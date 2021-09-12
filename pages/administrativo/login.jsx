@@ -7,15 +7,14 @@ import { useRouter } from 'next/router'
 import { AuthContext } from '../../contexts/AuthContext'
 import nookies from 'nookies'
 import ErrorMsg from '../../components/ErrorMsg'
+import { useEffect } from 'react'
 
 export default function Login() {
-  const { sigIn, platform } = useContext(AuthContext)
-  console.log(platform)
+  const { sigIn } = useContext(AuthContext)
   const router = useRouter()
   const { register, handleSubmit } = useForm()
   const [error, setError] = useState(false)
   const [errorMsg, setErrorMsg] = useState('')
-  
   async function enviar(data, event) {
     const { login, senha } = data
     api.administrativo.login(login, senha).then(token => {
@@ -25,7 +24,7 @@ export default function Login() {
         sigIn({
           login,
           senha
-        }, 'administrativo').then(() => {
+        }, 'administrativo', window.navigator.userAgent.split('(')[1].split(')')[0].split(';').map(info => info.trim())).then(() => {
           router.push('/administrativo').then()
         })
       } else {
@@ -45,7 +44,6 @@ export default function Login() {
         <LoginStyle.PartLeft>
             <LoginStyle.PartLeft.LogoJPNome/>
         </LoginStyle.PartLeft>
-        <span style={{color: 'black'}}>{platform}</span>
         <LoginStyle.PartRight>
             {error && <ErrorMsg>{errorMsg}</ErrorMsg>}
             <LoginStyle.PartRight.Form action='/administrativo' onSubmit={handleSubmit(enviar)} error={error}>

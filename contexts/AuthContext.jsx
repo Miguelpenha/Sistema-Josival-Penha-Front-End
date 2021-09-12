@@ -6,11 +6,9 @@ export const AuthContext = createContext({})
 
 export function AuthProvider({ children }) {
     const [user, setUser] = useState({})
-    const [platform, setPlatform] = useState('')
 
     let isAuthenticated = user.id ? true : false
     useEffect(() => {
-        setPlatform(window.navigator.userAgent)
         const { [process.env.NEXT_STATIC_NAME_COOKIE_PROFESSORAS]:tokenProf } = parseCookies()
         const { [process.env.NEXT_STATIC_NAME_COOKIE_ADMINISTRATIVO]:tokenAdmin } = parseCookies()
         if (tokenProf) {
@@ -61,10 +59,11 @@ export function AuthProvider({ children }) {
             })
         }
     }, [])
-    async function sigIn(data, type) {
+    
+    async function sigIn(data={}, type='', modelUser=[]) {
         if (type === 'professora') {
             const { login, senha } = data
-            const token = await api.professoras.login(login, senha, true)
+            const token = await api.professoras.login(login, senha)
             setUser({
                 id: await api.professoras.tokenId(token)
             })
@@ -76,7 +75,7 @@ export function AuthProvider({ children }) {
             })
         } else if (type === 'administrativo') {
             const { login, senha } = data
-            const token = await api.administrativo.login(login, senha, true, platform)
+            const token = await api.administrativo.login(login, senha, true, modelUser)
             setUser({
                 id: await api.administrativo.tokenId(token)
             })
@@ -90,7 +89,7 @@ export function AuthProvider({ children }) {
     }
 
     return (
-        <AuthContext.Provider value={{ user, isAuthenticated, sigIn, platform }}>
+        <AuthContext.Provider value={{ user, isAuthenticated, sigIn }}>
             {children}
         </AuthContext.Provider>
     )
