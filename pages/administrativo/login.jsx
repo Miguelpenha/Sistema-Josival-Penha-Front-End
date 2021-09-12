@@ -9,7 +9,8 @@ import nookies from 'nookies'
 import ErrorMsg from '../../components/ErrorMsg'
 
 export default function Login() {
-  const { sigIn } = useContext(AuthContext)
+  const { sigIn, platform } = useContext(AuthContext)
+  console.log(platform)
   const router = useRouter()
   const { register, handleSubmit } = useForm()
   const [error, setError] = useState(false)
@@ -44,6 +45,7 @@ export default function Login() {
         <LoginStyle.PartLeft>
             <LoginStyle.PartLeft.LogoJPNome/>
         </LoginStyle.PartLeft>
+        <span style={{color: 'black'}}>{platform}</span>
         <LoginStyle.PartRight>
             {error && <ErrorMsg>{errorMsg}</ErrorMsg>}
             <LoginStyle.PartRight.Form action='/administrativo' onSubmit={handleSubmit(enviar)} error={error}>
