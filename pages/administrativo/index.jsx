@@ -2,8 +2,10 @@ import Head from 'next/head'
 import nookies from 'nookies'
 import { Container, Main } from '../../styles/pages/professoras/index'
 import NavTool from '../../components/NavTool'
+import api from '../../api/api'
 
 export default function Administrativo() {
+  api.professoras.professorasAPI(true).then(quant => console.log(quant))
   return (
     <>
       <Head>
