@@ -1,7 +1,6 @@
 import Head from 'next/head'
 import nookies from 'nookies'
-import { Container, Main } from '../../styles/pages/professoras/index'
-import NavTool from '../../components/NavTool'
+import { Container, NavOptions, LogoJPNome, Funções, Função, IconAlunos, Main } from '../../styles/pages/administrativo'
 import api from '../../api/api'
 
 export default function Administrativo() {
@@ -12,9 +11,22 @@ export default function Administrativo() {
         <title>Administrativo</title>
       </Head>
       <Container>
-        <NavTool/>
+        <NavOptions>
+          <LogoJPNome/>
+          <Funções>
+            <Função selected={true}>
+              <IconAlunos/>
+              Alunos
+            </Função>
+            <Função>Acadêmico</Função>
+            <Função>Dashboard</Função>
+            <Função>Marketing</Função>
+            <Função>Colaboradores</Função>
+            <Função>Financeiro</Função>
+          </Funções>
+        </NavOptions>
         <Main>
-          <h1>Administrativo</h1>
+          asd
         </Main>
       </Container>
     </>
