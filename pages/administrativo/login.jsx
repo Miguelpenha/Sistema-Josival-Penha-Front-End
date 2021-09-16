@@ -25,7 +25,7 @@ export default function Login() {
           login,
           senha
         }, 'administrativo', window.navigator.userAgent.split('(')[1].split(')')[0].split(';').map(info => info.trim())).then(() => {
-          router.push('/administrativo').then()
+          router.push('/administrativo/alunos').then()
         })
       } else {
         event.preventDefault()
@@ -76,7 +76,7 @@ export const getServerSideProps = async ctx => {
   } else if (tokenAdmin) {
     return {
       redirect: {
-        destination: '/administrativo',
+        destination: '/administrativo/alunos',
         permanent: false
       }
     }

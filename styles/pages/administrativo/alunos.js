@@ -25,8 +25,8 @@ const Main = styled.main`
 
 const NavOptions = styled.nav`
     background-color: #ffffff;
-    border-top-right-radius: 30px;
-    border-bottom-right-radius: 30px;
+    border-top-right-radius: 2.5vw;
+    border-bottom-right-radius: 2.5vw;
 `
 
 const LogoJPNome = styled(LogoJPNomeSemStyle)`

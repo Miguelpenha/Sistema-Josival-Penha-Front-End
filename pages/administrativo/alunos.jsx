@@ -1,14 +1,14 @@
 import Head from 'next/head'
 import nookies from 'nookies'
-import { Container, NavOptions, LogoJPNome, Funções, Função, IconAlunosSele, IconAcadêmico, IconDashBoard, IconMarketing, IconFinanceiro, IconColaboradores, Main } from '../../styles/pages/administrativo'
+import { Container, NavOptions, LogoJPNome, Funções, Função, IconAlunosSele, IconAcadêmico, IconDashBoard, IconMarketing, IconFinanceiro, IconColaboradores, Main } from '../../styles/pages/administrativo/alunos'
 import api from '../../api/api'
 
-export default function Administrativo() {
+export default function Alunos() {
   api.professoras.professorasAPI(true).then(quant => console.log(quant))
   return (
     <>
       <Head>
-        <title>Administrativo</title>
+        <title>Administrativo (Alunos)</title>
       </Head>
       <Container>
         <NavOptions>

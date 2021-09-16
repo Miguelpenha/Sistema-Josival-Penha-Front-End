@@ -46,7 +46,7 @@ export const getServerSideProps = async ctx => {
   } else if (tokenAdmin) {
     return {
       redirect: {
-        destination: '/administrativo',
+        destination: '/administrativo/alunos',
         permanent: false
       }
     }
