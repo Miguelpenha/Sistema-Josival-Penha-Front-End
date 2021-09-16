@@ -13,6 +13,7 @@ import IconFinanceiroSeleSVG from '../../../assets/icon-nav-admin-financeiro-sel
 import IconColaboradoresSVG from '../../../assets/icon-nav-admin-financeiro.svg'
 import IconColaboradoresSeleSVG from '../../../assets/icon-nav-admin-financeiro-sele.svg'
 import Iconalunosbannersvg from '../../../assets/icon-alunos-banner.svg'
+import IconInfoTotalAlunosSVG from '../../../assets/icon-info-total-alunos.svg'
 
 const Container = styled.div`
     display: grid;
@@ -30,20 +31,20 @@ const LogoJPNome = styled(LogoJPNomeSemStyle)`
     margin-left: auto;
     margin-right: auto;
     margin-top: 8%;
-    width: 80%;
+    width: 70%;
     height: auto;
 `
 
 const Funções = styled.ul`
     height: auto;
-    font-size: 1.5vw;
-    font-weight: 500;
+    font-size: 1.4vw;
     margin-top: 15%;
 `
 
 const Função = styled.li`
     height: auto;
     color: ${props => props.selected ? '#000000;' :'#9D9D9D;'};
+    font-weight: ${props => props.selected ? '500;' :'200;'};
     width: 80%;
     display: flex;
     margin-left: auto;
@@ -54,63 +55,63 @@ const Função = styled.li`
 `
 
 const IconAlunos = styled(IconAlunosSVG)`
-    width: 35%;
-    margin-right: 8%;
+    width: 25%;
+    margin-right: 4%;
 `
 
 const IconAlunosSele = styled(IconAlunosSeleSVG)`
-    width: 35%;
-    margin-right: 8%;
+    width: 25%;
+    margin-right: 4%;
 `
 
 const IconAcadêmico = styled(IconAcadêmicoSVG)`
-    width: 35%;
-    margin-right: 8%;
+    width: 25%;
+    margin-right: 4%;
 `
 
 const IconAcadêmicoSele = styled(IconAcadêmicoSeleSVG)`
-    width: 35%;
-    margin-right: 8%;
+    width: 25%;
+    margin-right: 4%;
 `
 
 const IconDashBoard = styled(IconDashBoardSVG)`
-    width: 35%;
-    margin-right: 8%;
+    width: 25%;
+    margin-right: 4%;
 `
 
 const IconDashBoardSele = styled(IconDashBoardSeleSVG)`
-    width: 35%;
-    margin-right: 8%;
+    width: 25%;
+    margin-right: 4%;
 `
 
 const IconMarketing = styled(IconMarketingSVG)`
-    width: 35%;
-    margin-right: 8%;
+    width: 25%;
+    margin-right: 4%;
 `
 
 const IconMarketingSele = styled(IconMarketingSeleSVG)`
-    width: 35%;
-    margin-right: 8%;
+    width: 25%;
+    margin-right: 4%;
 `
 
 const IconFinanceiro = styled(IconFinanceiroSVG)`
-    width: 35%;
-    margin-right: 8%;
+    width: 25%;
+    margin-right: 4%;
 `
 
 const IconFinanceiroSele = styled(IconFinanceiroSeleSVG)`
-    width: 35%;
-    margin-right: 8%;
+    width: 25%;
+    margin-right: 4%;
 `
 
 const IconColaboradores = styled(IconColaboradoresSVG)`
-    width: 35%;
-    margin-right: 8%;
+    width: 25%;
+    margin-right: 4%;
 `
 
 const IconColaboradoresSele = styled(IconColaboradoresSeleSVG)`
-    width: 35%;
-    margin-right: 8%;
+    width: 25%;
+    margin-right: 4%;
 `
 
 const Main = styled.main`
@@ -127,6 +128,33 @@ const AlunosBanner = styled.div`
     margin-top: 8%;
     color: #ffffff;
     border-radius: 1.2vw;
+    font-weight: 500;
+    padding-top: 3.5%;
+    padding-bottom: 3.5%;
+`
+
+const InfoAdmin = styled.div`
+    background-color: #ffffff;
+    width: 25%;
+    height: auto;
+    margin-top: 5%;
+    padding: 1.2%;
+    border-radius: 0.5vw;
+`
+
+const InfoAdminTit = styled.h2`
+    font-weight: 100;
+    color: #525051;
+`
+
+const InfoAdminDado = styled.span`
+    font-weight: bolder;
+    font-size: 3vw;
+    color: #0872FC;
+`
+
+const IconInfoTotalAlunos = styled(IconInfoTotalAlunosSVG)`
+    width: 45%;
 `
 
 const NavInfos = styled.nav`
@@ -157,5 +185,9 @@ export {
     IconColaboradoresSele,
     Main,
     AlunosBanner,
+    InfoAdmin,
+    InfoAdminTit,
+    InfoAdminDado,
+    IconInfoTotalAlunos,
     NavInfos
 }

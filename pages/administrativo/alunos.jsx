@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import nookies from 'nookies'
-import { Container, NavOptions, LogoJPNome, Funções, Função, IconAlunosSele, IconAcadêmico, IconDashBoard, IconMarketing, IconFinanceiro, IconColaboradores, Main, AlunosBanner, NavInfos } from '../../styles/pages/administrativo/alunos'
+import { Container, NavOptions, LogoJPNome, Funções, Função, IconAlunosSele, IconAcadêmico, IconDashBoard, IconMarketing, IconFinanceiro, IconColaboradores, Main, AlunosBanner, InfoAdmin, InfoAdminTit, InfoAdminDado, IconInfoTotalAlunos, NavInfos } from '../../styles/pages/administrativo/alunos'
 import api from '../../api/api'
 
 export default function Alunos() {
@@ -44,6 +44,11 @@ export default function Alunos() {
           <AlunosBanner>
             Alunos
           </AlunosBanner>
+          <InfoAdmin>
+            <InfoAdminTit>Total de Alunos</InfoAdminTit>
+            <InfoAdminDado>120</InfoAdminDado>
+            <IconInfoTotalAlunos/>
+          </InfoAdmin>
         </Main>
         <NavInfos>
           asd2
