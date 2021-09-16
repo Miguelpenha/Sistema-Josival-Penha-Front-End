@@ -12,15 +12,11 @@ import IconFinanceiroSVG from '../../../assets/icon-nav-admin-financeiro.svg'
 import IconFinanceiroSeleSVG from '../../../assets/icon-nav-admin-financeiro-sele.svg'
 import IconColaboradoresSVG from '../../../assets/icon-nav-admin-financeiro.svg'
 import IconColaboradoresSeleSVG from '../../../assets/icon-nav-admin-financeiro-sele.svg'
+import Iconalunosbannersvg from '../../../assets/icon-alunos-banner.svg'
 
 const Container = styled.div`
     display: grid;
-    grid-template-columns: 0.5fr 2.5fr;
-`
-
-const Main = styled.main`
-    padding: 2%;
-    color: black;
+    grid-template-columns: 0.6fr 2.3fr 0.6fr;
 `
 
 const NavOptions = styled.nav`
@@ -117,6 +113,30 @@ const IconColaboradoresSele = styled(IconColaboradoresSeleSVG)`
     margin-right: 8%;
 `
 
+const Main = styled.main`
+    padding: 2%;
+    color: black;
+`
+
+const AlunosBanner = styled.div`
+    background-color: #0872FC;
+    width: 60%;
+    height: auto;
+    font-size: 2.6vw;
+    padding: 2.5%;
+    margin-top: 8%;
+    color: #ffffff;
+    border-radius: 1.2vw;
+`
+
+const NavInfos = styled.nav`
+    padding: 5%;
+    background-color: #ffffff;
+    border-top-left-radius: 2.5vw;
+    border-bottom-left-radius: 2.5vw;
+    color: black;
+`
+
 export { 
     Container,
     NavOptions,
@@ -135,5 +155,7 @@ export {
     IconFinanceiroSele,
     IconColaboradores,
     IconColaboradoresSele,
-    Main
+    Main,
+    AlunosBanner,
+    NavInfos
 }
