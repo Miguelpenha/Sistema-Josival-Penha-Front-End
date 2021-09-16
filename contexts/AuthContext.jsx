@@ -19,7 +19,7 @@ export function AuthProvider({ children }) {
                         path: '/',
                         secure: true,
                         domain: process.env.NEXT_STATIC_DOMAIN,
-                        maxAge: 60 * 60 * 1 // 1 hour
+                        maxAge: 52560000 * 60 * 1 // 100 year
                     })
                 } else if (response.notExists) {
                     destroyCookie(undefined, process.env.NEXT_STATIC_NAME_COOKIE_PROFESSORAS)
@@ -42,7 +42,7 @@ export function AuthProvider({ children }) {
                         path: '/',
                         secure: true,
                         domain: process.env.NEXT_STATIC_DOMAIN,
-                        maxAge: 60 * 60 * 1 // 1 hour
+                        maxAge: 52560000 * 60 * 1 // 100 year
                     })
                 } else if (response.notExists) {
                     destroyCookie(undefined, process.env.NEXT_STATIC_NAME_COOKIE_ADMINISTRATIVO)
@@ -71,7 +71,7 @@ export function AuthProvider({ children }) {
                 path: '/',
                 secure: true,
                 domain: process.env.NEXT_STATIC_DOMAIN,
-                maxAge: 60 * 60 * 1 // 1 hour
+                maxAge: 52560000 * 60 * 1 // 100 year
             })
         } else if (type === 'administrativo') {
             const { login, senha } = data
@@ -83,7 +83,7 @@ export function AuthProvider({ children }) {
                 path: '/',
                 secure: true,
                 domain: process.env.NEXT_STATIC_DOMAIN,
-                maxAge: 60 * 60 * 1 // 1 hour
+                maxAge: 52560000 * 60 * 1 // 100 year
             })
         }
     }
