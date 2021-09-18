@@ -13,7 +13,7 @@ export default function Alunos() {
 
   useEffect(() => {
     if (quantTurmas && quantAlunos) {
-      setMediaAlunos(Number(quantAlunos.quant)/Number(quantTurmas.quant))
+      setMediaAlunos(parseFloat(Number(quantAlunos.quant)/Number(quantTurmas.quant)).toFixed(2))
       setMediaOcupação(parseFloat((Number(quantAlunos.quant)*Number(quantTurmas.quant))/100).toFixed(2))
     }
   }, [quantAlunos, quantTurmas])
