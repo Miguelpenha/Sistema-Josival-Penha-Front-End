@@ -6,8 +6,8 @@ import Skeleton from '@material-ui/core/Skeleton'
 import { useEffect, useState } from 'react'
 
 export default function Alunos() {
-  const { data: quantAlunos } = api('api/alunos?quant=true')
-  const { data: quantTurmas } = api('api/turmas?quant=true')
+  const { data: quantAlunos } = api('alunos?quant=true')
+  const { data: quantTurmas } = api('turmas?quant=true')
   const [mediaAlunos, setMediaAlunos] = useState(undefined)
   const [mediaOcupação, setMediaOcupação] = useState(undefined)
 
