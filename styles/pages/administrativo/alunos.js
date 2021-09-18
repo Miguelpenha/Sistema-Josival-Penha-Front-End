@@ -14,6 +14,9 @@ import IconColaboradoresSVG from '../../../assets/icon-nav-admin-financeiro.svg'
 import IconColaboradoresSeleSVG from '../../../assets/icon-nav-admin-financeiro-sele.svg'
 import Iconalunosbannersvg from '../../../assets/icon-alunos-banner.svg'
 import IconInfoTotalAlunosSVG from '../../../assets/icon-info-total-alunos.svg'
+import IconInfoTotalTurmasSVG from '../../../assets/icon-info-total-turmas.svg'
+import IconInfoMédiaAlunosSVG from '../../../assets/icon-info-média-alunos.svg'
+import IconInfoOcupaçãoSVG from '../../../assets/icon-info-ocupação.svg'
 
 const Container = styled.div`
     display: grid;
@@ -170,6 +173,24 @@ const IconInfoTotalAlunos = styled(IconInfoTotalAlunosSVG)`
     margin-top: 2%;
 `
 
+const IconInfoTotalTurmas = styled(IconInfoTotalTurmasSVG)`
+    width: 45%;
+    float: right;
+    margin-top: 2%;
+`
+
+const IconInfoMédiaAlunos = styled(IconInfoMédiaAlunosSVG)`
+    width: 45%;
+    float: right;
+    margin-top: 2%;
+`
+
+const IconInfoOcupação = styled(IconInfoOcupaçãoSVG)`
+    width: 45%;
+    float: right;
+    margin-top: 2%;
+`
+
 const NavInfos = styled.nav`
     padding: 5%;
     background-color: #ffffff;
@@ -203,5 +224,8 @@ export {
     InfoAdminTit,
     InfoAdminDado,
     IconInfoTotalAlunos,
+    IconInfoTotalTurmas,
+    IconInfoMédiaAlunos,
+    IconInfoOcupação,
     NavInfos
 }

@@ -1,10 +1,14 @@
 import Head from 'next/head'
 import nookies from 'nookies'
-import { Container, NavOptions, LogoJPNome, Funções, Função, IconAlunosSele, IconAcadêmico, IconDashBoard, IconMarketing, IconFinanceiro, IconColaboradores, Main, AlunosBanner, InfoAdminContainer, InfoAdmin, InfoAdminTit, InfoAdminDado, IconInfoTotalAlunos, NavInfos } from '../../styles/pages/administrativo/alunos'
+import { Container, NavOptions, LogoJPNome, Funções, Função, IconAlunosSele, IconAcadêmico, IconDashBoard, IconMarketing, IconFinanceiro, IconColaboradores, Main, AlunosBanner, InfoAdminContainer, InfoAdmin, InfoAdminTit, InfoAdminDado, IconInfoTotalAlunos, IconInfoTotalTurmas, IconInfoMédiaAlunos, IconInfoOcupação, NavInfos } from '../../styles/pages/administrativo/alunos'
 import api from '../../api/api'
+import { useEffect, useState } from 'react'
 
 export default function Alunos() {
-  api.professoras.professorasAPI(true).then(quant => console.log(quant))
+  const [alunos, setAlunos] = useState(0)
+  const fetcher = (url) => fetch(url).then((res) => res.json())
+
+  const { data, error } = useSWR('', fetcher)
   return (
     <>
       <Head>
@@ -47,23 +51,23 @@ export default function Alunos() {
           <InfoAdminContainer>
             <InfoAdmin>
               <InfoAdminTit>Total de Alunos</InfoAdminTit>
-              <InfoAdminDado>120</InfoAdminDado>
+              <InfoAdminDado>{alunos}</InfoAdminDado>
               <IconInfoTotalAlunos/>
             </InfoAdmin>
             <InfoAdmin>
               <InfoAdminTit>Total de Turmas</InfoAdminTit>
               <InfoAdminDado>9</InfoAdminDado>
-              <IconInfoTotalAlunos/>
+              <IconInfoTotalTurmas/>
             </InfoAdmin>
             <InfoAdmin>
               <InfoAdminTit>Média de Alunos por Turma</InfoAdminTit>
               <InfoAdminDado>13,3</InfoAdminDado>
-              <IconInfoTotalAlunos/>
+              <IconInfoMédiaAlunos/>
             </InfoAdmin>
             <InfoAdmin>
               <InfoAdminTit>Ocupação das Vagas</InfoAdminTit>
               <InfoAdminDado>84%</InfoAdminDado>
-              <IconInfoTotalAlunos/>
+              <IconInfoOcupação/>
             </InfoAdmin>
           </InfoAdminContainer>
         </Main>
