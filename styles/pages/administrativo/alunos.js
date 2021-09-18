@@ -161,10 +161,11 @@ const InfoAdminTit = styled.h2`
 `
 
 const InfoAdminDado = styled.span`
-    width: 50%;
+    width: 45%;
     font-weight: bolder;
     font-size: 3vw;
     color: #0872FC;
+    height: auto;
 `
 
 const IconInfoTotalAlunos = styled(IconInfoTotalAlunosSVG)`

@@ -1,14 +1,23 @@
 import Head from 'next/head'
 import nookies from 'nookies'
 import { Container, NavOptions, LogoJPNome, Funções, Função, IconAlunosSele, IconAcadêmico, IconDashBoard, IconMarketing, IconFinanceiro, IconColaboradores, Main, AlunosBanner, InfoAdminContainer, InfoAdmin, InfoAdminTit, InfoAdminDado, IconInfoTotalAlunos, IconInfoTotalTurmas, IconInfoMédiaAlunos, IconInfoOcupação, NavInfos } from '../../styles/pages/administrativo/alunos'
-import api from '../../api/api'
+import api from '../../api/alunos/alunosQuant'
+import Skeleton from '@material-ui/core/Skeleton'
 import { useEffect, useState } from 'react'
 
 export default function Alunos() {
-  const [alunos, setAlunos] = useState(0)
-  const fetcher = (url) => fetch(url).then((res) => res.json())
+  const { data: quantAlunos } = api('http://localhost:3000/api/alunos?quant=true')
+  const { data: quantTurmas } = api('http://localhost:3000/api/turmas?quant=true')
+  const [mediaAlunos, setMediaAlunos] = useState(undefined)
+  const [mediaOcupação, setMediaOcupação] = useState(undefined)
 
-  const { data, error } = useSWR('', fetcher)
+  useEffect(() => {
+    if (quantTurmas && quantAlunos) {
+      setMediaAlunos(Number(quantAlunos.quant)/Number(quantTurmas.quant))
+      setMediaOcupação((Number(quantAlunos.quant)*Number(quantTurmas.quant))/100)
+    }
+  }, [quantAlunos, quantTurmas])
+  
   return (
     <>
       <Head>
@@ -51,22 +60,26 @@ export default function Alunos() {
           <InfoAdminContainer>
             <InfoAdmin>
               <InfoAdminTit>Total de Alunos</InfoAdminTit>
-              <InfoAdminDado>{alunos}</InfoAdminDado>
+              {!quantAlunos && <Skeleton variant="rectangular" width={`20%`} height={35} style={{display: 'inline-block', borderRadius: '10px', marginTop: '5%'}} animation="wave"/>}
+              {quantAlunos && <InfoAdminDado>{quantAlunos.quant}</InfoAdminDado>}
               <IconInfoTotalAlunos/>
             </InfoAdmin>
             <InfoAdmin>
               <InfoAdminTit>Total de Turmas</InfoAdminTit>
-              <InfoAdminDado>9</InfoAdminDado>
+              {!quantTurmas && <Skeleton variant="rectangular" width={`20%`} height={35} style={{display: 'inline-block', borderRadius: '10px', marginTop: '5%'}} animation="wave"/>}
+              {quantTurmas && <InfoAdminDado>{quantTurmas.quant}</InfoAdminDado>}
               <IconInfoTotalTurmas/>
             </InfoAdmin>
             <InfoAdmin>
               <InfoAdminTit>Média de Alunos por Turma</InfoAdminTit>
-              <InfoAdminDado>13,3</InfoAdminDado>
+              {!mediaAlunos && mediaAlunos != 0 && <Skeleton variant="rectangular" width={`20%`} height={35} style={{display: 'inline-block', borderRadius: '10px', marginTop: '5%'}} animation="wave"/>}
+              {mediaAlunos >= 0 && <InfoAdminDado>{mediaAlunos}</InfoAdminDado>}
               <IconInfoMédiaAlunos/>
             </InfoAdmin>
-            <InfoAdmin>
+            <InfoAdmin style={{width: '28%'}}>
               <InfoAdminTit>Ocupação das Vagas</InfoAdminTit>
-              <InfoAdminDado>84%</InfoAdminDado>
+              {!mediaOcupação && mediaOcupação != 0 && <Skeleton variant="rectangular" width={`20%`} height={35} style={{display: 'inline-block', borderRadius: '10px', marginTop: '5%'}} animation="wave"/>}
+              {mediaOcupação >= 0 && <InfoAdminDado>{mediaOcupação}%</InfoAdminDado>}
               <IconInfoOcupação/>
             </InfoAdmin>
           </InfoAdminContainer>
