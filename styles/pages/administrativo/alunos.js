@@ -131,23 +131,34 @@ const AlunosBanner = styled.div`
     font-weight: 500;
     padding-top: 3.5%;
     padding-bottom: 3.5%;
+    margin-left: 1.6%;
+`
+
+const InfoAdminContainer = styled.div`
+    display: flex;
+    height: fit-content;
+    flex-direction: row;
+    justify-content: space-around;
 `
 
 const InfoAdmin = styled.div`
+    display: inline-block;
     background-color: #ffffff;
-    width: 25%;
-    height: auto;
+    width: 22%;
+    height: fit-content;
     margin-top: 5%;
     padding: 1.2%;
     border-radius: 0.5vw;
 `
 
 const InfoAdminTit = styled.h2`
+    width: 100%;
     font-weight: 100;
     color: #525051;
 `
 
 const InfoAdminDado = styled.span`
+    width: 50%;
     font-weight: bolder;
     font-size: 3vw;
     color: #0872FC;
@@ -155,6 +166,8 @@ const InfoAdminDado = styled.span`
 
 const IconInfoTotalAlunos = styled(IconInfoTotalAlunosSVG)`
     width: 45%;
+    float: right;
+    margin-top: 2%;
 `
 
 const NavInfos = styled.nav`
@@ -185,6 +198,7 @@ export {
     IconColaboradoresSele,
     Main,
     AlunosBanner,
+    InfoAdminContainer,
     InfoAdmin,
     InfoAdminTit,
     InfoAdminDado,
