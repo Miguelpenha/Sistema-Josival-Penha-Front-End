@@ -1,7 +1,7 @@
 import LoginStyle from '../../styles/pages/professoras/login'
 import Head from 'next/head'
 import { useContext, useState } from 'react'
-import api from '../../api/api'
+import api from '../../apiBE/api'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
 import { AuthContext } from '../../contexts/AuthContext'

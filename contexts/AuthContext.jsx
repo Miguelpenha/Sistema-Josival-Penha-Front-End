@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from 'react'
-import api from '../api/api'
+import api from '../apiBE/api'
 import { setCookie, parseCookies, destroyCookie } from 'nookies'
 
 export const AuthContext = createContext({})

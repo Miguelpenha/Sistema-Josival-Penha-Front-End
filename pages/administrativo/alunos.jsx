@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import nookies from 'nookies'
 import { Container, NavOptions, LogoJPNome, Funções, Função, IconAlunosSele, IconAcadêmico, IconDashBoard, IconMarketing, IconFinanceiro, IconColaboradores, Main, AlunosBanner, InfoAdminContainer, InfoAdmin, InfoAdminTit, InfoAdminDado, IconInfoTotalAlunos, IconInfoTotalTurmas, IconInfoMédiaAlunos, IconInfoOcupação, NavInfos } from '../../styles/pages/administrativo/alunos'
-import api from '../../api/alunos/alunosQuant'
+import api from '../../apiBE/alunos/alunosQuant'
 import Skeleton from '@material-ui/core/Skeleton'
 import { useEffect, useState } from 'react'
 
