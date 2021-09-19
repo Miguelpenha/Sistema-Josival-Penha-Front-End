@@ -2,6 +2,7 @@ import LoginStyle from '../../styles/pages/administrativo/login'
 import Head from 'next/head'
 import { useContext, useState } from 'react'
 import api from '../../services/api/api'
+import { post } from '../../services/api/alunos/alunosQuant'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
 import { AuthContext } from '../../contexts/AuthContext'
@@ -17,22 +18,24 @@ export default function Login() {
   const [errorMsg, setErrorMsg] = useState('')
   async function enviar(data, event) {
     const { login, senha } = data
-    api.administrativo.login(login, senha).then(token => {
-      if (token) {
-        setError(false)
-        setErrorMsg('')
-        sigIn({
-          login,
-          senha
-        }, 'administrativo', window.navigator.userAgent.split('(')[1].split(')')[0].split(';').map(info => info.trim())).then(() => {
-          router.push('/administrativo/alunos').then()
-        })
-      } else {
-        event.preventDefault()
-        setError(true)
-        setErrorMsg('Login ou senha inválidos')
-      }
+    const { data: token } = post('/administrativo/login', {
+      login,
+      senha
     })
+    if (token) {
+      setError(false)
+      setErrorMsg('')
+      sigIn({
+        login,
+        senha
+      }, 'administrativo', window.navigator.userAgent.split('(')[1].split(')')[0].split(';').map(info => info.trim())).then(() => {
+        router.push('/administrativo/alunos').then()
+      })
+    } else {
+      event.preventDefault()
+      setError(true)
+      setErrorMsg('Login ou senha inválidos')
+    }
   }
   
   return (

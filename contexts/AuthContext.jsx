@@ -1,71 +1,80 @@
 import { createContext, useEffect, useState } from 'react'
 import api from '../services/api/api'
 import { setCookie, parseCookies, destroyCookie } from 'nookies'
+import { get, post } from '../services/api/alunos/alunosQuant'
 
 export const AuthContext = createContext({})
 
 export function AuthProvider({ children }) {
     const [user, setUser] = useState({})
-
     let isAuthenticated = user.id ? true : false
     useEffect(() => {
         const { [process.env.NEXT_STATIC_NAME_COOKIE_PROFESSORAS]:tokenProf } = parseCookies()
         const { [process.env.NEXT_STATIC_NAME_COOKIE_ADMINISTRATIVO]:tokenAdmin } = parseCookies()
         if (tokenProf) {
             const token = tokenProf
-            api.professoras.auth(token).then(response => {
-                if (response.newToken) {
-                    setCookie(undefined, process.env.NEXT_STATIC_NAME_COOKIE_PROFESSORAS, response.newToken, {
-                        path: '/',
-                        secure: true,
-                        domain: process.env.NEXT_STATIC_DOMAIN,
-                        maxAge: 52560000 * 60 * 1 // 100 year
-                    })
-                } else if (response.notExists) {
-                    destroyCookie(undefined, process.env.NEXT_STATIC_NAME_COOKIE_PROFESSORAS)
-                    isAuthenticated = false
-                    setUser({})
-                }
+            const { data: newTokenBruto } = post('/professoras/auth', {
+                token
             })
-            api.professoras.tokenId(token).then(response => {
-                if (response.id) {
-                    setUser({
-                        id: response.id
-                    })
-                }
+            if (newTokenBruto.newToken) {
+                setCookie(undefined, process.env.NEXT_STATIC_NAME_COOKIE_PROFESSORAS, newTokenBruto.newToken, {
+                    path: '/',
+                    secure: true,
+                    domain: process.env.NEXT_STATIC_DOMAIN,
+                    maxAge: 52560000 * 60 * 1 // 100 year
+                })
+            } else if (newTokenBruto.notExists) {
+                destroyCookie(undefined, process.env.NEXT_STATIC_NAME_COOKIE_PROFESSORAS)
+                isAuthenticated = false
+                setUser({})
+            }
+            const { data: tokenTokenIdBruto } = post('/professoras/tokenId', {
+                token
             })
+            if (tokenTokenIdBruto.id) {
+                setUser({
+                    id: tokenTokenIdBruto.id
+                })
+            }
         } else if (tokenAdmin) {
             const token = tokenAdmin
-            api.administrativo.auth(token).then(response => {
-                if (response.newToken) {
-                    setCookie(undefined, process.env.NEXT_STATIC_NAME_COOKIE_ADMINISTRATIVO, response.newToken, {
-                        path: '/',
-                        secure: true,
-                        domain: process.env.NEXT_STATIC_DOMAIN,
-                        maxAge: 52560000 * 60 * 1 // 100 year
-                    })
-                } else if (response.notExists) {
-                    destroyCookie(undefined, process.env.NEXT_STATIC_NAME_COOKIE_ADMINISTRATIVO)
-                    isAuthenticated = false
-                    setUser({})
-                }
+            const { data: tokenAdminBruto } = post('/administrativo/auth', {
+                token
             })
-            api.administrativo.tokenId(token).then(response => {
-                if (response.id) {
-                    setUser({
-                        id: response.id
-                    })
-                }
+            if (tokenAdminBruto.newToken) {
+                setCookie(undefined, process.env.NEXT_STATIC_NAME_COOKIE_ADMINISTRATIVO, tokenAdminBruto.newToken, {
+                    path: '/',
+                    secure: true,
+                    domain: process.env.NEXT_STATIC_DOMAIN,
+                    maxAge: 52560000 * 60 * 1 // 100 year
+                })
+            } else if (tokenAdminBruto.notExists) {
+                destroyCookie(undefined, process.env.NEXT_STATIC_NAME_COOKIE_ADMINISTRATIVO)
+                isAuthenticated = false
+                setUser({})
+            }
+            const { data: tokenAdminTokenId } = post('/professoras/tokenId', {
+                token
             })
+            if (tokenAdminTokenId.id) {
+                setUser({
+                    id: tokenAdminTokenId.id
+                })
+            }
         }
     }, [])
     
     async function sigIn(data={}, type='', modelUser=[]) {
         if (type === 'professora') {
             const { login, senha } = data
-            const token = await api.professoras.login(login, senha)
+            const { data: token } = post('/professoras/login', {
+                login,
+                senha
+            }).token
             setUser({
-                id: await api.professoras.tokenId(token)
+                id: post('/professoras/tokenId', {
+                    token
+                }).data
             })
             setCookie(undefined, process.env.NEXT_STATIC_NAME_COOKIE_PROFESSORAS, token, {
                 path: '/',
@@ -75,9 +84,16 @@ export function AuthProvider({ children }) {
             })
         } else if (type === 'administrativo') {
             const { login, senha } = data
-            const token = await api.administrativo.login(login, senha, true, modelUser)
+            const token = post('/administrativo/login', {
+                login,
+                senha,
+                ult: true,
+                modelUser: ult ? modelUser : false
+            }).data.token
             setUser({
-                id: await api.administrativo.tokenId(token)
+                id: post('/administrativo/tokenId', {
+                    token
+                })
             })
             setCookie(undefined, process.env.NEXT_STATIC_NAME_COOKIE_ADMINISTRATIVO, token, {
                 path: '/',
