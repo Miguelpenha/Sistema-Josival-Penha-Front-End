@@ -1,9 +1,10 @@
 import Head from 'next/head'
 import nookies from 'nookies'
-import { Container, NavOptions, LogoJPNome, Funções, Função, IconAlunosSele, IconAcadêmico, IconDashBoard, IconMarketing, IconFinanceiro, IconColaboradores, Main, AlunosBanner, InfoAdminContainer, InfoAdmin, InfoAdminTit, InfoAdminDado, IconInfoTotalAlunos, IconInfoTotalTurmas, IconInfoMédiaAlunos, IconInfoOcupação, NavInfos } from '../../styles/pages/administrativo/alunos'
+import { Container, NavOptions, LogoJPNome, Funções, Função, LinkFunção, IconAlunosSele, IconAcadêmico, IconDashBoard, IconMarketing, IconFinanceiro, IconColaboradores, Main, AlunosBanner, InfoAdminContainer, InfoAdmin, InfoAdminTit, InfoAdminDado, IconInfoTotalAlunos, IconInfoTotalTurmas, IconInfoMédiaAlunos, IconInfoOcupação, NavInfos } from '../../styles/pages/administrativo/alunos'
 import api from '../../api'
 import Skeleton from '@material-ui/core/Skeleton'
 import { useEffect, useState } from 'react'
+import Link from 'next/link'
 
 export default function Alunos() {
   const { data: quantAlunos } = api('/alunos?quant=true')
@@ -31,26 +32,46 @@ export default function Alunos() {
               <IconAlunosSele/>
               Alunos
             </Função>
-            <Função>
-              <IconAcadêmico/>
-              Acadêmico  
-            </Função>
-            <Função>
-              <IconDashBoard/>
-              Dashboard
-            </Função>
-            <Função>
-              <IconMarketing/>
-              Marketing
-            </Função>
-            <Função>
-              <IconFinanceiro/>
-              Financeiro
-            </Função>
-            <Função>
-              <IconColaboradores/>
-              Colaboradores
-            </Função>
+            <Link href="academico">
+              <Função>
+                <LinkFunção>
+                  <IconAcadêmico/>
+                  Acadêmico
+                </LinkFunção>
+              </Função>
+            </Link>
+            <Link href="dashboard">
+              <Função>
+                <LinkFunção>
+                  <IconDashBoard/>
+                  Dashboard
+                </LinkFunção>
+              </Função>
+            </Link>
+            <Link href="marketing">
+              <Função>
+                <LinkFunção>
+                  <IconMarketing/>
+                  Marketing
+                </LinkFunção>
+              </Função>
+            </Link>
+            <Link href="financeiro">
+              <Função>
+                <LinkFunção>
+                  <IconFinanceiro/>
+                  Financeiro
+                </LinkFunção>
+              </Função>
+            </Link>
+            <Link href="colaboradores">
+              <Função>
+                <LinkFunção>
+                  <IconColaboradores/>
+                  Colaboradores
+                </LinkFunção>
+              </Função>
+            </Link>
           </Funções>
         </NavOptions>
         <Main>

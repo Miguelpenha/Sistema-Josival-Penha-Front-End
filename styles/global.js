@@ -6,6 +6,8 @@ export default createGlobalStyle`
         padding: 0;
         box-sizing: border-box;
         height: 100%;
+        transition-timing-function: linear;
+        transition-duration: 0.2s;
     }
 
     html {

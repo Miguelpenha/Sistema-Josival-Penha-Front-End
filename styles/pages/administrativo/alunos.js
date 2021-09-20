@@ -52,9 +52,27 @@ const Função = styled.li`
     display: flex;
     margin-left: auto;
     margin-right: auto;
-    padding: 3%;
+    padding: 2%;
     margin-top: 4%;
     align-items: center;
+`
+
+const LinkFunção = styled.a`
+    width: auto;
+    display: inline-flex;
+    justify-content: baseline;
+    cursor: pointer;
+    border-radius: 20px;
+    transition-timing-function: linear;
+    transition-duration: 0.2s;
+    padding: 3%;
+
+    &:hover {
+        transition-timing-function: linear;
+        transition-duration: 0.2s;
+        background-color: #0872FC;
+        color: #ffffff;
+    }
 `
 
 const IconAlunos = styled(IconAlunosSVG)`
@@ -206,6 +224,7 @@ export {
     LogoJPNome,
     Funções,
     Função,
+    LinkFunção,
     IconAlunos,
     IconAlunosSele,
     IconAcadêmico,
