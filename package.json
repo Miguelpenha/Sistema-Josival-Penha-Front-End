@@ -13,6 +13,8 @@
     "@material-ui/core": "^5.0.0-beta.5",
     "@material-ui/icons": "^5.0.0-beta.5",
     "@material-ui/styled-engine-sc": "^5.0.0-beta.5",
+    "@unform/core": "^2.1.6",
+    "@unform/web": "^2.1.6",
     "axios": "^0.21.1",
     "babel-plugin-inline-react-svg": "^2.0.1",
     "dotenv-load": "^2.0.0",

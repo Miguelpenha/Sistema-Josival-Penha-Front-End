@@ -1,6 +1,6 @@
 import styled from 'styled-components'
-import Button from '@material-ui/core/Button'
 import { Add as IconAddSVG, TrendingDown as IconTrendingDownSVG } from '@material-ui/icons'
+import { Dialog, DialogContent, TextField } from '@material-ui/core'
 
 const Container = styled.div`
     display: grid;
@@ -16,11 +16,11 @@ const IconAdd = styled(IconAddSVG)`
     color: #ffffff;
     background-color: #6A54ED;
     border-radius: 50%;
-    border: 10px solid #6A54ED;
+    border: 2px solid #6A54ED;
     cursor: pointer;
 
     && {
-        width: 8%;
+        width: 6%;
         height: auto;
     }
 
@@ -40,9 +40,30 @@ const IconTrendingDown = styled(IconTrendingDownSVG)`
     }
 `
 
+const DialogCadasDespesa = styled(Dialog).attrs({
+    fullWidth: true
+})`
+    height: fit-content;
+`
+
+const DialogContentCadasDespesa = styled(DialogContent)`
+    && {
+        font-size: 20vw;
+    }
+`
+
+const InputNomeDespesa = styled(TextField)`
+    && {
+        font-size: 20vw;
+    }
+`
+
 export { 
     Container,
     Main,
     IconAdd,
-    IconTrendingDown
+    IconTrendingDown,
+    DialogCadasDespesa,
+    DialogContentCadasDespesa,
+    InputNomeDespesa
 }

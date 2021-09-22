@@ -1,15 +1,16 @@
 import Head from 'next/head'
 import nookies from 'nookies'
-import { Container, Main, IconAdd, IconTrendingDown } from '../../styles/pages/administrativo/financeiro'
+import { Container, Main, IconAdd, IconTrendingDown, DialogCadasDespesa, DialogContentCadasDespesa, InputNomeDespesa } from '../../styles/pages/administrativo/financeiro'
 import { NavOptions, LogoJPNome, Funções, Função, LinkFunção, IconAlunos, IconAcadêmico, IconDashBoard, IconMarketing, IconFinanceiroSele, IconColaboradores } from '../../components/NavTool'
 import Link from 'next/link'
-import { Menu, MenuItem, Box, Typography, Modal } from '@material-ui/core'
+import { Menu, MenuItem, TextField } from '@material-ui/core'
 import { useState } from 'react'
 
 
 export default function Financeiro() {
   const [fechadoCadas, setFechadoCadas] = useState(null)
   const openCadas = Boolean(fechadoCadas)
+  const [openDialogCadasDespesas, setOpenDialogCadasDespesas] = useState(false)
 
   function clickCadas(event) {
     setFechadoCadas(event.currentTarget)
@@ -18,6 +19,20 @@ export default function Financeiro() {
   function clickCloseCadas() {
     setFechadoCadas(null)
   }
+
+  function DialogCadasDespesas({ open }) {
+    if (open) {
+      return (
+        <DialogCadasDespesa open={true} onClose={() => setOpenDialogCadasDespesas(false)}>
+          <DialogContentCadasDespesa>
+            <InputNomeDespesa id="nome" label="Standard" variant="standard" helperText="Nome da despesa" size="medium" sx={{fontSize: '10vw'}} fullWidth/>
+          </DialogContentCadasDespesa>
+        </DialogCadasDespesa>
+      )
+    }
+    return null
+  }
+
   return (
     <>
       <Head>
@@ -77,12 +92,16 @@ export default function Financeiro() {
           <IconAdd onClick={clickCadas}/>
           <Menu anchorEl={fechadoCadas} open={openCadas} onClose={clickCloseCadas} MenuListProps={{
           'aria-labelledby': 'basic-button',
-        }} style={{height: '20%', width: '28%'}} >
-            <MenuItem disableRipple style={{height: '100%', width: '100%', fontSize: '1.2vw', color: '#C6C6C6'}}>
+        }} style={{height: '20%', width: '28%'}}>
+            <MenuItem disableRipple style={{height: '40%', width: '100%', fontSize: '1.2vw', color: '#C6C6C6'}} onClick={() => {
+              setOpenDialogCadasDespesas(true)
+              setFechadoCadas(false)
+            }}>
               <IconTrendingDown/>
               Despesas
             </MenuItem>
           </Menu>
+          <DialogCadasDespesas open={openDialogCadasDespesas}/>
         </Main>
       </Container>
     </>
