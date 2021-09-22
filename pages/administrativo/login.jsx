@@ -1,8 +1,6 @@
 import LoginStyle from '../../styles/pages/administrativo/login'
 import Head from 'next/head'
 import { useContext, useState } from 'react'
-import api from '../../services/api/api'
-import { post } from '../../services/api/alunos/alunosQuant'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
 import { AuthContext } from '../../contexts/AuthContext'
