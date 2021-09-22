@@ -8,7 +8,7 @@ import { useRouter } from 'next/router'
 import { AuthContext } from '../../contexts/AuthContext'
 import nookies from 'nookies'
 import ErrorMsg from '../../components/ErrorMsg'
-import { useEffect } from 'react'
+import { post } from '../../api'
 
 export default function Login() {
   const { sigIn } = useContext(AuthContext)
