@@ -1,9 +1,9 @@
 import Head from 'next/head'
 import nookies from 'nookies'
-import { Container, Main, IconAdd, IconTrendingDown, DialogCadasDespesa, DialogContentCadasDespesa, InputNomeDespesa } from '../../styles/pages/administrativo/financeiro'
+import { Container, Main, IconAdd, IconTrendingDown, DialogCadasDespesa, DialogContentCadasDespesa, InputNomeDespesa, IconMonetInputDespesa, RealInputDespesa } from '../../styles/pages/administrativo/financeiro'
 import { NavOptions, LogoJPNome, Funções, Função, LinkFunção, IconAlunos, IconAcadêmico, IconDashBoard, IconMarketing, IconFinanceiroSele, IconColaboradores } from '../../components/NavTool'
 import Link from 'next/link'
-import { Menu, MenuItem, TextField } from '@material-ui/core'
+import { Menu, MenuItem, InputAdornment } from '@material-ui/core'
 import { useState } from 'react'
 
 
@@ -25,10 +25,18 @@ export default function Financeiro() {
       return (
         <DialogCadasDespesa open={true} onClose={() => setOpenDialogCadasDespesas(false)}>
           <DialogContentCadasDespesa>
-            <InputNomeDespesa id="nome" fullWidth variant="standard"/>
-            <span style={{
-              fontSize: '2vw'
-            }}>asd</span>
+            <InputNomeDespesa type="number" id="nome" fullWidth variant="standard" InputProps={{
+              startAdornment: (
+                <>
+                  <InputAdornment position="start">
+                    <IconMonetInputDespesa/>
+                  </InputAdornment>
+                  <InputAdornment position="start">
+                    <RealInputDespesa>R$</RealInputDespesa>
+                  </InputAdornment>
+                </>
+              )
+            }}/>
           </DialogContentCadasDespesa>
         </DialogCadasDespesa>
       )

@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Add as IconAddSVG, TrendingDown as IconTrendingDownSVG } from '@material-ui/icons'
+import { Add as IconAddSVG, TrendingDown as IconTrendingDownSVG, Paid as IconMonetInputDespesaSVG  } from '@material-ui/icons'
 import { Dialog, DialogContent, TextField } from '@material-ui/core'
 
 const Container = styled.div`
@@ -51,13 +51,27 @@ const DialogContentCadasDespesa = styled(DialogContent)`
 `
 
 const InputNomeDespesa = styled(TextField)`
+    input {
+        color: #ED3237;
+    }
+    
     .MuiInput-underline {
-        font-size: 2vw;
+        font-size: 1.5vw;
     }
 
     .MuiInput-underline:after, .MuiInput-underline:before {
         border-bottom-color: #ED3237;
     }
+`
+
+const IconMonetInputDespesa = styled(IconMonetInputDespesaSVG)`
+    margin-top: 100%;
+`
+
+const RealInputDespesa = styled.span`
+    font-size: 1.5vw;
+    margin-bottom: 120%;
+    width: fit-content;
 `
 
 export { 
@@ -67,5 +81,7 @@ export {
     IconTrendingDown,
     DialogCadasDespesa,
     DialogContentCadasDespesa,
-    InputNomeDespesa
+    InputNomeDespesa,
+    IconMonetInputDespesa,
+    RealInputDespesa
 }
