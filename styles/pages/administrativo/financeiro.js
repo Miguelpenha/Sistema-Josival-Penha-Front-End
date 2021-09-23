@@ -47,14 +47,16 @@ const DialogCadasDespesa = styled(Dialog).attrs({
 `
 
 const DialogContentCadasDespesa = styled(DialogContent)`
-    && {
-        font-size: 20vw;
-    }
+    
 `
 
 const InputNomeDespesa = styled(TextField)`
-    && {
-        font-size: 20vw;
+    .MuiInput-underline {
+        font-size: 2vw;
+    }
+
+    .MuiInput-underline:after, .MuiInput-underline:before {
+        border-bottom-color: #ED3237;
     }
 `
 

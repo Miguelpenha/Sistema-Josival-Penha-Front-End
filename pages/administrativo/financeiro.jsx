@@ -25,7 +25,10 @@ export default function Financeiro() {
       return (
         <DialogCadasDespesa open={true} onClose={() => setOpenDialogCadasDespesas(false)}>
           <DialogContentCadasDespesa>
-            <InputNomeDespesa id="nome" label="Standard" variant="standard" helperText="Nome da despesa" size="medium" sx={{fontSize: '10vw'}} fullWidth/>
+            <InputNomeDespesa id="nome" fullWidth variant="standard"/>
+            <span style={{
+              fontSize: '2vw'
+            }}>asd</span>
           </DialogContentCadasDespesa>
         </DialogCadasDespesa>
       )
