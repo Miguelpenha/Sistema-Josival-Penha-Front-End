@@ -6,7 +6,7 @@ import { useRouter } from 'next/router'
 import { AuthContext } from '../../contexts/AuthContext'
 import nookies from 'nookies'
 import ErrorMsg from '../../components/ErrorMsg'
-import { post } from '../../api'
+import api from '../../services/api/api'
 
 export default function Login() {
   const { sigIn } = useContext(AuthContext)
@@ -16,10 +16,7 @@ export default function Login() {
   const [errorMsg, setErrorMsg] = useState('')
   async function enviar(data, event) {
     const { login, senha } = data
-    const { data: token } = post('/administrativo/login', {
-      login,
-      senha
-    })
+    const token = await api.administrativo.login(login, senha, false)
     if (token) {
       setError(false)
       setErrorMsg('')
