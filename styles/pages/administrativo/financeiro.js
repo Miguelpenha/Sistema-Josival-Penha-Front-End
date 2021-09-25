@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { Add as IconAddSVG, TrendingDown as IconTrendingDownSVG, Description as DescriptionIconSVG } from '@material-ui/icons'
-import { Dialog, DialogContent, TextField, Button } from '@material-ui/core'
+import { Dialog, DialogContent, TextField, Button, Autocomplete } from '@material-ui/core'
 
 const Container = styled.div`
     display: grid;
@@ -10,6 +10,10 @@ const Container = styled.div`
 const Main = styled.main`
     padding: 2%;
     color: black;
+
+    & .MuiAutocomplete-popper.css-bckmzb-MuiAutocomplete-popper {
+        background-color: red;
+    }
 `
 
 const IconAdd = styled(IconAddSVG)`
@@ -79,7 +83,7 @@ const InputDespesaData = styled.input`
     width: 100%;
 `
 
-const InputDespesaDescrição = styled(TextField)`
+const InputDespesaObservação = styled(TextField)`
     margin-top: 5%;
     
     .MuiInput-underline {
@@ -92,6 +96,10 @@ const InputDespesaDescrição = styled(TextField)`
 `
 
 const DescriptionIcon = styled(DescriptionIconSVG)`
+    
+`
+
+const InputDespesaCategoria = styled(Autocomplete)`
     
 `
 
@@ -121,7 +129,8 @@ export {
     InputDespesa,
     RealInputDespesa,
     InputDespesaData,
-    InputDespesaDescrição,
-    DescriptionIcon, 
+    InputDespesaObservação,
+    DescriptionIcon,
+    InputDespesaCategoria,
     ButtonSubmitDespesa
 }

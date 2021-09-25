@@ -1,9 +1,9 @@
 import Head from 'next/head'
 import nookies from 'nookies'
-import { Container, Main, IconAdd, IconTrendingDown, DialogCadasDespesa, DialogContentCadasDespesa, InputDespesa, RealInputDespesa, FormDespesa, InputDespesaDescrição, DescriptionIcon, InputDespesaData, ButtonSubmitDespesa } from '../../styles/pages/administrativo/financeiro'
+import { Container, Main, IconAdd, IconTrendingDown, DialogCadasDespesa, DialogContentCadasDespesa, InputDespesa, RealInputDespesa, FormDespesa, InputDespesaObservação, DescriptionIcon, InputDespesaData, InputDespesaCategoria, ButtonSubmitDespesa } from '../../styles/pages/administrativo/financeiro'
 import { NavOptions, LogoJPNome, Funções, Função, LinkFunção, IconAlunos, IconAcadêmico, IconDashBoard, IconMarketing, IconFinanceiroSele, IconColaboradores } from '../../components/NavTool'
 import Link from 'next/link'
-import { Menu, MenuItem, InputAdornment } from '@material-ui/core'
+import { Menu, MenuItem, InputAdornment, TextField } from '@material-ui/core'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
@@ -16,8 +16,8 @@ export default function Financeiro() {
   atualDate = `${atualDate.toLocaleDateString().split('/')[2]}-${atualDate.toLocaleDateString().split('/')[1]}-${atualDate.toLocaleDateString().split('/')[0]}`
 
   async function enviarDespesa(data, event) {
-    const { despesa, date, descrição } = data
-    console.log(despesa, date, descrição)
+    const { despesa, date, observação } = data
+    console.log(despesa, date, observação)
     event.preventDefault()
   }
 
@@ -45,7 +45,7 @@ export default function Financeiro() {
                 )
               }}/>
               <InputDespesaData value={atualDate} type="date" {...register('date')} required name="date"/>
-              <InputDespesaDescrição {...register('descrição')} type="text" name="descrição" fullWidth variant="standard" InputProps={{
+              <InputDespesaObservação {...register('observação')} placeholder="Observação" type="text" name="observação" fullWidth variant="standard" InputProps={{
                 startAdornment: (
                   <>
                     <InputAdornment position="start">
@@ -54,6 +54,13 @@ export default function Financeiro() {
                   </>
                 )
               }}/>
+              <InputDespesaCategoria options={['asd', 'asd2', 'asd3']} renderInput={(params) => (
+                <TextField
+                  {...params}
+                  variant="standard"
+                  label="Multiple values"
+                  placeholder="Favorites"/>
+              )} multiple/>
               <ButtonSubmitDespesa type="submit" variant="contained">Salvar</ButtonSubmitDespesa>
             </FormDespesa>
           </DialogContentCadasDespesa>
