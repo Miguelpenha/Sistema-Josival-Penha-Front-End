@@ -1,16 +1,25 @@
 import Head from 'next/head'
 import nookies from 'nookies'
-import { Container, Main, IconAdd, IconTrendingDown, DialogCadasDespesa, DialogContentCadasDespesa, InputNomeDespesa, IconMonetInputDespesa, RealInputDespesa } from '../../styles/pages/administrativo/financeiro'
+import { Container, Main, IconAdd, IconTrendingDown, DialogCadasDespesa, DialogContentCadasDespesa, InputDespesa, RealInputDespesa, FormDespesa, InputDespesaDescrição, DescriptionIcon, InputDespesaData, ButtonSubmitDespesa } from '../../styles/pages/administrativo/financeiro'
 import { NavOptions, LogoJPNome, Funções, Função, LinkFunção, IconAlunos, IconAcadêmico, IconDashBoard, IconMarketing, IconFinanceiroSele, IconColaboradores } from '../../components/NavTool'
 import Link from 'next/link'
 import { Menu, MenuItem, InputAdornment } from '@material-ui/core'
 import { useState } from 'react'
-
+import { useForm } from 'react-hook-form'
 
 export default function Financeiro() {
   const [fechadoCadas, setFechadoCadas] = useState(null)
   const openCadas = Boolean(fechadoCadas)
   const [openDialogCadasDespesas, setOpenDialogCadasDespesas] = useState(false)
+  const { register, handleSubmit } = useForm()
+  let atualDate = new Date()
+  atualDate = `${atualDate.toLocaleDateString().split('/')[2]}-${atualDate.toLocaleDateString().split('/')[1]}-${atualDate.toLocaleDateString().split('/')[0]}`
+
+  async function enviarDespesa(data, event) {
+    const { despesa, date, descrição } = data
+    console.log(despesa, date, descrição)
+    event.preventDefault()
+  }
 
   function clickCadas(event) {
     setFechadoCadas(event.currentTarget)
@@ -25,18 +34,28 @@ export default function Financeiro() {
       return (
         <DialogCadasDespesa open={true} onClose={() => setOpenDialogCadasDespesas(false)}>
           <DialogContentCadasDespesa>
-            <InputNomeDespesa type="number" id="nome" fullWidth variant="standard" InputProps={{
-              startAdornment: (
-                <>
-                  <InputAdornment position="start">
-                    <IconMonetInputDespesa/>
-                  </InputAdornment>
-                  <InputAdornment position="start">
-                    <RealInputDespesa>R$</RealInputDespesa>
-                  </InputAdornment>
-                </>
-              )
-            }}/>
+            <FormDespesa action="/administrativo" onSubmit={handleSubmit(enviarDespesa)}>
+              <InputDespesa defaultValue="0.00" {...register('despesa')} required type="number" name="despesa" fullWidth variant="standard" InputProps={{
+                startAdornment: (
+                  <>
+                    <InputAdornment position="start">
+                      <RealInputDespesa>R$</RealInputDespesa>
+                    </InputAdornment>
+                  </>
+                )
+              }}/>
+              <InputDespesaData value={atualDate} type="date" {...register('date')} required name="date"/>
+              <InputDespesaDescrição {...register('descrição')} type="text" name="descrição" fullWidth variant="standard" InputProps={{
+                startAdornment: (
+                  <>
+                    <InputAdornment position="start">
+                      <DescriptionIcon/>
+                    </InputAdornment>
+                  </>
+                )
+              }}/>
+              <ButtonSubmitDespesa type="submit" variant="contained">Salvar</ButtonSubmitDespesa>
+            </FormDespesa>
           </DialogContentCadasDespesa>
         </DialogCadasDespesa>
       )

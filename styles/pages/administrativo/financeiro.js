@@ -1,6 +1,6 @@
 import styled from 'styled-components'
-import { Add as IconAddSVG, TrendingDown as IconTrendingDownSVG, Paid as IconMonetInputDespesaSVG  } from '@material-ui/icons'
-import { Dialog, DialogContent, TextField } from '@material-ui/core'
+import { Add as IconAddSVG, TrendingDown as IconTrendingDownSVG, Description as DescriptionIconSVG } from '@material-ui/icons'
+import { Dialog, DialogContent, TextField, Button } from '@material-ui/core'
 
 const Container = styled.div`
     display: grid;
@@ -50,7 +50,11 @@ const DialogContentCadasDespesa = styled(DialogContent)`
     
 `
 
-const InputNomeDespesa = styled(TextField)`
+const FormDespesa = styled.form`
+
+`
+
+const InputDespesa = styled(TextField)`
     input {
         color: #ED3237;
     }
@@ -64,14 +68,46 @@ const InputNomeDespesa = styled(TextField)`
     }
 `
 
-const IconMonetInputDespesa = styled(IconMonetInputDespesaSVG)`
-    margin-top: 100%;
-`
-
 const RealInputDespesa = styled.span`
     font-size: 1.5vw;
     margin-bottom: 120%;
     width: fit-content;
+`
+
+const InputDespesaData = styled.input`
+    margin-top: 5%;
+    width: 100%;
+`
+
+const InputDespesaDescrição = styled(TextField)`
+    margin-top: 5%;
+    
+    .MuiInput-underline {
+        font-size: 1vw;
+    }
+
+    .MuiInput-underline:after, .MuiInput-underline:before {
+        border-bottom-color: #ED3237;
+    }
+`
+
+const DescriptionIcon = styled(DescriptionIconSVG)`
+    
+`
+
+const ButtonSubmitDespesa = styled(Button)`
+    float: right;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 20px;
+    background-color: #ED3237;
+    font-size: 1vw;
+    width: 30%;
+    margin-top: 8%;
+    
+    &&:hover {
+        background-color: #BA272B;
+    }
 `
 
 export { 
@@ -81,7 +117,11 @@ export {
     IconTrendingDown,
     DialogCadasDespesa,
     DialogContentCadasDespesa,
-    InputNomeDespesa,
-    IconMonetInputDespesa,
-    RealInputDespesa
+    FormDespesa,
+    InputDespesa,
+    RealInputDespesa,
+    InputDespesaData,
+    InputDespesaDescrição,
+    DescriptionIcon, 
+    ButtonSubmitDespesa
 }
