@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { Add as IconAddSVG, TrendingDown as IconTrendingDownSVG, Description as DescriptionIconSVG } from '@material-ui/icons'
-import { Dialog, DialogContent, TextField, Button, Autocomplete } from '@material-ui/core'
+import { Dialog, DialogContent, TextField, Button, Checkbox } from '@material-ui/core'
 
 const Container = styled.div`
     display: grid;
@@ -58,6 +58,18 @@ const FormDespesa = styled.form`
 
 `
 
+const InputNomeDespesa = styled(TextField)`
+    margin-top: 5%;
+    
+    .MuiInput-underline {
+        font-size: 1vw;
+    }
+
+    .MuiInput-underline:after, .MuiInput-underline:before {
+        border-bottom-color: #ED3237;
+    }
+`
+
 const InputDespesa = styled(TextField)`
     input {
         color: #ED3237;
@@ -99,8 +111,29 @@ const DescriptionIcon = styled(DescriptionIconSVG)`
     
 `
 
-const InputDespesaCategoria = styled(Autocomplete)`
-    
+const CampoCheckBoxsDespesas = styled.div`
+    margin-top: 5%;
+    background-color: #E7E7E7;
+    border-radius: 10px;
+    padding: 1%;
+`
+
+const CheckboxCategoriaDespesa = styled(Checkbox)`
+    & .MuiSvgIcon-root {
+        font-size: 1.5vw;
+    }
+`
+
+const NomeCategoriaDepesaComCor = styled.span`
+    font-size: 0.8vw;
+`
+
+const NomeCategoriaDepesaSóCor = styled.span`
+    background-color: ${props => props.color ? props.color : '#53BDE8'};
+    padding: 0.1%;
+    border-radius: 50%;
+    margin-right: 2%;
+    padding-left: 2.7%;
 `
 
 const ButtonSubmitDespesa = styled(Button)`
@@ -112,6 +145,7 @@ const ButtonSubmitDespesa = styled(Button)`
     font-size: 1vw;
     width: 30%;
     margin-top: 8%;
+    margin-bottom: 3%;
     
     &&:hover {
         background-color: #BA272B;
@@ -126,11 +160,15 @@ export {
     DialogCadasDespesa,
     DialogContentCadasDespesa,
     FormDespesa,
+    InputNomeDespesa,
     InputDespesa,
     RealInputDespesa,
     InputDespesaData,
     InputDespesaObservação,
     DescriptionIcon,
-    InputDespesaCategoria,
+    CampoCheckBoxsDespesas,
+    CheckboxCategoriaDespesa,
+    NomeCategoriaDepesaComCor,
+    NomeCategoriaDepesaSóCor,
     ButtonSubmitDespesa
 }
