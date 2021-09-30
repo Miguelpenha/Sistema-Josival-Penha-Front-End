@@ -1,12 +1,13 @@
 import Head from 'next/head'
 import nookies from 'nookies'
-import { Container, Main, IconAdd, IconTrendingDown, DialogCadasDespesa, DialogContentCadasDespesa, InputNomeDespesa, InputDespesa, RealInputDespesa, FormDespesa, InputDespesaObservação, DescriptionIcon, InputDespesaData, CampoCheckBoxsDespesas, CheckboxCategoriaDespesa, NomeCategoriaDepesaComCor, NomeCategoriaDepesaSóCor, ButtonSubmitDespesa } from '../../styles/pages/administrativo/financeiro'
+import { Container, Main, IconAdd, IconTrendingDown, DialogCadasDespesa, DialogContentCadasDespesa, InputNomeDespesa, InputDespesa, RealInputDespesa, FormDespesa, InputDespesaObservação, DescriptionIcon, InputDespesaData, CampoCheckBoxsDespesas, CheckboxCategoriaDespesa, NomeCategoriaDepesaComCor, NomeCategoriaDepesaSóCor, InvestimentoDespesa, FixaDespesa, ButtonSubmitDespesa } from '../../styles/pages/administrativo/financeiro'
 import { NavOptions, LogoJPNome, Funções, Função, LinkFunção, IconAlunos, IconAcadêmico, IconDashBoard, IconMarketing, IconFinanceiroSele, IconColaboradores } from '../../components/NavTool'
 import Link from 'next/link'
 import { Menu, MenuItem, InputAdornment } from '@material-ui/core'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { get } from '../../hooks'
+import api from '../../services/api/base'
 
 export default function Financeiro() {
   const [fechadoCadas, setFechadoCadas] = useState(null)
@@ -21,17 +22,20 @@ export default function Financeiro() {
   let fontes = []
 
   async function enviarDespesa(data, event) {
-    const { nome, despesa: despesaValor, date, observação } = data
-    console.log(new Date(date).toISOString())
+    const { nome, despesa: despesaValor, date, observação, investimento, fixa } = data
     const despesa = {
       nome,
       preco: despesaValor,
       categorias,
+      fontes,
       data: new Date(date).toISOString(),
+      investimento,
+      fixa,
       observação,
-      fontes
+      criação: new Date().toISOString()
     }
-    //console.log(despesa)
+    await api.post('/financeiro/despesas', despesa)
+    setOpenDialogCadasDespesas(false)
     event.preventDefault()
   }
 
@@ -62,9 +66,9 @@ export default function Financeiro() {
   function DialogCadasDespesas({ open }) {
     if (open) {
       return (
-        <DialogCadasDespesa open={true} onClose={() => setOpenDialogCadasDespesas(false)}>
+        <DialogCadasDespesa scroll="body" open={true} onClose={() => setOpenDialogCadasDespesas(false)}>
           <DialogContentCadasDespesa>
-            <FormDespesa action="/administrativo" onSubmit={handleSubmit(enviarDespesa)}>
+            <FormDespesa onSubmit={handleSubmit(enviarDespesa)}>
               <InputNomeDespesa required {...register('nome')} placeholder="Nome" type="text" name="nome" fullWidth variant="standard" InputProps={{
                 startAdornment: (
                   <>
@@ -83,7 +87,7 @@ export default function Financeiro() {
                   </>
                 )
               }}/>
-              <InputDespesaData value={atualDate} type="date" {...register('date')} required name="date"/>
+              <InputDespesaData defaultValue={atualDate} type="date" {...register('date')} required name="date"/>
               <InputDespesaObservação {...register('observação')} placeholder="Observação" type="text" name="observação" fullWidth variant="standard" InputProps={{
                 startAdornment: (
                   <>
@@ -93,6 +97,9 @@ export default function Financeiro() {
                   </>
                 )
               }}/>
+              <FixaDespesa {...register('fixa')}/>Fixa
+              <br/>
+              <InvestimentoDespesa {...register('investimento')}/>Investimento
               <CampoCheckBoxsDespesas>
                 <h3>Categorias</h3>
                 {categoriasDespesas.map(categoria => 

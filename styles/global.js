@@ -8,6 +8,14 @@ export default createGlobalStyle`
         height: 100%;
         transition-timing-function: linear;
         transition-duration: 0.2s;
+        
+        & .css-zw3mfo-MuiModal-root-MuiDialog-root {
+            height: 1%;
+        }
+
+        & .css-iz3z40-MuiDialog-container {
+            height: 10000%;
+        }
     }
 
     html {

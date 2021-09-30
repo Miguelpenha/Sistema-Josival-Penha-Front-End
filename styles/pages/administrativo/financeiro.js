@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { Add as IconAddSVG, TrendingDown as IconTrendingDownSVG, Description as DescriptionIconSVG } from '@material-ui/icons'
-import { Dialog, DialogContent, TextField, Button, Checkbox } from '@material-ui/core'
+import { Dialog, DialogContent, TextField, Button, Checkbox, Switch } from '@material-ui/core'
 
 const Container = styled.div`
     display: grid;
@@ -11,7 +11,7 @@ const Main = styled.main`
     padding: 2%;
     color: black;
 
-    & .MuiAutocomplete-popper.css-bckmzb-MuiAutocomplete-popper {
+    & .css-zw3mfo-MuiModal-root-MuiDialog-root {
         background-color: red;
     }
 `
@@ -47,15 +47,15 @@ const IconTrendingDown = styled(IconTrendingDownSVG)`
 const DialogCadasDespesa = styled(Dialog).attrs({
     fullWidth: true
 })`
-    height: fit-content;
+    height: 20%;
 `
 
 const DialogContentCadasDespesa = styled(DialogContent)`
-    
+    height: fit-content;
 `
 
 const FormDespesa = styled.form`
-
+    
 `
 
 const InputNomeDespesa = styled(TextField)`
@@ -136,6 +136,26 @@ const NomeCategoriaDepesaSóCor = styled.span`
     padding-left: 2.7%;
 `
 
+const InvestimentoDespesa = styled(Switch)`
+    & .MuiSwitch-switchBase.Mui-checked {
+        color: #ED3237;
+    }
+    
+    & .MuiSwitch-switchBase.Mui-checked+.MuiSwitch-track {
+        background-color: #ED3237;
+    }
+`
+
+const FixaDespesa = styled(Switch)`
+    & .MuiSwitch-switchBase.Mui-checked {
+        color: #ED3237;
+    }
+    
+    & .MuiSwitch-switchBase.Mui-checked+.MuiSwitch-track {
+        background-color: #ED3237;
+    }
+`
+
 const ButtonSubmitDespesa = styled(Button)`
     float: right;
     margin-left: auto;
@@ -144,8 +164,7 @@ const ButtonSubmitDespesa = styled(Button)`
     background-color: #ED3237;
     font-size: 1vw;
     width: 30%;
-    margin-top: 8%;
-    margin-bottom: 3%;
+    margin-top: 6%;
     
     &&:hover {
         background-color: #BA272B;
@@ -170,5 +189,7 @@ export {
     CheckboxCategoriaDespesa,
     NomeCategoriaDepesaComCor,
     NomeCategoriaDepesaSóCor,
+    InvestimentoDespesa,
+    FixaDespesa, 
     ButtonSubmitDespesa
 }
