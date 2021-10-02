@@ -22,18 +22,20 @@ export default function Financeiro() {
   let fontes = []
 
   async function enviarDespesa(data, event) {
-    const { nome, despesa: despesaValor, date, observação, investimento, fixa } = data
+    let { nome, despesa: despesaValor, date, observação, investimento, fixa } = data
+    date = `${date.split('-')[1]}/${date.split('-')[2]}/${date.split('-')[0]}`
     const despesa = {
       nome,
       preco: despesaValor,
       categorias,
       fontes,
-      data: new Date(date).toISOString(),
+      data: date,
       investimento,
       fixa,
       observação,
       criação: new Date().toISOString()
     }
+    console.log(despesa)
     await api.post('/financeiro/despesas', despesa)
     setOpenDialogCadasDespesas(false)
     event.preventDefault()

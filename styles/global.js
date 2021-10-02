@@ -14,7 +14,7 @@ export default createGlobalStyle`
         }
 
         & .css-iz3z40-MuiDialog-container {
-            height: 10000%;
+            height: 10050%;
         }
     }
 
