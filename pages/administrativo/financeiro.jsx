@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import nookies from 'nookies'
 import { Container, Main, IconAdd, IconTrendingDown, DialogCadasDespesa, DialogContentCadasDespesa, InputNomeDespesa, InputDespesa, RealInputDespesa, FormDespesa, InputDespesaObservação, DescriptionIcon, InputDespesaData, CampoCheckBoxsDespesas, CheckboxCategoriaDespesa, NomeCategoriaDepesaComCor, NomeCategoriaDepesaSóCor, InvestimentoDespesa, FixaDespesa, ButtonSubmitDespesa } from '../../styles/pages/administrativo/financeiro'
-import { NavOptions, LogoJPNome, Funções, Função, LinkFunção, IconAlunos, IconAcadêmico, IconDashBoard, IconMarketing, IconFinanceiroSele, IconColaboradores } from '../../components/NavTool'
+import { NavOptions, LogoJPNome, Funções, Função, LinkFunção, IconAlunos, IconAcadêmico, IconDashBoard, IconMarketing, IconFinanceiroSele, IconColaboradores, TextFunção } from '../../components/NavTool'
 import Link from 'next/link'
 import { Menu, MenuItem, InputAdornment } from '@material-ui/core'
 import { useState } from 'react'
@@ -17,7 +17,7 @@ export default function Financeiro() {
   const [atualDate, setAtualDate] = useState(`${atualDateBruta.toLocaleDateString().split('/')[2]}-${atualDateBruta.toLocaleDateString().split('/')[1]}-${atualDateBruta.toLocaleDateString().split('/')[0]}`)
   const openCadas = Boolean(fechadoCadas)
   const [openDialogCadasDespesas, setOpenDialogCadasDespesas] = useState(false)
-  const { register, handleSubmit } = useForm()
+  const { register, handleSubmit, reset } = useForm()
   let categorias = []
   let fontes = []
 
@@ -35,8 +35,8 @@ export default function Financeiro() {
       observação,
       criação: new Date().toISOString()
     }
-    console.log(despesa)
     await api.post('/financeiro/despesas', despesa)
+    limparCampos()
     setOpenDialogCadasDespesas(false)
     event.preventDefault()
   }
@@ -65,10 +65,19 @@ export default function Financeiro() {
     }
   }
 
+  function limparCampos() {
+    reset()
+    categorias = []
+    fontes = []
+  }
+
   function DialogCadasDespesas({ open }) {
     if (open) {
       return (
-        <DialogCadasDespesa scroll="body" open={true} onClose={() => setOpenDialogCadasDespesas(false)}>
+        <DialogCadasDespesa open={true} onClose={() => {
+          setOpenDialogCadasDespesas(false)
+          limparCampos()
+        }}>
           <DialogContentCadasDespesa>
             <FormDespesa onSubmit={handleSubmit(enviarDespesa)}>
               <InputNomeDespesa required {...register('nome')} placeholder="Nome" type="text" name="nome" fullWidth variant="standard" InputProps={{
@@ -80,7 +89,7 @@ export default function Financeiro() {
                   </>
                 )
               }}/>
-              <InputDespesa defaultValue="0.00" {...register('despesa')} required type="number" name="despesa" fullWidth variant="standard" InputProps={{
+              <InputDespesa defaultValue="0,00" {...register('despesa')} required type="text" name="despesa" fullWidth variant="standard" InputProps={{
                 startAdornment: (
                   <>
                     <InputAdornment position="start">
@@ -99,7 +108,7 @@ export default function Financeiro() {
                   </>
                 )
               }}/>
-              <FixaDespesa {...register('fixa')}/>Fixa
+              <FixaDespesa name="fixa" inputRef={register('fixa').ref} onChange={register('fixa').onChange}/>Fixa
               <br/>
               <InvestimentoDespesa {...register('investimento')}/>Investimento
               <CampoCheckBoxsDespesas>
@@ -155,18 +164,18 @@ export default function Financeiro() {
           <LogoJPNome/>
           <Funções>
             <Link href="alunos">
-                <Função>
-                    <LinkFunção>
-                        <IconAlunos/>
-                        Alunos
-                    </LinkFunção>
-                </Função>
+              <Função>
+                <LinkFunção>
+                  <IconAlunos/>
+                  <TextFunção>Alunos</TextFunção>
+                </LinkFunção>
+              </Função>
             </Link>
             <Link href="academico">
               <Função>
                 <LinkFunção>
                   <IconAcadêmico/>
-                  Acadêmico
+                  <TextFunção>Acadêmico</TextFunção>
                 </LinkFunção>
               </Função>
             </Link>
@@ -174,7 +183,7 @@ export default function Financeiro() {
               <Função>
                 <LinkFunção>
                   <IconDashBoard/>
-                  Dashboard
+                  <TextFunção>Dashboard</TextFunção>
                 </LinkFunção>
               </Função>
             </Link>
@@ -182,19 +191,19 @@ export default function Financeiro() {
               <Função>
                 <LinkFunção>
                   <IconMarketing/>
-                  Marketing
+                  <TextFunção>Marketing</TextFunção>
                 </LinkFunção>
               </Função>
             </Link>
             <Função selected={true}>
                 <IconFinanceiroSele/>
-                Financeiro
+                <TextFunção>Financeiro</TextFunção>
             </Função>
             <Link href="colaboradores">
               <Função>
                 <LinkFunção>
                   <IconColaboradores/>
-                  Colaboradores
+                  <TextFunção>Colaboradores</TextFunção>
                 </LinkFunção>
               </Função>
             </Link>

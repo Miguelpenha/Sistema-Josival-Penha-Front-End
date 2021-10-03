@@ -5,15 +5,13 @@ import { Dialog, DialogContent, TextField, Button, Checkbox, Switch } from '@mat
 const Container = styled.div`
     display: grid;
     grid-template-columns: 0.6fr 2.3fr 0.6fr;
+    height: 100%;
 `
 
 const Main = styled.main`
     padding: 2%;
     color: black;
-
-    & .css-zw3mfo-MuiModal-root-MuiDialog-root {
-        background-color: red;
-    }
+    height: 8%;
 `
 
 const IconAdd = styled(IconAddSVG)`
@@ -47,15 +45,15 @@ const IconTrendingDown = styled(IconTrendingDownSVG)`
 const DialogCadasDespesa = styled(Dialog).attrs({
     fullWidth: true
 })`
-    height: 20%;
+    height: 100%;
 `
 
 const DialogContentCadasDespesa = styled(DialogContent)`
-    height: fit-content;
+    
 `
 
 const FormDespesa = styled.form`
-    
+    padding-bottom: 15%;
 `
 
 const InputNomeDespesa = styled(TextField)`
@@ -86,8 +84,6 @@ const InputDespesa = styled(TextField)`
 
 const RealInputDespesa = styled.span`
     font-size: 1.5vw;
-    margin-bottom: 120%;
-    width: fit-content;
 `
 
 const InputDespesaData = styled.input`
@@ -158,14 +154,13 @@ const FixaDespesa = styled(Switch)`
 
 const ButtonSubmitDespesa = styled(Button)`
     float: right;
-    margin-left: auto;
-    margin-right: auto;
     border-radius: 20px;
     background-color: #ED3237;
     font-size: 1vw;
     width: 30%;
     margin-top: 6%;
-    
+    margin-bottom: 30%;
+    height: auto;
     &&:hover {
         background-color: #BA272B;
     }
