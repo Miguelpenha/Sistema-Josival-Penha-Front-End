@@ -163,50 +163,50 @@ export default function Financeiro() {
         <NavOptions>
           <LogoJPNome/>
           <Funções>
-            <Link href="alunos">
-              <Função>
+            <Função>
+              <Link href="alunos">
                 <LinkFunção>
                   <IconAlunos/>
                   <TextFunção>Alunos</TextFunção>
                 </LinkFunção>
-              </Função>
-            </Link>
-            <Link href="academico">
-              <Função>
+              </Link>
+            </Função>
+            <Função>
+              <Link href="academico">
                 <LinkFunção>
                   <IconAcadêmico/>
                   <TextFunção>Acadêmico</TextFunção>
                 </LinkFunção>
-              </Função>
-            </Link>
-            <Link href="dashboard">
-              <Função>
+              </Link>
+            </Função>
+            <Função>
+              <Link href="dashboard">
                 <LinkFunção>
                   <IconDashBoard/>
                   <TextFunção>Dashboard</TextFunção>
                 </LinkFunção>
-              </Função>
-            </Link>
-            <Link href="marketing">
-              <Função>
+              </Link>
+            </Função>
+            <Função>
+              <Link href="marketing">
                 <LinkFunção>
                   <IconMarketing/>
                   <TextFunção>Marketing</TextFunção>
                 </LinkFunção>
-              </Função>
-            </Link>
-            <Função selected={true}>
-                <IconFinanceiroSele/>
-                <TextFunção>Financeiro</TextFunção>
+              </Link>
             </Função>
-            <Link href="colaboradores">
-              <Função>
+            <Função selected={true}>
+              <IconFinanceiroSele/>
+              <TextFunção>Financeiro</TextFunção>
+            </Função>
+            <Função>
+              <Link href="colaboradores">
                 <LinkFunção>
                   <IconColaboradores/>
                   <TextFunção>Colaboradores</TextFunção>
                 </LinkFunção>
-              </Função>
-            </Link>
+              </Link>
+            </Função>
           </Funções>
         </NavOptions>
         <Main>

@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import nookies from 'nookies'
-import { Container, NavOptions, LogoJPNome, Funções, Função, LinkFunção, IconAlunosSele, IconAcadêmico, IconDashBoard, IconMarketing, IconFinanceiro, IconColaboradores, Main, AlunosBanner, InfoAdminContainer, InfoAdmin, InfoAdminTit, InfoAdminDado, IconInfoTotalAlunos, IconInfoTotalTurmas, IconInfoMédiaAlunos, IconInfoOcupação, NavInfos } from '../../styles/pages/administrativo/alunos'
+import { Container, Main, AlunosBanner, InfoAdminContainer, InfoAdmin, InfoAdminTit, InfoAdminDado, IconInfoTotalAlunos, IconInfoTotalTurmas, IconInfoMédiaAlunos, IconInfoOcupação, NavInfos } from '../../styles/pages/administrativo/alunos'
+import { NavOptions, LogoJPNome, Funções, Função, LinkFunção, IconAlunosSele, IconFinanceiro, IconAcadêmico, IconDashBoard, IconMarketing, IconColaboradores, TextFunção } from '../../components/NavTool'
 import api from '../../hooks'
 import Skeleton from '@material-ui/core/Skeleton'
 import { useEffect, useState } from 'react'
@@ -30,48 +31,48 @@ export default function Alunos() {
           <Funções>
             <Função selected={true}>
               <IconAlunosSele/>
-              Alunos
+              <TextFunção>Alunos</TextFunção>
             </Função>
-            <Link href="academico">
-              <Função>
+            <Função>
+              <Link href="academico">
                 <LinkFunção>
                   <IconAcadêmico/>
-                  Acadêmico
+                  <TextFunção>Acadêmico</TextFunção>
                 </LinkFunção>
-              </Função>
-            </Link>
-            <Link href="dashboard">
-              <Função>
+              </Link>
+            </Função>
+            <Função>
+              <Link href="dashboard">
                 <LinkFunção>
                   <IconDashBoard/>
-                  Dashboard
+                  <TextFunção>Dashboard</TextFunção>
                 </LinkFunção>
-              </Função>
-            </Link>
-            <Link href="marketing">
-              <Função>
+              </Link>
+            </Função>
+            <Função>
+              <Link href="marketing">
                 <LinkFunção>
                   <IconMarketing/>
-                  Marketing
+                  <TextFunção>Marketing</TextFunção>
                 </LinkFunção>
-              </Função>
-            </Link>
-            <Link href="financeiro">
-              <Função>
+              </Link>
+            </Função>
+            <Função>
+              <Link href="financeiro">
                 <LinkFunção>
                   <IconFinanceiro/>
-                  Financeiro
+                  <TextFunção>Financeiro</TextFunção>
                 </LinkFunção>
-              </Função>
-            </Link>
-            <Link href="colaboradores">
-              <Função>
+              </Link>
+            </Função>
+            <Função>
+              <Link href="colaboradores">
                 <LinkFunção>
                   <IconColaboradores/>
-                  Colaboradores
+                  <TextFunção>Colaboradores</TextFunção>
                 </LinkFunção>
-              </Função>
-            </Link>
+              </Link>
+            </Função>
           </Funções>
         </NavOptions>
         <Main>
