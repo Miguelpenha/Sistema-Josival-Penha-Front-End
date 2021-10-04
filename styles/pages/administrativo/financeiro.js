@@ -15,15 +15,14 @@ const Main = styled.main`
 `
 
 const IconAdd = styled(IconAddSVG)`
-    color: #ffffff;
-    background-color: #6A54ED;
-    border-radius: 50%;
-    border: 2px solid #6A54ED;
-    cursor: pointer;
-
     && {
         width: 6%;
         height: auto;
+        color: #ffffff;
+        background-color: #6A54ED;
+        border-radius: 50%;
+        border: 2px solid #6A54ED;
+        cursor: pointer;
     }
 
     &:hover {
@@ -33,10 +32,9 @@ const IconAdd = styled(IconAddSVG)`
 `
 
 const IconTrendingDown = styled(IconTrendingDownSVG)`
-    color: #ED3237;
-    margin-right: 15%;
-
     && {
+        color: #ED3237;
+        margin-right: 15%;
         width: 22%;
         height: auto;
     }
@@ -45,7 +43,9 @@ const IconTrendingDown = styled(IconTrendingDownSVG)`
 const DialogCadasDespesa = styled(Dialog).attrs({
     fullWidth: true
 })`
-    height: 100%;
+    && {
+        height: 100%;
+    }
 `
 
 const DialogContentCadasDespesa = styled(DialogContent)`
@@ -53,31 +53,35 @@ const DialogContentCadasDespesa = styled(DialogContent)`
 `
 
 const FormDespesa = styled.form`
-    padding-bottom: 15%;
+    && {
+        padding-bottom: 15%;
+    }
 `
 
 const InputNomeDespesa = styled(TextField)`
-    margin-top: 5%;
+    && {
+        margin-top: 5%;
+    }
     
-    .MuiInput-underline {
+    & .MuiInput-underline {
         font-size: 1vw;
     }
 
-    .MuiInput-underline:after, .MuiInput-underline:before {
+    & .MuiInput-underline:after, .MuiInput-underline:before {
         border-bottom-color: #ED3237;
     }
 `
 
 const InputDespesa = styled(TextField)`
-    input {
+    & input {
         color: #ED3237;
     }
     
-    .MuiInput-underline {
+    & .MuiInput-underline {
         font-size: 1.5vw;
     }
 
-    .MuiInput-underline:after, .MuiInput-underline:before {
+    & .MuiInput-underline:after, .MuiInput-underline:before {
         border-bottom-color: #ED3237;
     }
 `
@@ -92,13 +96,15 @@ const InputDespesaData = styled.input`
 `
 
 const InputDespesaObservação = styled(TextField)`
-    margin-top: 5%;
+    && {
+        margin-top: 5%;
+    }
     
-    .MuiInput-underline {
+    & .MuiInput-underline {
         font-size: 1vw;
     }
 
-    .MuiInput-underline:after, .MuiInput-underline:before {
+    & .MuiInput-underline:after, .MuiInput-underline:before {
         border-bottom-color: #ED3237;
     }
 `
