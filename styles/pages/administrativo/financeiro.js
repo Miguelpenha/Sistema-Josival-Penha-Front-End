@@ -15,7 +15,7 @@ const Main = styled.main`
 `
 
 const IconAdd = styled(IconAddSVG)`
-    && {
+    & {
         width: 6%;
         height: auto;
         color: #ffffff;
@@ -23,16 +23,16 @@ const IconAdd = styled(IconAddSVG)`
         border-radius: 50%;
         border: 2px solid #6A54ED;
         cursor: pointer;
-    }
-
-    &:hover {
-        background-color: #9C59FF;
-        border-color: #9C59FF;
+        
+        :hover {
+            background-color: #9C59FF;
+            border-color: #9C59FF;
+        }
     }
 `
 
 const IconTrendingDown = styled(IconTrendingDownSVG)`
-    && {
+    & {
         color: #ED3237;
         margin-right: 15%;
         width: 22%;
@@ -43,7 +43,7 @@ const IconTrendingDown = styled(IconTrendingDownSVG)`
 const DialogCadasDespesa = styled(Dialog).attrs({
     fullWidth: true
 })`
-    && {
+    & {
         height: 100%;
     }
 `
@@ -53,36 +53,38 @@ const DialogContentCadasDespesa = styled(DialogContent)`
 `
 
 const FormDespesa = styled.form`
-    && {
+    & {
         padding-bottom: 15%;
     }
 `
 
 const InputNomeDespesa = styled(TextField)`
-    && {
+    & {
         margin-top: 5%;
-    }
-    
-    & .MuiInput-underline {
-        font-size: 1vw;
-    }
+        
+        .MuiInput-underline {
+            font-size: 1vw;
+        }
 
-    & .MuiInput-underline:after, .MuiInput-underline:before {
-        border-bottom-color: #ED3237;
+        .MuiInput-underline:after, .MuiInput-underline:before {
+            border-bottom-color: #ED3237;
+        }
     }
 `
 
 const InputDespesa = styled(TextField)`
-    & input {
-        color: #ED3237;
-    }
-    
-    & .MuiInput-underline {
-        font-size: 1.5vw;
-    }
+    & {
+        input {
+            color: #ED3237;
+        }
 
-    & .MuiInput-underline:after, .MuiInput-underline:before {
-        border-bottom-color: #ED3237;
+        .MuiInput-underline {
+            font-size: 1.5vw;
+        }
+
+        .MuiInput-underline:after, .MuiInput-underline:before {
+            border-bottom-color: #ED3237;
+        }
     }
 `
 
@@ -96,16 +98,16 @@ const InputDespesaData = styled.input`
 `
 
 const InputDespesaObservação = styled(TextField)`
-    && {
+    & {
         margin-top: 5%;
-    }
-    
-    & .MuiInput-underline {
-        font-size: 1vw;
-    }
 
-    & .MuiInput-underline:after, .MuiInput-underline:before {
-        border-bottom-color: #ED3237;
+        .MuiInput-underline {
+            font-size: 1vw;
+        }
+
+        .MuiInput-underline:after, .MuiInput-underline:before {
+            border-bottom-color: #ED3237;
+        }
     }
 `
 
@@ -139,27 +141,31 @@ const NomeCategoriaDepesaSóCor = styled.span`
 `
 
 const InvestimentoDespesa = styled(Switch)`
-    & .MuiSwitch-switchBase.Mui-checked {
-        color: #ED3237;
-    }
-    
-    & .MuiSwitch-switchBase.Mui-checked+.MuiSwitch-track {
-        background-color: #ED3237;
+    & {
+        .MuiSwitch-switchBase.Mui-checked {
+            color: #ED3237;
+        }
+        
+        .MuiSwitch-switchBase.Mui-checked+.MuiSwitch-track {
+            background-color: #ED3237;
+        }
     }
 `
 
 const FixaDespesa = styled(Switch)`
-    & .MuiSwitch-switchBase.Mui-checked {
-        color: #ED3237;
-    }
-    
-    & .MuiSwitch-switchBase.Mui-checked+.MuiSwitch-track {
-        background-color: #ED3237;
+    & {
+        .MuiSwitch-switchBase.Mui-checked {
+            color: #ED3237;
+        }
+        
+        .MuiSwitch-switchBase.Mui-checked+.MuiSwitch-track {
+            background-color: #ED3237;
+        }
     }
 `
 
 const ButtonSubmitDespesa = styled(Button)`
-    && {
+    & {
         float: right;
         border-radius: 20px;
         background-color: #ED3237;
@@ -168,10 +174,10 @@ const ButtonSubmitDespesa = styled(Button)`
         margin-top: 6%;
         margin-bottom: 30%;
         height: auto;
-    }
 
-    &&:hover {
-        background-color: #BA272B;
+        :hover {
+            background-color: #BA272B;
+        }
     }
 `
 
