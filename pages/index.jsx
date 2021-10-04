@@ -14,13 +14,13 @@ export default function Home() {
           <HomeStyle.LogoJPNome/>
         </HomeStyle.PartLeft>
         <HomeStyle.PartRight className="part-right">
-          <Link href="/administrativo/login">
+          <Link href="/administrativo/login" passHref>
             <HomeStyle.LinkAdmin>
               <HomeStyle.LinkAdmin.Icon/>
               Administrativo
             </HomeStyle.LinkAdmin>
           </Link>
-          <Link href="/professoras/login">
+          <Link href="/professoras/login" passHref>
             <HomeStyle.LinkProfessoras background="secondary">
               <HomeStyle.LinkProfessoras.Icon/>
               Professoras
