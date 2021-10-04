@@ -153,14 +153,17 @@ const FixaDespesa = styled(Switch)`
 `
 
 const ButtonSubmitDespesa = styled(Button)`
-    float: right;
-    border-radius: 20px;
-    background-color: #ED3237;
-    font-size: 1vw;
-    width: 30%;
-    margin-top: 6%;
-    margin-bottom: 30%;
-    height: auto;
+    && {
+        float: right;
+        border-radius: 20px;
+        background-color: #ED3237;
+        font-size: 1vw;
+        width: 30%;
+        margin-top: 6%;
+        margin-bottom: 30%;
+        height: auto;
+    }
+
     &&:hover {
         background-color: #BA272B;
     }
