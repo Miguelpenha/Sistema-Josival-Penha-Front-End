@@ -1,6 +1,8 @@
 import styled from 'styled-components'
 
 export const Link = styled.a`
+    text-decoration: none;
+    color: #9D9D9D;
     align-items: center;
     display: flex;
     flex-direction: row;

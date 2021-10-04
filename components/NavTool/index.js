@@ -50,6 +50,8 @@ const Função = styled.li`
 `
 
 const LinkFunção = styled.a`
+    color: #9D9D9D;
+    text-decoration: none;
     width: auto;
     display: inline-flex;
     justify-content: baseline;
