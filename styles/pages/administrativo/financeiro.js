@@ -93,6 +93,10 @@ const RealInputDespesa = styled.span`
 const InputDespesaData = styled.input`
     margin-top: 5%;
     width: 100%;
+    font-family: 'Roboto', sans-serif;
+    border: 1.6px solid #767676;
+    border-radius: 5px;
+    padding: 1%;
 `
 
 const InputDespesaObservação = styled(TextField)`
@@ -114,10 +118,14 @@ const DescriptionIcon = styled(DescriptionIconSVG)`
 `
 
 const CampoCheckBoxsDespesas = styled.div`
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
     margin-top: 5%;
     background-color: #E7E7E7;
     border-radius: 10px;
     padding: 1%;
+    width: 70%;
 `
 
 const CheckboxCategoriaDespesa = styled(Checkbox)`
@@ -130,12 +138,17 @@ const NomeCategoriaDepesaComCor = styled.span`
     font-size: 0.8vw;
 `
 
+const TitCampoCheckBoxDespesa = styled.h1`
+    text-align: center;
+    padding-top: 2%;
+`
+
 const NomeCategoriaDepesaSóCor = styled.span`
     background-color: ${props => props.color ? props.color : '#53BDE8'};
     padding: 0.1%;
     border-radius: 50%;
     margin-right: 2%;
-    padding-left: 2.7%;
+    padding-left: 4%;
 `
 
 const InvestimentoDespesa = styled(Switch)`
@@ -195,5 +208,6 @@ export {
     NomeCategoriaDepesaSóCor,
     InvestimentoDespesa,
     FixaDespesa, 
-    ButtonSubmitDespesa
+    ButtonSubmitDespesa,
+    TitCampoCheckBoxDespesa
 }

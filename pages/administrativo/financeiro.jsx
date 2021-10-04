@@ -1,9 +1,9 @@
 import Head from 'next/head'
 import nookies from 'nookies'
-import { Container, Main, IconAdd, IconTrendingDown, DialogCadasDespesa, DialogContentCadasDespesa, InputNomeDespesa, InputDespesa, RealInputDespesa, FormDespesa, InputDespesaObservação, DescriptionIcon, InputDespesaData, CampoCheckBoxsDespesas, CheckboxCategoriaDespesa, NomeCategoriaDepesaComCor, NomeCategoriaDepesaSóCor, InvestimentoDespesa, FixaDespesa, ButtonSubmitDespesa } from '../../styles/pages/administrativo/financeiro'
+import { Container, Main, IconAdd, IconTrendingDown, DialogCadasDespesa, DialogContentCadasDespesa, InputNomeDespesa, InputDespesa, RealInputDespesa, FormDespesa, InputDespesaObservação, DescriptionIcon, InputDespesaData, CampoCheckBoxsDespesas, CheckboxCategoriaDespesa, TitCampoCheckBoxDespesa, NomeCategoriaDepesaComCor, NomeCategoriaDepesaSóCor, InvestimentoDespesa, FixaDespesa, ButtonSubmitDespesa } from '../../styles/pages/administrativo/financeiro'
 import { NavOptions, LogoJPNome, Funções, Função, LinkFunção, IconAlunos, IconAcadêmico, IconDashBoard, IconMarketing, IconFinanceiroSele, IconColaboradores, TextFunção } from '../../components/NavTool'
 import Link from 'next/link'
-import { Menu, MenuItem, InputAdornment } from '@material-ui/core'
+import { Menu, MenuItem, InputAdornment, Snackbar, Alert } from '@material-ui/core'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { get } from '../../hooks'
@@ -11,16 +11,19 @@ import api from '../../services/api/base'
 
 export default function Financeiro() {
   const [fechadoCadas, setFechadoCadas] = useState(null)
+  const [errorNomeDespesa, setErrorNomeDespesa] = useState(false)
+  const [alert, setAlert] = useState({
+    open: false
+  })
   const { data: categoriasDespesas } = get('/financeiro/despesas/categorias')
   const { data: fontesDespesas } = get('/financeiro/despesas/fontes')
   let atualDateBruta = new Date()
   const [atualDate, setAtualDate] = useState(`${atualDateBruta.toLocaleDateString().split('/')[2]}-${atualDateBruta.toLocaleDateString().split('/')[1]}-${atualDateBruta.toLocaleDateString().split('/')[0]}`)
   const openCadas = Boolean(fechadoCadas)
   const [openDialogCadasDespesas, setOpenDialogCadasDespesas] = useState(false)
-  const { register, handleSubmit, reset } = useForm()
+  const { register, handleSubmit, reset, watch, setFocus } = useForm()
   let categorias = []
   let fontes = []
-
   async function enviarDespesa(data, event) {
     let { nome, despesa: despesaValor, date, observação, investimento, fixa } = data
     date = `${date.split('-')[1]}/${date.split('-')[2]}/${date.split('-')[0]}`
@@ -36,6 +39,12 @@ export default function Financeiro() {
       criação: new Date().toISOString()
     }
     await api.post('/financeiro/despesas', despesa)
+    setAlert({
+      open: true,
+      text: 'Despesa salva com sucesso!',
+      variant: 'filled',
+      severity: 'success'
+    })
     limparCampos()
     setOpenDialogCadasDespesas(false)
     event.preventDefault()
@@ -89,7 +98,7 @@ export default function Financeiro() {
                   </>
                 )
               }}/>
-              <InputDespesa defaultValue="0,00" {...register('despesa')} required type="text" name="despesa" fullWidth variant="standard" InputProps={{
+              <InputDespesa defaultValue="1,00" {...register('despesa')} required type="text" name="despesa" fullWidth variant="standard" InputProps={{
                 startAdornment: (
                   <>
                     <InputAdornment position="start">
@@ -99,7 +108,7 @@ export default function Financeiro() {
                 )
               }}/>
               <InputDespesaData defaultValue={atualDate} type="date" {...register('date')} required name="date"/>
-              <InputDespesaObservação {...register('observação')} placeholder="Observação" type="text" name="observação" fullWidth variant="standard" InputProps={{
+              <InputDespesaObservação multiline {...register('observação')} placeholder="Observação" type="text" name="observação" fullWidth variant="standard" InputProps={{
                 startAdornment: (
                   <>
                     <InputAdornment position="start">
@@ -112,7 +121,7 @@ export default function Financeiro() {
               <br/>
               <InvestimentoDespesa {...register('investimento')}/>Investimento
               <CampoCheckBoxsDespesas>
-                <h3>Categorias</h3>
+                <TitCampoCheckBoxDespesa>Categorias</TitCampoCheckBoxDespesa>
                 {categoriasDespesas.map(categoria => 
                   <div key={categoria._id}>
                     <CheckboxCategoriaDespesa name={categoria.nome} onChange={veriCategoriaDespesa} sx={{
@@ -129,7 +138,7 @@ export default function Financeiro() {
                 )}
               </CampoCheckBoxsDespesas>
               <CampoCheckBoxsDespesas>
-                <h3>Fontes</h3>
+                <TitCampoCheckBoxDespesa>Fontes</TitCampoCheckBoxDespesa>
                 {fontesDespesas.map(fonte => 
                   <div key={fonte._id}>
                     <CheckboxCategoriaDespesa name={fonte.nome} onChange={veriFonteDespesa} sx={{
@@ -222,6 +231,20 @@ export default function Financeiro() {
               Despesas
             </MenuItem>
           </Menu>
+          <Snackbar anchorOrigin={{
+            horizontal: 'right',
+            vertical: 'bottom'
+          }} open={alert.open} onClose={() => setAlert({
+            open: false
+          })} autoHideDuration={3000}>
+            <Alert variant={alert.variant} severity={alert.severity} onClose={() => 
+              setAlert({
+                open: false
+              })
+            }>
+              <h1>{alert.text}</h1>
+            </Alert>
+          </Snackbar>
           <DialogCadasDespesas open={openDialogCadasDespesas}/>
         </Main>
       </Container>
