@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import HomeStyle from '../styles/pages/Home'
+import HomeStyle from '../styles/pages'
 import Link from 'next/link'
 import nookies from 'nookies'
 

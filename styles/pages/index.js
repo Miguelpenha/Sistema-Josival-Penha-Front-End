@@ -68,6 +68,8 @@ HomeStyle.PartLeft = styled.div`
     flex-wrap: wrap;
     justify-content: center;
     float: left;
+    padding-top: 18.5%;
+    padding-bottom: 18.5%;
 `
 
 HomeStyle.Exit = styled(IconExit)`
@@ -94,12 +96,13 @@ HomeStyle.PartRight = styled.div`
     align-items: center;
     justify-content: space-evenly;
     flex-direction: column;
-    padding-top: 15rem;
-    padding-bottom: 15rem;
+    padding-top: 14.445%;
+    padding-bottom: 14.445%;
 `
 
 HomeStyle.LinkAdmin = styled(Link)`
     padding: 1.5%;
+    margin-bottom: 12%;
 `
 
 HomeStyle.LinkAdmin.Icon = styled(IconLinkAdmin)`
