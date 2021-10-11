@@ -149,7 +149,10 @@ export default function Financeiro() {
               <InvestimentoDespesa {...register('investimento')}/>Investimento
               <CampoCheckBoxsDespesas>
                 <TitCampoCheckBoxDespesa>Categorias</TitCampoCheckBoxDespesa>
-                {categoriasDespesas.map(categoria => 
+                {categoriasDespesas.length == 0 && <Alert style={{marginTop: '3%', marginLeft: '10%', marginRight: '10%', marginBottom: '5%'}} variant="standard" severity="info">
+                  <h2>Não existem categorias cadastradas</h2>
+                </Alert>}
+                {categoriasDespesas.map(categoria =>
                   <div key={categoria._id}>
                     <CheckboxCategoriaDespesa name={categoria.nome} onChange={veriCategoriaDespesa} sx={{
                       color: categoria.cor,
@@ -166,6 +169,9 @@ export default function Financeiro() {
               </CampoCheckBoxsDespesas>
               <CampoCheckBoxsDespesas>
                 <TitCampoCheckBoxDespesa>Fontes</TitCampoCheckBoxDespesa>
+                {fontesDespesas.length == 0 && <Alert style={{marginTop: '3%', marginLeft: '10%', marginRight: '10%', marginBottom: '5%'}} variant="standard" severity="info">
+                  <h2>Não existem fontes cadastradas</h2>
+                </Alert>}
                 {fontesDespesas.map(fonte => 
                   <div key={fonte._id}>
                     <CheckboxCategoriaDespesa name={fonte.nome} onChange={veriFonteDespesa} sx={{
