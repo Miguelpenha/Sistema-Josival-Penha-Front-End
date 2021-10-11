@@ -1,9 +1,9 @@
 import Head from 'next/head'
 import nookies from 'nookies'
-import { Container, Main, IconAdd, IconTrendingDown, DialogCadasDespesa, DialogContentCadasDespesa, InputNomeDespesa, InputDespesa, RealInputDespesa, FormDespesa, InputDespesaObservação, DescriptionIcon, InputDespesaData, CampoCheckBoxsDespesas, CheckboxCategoriaDespesa, TitCampoCheckBoxDespesa, NomeCategoriaDepesaComCor, NomeCategoriaDepesaSóCor, InvestimentoDespesa, FixaDespesa, ButtonSubmitDespesa } from '../../styles/pages/administrativo/financeiro'
+import { Container, Main, IconAdd, IconTrendingDown, IconLabel, DialogCadasDespesa, DialogContentCadasDespesa, InputNomeDespesa, InputDespesa, RealInputDespesa, FormDespesa, InputDespesaObservação, DescriptionIcon, InputDespesaData, CampoCheckBoxsDespesas, CheckboxCategoriaDespesa, TitCampoCheckBoxDespesa, NomeCategoriaDepesaComCor, NomeCategoriaDepesaSóCor, InvestimentoDespesa, FixaDespesa, ButtonSubmitDespesa } from '../../styles/pages/administrativo/financeiro'
 import { NavOptions, LogoJPNome, Funções, Função, LinkFunção, IconAlunos, IconAcadêmico, IconDashBoard, IconMarketing, IconFinanceiroSele, IconColaboradores, TextFunção } from '../../components/NavTool'
 import Link from 'next/link'
-import { Menu, MenuItem, InputAdornment, Snackbar, Alert } from '@material-ui/core'
+import { Menu, MenuItem, InputAdornment, Snackbar, Alert, TextField } from '@material-ui/core'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { get } from '../../hooks'
@@ -11,71 +11,16 @@ import api from '../../services/api/base'
 
 export default function Financeiro() {
   const [fechadoCadas, setFechadoCadas] = useState(null)
-  const [errorNomeDespesa, setErrorNomeDespesa] = useState(false)
   const [alert, setAlert] = useState({
     open: false
   })
   const { data: categoriasDespesas } = get('/financeiro/despesas/categorias')
   const { data: fontesDespesas } = get('/financeiro/despesas/fontes')
   let atualDateBruta = new Date()
-  const [atualDate, setAtualDate] = useState(`${atualDateBruta.toLocaleDateString().split('/')[2]}-${atualDateBruta.toLocaleDateString().split('/')[1]}-${atualDateBruta.toLocaleDateString().split('/')[0]}`)
+  const [atualDate] = useState(`${atualDateBruta.toLocaleDateString().split('/')[2]}-${atualDateBruta.toLocaleDateString().split('/')[1]}-${atualDateBruta.toLocaleDateString().split('/')[0]}`)
   const openCadas = Boolean(fechadoCadas)
   const [openDialogCadasDespesas, setOpenDialogCadasDespesas] = useState(false)
   const [openDialogCadasCategoriasDespesas, setOpenDialogCadasCategoriasDespesas] = useState(false)
-  const { register, handleSubmit, reset, watch, setFocus } = useForm()
-  let categorias = []
-  let fontes = []
-  async function enviarDespesa(data, event) {
-    let { nome, despesa: despesaValor, date, observação, investimento, fixa } = data
-    date = `${date.split('-')[1]}/${date.split('-')[2]}/${date.split('-')[0]}`
-    const despesa = {
-      nome,
-      preco: despesaValor,
-      categorias,
-      fontes,
-      data: date,
-      investimento,
-      fixa,
-      observação,
-      criação: new Date().toISOString()
-    }
-    await api.post('/financeiro/despesas', despesa)
-    setAlert({
-      open: true,
-      text: 'Despesa salva com sucesso!',
-      variant: 'filled',
-      severity: 'success'
-    })
-    limparCampos()
-    setOpenDialogCadasDespesas(false)
-    event.preventDefault()
-  }
-
-  async function enviarDespesa(data, event) {
-    let { nome, despesa: despesaValor, date, observação, investimento, fixa } = data
-    date = `${date.split('-')[1]}/${date.split('-')[2]}/${date.split('-')[0]}`
-    const despesa = {
-      nome,
-      preco: despesaValor,
-      categorias,
-      fontes,
-      data: date,
-      investimento,
-      fixa,
-      observação,
-      criação: new Date().toISOString()
-    }
-    await api.post('/financeiro/despesas', despesa)
-    setAlert({
-      open: true,
-      text: 'Despesa salva com sucesso!',
-      variant: 'filled',
-      severity: 'success'
-    })
-    limparCampos()
-    setOpenDialogCadasDespesas(false)
-    event.preventDefault()
-  }
 
   function clickCadas(event) {
     setFechadoCadas(event.currentTarget)
@@ -85,29 +30,54 @@ export default function Financeiro() {
     setFechadoCadas(null)
   }
 
-  function veriCategoriaDespesa(event, data) {
-    if (data) {
-      categorias.push(event.target.name)
-    } else {
-      categorias.splice(categorias.indexOf(event.target.name), 1)
-    }
-  }
-
-  function veriFonteDespesa(event, data) {
-    if (data) {
-      fontes.push(event.target.name)
-    } else {
-      fontes.splice(fontes.indexOf(event.target.name), 1)
-    }
-  }
-
-  function limparCampos() {
-    reset()
-    categorias = []
-    fontes = []
-  }
-
   function DialogCadasDespesas({ open }) {
+    const { register, handleSubmit, reset } = useForm()
+    let categorias = []
+    let fontes = []
+    async function enviarDespesa(data, event) {
+      let { nome, despesa: despesaValor, date, observação, investimento, fixa } = data
+      date = `${date.split('-')[1]}/${date.split('-')[2]}/${date.split('-')[0]}`
+      const despesa = {
+        nome,
+        preco: despesaValor,
+        categorias,
+        fontes,
+        data: date,
+        investimento,
+        fixa,
+        observação,
+        criação: new Date().toISOString()
+      }
+      await api.post('/financeiro/despesas', despesa)
+      setAlert({
+        open: true,
+        text: 'Despesa salva com sucesso!',
+        variant: 'filled',
+        severity: 'success'
+      })
+      limparCampos()
+      setOpenDialogCadasDespesas(false)
+      event.preventDefault()
+    }
+    function limparCampos() {
+      reset()
+      categorias = []
+      fontes = []
+    }
+    function veriFonteDespesa(event, data) {
+      if (data) {
+        fontes.push(event.target.name)
+      } else {
+        fontes.splice(fontes.indexOf(event.target.name), 1)
+      }
+    }
+    function veriCategoriaDespesa(event, data) {
+      if (data) {
+        categorias.push(event.target.name)
+      } else {
+        categorias.splice(categorias.indexOf(event.target.name), 1)
+      }
+    }
     if (open) {
       return (
         <DialogCadasDespesa open={true} onClose={() => {
@@ -197,10 +167,32 @@ export default function Financeiro() {
   }
 
   function DialogCadasCategoriasDespesas({ open }) {
+    const { register, handleSubmit, reset } = useForm()
+    async function enviarDespesa(data, event) {
+      let { nome, cor } = data
+      const despesa = {
+        nome,
+        cor,
+        criação: new Date().toISOString()
+      }
+      await api.post('/financeiro/despesas/categorias', despesa)
+      setAlert({
+        open: true,
+        text: 'Categoria de despesa salva com sucesso!',
+        variant: 'filled',
+        severity: 'success'
+      })
+      limparCampos()
+      setOpenDialogCadasCategoriasDespesas(false)
+      event.preventDefault()
+    }
+    function limparCampos() {
+      reset()
+    }
     if (open) {
       return (
         <DialogCadasDespesa open={true} onClose={() => {
-          setOpenDialogCadasDespesas(false)
+          setOpenDialogCadasCategoriasDespesas(false)
           limparCampos()
         }}>
           <DialogContentCadasDespesa>
@@ -214,63 +206,8 @@ export default function Financeiro() {
                   </>
                 )
               }}/>
-              <InputDespesa defaultValue="1,00" {...register('despesa')} required type="text" name="despesa" fullWidth variant="standard" InputProps={{
-                startAdornment: (
-                  <>
-                    <InputAdornment position="start">
-                      <RealInputDespesa>R$</RealInputDespesa>
-                    </InputAdornment>
-                  </>
-                )
-              }}/>
-              <InputDespesaData defaultValue={atualDate} type="date" {...register('date')} required name="date"/>
-              <InputDespesaObservação multiline {...register('observação')} placeholder="Observação" type="text" name="observação" fullWidth variant="standard" InputProps={{
-                startAdornment: (
-                  <>
-                    <InputAdornment position="start">
-                      <DescriptionIcon/>
-                    </InputAdornment>
-                  </>
-                )
-              }}/>
-              <FixaDespesa name="fixa" inputRef={register('fixa').ref} onChange={register('fixa').onChange}/>Fixa
-              <br/>
-              <InvestimentoDespesa {...register('investimento')}/>Investimento
-              <CampoCheckBoxsDespesas>
-                <TitCampoCheckBoxDespesa>Categorias</TitCampoCheckBoxDespesa>
-                {categoriasDespesas.map(categoria => 
-                  <div key={categoria._id}>
-                    <CheckboxCategoriaDespesa name={categoria.nome} onChange={veriCategoriaDespesa} sx={{
-                      color: categoria.cor,
-                      '&.Mui-checked': {
-                        color: categoria.cor
-                      }
-                    }}/>
-                    <NomeCategoriaDepesaComCor>
-                      <NomeCategoriaDepesaSóCor color={categoria.cor}/>
-                      {categoria.nome}
-                    </NomeCategoriaDepesaComCor>
-                  </div>
-                )}
-              </CampoCheckBoxsDespesas>
-              <CampoCheckBoxsDespesas>
-                <TitCampoCheckBoxDespesa>Fontes</TitCampoCheckBoxDespesa>
-                {fontesDespesas.map(fonte => 
-                  <div key={fonte._id}>
-                    <CheckboxCategoriaDespesa name={fonte.nome} onChange={veriFonteDespesa} sx={{
-                      color: fonte.cor,
-                      '&.Mui-checked': {
-                        color: fonte.cor
-                      }
-                    }}/>
-                    <NomeCategoriaDepesaComCor>
-                      <NomeCategoriaDepesaSóCor color={fonte.cor}/>
-                      {fonte.nome}
-                    </NomeCategoriaDepesaComCor>
-                  </div>
-                )}
-              </CampoCheckBoxsDespesas>
-              <ButtonSubmitDespesa type="submit" variant="contained">Salvar</ButtonSubmitDespesa>
+              <TextField style={{marginTop: '5%', width: '65%'}} required type="color" {...register('cor')} placeholder="Cor" name="cor"/>
+              <ButtonSubmitDespesa style={{marginBottom: '0%'}} type="submit" variant="contained">Salvar</ButtonSubmitDespesa>
             </FormDespesa>
           </DialogContentCadasDespesa>
         </DialogCadasDespesa>
@@ -350,7 +287,7 @@ export default function Financeiro() {
               setOpenDialogCadasCategoriasDespesas(true)
               setFechadoCadas(false)
             }}>
-              <IconTrendingDown/>
+              <IconLabel/>
               Categorias
             </MenuItem>
           </Menu>

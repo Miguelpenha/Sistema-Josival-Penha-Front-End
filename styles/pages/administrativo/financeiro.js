@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Add as IconAddSVG, TrendingDown as IconTrendingDownSVG, Description as DescriptionIconSVG } from '@material-ui/icons'
+import { Add as IconAddSVG, TrendingDown as IconTrendingDownSVG, Label as IconLabelSVG, Description as DescriptionIconSVG } from '@material-ui/icons'
 import { Dialog, DialogContent, TextField, Button, Checkbox, Switch } from '@material-ui/core'
 
 const Container = styled.div`
@@ -32,6 +32,15 @@ const IconAdd = styled(IconAddSVG)`
 `
 
 const IconTrendingDown = styled(IconTrendingDownSVG)`
+    && {
+        color: #ED3237;
+        margin-right: 15%;
+        width: 22%;
+        height: auto;
+    }
+`
+
+const IconLabel = styled(IconLabelSVG)`
     && {
         color: #ED3237;
         margin-right: 15%;
@@ -193,6 +202,7 @@ export {
     Main,
     IconAdd,
     IconTrendingDown,
+    IconLabel,
     DialogCadasDespesa,
     DialogContentCadasDespesa,
     FormDespesa,
