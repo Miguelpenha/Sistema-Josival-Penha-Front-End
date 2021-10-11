@@ -1,9 +1,9 @@
 import Head from 'next/head'
 import nookies from 'nookies'
-import { Container, Main, IconAdd, IconTrendingDown, IconLabel, DialogCadasDespesa, DialogContentCadasDespesa, InputNomeDespesa, InputDespesa, RealInputDespesa, FormDespesa, InputDespesaObservação, DescriptionIcon, InputDespesaData, CampoCheckBoxsDespesas, CheckboxCategoriaDespesa, TitCampoCheckBoxDespesa, NomeCategoriaDepesaComCor, NomeCategoriaDepesaSóCor, InvestimentoDespesa, FixaDespesa, ButtonSubmitDespesa } from '../../styles/pages/administrativo/financeiro'
+import { Container, Main, IconAdd, IconTrendingDown, IconTrendingUp, IconLabel, DialogCadasDespesa, DialogContentCadasDespesa, InputNomeDespesa, InputDespesa, RealInputDespesa, FormDespesa, InputDespesaObservação, DescriptionIcon, InputDespesaData, CampoCheckBoxsDespesas, CheckboxCategoriaDespesa, TitCampoCheckBoxDespesa, NomeCategoriaDepesaComCor, NomeCategoriaDepesaSóCor, InvestimentoDespesa, FixaDespesa, ButtonSubmitDespesa, IconPayment } from '../../styles/pages/administrativo/financeiro'
 import { NavOptions, LogoJPNome, Funções, Função, LinkFunção, IconAlunos, IconAcadêmico, IconDashBoard, IconMarketing, IconFinanceiroSele, IconColaboradores, TextFunção } from '../../components/NavTool'
 import Link from 'next/link'
-import { Menu, MenuItem, InputAdornment, Snackbar, Alert, TextField } from '@material-ui/core'
+import { Menu, MenuItem, InputAdornment, Snackbar, Alert, TextField, Divider } from '@material-ui/core'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { get } from '../../hooks'
@@ -14,13 +14,12 @@ export default function Financeiro() {
   const [alert, setAlert] = useState({
     open: false
   })
-  const { data: categoriasDespesas } = get('/financeiro/despesas/categorias')
-  const { data: fontesDespesas } = get('/financeiro/despesas/fontes')
   let atualDateBruta = new Date()
   const [atualDate] = useState(`${atualDateBruta.toLocaleDateString().split('/')[2]}-${atualDateBruta.toLocaleDateString().split('/')[1]}-${atualDateBruta.toLocaleDateString().split('/')[0]}`)
   const openCadas = Boolean(fechadoCadas)
   const [openDialogCadasDespesas, setOpenDialogCadasDespesas] = useState(false)
   const [openDialogCadasCategoriasDespesas, setOpenDialogCadasCategoriasDespesas] = useState(false)
+  const [openDialogCadasFontesDespesas, setOpenDialogCadasFontesDespesas] = useState(false)
 
   function clickCadas(event) {
     setFechadoCadas(event.currentTarget)
@@ -31,6 +30,8 @@ export default function Financeiro() {
   }
 
   function DialogCadasDespesas({ open }) {
+    const { data: categoriasDespesas } = get('/financeiro/despesas/categorias')
+    const { data: fontesDespesas } = get('/financeiro/despesas/fontes')
     const { register, handleSubmit, reset } = useForm()
     let categorias = []
     let fontes = []
@@ -216,6 +217,56 @@ export default function Financeiro() {
     return null
   }
 
+  function DialogCadasFontesDespesas({ open }) {
+    const { register, handleSubmit, reset } = useForm()
+    async function enviarDespesa(data, event) {
+      let { nome, cor } = data
+      const despesa = {
+        nome,
+        cor,
+        criação: new Date().toISOString()
+      }
+      await api.post('/financeiro/despesas/fontes', despesa)
+      setAlert({
+        open: true,
+        text: 'Fonte de despesa salva com sucesso!',
+        variant: 'filled',
+        severity: 'success'
+      })
+      limparCampos()
+      setOpenDialogCadasFontesDespesas(false)
+      event.preventDefault()
+    }
+    function limparCampos() {
+      reset()
+    }
+    if (open) {
+      return (
+        <DialogCadasDespesa open={true} onClose={() => {
+          setOpenDialogCadasFontesDespesas(false)
+          limparCampos()
+        }}>
+          <DialogContentCadasDespesa>
+            <FormDespesa onSubmit={handleSubmit(enviarDespesa)}>
+              <InputNomeDespesa required {...register('nome')} placeholder="Nome" type="text" name="nome" fullWidth variant="standard" InputProps={{
+                startAdornment: (
+                  <>
+                    <InputAdornment position="start">
+                      <DescriptionIcon/>
+                    </InputAdornment>
+                  </>
+                )
+              }}/>
+              <TextField style={{marginTop: '5%', width: '65%'}} required type="color" {...register('cor')} placeholder="Cor" name="cor"/>
+              <ButtonSubmitDespesa style={{marginBottom: '0%'}} type="submit" variant="contained">Salvar</ButtonSubmitDespesa>
+            </FormDespesa>
+          </DialogContentCadasDespesa>
+        </DialogCadasDespesa>
+      )
+    }
+    return null
+  }
+
   return (
     <>
       <Head>
@@ -275,20 +326,49 @@ export default function Financeiro() {
           <IconAdd onClick={clickCadas}/>
           <Menu anchorEl={fechadoCadas} open={openCadas} onClose={clickCloseCadas} MenuListProps={{
           'aria-labelledby': 'basic-button',
-        }} style={{height: '20%', width: '30%'}}>
+        }} style={{height: '51%', width: '32%'}}>
             <MenuItem disableRipple style={{height: '40%', width: '100%', fontSize: '1.2vw', color: '#C6C6C6'}} onClick={() => {
               setOpenDialogCadasDespesas(true)
               setFechadoCadas(false)
             }}>
-              <IconTrendingDown/>
-              Despesas
+              <IconTrendingDown color="#ED3237"/>
+              Despesa
             </MenuItem>
             <MenuItem disableRipple style={{height: '40%', width: '100%', fontSize: '1.2vw', color: '#C6C6C6'}} onClick={() => {
               setOpenDialogCadasCategoriasDespesas(true)
               setFechadoCadas(false)
             }}>
-              <IconLabel/>
-              Categorias
+              <IconLabel color="#ED3237"/>
+              Categoria
+            </MenuItem>
+            <MenuItem disableRipple style={{height: '40%', width: '100%', fontSize: '1.2vw', color: '#C6C6C6'}} onClick={() => {
+              setOpenDialogCadasFontesDespesas(true)
+              setFechadoCadas(false)
+            }}>
+              <IconPayment color="#ED3237"/>
+              Fonte
+            </MenuItem>
+            <Divider/>
+            <MenuItem disableRipple style={{height: '40%', width: '100%', fontSize: '1.2vw', color: '#C6C6C6'}} onClick={() => {
+              setOpenDialogCadasDespesas(true)
+              setFechadoCadas(false)
+            }}>
+              <IconTrendingUp color="#5AB55E"/>
+              Receita
+            </MenuItem>
+            <MenuItem disableRipple style={{height: '40%', width: '100%', fontSize: '1.2vw', color: '#C6C6C6'}} onClick={() => {
+              setOpenDialogCadasCategoriasDespesas(true)
+              setFechadoCadas(false)
+            }}>
+              <IconLabel color="#5AB55E"/>
+              Categoria
+            </MenuItem>
+            <MenuItem disableRipple style={{height: '40%', width: '100%', fontSize: '1.2vw', color: '#C6C6C6'}} onClick={() => {
+              setOpenDialogCadasFontesDespesas(true)
+              setFechadoCadas(false)
+            }}>
+              <IconPayment color="#5AB55E"/>
+              Fonte
             </MenuItem>
           </Menu>
           <Snackbar anchorOrigin={{
@@ -307,6 +387,7 @@ export default function Financeiro() {
           </Snackbar>
           <DialogCadasDespesas open={openDialogCadasDespesas}/>
           <DialogCadasCategoriasDespesas open={openDialogCadasCategoriasDespesas}/>
+          <DialogCadasFontesDespesas open={openDialogCadasFontesDespesas}/>
         </Main>
       </Container>
     </>
