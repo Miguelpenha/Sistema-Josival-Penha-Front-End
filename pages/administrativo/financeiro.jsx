@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import nookies from 'nookies'
-import { Container, Main, IconAdd, IconTrendingDown, IconTrendingUp, IconLabel, DialogCadasDespesa, DialogContentCadasDespesa, InputNomeDespesa, InputNomeReceita, InputDespesa, InputReceita, RealInputDespesa, FormDespesa, InputDespesaObservação, InputReceitaObservação, DescriptionIcon, InputDespesaData, CampoCheckBoxsDespesas, CheckboxCategoriaDespesa, TitCampoCheckBoxDespesa, NomeCategoriaDepesaComCor, NomeCategoriaDepesaSóCor, InvestimentoDespesa, InvestimentoReceita, FixaDespesa, FixaReceita, ButtonSubmitDespesa, ButtonSubmitReceita, IconPayment } from '../../styles/pages/administrativo/financeiro'
+import { Container, Main, IconAdd, IconTrendingDown, IconTrendingUp, IconLabel, IconSyncAlt, DialogCadasDespesa, DialogContentCadasDespesa, InputNomeDespesa, InputNomeReceita, InputDespesa, InputReceita, RealInputDespesa, FormDespesa, InputDespesaObservação, InputReceitaObservação, DescriptionIcon, InputDespesaData, CampoCheckBoxsDespesas, CheckboxCategoriaDespesa, TitCampoCheckBoxDespesa, NomeCategoriaDepesaComCor, NomeCategoriaDepesaSóCor, InvestimentoDespesa, InvestimentoReceita, FixaDespesa, FixaReceita, ButtonSubmitDespesa, ButtonSubmitReceita, IconPayment } from '../../styles/pages/administrativo/financeiro'
 import { NavOptions, LogoJPNome, Funções, Função, LinkFunção, IconAlunos, IconAcadêmico, IconDashBoard, IconMarketing, IconFinanceiroSele, IconColaboradores, TextFunção } from '../../components/NavTool'
 import Link from 'next/link'
 import { Menu, MenuItem, InputAdornment, Snackbar, Alert, TextField, Divider } from '@material-ui/core'
@@ -567,7 +567,7 @@ export default function Financeiro() {
           <IconAdd onClick={clickCadas}/>
           <Menu anchorEl={fechadoCadas} open={openCadas} onClose={clickCloseCadas} MenuListProps={{
           'aria-labelledby': 'basic-button',
-        }} style={{height: '51%', width: '32%'}}>
+        }} style={{height: '62%', width: '32%'}}>
             <MenuItem disableRipple style={{height: '40%', width: '100%', fontSize: '1.2vw', color: '#C6C6C6'}} onClick={() => {
               setOpenDialogCadasDespesas(true)
               setFechadoCadas(false)
@@ -610,6 +610,13 @@ export default function Financeiro() {
             }}>
               <IconPayment color="#5AB55E"/>
               Fonte
+            </MenuItem>
+            <Divider/>
+            <MenuItem disableRipple style={{height: '40%', width: '100%', fontSize: '1.2vw', color: '#C6C6C6'}} onClick={() => {
+              setFechadoCadas(false)
+            }}>
+              <IconSyncAlt color="#0872FC"/>
+              Transferência
             </MenuItem>
           </Menu>
           <Snackbar anchorOrigin={{

@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Add as IconAddSVG, TrendingDown as IconTrendingDownSVG, TrendingUp as IconTrendingUpSVG, Label as IconLabelSVG, Description as DescriptionIconSVG, Payment as IconPaymentSVG } from '@material-ui/icons'
+import { Add as IconAddSVG, TrendingDown as IconTrendingDownSVG, TrendingUp as IconTrendingUpSVG, Label as IconLabelSVG, Description as DescriptionIconSVG, Payment as IconPaymentSVG, SyncAlt as IconSyncAltSVG } from '@material-ui/icons'
 import { Dialog, DialogContent, TextField, Button, Checkbox, Switch } from '@material-ui/core'
 
 const Container = styled.div`
@@ -59,6 +59,15 @@ const IconLabel = styled(IconLabelSVG)`
 `
 
 const IconPayment = styled(IconPaymentSVG)`
+    && {
+        color: ${props => props.color};
+        margin-right: 15%;
+        width: 22%;
+        height: auto;
+    }
+`
+
+const IconSyncAlt = styled(IconSyncAltSVG)`
     && {
         color: ${props => props.color};
         margin-right: 15%;
@@ -302,6 +311,7 @@ export {
     IconTrendingUp,
     IconLabel,
     IconPayment,
+    IconSyncAlt,
     DialogCadasDespesa,
     DialogContentCadasDespesa,
     FormDespesa,
