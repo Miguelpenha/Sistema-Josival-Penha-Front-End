@@ -20,7 +20,9 @@ export default function Financeiro() {
   const [openDialogCadasDespesas, setOpenDialogCadasDespesas] = useState(false)
   const [openDialogCadasReceitas, setOpenDialogCadasReceitas] = useState(false)
   const [openDialogCadasCategoriasDespesas, setOpenDialogCadasCategoriasDespesas] = useState(false)
+  const [openDialogCadasCategoriasReceitas, setOpenDialogCadasCategoriasReceitas] = useState(false)
   const [openDialogCadasFontesDespesas, setOpenDialogCadasFontesDespesas] = useState(false)
+  const [openDialogCadasFontesReceitas, setOpenDialogCadasFontesReceitas] = useState(false)
 
   function clickCadas(event) {
     setFechadoCadas(event.currentTarget)
@@ -406,6 +408,106 @@ export default function Financeiro() {
     return null
   }
 
+  function DialogCadasCategoriasReceitas({ open }) {
+    const { register, handleSubmit, reset } = useForm()
+    async function enviarCategoriaReceita(data, event) {
+      let { nome, cor } = data
+      const categoria = {
+        nome,
+        cor,
+        criação: new Date().toISOString()
+      }
+      await api.post('/financeiro/receitas/categorias', categoria)
+      setAlert({
+        open: true,
+        text: 'Categoria de receita salva com sucesso!',
+        variant: 'filled',
+        severity: 'success'
+      })
+      limparCampos()
+      setOpenDialogCadasCategoriasReceitas(false)
+      event.preventDefault()
+    }
+    function limparCampos() {
+      reset()
+    }
+    if (open) {
+      return (
+        <DialogCadasDespesa open={true} onClose={() => {
+          setOpenDialogCadasCategoriasReceitas(false)
+          limparCampos()
+        }}>
+          <DialogContentCadasDespesa>
+            <FormDespesa onSubmit={handleSubmit(enviarCategoriaReceita)}>
+              <InputNomeReceita required {...register('nome')} placeholder="Nome" type="text" name="nome" fullWidth variant="standard" InputProps={{
+                startAdornment: (
+                  <>
+                    <InputAdornment position="start">
+                      <DescriptionIcon/>
+                    </InputAdornment>
+                  </>
+                )
+              }}/>
+              <TextField style={{marginTop: '5%', width: '65%'}} required type="color" {...register('cor')} placeholder="Cor" name="cor"/>
+              <ButtonSubmitReceita style={{marginBottom: '0%'}} type="submit" variant="contained">Salvar</ButtonSubmitReceita>
+            </FormDespesa>
+          </DialogContentCadasDespesa>
+        </DialogCadasDespesa>
+      )
+    }
+    return null
+  }
+
+  function DialogCadasFontesReceitas({ open }) {
+    const { register, handleSubmit, reset } = useForm()
+    async function enviarFonteReceita(data, event) {
+      let { nome, cor } = data
+      const fonte = {
+        nome,
+        cor,
+        criação: new Date().toISOString()
+      }
+      await api.post('/financeiro/receitas/fontes', fonte)
+      setAlert({
+        open: true,
+        text: 'Fonte de receita salva com sucesso!',
+        variant: 'filled',
+        severity: 'success'
+      })
+      limparCampos()
+      setOpenDialogCadasFontesReceitas(false)
+      event.preventDefault()
+    }
+    function limparCampos() {
+      reset()
+    }
+    if (open) {
+      return (
+        <DialogCadasDespesa open={true} onClose={() => {
+          setOpenDialogCadasFontesReceitas(false)
+          limparCampos()
+        }}>
+          <DialogContentCadasDespesa>
+            <FormDespesa onSubmit={handleSubmit(enviarFonteReceita)}>
+              <InputNomeReceita required {...register('nome')} placeholder="Nome" type="text" name="nome" fullWidth variant="standard" InputProps={{
+                startAdornment: (
+                  <>
+                    <InputAdornment position="start">
+                      <DescriptionIcon/>
+                    </InputAdornment>
+                  </>
+                )
+              }}/>
+              <TextField style={{marginTop: '5%', width: '65%'}} required type="color" {...register('cor')} placeholder="Cor" name="cor"/>
+              <ButtonSubmitReceita style={{marginBottom: '0%'}} type="submit" variant="contained">Salvar</ButtonSubmitReceita>
+            </FormDespesa>
+          </DialogContentCadasDespesa>
+        </DialogCadasDespesa>
+      )
+    }
+    return null
+  }
+
   return (
     <>
       <Head>
@@ -496,14 +598,14 @@ export default function Financeiro() {
               Receita
             </MenuItem>
             <MenuItem disableRipple style={{height: '40%', width: '100%', fontSize: '1.2vw', color: '#C6C6C6'}} onClick={() => {
-              setOpenDialogCadasCategoriasDespesas(true)
+              setOpenDialogCadasCategoriasReceitas(true)
               setFechadoCadas(false)
             }}>
               <IconLabel color="#5AB55E"/>
               Categoria
             </MenuItem>
             <MenuItem disableRipple style={{height: '40%', width: '100%', fontSize: '1.2vw', color: '#C6C6C6'}} onClick={() => {
-              setOpenDialogCadasFontesDespesas(true)
+              setOpenDialogCadasFontesReceitas(true)
               setFechadoCadas(false)
             }}>
               <IconPayment color="#5AB55E"/>
@@ -528,6 +630,8 @@ export default function Financeiro() {
           <DialogCadasCategoriasDespesas open={openDialogCadasCategoriasDespesas}/>
           <DialogCadasFontesDespesas open={openDialogCadasFontesDespesas}/>
           <DialogCadasReceitas open={openDialogCadasReceitas}/>
+          <DialogCadasCategoriasReceitas open={openDialogCadasCategoriasReceitas}/>
+          <DialogCadasFontesReceitas open={openDialogCadasFontesReceitas}/>
         </Main>
       </Container>
     </>
