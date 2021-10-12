@@ -573,7 +573,7 @@ export default function Financeiro() {
             <Info>
               <InfoTit>Saldo atual: </InfoTit>
               <br/>
-              <InfoDado color="#0872FC">R$ 1.000,00</InfoDado>
+              {totalReceitas && totalDespesas && <InfoDado color="#0872FC">{totalReceitas.total}</InfoDado>}
               <IconAccountBalance color="#009CDE" bg="#A7E7FF"/>
             </Info>
             <Info>
