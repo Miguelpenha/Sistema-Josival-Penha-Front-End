@@ -3,7 +3,7 @@ import nookies from 'nookies'
 import { Container, Main, IconAdd, IconTrendingDown, IconTrendingUp, IconLabel, IconSyncAlt, Infos, Info, InfoTit, InfoDado, IconAccountBalance, IconTrendingUpInfo, IconTrendingDownInfo, DialogCadasDespesa, DialogContentCadasDespesa, InputNomeDespesa, InputNomeReceita, InputDespesa, InputReceita, RealInputDespesa, FormDespesa, InputDespesaObservação, InputReceitaObservação, DescriptionIcon, InputDespesaData, CampoCheckBoxsDespesas, CheckboxCategoriaDespesa, TitCampoCheckBoxDespesa, NomeCategoriaDepesaComCor, NomeCategoriaDepesaSóCor, InvestimentoDespesa, InvestimentoReceita, FixaDespesa, FixaReceita, ButtonSubmitDespesa, ButtonSubmitReceita, IconPayment } from '../../styles/pages/administrativo/financeiro'
 import { NavOptions, LogoJPNome, Funções, Função, LinkFunção, IconAlunos, IconAcadêmico, IconDashBoard, IconMarketing, IconFinanceiroSele, IconColaboradores, TextFunção } from '../../components/NavTool'
 import Link from 'next/link'
-import { Menu, MenuItem, InputAdornment, Snackbar, Alert, TextField, Divider } from '@material-ui/core'
+import { Menu, MenuItem, InputAdornment, Snackbar, Alert, TextField, Divider, Skeleton } from '@material-ui/core'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { get } from '../../hooks'
@@ -12,6 +12,7 @@ import api from '../../services/api/base'
 export default function Financeiro() {
   const { data: totalReceitas, mutate: mutateTotalReceitas } = get('/financeiro/receitas/total')
   const { data: totalDespesas, mutate: mutateTotalDespesas } = get('/financeiro/despesas/total')
+  const { data: saldo, mutate: mutateSaldo } = get('/financeiro/saldo')
   const [fechadoCadas, setFechadoCadas] = useState(null)
   const [alert, setAlert] = useState({
     open: false
@@ -573,19 +574,19 @@ export default function Financeiro() {
             <Info>
               <InfoTit>Saldo atual: </InfoTit>
               <br/>
-              {totalReceitas && totalDespesas && <InfoDado color="#0872FC">{totalReceitas.total}</InfoDado>}
+              {saldo ? <InfoDado color="#0872FC">{saldo.saldo}</InfoDado> : <Skeleton variant="rectangular" width={`50%`} height={35} style={{display: 'inline-block', borderRadius: '10px', marginTop: '5%'}} animation="wave"/>}
               <IconAccountBalance color="#009CDE" bg="#A7E7FF"/>
             </Info>
             <Info>
               <InfoTit>Receitas: </InfoTit>
               <br/>
-              {totalReceitas && <InfoDado color="#60BF92">{totalReceitas.total}</InfoDado>}
+              {totalReceitas ? <InfoDado color="#60BF92">{totalReceitas.total}</InfoDado> : <Skeleton variant="rectangular" width={`50%`} height={35} style={{display: 'inline-block', borderRadius: '10px', marginTop: '5%'}} animation="wave"/>}
               <IconTrendingUpInfo color="#ffffff" bg="#60BF92"/>
             </Info>
             <Info>
               <InfoTit>Despesas: </InfoTit>
               <br/>
-              {totalDespesas && <InfoDado color="#EF5252">{totalDespesas.total}</InfoDado>}
+              {totalDespesas ? <InfoDado color="#EF5252">{totalDespesas.total}</InfoDado> : <Skeleton variant="rectangular" width={`50%`} height={35} style={{display: 'inline-block', borderRadius: '10px', marginTop: '5%'}} animation="wave"/>}
               <IconTrendingDownInfo color="#ffffff" bg="#EF5252"/>
             </Info>
           </Infos>
