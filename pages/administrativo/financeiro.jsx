@@ -8,7 +8,7 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { get } from '../../hooks'
 import api from '../../services/api/base'
-import { BarChart, Bar, XAxis, YAxis } from 'recharts'
+import { PieChart, Pie, Sector, Cell } from 'recharts'
 
 export default function Financeiro() {
   const { data: totalReceitas, mutate: mutateTotalReceitas } = get('/financeiro/receitas/total')
@@ -515,17 +515,30 @@ export default function Financeiro() {
     }
     return null
   }
-
+  
   const data = [
-    {
-      nome: 'Receitas',
-      valor: 5000
-    },
-    {
-      nome: 'Despesas',
-      valor: 3000
-    }
-  ]
+    { name: 'Group A', value: 400 },
+    { name: 'Group B', value: 300 },
+    { name: 'Group C', value: 300 },
+    { name: 'Group D', value: 200 },
+  ];
+  
+  const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+  
+  const RADIAN = Math.PI / 180;
+  const renderCustomizedLabel = ({
+    cx, cy, midAngle, innerRadius, outerRadius, percent, index,
+  }) => {
+    const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+    const x = cx + radius * Math.cos(-midAngle * RADIAN);
+    const y = cy + radius * Math.sin(-midAngle * RADIAN);
+  
+    return (
+      <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
+        {`${(percent * 100).toFixed(0)}%`}
+      </text>
+    );
+  };
   return (
     <>
       <Head>
@@ -603,11 +616,20 @@ export default function Financeiro() {
               <IconTrendingDownInfo color="#ffffff" bg="#EF5252"/>
             </Info>
           </Infos>
-          <BarChart width={150} height={100} data={data}>
-            <Bar dataKey="valor" fill="#8884d8"/>
-            <XAxis dataKey="nome"/>
-            <YAxis/>
-          </BarChart>
+          <PieChart width={400} height={400}>
+            <Pie
+              data={data}
+              cx={200}
+              cy={200}
+              labelLine={false}
+              label={renderCustomizedLabel}
+              outerRadius={80}
+              fill="#8884d8"
+              dataKey="value"
+            >
+					    {data.map((entry, index) => <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />)}
+				    </Pie>
+			    </PieChart>
           <Menu anchorEl={fechadoCadas} open={openCadas} onClose={clickCloseCadas} MenuListProps={{
           'aria-labelledby': 'basic-button',
         }} style={{height: '62%', width: '32%'}}>
