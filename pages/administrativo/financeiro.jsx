@@ -8,6 +8,7 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { get } from '../../hooks'
 import api from '../../services/api/base'
+import { BarChart, Bar, XAxis, YAxis } from 'recharts'
 
 export default function Financeiro() {
   const { data: totalReceitas, mutate: mutateTotalReceitas } = get('/financeiro/receitas/total')
@@ -66,6 +67,7 @@ export default function Financeiro() {
       setOpenDialogCadasDespesas(false)
       event.preventDefault()
       mutateTotalDespesas('/financeiro/despesas/total')
+      mutateSaldo('/financeiro/saldo')
     }
     function limparCampos() {
       reset()
@@ -305,6 +307,7 @@ export default function Financeiro() {
       setOpenDialogCadasReceitas(false)
       event.preventDefault()
       mutateTotalReceitas('/financeiro/receitas/total')
+      mutateSaldo('/financeiro/saldo')
     }
     function limparCampos() {
       reset()
@@ -513,6 +516,16 @@ export default function Financeiro() {
     return null
   }
 
+  const data = [
+    {
+      nome: 'Receitas',
+      valor: 5000
+    },
+    {
+      nome: 'Despesas',
+      valor: 3000
+    }
+  ]
   return (
     <>
       <Head>
@@ -574,22 +587,27 @@ export default function Financeiro() {
             <Info>
               <InfoTit>Saldo atual: </InfoTit>
               <br/>
-              {saldo ? <InfoDado color="#0872FC">{saldo.saldo}</InfoDado> : <Skeleton variant="rectangular" width={`50%`} height={35} style={{display: 'inline-block', borderRadius: '10px', marginTop: '5%'}} animation="wave"/>}
+              {saldo ? <InfoDado color="#0872FC">{saldo.saldo}</InfoDado> : <Skeleton variant="rectangular" width={`60%`} height={35} style={{display: 'inline-block', borderRadius: '10px', marginTop: '5%'}} animation="wave"/>}
               <IconAccountBalance color="#009CDE" bg="#A7E7FF"/>
             </Info>
             <Info>
               <InfoTit>Receitas: </InfoTit>
               <br/>
-              {totalReceitas ? <InfoDado color="#60BF92">{totalReceitas.total}</InfoDado> : <Skeleton variant="rectangular" width={`50%`} height={35} style={{display: 'inline-block', borderRadius: '10px', marginTop: '5%'}} animation="wave"/>}
+              {totalReceitas ? <InfoDado color="#60BF92">{totalReceitas.total}</InfoDado> : <Skeleton variant="rectangular" width={`60%`} height={35} style={{display: 'inline-block', borderRadius: '10px', marginTop: '5%'}} animation="wave"/>}
               <IconTrendingUpInfo color="#ffffff" bg="#60BF92"/>
             </Info>
             <Info>
               <InfoTit>Despesas: </InfoTit>
               <br/>
-              {totalDespesas ? <InfoDado color="#EF5252">{totalDespesas.total}</InfoDado> : <Skeleton variant="rectangular" width={`50%`} height={35} style={{display: 'inline-block', borderRadius: '10px', marginTop: '5%'}} animation="wave"/>}
+              {totalDespesas ? <InfoDado color="#EF5252">{totalDespesas.total}</InfoDado> : <Skeleton variant="rectangular" width={`60%`} height={35} style={{display: 'inline-block', borderRadius: '10px', marginTop: '5%'}} animation="wave"/>}
               <IconTrendingDownInfo color="#ffffff" bg="#EF5252"/>
             </Info>
           </Infos>
+          <BarChart width={150} height={100} data={data}>
+            <Bar dataKey="valor" fill="#8884d8"/>
+            <XAxis dataKey="nome"/>
+            <YAxis/>
+          </BarChart>
           <Menu anchorEl={fechadoCadas} open={openCadas} onClose={clickCloseCadas} MenuListProps={{
           'aria-labelledby': 'basic-button',
         }} style={{height: '62%', width: '32%'}}>
