@@ -10,6 +10,8 @@ import { get } from '../../hooks'
 import api from '../../services/api/base'
 
 export default function Financeiro() {
+  const { data: totalReceitas, mutate: mutateTotalReceitas } = get('/financeiro/receitas/total')
+  const { data: totalDespesas, mutate: mutateTotalDespesas } = get('/financeiro/despesas/total')
   const [fechadoCadas, setFechadoCadas] = useState(null)
   const [alert, setAlert] = useState({
     open: false
@@ -23,7 +25,7 @@ export default function Financeiro() {
   const [openDialogCadasCategoriasReceitas, setOpenDialogCadasCategoriasReceitas] = useState(false)
   const [openDialogCadasFontesDespesas, setOpenDialogCadasFontesDespesas] = useState(false)
   const [openDialogCadasFontesReceitas, setOpenDialogCadasFontesReceitas] = useState(false)
-
+  
   function clickCadas(event) {
     setFechadoCadas(event.currentTarget)
   }
@@ -62,6 +64,7 @@ export default function Financeiro() {
       limparCampos()
       setOpenDialogCadasDespesas(false)
       event.preventDefault()
+      mutateTotalDespesas('/financeiro/despesas/total')
     }
     function limparCampos() {
       reset()
@@ -300,6 +303,7 @@ export default function Financeiro() {
       limparCampos()
       setOpenDialogCadasReceitas(false)
       event.preventDefault()
+      mutateTotalReceitas('/financeiro/receitas/total')
     }
     function limparCampos() {
       reset()
@@ -575,13 +579,13 @@ export default function Financeiro() {
             <Info>
               <InfoTit>Receitas: </InfoTit>
               <br/>
-              <InfoDado color="#60BF92">R$ 1.000,00</InfoDado>
+              {totalReceitas && <InfoDado color="#60BF92">{totalReceitas.total}</InfoDado>}
               <IconTrendingUpInfo color="#ffffff" bg="#60BF92"/>
             </Info>
             <Info>
               <InfoTit>Despesas: </InfoTit>
               <br/>
-              <InfoDado color="#EF5252">R$ 1.000,00</InfoDado>
+              {totalDespesas && <InfoDado color="#EF5252">{totalDespesas.total}</InfoDado>}
               <IconTrendingDownInfo color="#ffffff" bg="#EF5252"/>
             </Info>
           </Infos>

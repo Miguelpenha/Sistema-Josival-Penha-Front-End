@@ -17,14 +17,14 @@ export default function api(url='', config={}) {
 }
 
 export function get(url='', config={}) {
-    const { data, error } = useSWR(url, async url => {
+    const { data, error, mutate } = useSWR(url, async url => {
         const response = await base.get(url, config)
         const data = await response.data
 
         return data
     })
     
-    return { data, error }
+    return { data, error, mutate }
 }
 
 export function post(url='', dataParams={}, config={}) {
