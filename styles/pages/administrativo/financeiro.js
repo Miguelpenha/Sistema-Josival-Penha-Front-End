@@ -1,17 +1,19 @@
 import styled from 'styled-components'
-import { Add as IconAddSVG, TrendingDown as IconTrendingDownSVG, TrendingUp as IconTrendingUpSVG, Label as IconLabelSVG, Description as DescriptionIconSVG, Payment as IconPaymentSVG, SyncAlt as IconSyncAltSVG } from '@material-ui/icons'
-import { Dialog, DialogContent, TextField, Button, Checkbox, Switch } from '@material-ui/core'
+import { Add as IconAddSVG, TrendingDown as IconTrendingDownSVG, TrendingUp as IconTrendingUpSVG, Label as IconLabelSVG, Description as DescriptionIconSVG, Payment as IconPaymentSVG, SyncAlt as IconSyncAltSVG, AccountBalance as IconAccountBalanceSVG } from '@material-ui/icons'
+import { Card, Dialog, DialogContent, TextField, Button, Checkbox, Switch } from '@material-ui/core'
 
 const Container = styled.div`
     display: grid;
-    grid-template-columns: 0.6fr 2.3fr 0.6fr;
+    grid-template-columns: 0.5fr 2.3fr;
     height: 100%;
+    width: 100%;
 `
 
 const Main = styled.main`
     padding: 2%;
     color: black;
-    height: 8%;
+    height: 100%;
+    width: 100%;
 `
 
 const IconAdd = styled(IconAddSVG)`
@@ -73,6 +75,92 @@ const IconSyncAlt = styled(IconSyncAltSVG)`
         margin-right: 15%;
         width: 22%;
         height: auto;
+    }
+`
+
+const Infos = styled.section`
+    padding-top: 5%;
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    padding-right: 2%;
+`
+
+const Info = styled(Card)`
+    background-color: #ffffff;
+    padding: 2%;
+    width: 27%;
+    padding-bottom: 2%;
+    border-radius: 12px;
+    margin-left: 2%;
+`
+
+const InfoTit = styled.span`
+    font-size: 1vw;
+`
+
+const InfoDado = styled.span`
+    display: inline-block;
+    font-size: 2vw;
+    color: ${props => props.color};
+    font-weight: bold;
+    padding-top: 6%;
+`
+
+const IconAccountBalance = styled(IconAccountBalanceSVG)`
+    && {
+        color: ${props => props.color};
+        ${props => {
+            if (props.bg) {
+                return `
+                    border: 5px solid ${props.bg};
+                    border-radius: 50px;
+                    background-color: ${props.bg};
+                `
+            }
+        }}
+        margin-top: 2%;
+        width: 22%;
+        height: auto;
+        float: right;
+    }
+`
+
+const IconTrendingUpInfo = styled(IconTrendingUpSVG)`
+    && {
+        color: ${props => props.color};
+        ${props => {
+            if (props.bg) {
+                return `
+                    border: 5px solid ${props.bg};
+                    border-radius: 50px;
+                    background-color: ${props.bg};
+                `
+            }
+        }}
+        margin-top: 2%;
+        width: 22%;
+        height: auto;
+        float: right;
+    }
+`
+
+const IconTrendingDownInfo = styled(IconTrendingDownSVG)`
+    && {
+        color: ${props => props.color};
+        ${props => {
+            if (props.bg) {
+                return `
+                    border: 5px solid ${props.bg};
+                    border-radius: 50px;
+                    background-color: ${props.bg};
+                `
+            }
+        }}
+        margin-top: 2%;
+        width: 22%;
+        height: auto;
+        float: right;
     }
 `
 
@@ -312,6 +400,13 @@ export {
     IconLabel,
     IconPayment,
     IconSyncAlt,
+    Infos,
+    Info,
+    InfoTit,
+    InfoDado,
+    IconAccountBalance,
+    IconTrendingUpInfo,
+    IconTrendingDownInfo,
     DialogCadasDespesa,
     DialogContentCadasDespesa,
     FormDespesa,
