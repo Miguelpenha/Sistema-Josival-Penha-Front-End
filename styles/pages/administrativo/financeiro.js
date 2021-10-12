@@ -99,6 +99,20 @@ const InputNomeDespesa = styled(TextField)`
     }
 `
 
+const InputNomeReceita = styled(TextField)`
+    && {
+        margin-top: 5%;
+    }
+    
+    & .MuiInput-underline {
+        font-size: 1vw;
+    }
+
+    & .MuiInput-underline:after, .MuiInput-underline:before {
+        border-bottom-color: #5AB55E;
+    }
+`
+
 const InputDespesa = styled(TextField)`
     & input {
         color: #ED3237;
@@ -110,6 +124,20 @@ const InputDespesa = styled(TextField)`
 
     & .MuiInput-underline:after, .MuiInput-underline:before {
         border-bottom-color: #ED3237;
+    }
+`
+
+const InputReceita = styled(TextField)`
+    & input {
+        color: #5AB55E;
+    }
+    
+    & .MuiInput-underline {
+        font-size: 1.5vw;
+    }
+
+    & .MuiInput-underline:after, .MuiInput-underline:before {
+        border-bottom-color: #5AB55E;
     }
 `
 
@@ -137,6 +165,20 @@ const InputDespesaObservação = styled(TextField)`
 
     & .MuiInput-underline:after, .MuiInput-underline:before {
         border-bottom-color: #ED3237;
+    }
+`
+
+const InputReceitaObservação = styled(TextField)`
+    && {
+        margin-top: 5%;
+    }
+    
+    & .MuiInput-underline {
+        font-size: 1vw;
+    }
+
+    & .MuiInput-underline:after, .MuiInput-underline:before {
+        border-bottom-color: #5AB55E;
     }
 `
 
@@ -188,6 +230,16 @@ const InvestimentoDespesa = styled(Switch)`
     }
 `
 
+const InvestimentoReceita = styled(Switch)`
+    & .MuiSwitch-switchBase.Mui-checked {
+        color: #5AB55E;
+    }
+    
+    & .MuiSwitch-switchBase.Mui-checked+.MuiSwitch-track {
+        background-color: #5AB55E;
+    }
+`
+
 const FixaDespesa = styled(Switch)`
     & .MuiSwitch-switchBase.Mui-checked {
         color: #ED3237;
@@ -195,6 +247,16 @@ const FixaDespesa = styled(Switch)`
     
     & .MuiSwitch-switchBase.Mui-checked+.MuiSwitch-track {
         background-color: #ED3237;
+    }
+`
+
+const FixaReceita = styled(Switch)`
+    & .MuiSwitch-switchBase.Mui-checked {
+        color: #5AB55E;
+    }
+    
+    & .MuiSwitch-switchBase.Mui-checked+.MuiSwitch-track {
+        background-color: #5AB55E;
     }
 `
 
@@ -215,6 +277,23 @@ const ButtonSubmitDespesa = styled(Button)`
     }
 `
 
+const ButtonSubmitReceita = styled(Button)`
+    && {
+        float: right;
+        border-radius: 20px;
+        background-color: #5AB55E;
+        font-size: 1vw;
+        width: 30%;
+        margin-top: 6%;
+        margin-bottom: 30%;
+        height: auto;
+    }
+
+    &&:hover {
+        background-color: #408243;
+    }
+`
+
 export { 
     Container,
     Main,
@@ -227,17 +306,23 @@ export {
     DialogContentCadasDespesa,
     FormDespesa,
     InputNomeDespesa,
+    InputNomeReceita,
     InputDespesa,
+    InputReceita,
     RealInputDespesa,
     InputDespesaData,
     InputDespesaObservação,
+    InputReceitaObservação,
     DescriptionIcon,
     CampoCheckBoxsDespesas,
     CheckboxCategoriaDespesa,
     NomeCategoriaDepesaComCor,
     NomeCategoriaDepesaSóCor,
     InvestimentoDespesa,
-    FixaDespesa, 
+    InvestimentoReceita,
+    FixaDespesa,
+    FixaReceita,
     ButtonSubmitDespesa,
+    ButtonSubmitReceita,
     TitCampoCheckBoxDespesa
 }
