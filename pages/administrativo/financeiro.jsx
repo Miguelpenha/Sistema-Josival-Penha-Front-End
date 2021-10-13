@@ -516,6 +516,26 @@ export default function Financeiro() {
     return null
   }
 
+  function ChartReceitasDespesasComCarregamento() {
+    if (totalReceitas && totalDespesas) {
+      return <ChartReceitasDespesas width="500px" height="300px" chartType="PieChart" data={[
+        ['Linguagens', 'Quantidade'],
+        ['Receitas', totalDespesas && totalReceitas && totalReceitas.totalBruto],
+        ['Despesas', totalReceitas && totalDespesas && totalDespesas.totalBruto]
+      ]} options={{
+        colors: ['#5AB55E', '#ED3237'],
+        pieHole: 0.4,
+        title: totalReceitas && totalDespesas && totalReceitas.totalBruto==totalDespesas.totalBruto ? 'Iguais' : totalReceitas.totalBruto>totalDespesas.totalBruto ? 'Receitas' : 'Despesas',
+        titleTextStyle: {
+          color: totalReceitas && totalDespesas && totalReceitas.totalBruto==totalDespesas.totalBruto ? '#009CDE' : totalReceitas.totalBruto>totalDespesas.totalBruto ? '#5AB55E' : '#ED3237',
+          fontSize: 20
+        }
+      }}/>
+    } else {
+      return <Skeleton variant="rectangular" width={500} height={300} style={{marginTop: '3%', borderRadius: '20px'}} animation="wave"/>
+    }
+  }
+
   return (
     <>
       <Head>
@@ -593,18 +613,7 @@ export default function Financeiro() {
               <IconTrendingDownInfo color="#ffffff" bg="#EF5252"/>
             </Info>
           </Infos>
-          <ChartReceitasDespesas width="500px" height="300px" chartType="PieChart" data={[
-            ['Linguagens', 'Quantidade'],
-            ['Receitas', totalDespesas && totalReceitas && totalReceitas.totalBruto],
-            ['Despesas', totalReceitas && totalDespesas && totalDespesas.totalBruto]
-          ]} loader={<div>Carregando...</div>} options={{
-            colors: ['#5AB55E', '#ED3237'],
-            pieHole: 0.4,
-            title: 'asd',
-            titleTextStyle: {
-              color: totalReceitas && totalDespesas && totalReceitas.totalBruto>totalDespesas.totalBruto ? '#5AB55E' : '#ED3237'
-            }
-          }}/>
+          <ChartReceitasDespesasComCarregamento/>
           <Menu anchorEl={fechadoCadas} open={openCadas} onClose={clickCloseCadas} MenuListProps={{
           'aria-labelledby': 'basic-button',
         }} style={{height: '62%', width: '32%'}}>
