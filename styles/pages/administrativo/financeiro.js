@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import { Add as IconAddSVG, TrendingDown as IconTrendingDownSVG, TrendingUp as IconTrendingUpSVG, Label as IconLabelSVG, Description as DescriptionIconSVG, Payment as IconPaymentSVG, SyncAlt as IconSyncAltSVG, AccountBalance as IconAccountBalanceSVG } from '@material-ui/icons'
 import { Card, Dialog, DialogContent, TextField, Button, Checkbox, Switch } from '@material-ui/core'
+import Chart from 'react-google-charts'
 
 const Container = styled.div`
     display: grid;
@@ -391,6 +392,14 @@ const ButtonSubmitReceita = styled(Button)`
     }
 `
 
+const ChartReceitasDespesas = styled(Chart)`
+    margin-top: 7%;
+
+    & svg {
+        border-radius: 20px;
+    }
+`
+
 export { 
     Container,
     Main,
@@ -429,5 +438,6 @@ export {
     FixaReceita,
     ButtonSubmitDespesa,
     ButtonSubmitReceita,
-    TitCampoCheckBoxDespesa
+    TitCampoCheckBoxDespesa,
+    ChartReceitasDespesas
 }

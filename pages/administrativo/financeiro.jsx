@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import nookies from 'nookies'
-import { Container, Main, IconAdd, IconTrendingDown, IconTrendingUp, IconLabel, IconSyncAlt, Infos, Info, InfoTit, InfoDado, IconAccountBalance, IconTrendingUpInfo, IconTrendingDownInfo, DialogCadasDespesa, DialogContentCadasDespesa, InputNomeDespesa, InputNomeReceita, InputDespesa, InputReceita, RealInputDespesa, FormDespesa, InputDespesaObservação, InputReceitaObservação, DescriptionIcon, InputDespesaData, CampoCheckBoxsDespesas, CheckboxCategoriaDespesa, TitCampoCheckBoxDespesa, NomeCategoriaDepesaComCor, NomeCategoriaDepesaSóCor, InvestimentoDespesa, InvestimentoReceita, FixaDespesa, FixaReceita, ButtonSubmitDespesa, ButtonSubmitReceita, IconPayment } from '../../styles/pages/administrativo/financeiro'
+import { Container, Main, IconAdd, IconTrendingDown, IconTrendingUp, IconLabel, IconSyncAlt, Infos, Info, InfoTit, InfoDado, IconAccountBalance, IconTrendingUpInfo, IconTrendingDownInfo, DialogCadasDespesa, DialogContentCadasDespesa, InputNomeDespesa, InputNomeReceita, InputDespesa, InputReceita, RealInputDespesa, FormDespesa, InputDespesaObservação, InputReceitaObservação, DescriptionIcon, InputDespesaData, CampoCheckBoxsDespesas, CheckboxCategoriaDespesa, TitCampoCheckBoxDespesa, NomeCategoriaDepesaComCor, NomeCategoriaDepesaSóCor, InvestimentoDespesa, InvestimentoReceita, FixaDespesa, FixaReceita, ButtonSubmitDespesa, ButtonSubmitReceita, IconPayment, ChartReceitasDespesas } from '../../styles/pages/administrativo/financeiro'
 import { NavOptions, LogoJPNome, Funções, Função, LinkFunção, IconAlunos, IconAcadêmico, IconDashBoard, IconMarketing, IconFinanceiroSele, IconColaboradores, TextFunção } from '../../components/NavTool'
 import Link from 'next/link'
 import { Menu, MenuItem, InputAdornment, Snackbar, Alert, TextField, Divider, Skeleton } from '@material-ui/core'
@@ -8,8 +8,7 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { get } from '../../hooks'
 import api from '../../services/api/base'
-import dynamic from 'next/dynamic'
-const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
+import { Chart } from 'react-google-charts'
 
 export default function Financeiro() {
   const { data: totalReceitas, mutate: mutateTotalReceitas } = get('/financeiro/receitas/total')
@@ -516,21 +515,6 @@ export default function Financeiro() {
     }
     return null
   }
-  
-  const dataGráficoReceitaeDespesa = [
-    {
-      nome: 'Receitas',
-      valor: totalReceitas ? totalReceitas.totalBruto : null,
-      real: totalReceitas ? totalReceitas.total : null,
-      cor: '#60BF92'
-    },
-    {
-      nome: 'Despesas',
-      valor: totalDespesas ? totalDespesas.totalBruto : null,
-      real: totalDespesas ? totalDespesas.total : null,
-      cor: '#EF5252'
-    }
-  ]
 
   return (
     <>
@@ -609,40 +593,18 @@ export default function Financeiro() {
               <IconTrendingDownInfo color="#ffffff" bg="#EF5252"/>
             </Info>
           </Infos>
-          <Chart style={{marginTop: '6%', backgroundColor: '#ffffff', width: 'fit-content', padding: '1%', borderRadius: '15px'}} options={{
-            legend: {
-              fontSize: '15px',
-              labels: {
-                useSeriesColors: true
-              }
-            },
+          <ChartReceitasDespesas width="500px" height="300px" chartType="PieChart" data={[
+            ['Linguagens', 'Quantidade'],
+            ['Receitas', totalDespesas && totalReceitas && totalReceitas.totalBruto],
+            ['Despesas', totalReceitas && totalDespesas && totalDespesas.totalBruto]
+          ]} loader={<div>Carregando...</div>} options={{
             colors: ['#5AB55E', '#ED3237'],
-            labels: [`Receitas ${totalReceitas && totalReceitas.total}`, `Despesas ${totalDespesas && totalDespesas.total}`],
-            plotOptions: {
-              pie: {
-                donut: {
-                  labels: {
-                    show: true,
-                    total: {
-                      show: true,
-                      showAlways: true,
-                      label: totalReceitas && totalDespesas && totalReceitas>totalDespesas ? 'Despesas' : 'Receitas',
-                      fontSize: '18px',
-                      fontFamily: 'Helvetica, Arial, sans-serif',
-                      fontWeight: 400,
-                      color: totalReceitas && totalDespesas && totalReceitas>totalDespesas ? '#ED3237' : '#5AB55E',
-                      formatter() {
-                        return totalReceitas && totalDespesas && totalReceitas>totalDespesas ? totalDespesas.total : totalReceitas.total
-                      }
-                    }
-                  }
-                }
-              }
+            pieHole: 0.4,
+            title: 'asd',
+            titleTextStyle: {
+              color: totalReceitas && totalDespesas && totalReceitas.totalBruto>totalDespesas.totalBruto ? '#5AB55E' : '#ED3237'
             }
-          }} series={[
-            totalReceitas ? totalReceitas.totalBruto : null,
-            totalDespesas ? totalDespesas.totalBruto : null
-          ]} type="donut" width={480}/>
+          }}/>
           <Menu anchorEl={fechadoCadas} open={openCadas} onClose={clickCloseCadas} MenuListProps={{
           'aria-labelledby': 'basic-button',
         }} style={{height: '62%', width: '32%'}}>
