@@ -8,7 +8,8 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { get } from '../../hooks'
 import api from '../../services/api/base'
-import { PieChart, Pie, Cell } from 'recharts'
+import dynamic from 'next/dynamic'
+const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
 export default function Financeiro() {
   const { data: totalReceitas, mutate: mutateTotalReceitas } = get('/financeiro/receitas/total')
@@ -516,7 +517,7 @@ export default function Financeiro() {
     return null
   }
   
-  const data = [
+  const dataGráficoReceitaeDespesa = [
     {
       nome: 'Receitas',
       valor: totalReceitas ? totalReceitas.totalBruto : null,
@@ -530,18 +531,7 @@ export default function Financeiro() {
       cor: '#EF5252'
     }
   ]
-  
-  const RADIAN = Math.PI / 180
-  const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
-    const radius = innerRadius + (outerRadius - innerRadius) * 0.5
-    const x = cx + radius * Math.cos(-midAngle * RADIAN)
-    const y = cy + radius * Math.sin(-midAngle * RADIAN)
-    return (
-      <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
-        {data[index].real}
-      </text>
-    );
-  };
+
   return (
     <>
       <Head>
@@ -619,21 +609,40 @@ export default function Financeiro() {
               <IconTrendingDownInfo color="#ffffff" bg="#EF5252"/>
             </Info>
           </Infos>
-          <PieChart width={400} height={400}>
-            <Pie
-              isAnimationActive={false}
-              data={data}
-              cx="50%"
-              cy="50%"
-              labelLine={false}
-              label={renderCustomizedLabel}
-              outerRadius={80}
-              fill="#8884d8"
-              dataKey="valor"
-            >
-            {data.map((dado, index) => <Cell key={index} fill={dado.cor} />)}
-            </Pie>
-          </PieChart>
+          <Chart style={{marginTop: '6%', backgroundColor: '#ffffff', width: 'fit-content', padding: '1%', borderRadius: '15px'}} options={{
+            legend: {
+              fontSize: '15px',
+              labels: {
+                useSeriesColors: true
+              }
+            },
+            colors: ['#5AB55E', '#ED3237'],
+            labels: [`Receitas ${totalReceitas && totalReceitas.total}`, `Despesas ${totalDespesas && totalDespesas.total}`],
+            plotOptions: {
+              pie: {
+                donut: {
+                  labels: {
+                    show: true,
+                    total: {
+                      show: true,
+                      showAlways: true,
+                      label: totalReceitas && totalDespesas && totalReceitas>totalDespesas ? 'Despesas' : 'Receitas',
+                      fontSize: '18px',
+                      fontFamily: 'Helvetica, Arial, sans-serif',
+                      fontWeight: 400,
+                      color: totalReceitas && totalDespesas && totalReceitas>totalDespesas ? '#ED3237' : '#5AB55E',
+                      formatter() {
+                        return totalReceitas && totalDespesas && totalReceitas>totalDespesas ? totalDespesas.total : totalReceitas.total
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }} series={[
+            totalReceitas ? totalReceitas.totalBruto : null,
+            totalDespesas ? totalDespesas.totalBruto : null
+          ]} type="donut" width={480}/>
           <Menu anchorEl={fechadoCadas} open={openCadas} onClose={clickCloseCadas} MenuListProps={{
           'aria-labelledby': 'basic-button',
         }} style={{height: '62%', width: '32%'}}>
