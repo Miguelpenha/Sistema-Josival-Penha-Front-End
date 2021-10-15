@@ -8,14 +8,13 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { get } from '../../hooks'
 import api from '../../services/api/base'
-import TableDespesas from '../../components/TableDespesas'
-import TableReceitas from '../../components/TableReceitas'
+import TableReceitasDespesas from '../../components/TableReceitasDespesas'
 
 export default function Financeiro() {
   const { data: totalReceitas, mutate: mutateTotalReceitas } = get('/financeiro/receitas/total')
   const { data: totalDespesas, mutate: mutateTotalDespesas } = get('/financeiro/despesas/total')
   const { data: despesas, mutate: mutateDespesas } = get('/financeiro/despesas')
-  const { data: receitas, mutate: mutateReceitas } = get('/financeiro/despesas')
+  const { data: receitas, mutate: mutateReceitas } = get('/financeiro/receitas')
   const { data: saldo, mutate: mutateSaldo } = get('/financeiro/saldo')
   const [fechadoCadas, setFechadoCadas] = useState(null)
   const [alert, setAlert] = useState({
@@ -30,7 +29,7 @@ export default function Financeiro() {
   const [openDialogCadasCategoriasReceitas, setOpenDialogCadasCategoriasReceitas] = useState(false)
   const [openDialogCadasFontesDespesas, setOpenDialogCadasFontesDespesas] = useState(false)
   const [openDialogCadasFontesReceitas, setOpenDialogCadasFontesReceitas] = useState(false)
-  
+  //console.log(receitas && receitas)
   function clickCadas(event) {
     setFechadoCadas(event.currentTarget)
   }
@@ -601,29 +600,26 @@ export default function Financeiro() {
           <IconAdd onClick={clickCadas}/>
           <Infos>
             <Info>
-              <InfoTit>Saldo atual: </InfoTit>
+              <InfoTit>Saldo atual</InfoTit>
               <br/>
               {saldo ? <InfoDado color="#0872FC">{saldo.saldo}</InfoDado> : <Skeleton variant="rectangular" width={`60%`} height={35} style={{display: 'inline-block', borderRadius: '10px', marginTop: '5%'}} animation="wave"/>}
               <IconAccountBalance color="#009CDE" bg="#A7E7FF"/>
             </Info>
             <Info>
-              <InfoTit>Receitas: </InfoTit>
+              <InfoTit>Receitas</InfoTit>
               <br/>
               {totalReceitas ? <InfoDado color="#60BF92">{totalReceitas.total}</InfoDado> : <Skeleton variant="rectangular" width={`60%`} height={35} style={{display: 'inline-block', borderRadius: '10px', marginTop: '5%'}} animation="wave"/>}
               <IconTrendingUpInfo color="#ffffff" bg="#60BF92"/>
             </Info>
             <Info>
-              <InfoTit>Despesas: </InfoTit>
+              <InfoTit>Despesas</InfoTit>
               <br/>
               {totalDespesas ? <InfoDado color="#EF5252">{totalDespesas.total}</InfoDado> : <Skeleton variant="rectangular" width={`60%`} height={35} style={{display: 'inline-block', borderRadius: '10px', marginTop: '5%'}} animation="wave"/>}
               <IconTrendingDownInfo color="#ffffff" bg="#EF5252"/>
             </Info>
           </Infos>
           <ChartReceitasDespesasComCarregamento/>
-          <Tabelas>
-            <TableReceitas rows={receitas && receitas}/>
-            <TableDespesas rows={despesas && despesas}/>
-          </Tabelas>
+          <TableReceitasDespesas receitas={receitas && receitas} despesas={despesas && despesas} saldo={saldo && saldo.saldo}/>
           <Menu anchorEl={fechadoCadas} open={openCadas} onClose={clickCloseCadas} MenuListProps={{
           'aria-labelledby': 'basic-button',
         }} style={{height: '62%', width: '32%'}}>
