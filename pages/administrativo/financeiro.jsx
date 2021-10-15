@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import nookies from 'nookies'
-import { Container, Main, IconAdd, IconTrendingDown, IconTrendingUp, IconLabel, IconSyncAlt, Infos, Info, InfoTit, InfoDado, IconAccountBalance, IconTrendingUpInfo, IconTrendingDownInfo, DialogCadasDespesa, DialogContentCadasDespesa, InputNomeDespesa, InputNomeReceita, InputDespesa, InputReceita, RealInputDespesa, FormDespesa, InputDespesaObservação, InputReceitaObservação, DescriptionIcon, InputDespesaData, CampoCheckBoxsDespesas, CheckboxCategoriaDespesa, TitCampoCheckBoxDespesa, NomeCategoriaDepesaComCor, NomeCategoriaDepesaSóCor, InvestimentoDespesa, InvestimentoReceita, FixaDespesa, FixaReceita, ButtonSubmitDespesa, ButtonSubmitReceita, IconPayment, ChartReceitasDespesas, TableDespesas } from '../../styles/pages/administrativo/financeiro'
+import { Container, Main, IconAdd, IconTrendingDown, IconTrendingUp, IconLabel, IconSyncAlt, Infos, Info, InfoTit, InfoDado, IconAccountBalance, IconTrendingUpInfo, IconTrendingDownInfo, DialogCadasDespesa, DialogContentCadasDespesa, InputNomeDespesa, InputNomeReceita, InputDespesa, InputReceita, RealInputDespesa, FormDespesa, InputDespesaObservação, InputReceitaObservação, DescriptionIcon, InputDespesaData, CampoCheckBoxsDespesas, CheckboxCategoriaDespesa, TitCampoCheckBoxDespesa, NomeCategoriaDepesaComCor, NomeCategoriaDepesaSóCor, InvestimentoDespesa, InvestimentoReceita, FixaDespesa, FixaReceita, ButtonSubmitDespesa, ButtonSubmitReceita, IconPayment, ChartReceitasDespesas, Tabelas } from '../../styles/pages/administrativo/financeiro'
 import { NavOptions, LogoJPNome, Funções, Função, LinkFunção, IconAlunos, IconAcadêmico, IconDashBoard, IconMarketing, IconFinanceiroSele, IconColaboradores, TextFunção } from '../../components/NavTool'
 import Link from 'next/link'
 import { Menu, MenuItem, InputAdornment, Snackbar, Alert, TextField, Divider, Skeleton } from '@material-ui/core'
@@ -8,11 +8,14 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { get } from '../../hooks'
 import api from '../../services/api/base'
-import { DataGrid as Table } from '@mui/x-data-grid'
+import TableDespesas from '../../components/TableDespesas'
+import TableReceitas from '../../components/TableReceitas'
 
 export default function Financeiro() {
   const { data: totalReceitas, mutate: mutateTotalReceitas } = get('/financeiro/receitas/total')
   const { data: totalDespesas, mutate: mutateTotalDespesas } = get('/financeiro/despesas/total')
+  const { data: despesas, mutate: mutateDespesas } = get('/financeiro/despesas')
+  const { data: receitas, mutate: mutateReceitas } = get('/financeiro/despesas')
   const { data: saldo, mutate: mutateSaldo } = get('/financeiro/saldo')
   const [fechadoCadas, setFechadoCadas] = useState(null)
   const [alert, setAlert] = useState({
@@ -67,6 +70,7 @@ export default function Financeiro() {
       setOpenDialogCadasDespesas(false)
       event.preventDefault()
       mutateTotalDespesas('/financeiro/despesas/total')
+      mutateDespesas('/financeiro/despesas')
       mutateSaldo('/financeiro/saldo')
     }
     function limparCampos() {
@@ -307,6 +311,7 @@ export default function Financeiro() {
       setOpenDialogCadasReceitas(false)
       event.preventDefault()
       mutateTotalReceitas('/financeiro/receitas/total')
+      mutateReceitas('/financeiro/receitas')
       mutateSaldo('/financeiro/saldo')
     }
     function limparCampos() {
@@ -529,57 +534,14 @@ export default function Financeiro() {
         titleTextStyle: {
           color: totalReceitas && totalDespesas && totalReceitas.totalBruto==totalDespesas.totalBruto ? '#009CDE' : totalReceitas.totalBruto>totalDespesas.totalBruto ? '#5AB55E' : '#ED3237',
           fontSize: 20
-        }
+        },
+        pieStartAngle: 180
       }}/>
     } else {
       return <Skeleton variant="rectangular" width={500} height={300} style={{marginTop: '3%', borderRadius: '20px'}} animation="wave"/>
     }
   }
-  const columns = [
-    { field: 'id', headerName: 'ID', width: 90 },
-    {
-      field: 'firstName',
-      headerName: 'First name',
-      width: 150,
-      editable: true,
-    },
-    {
-      field: 'lastName',
-      headerName: 'Last name',
-      width: 150,
-      editable: true,
-    },
-    {
-      field: 'age',
-      headerName: 'Age',
-      type: 'number',
-      width: 110,
-      editable: true,
-    },
-    {
-      field: 'fullName',
-      headerName: 'Full name',
-      description: 'This column has a value getter and is not sortable.',
-      sortable: false,
-      width: 160,
-      valueGetter: (params) =>
-        `${params.getValue(params.id, 'firstName') || ''} ${
-          params.getValue(params.id, 'lastName') || ''
-        }`,
-    },
-  ];
-  
-  const rows = [
-    { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-    { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-    { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-    { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-    { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-    { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-    { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-    { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-    { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-  ];
+
   return (
     <>
       <Head>
@@ -658,9 +620,10 @@ export default function Financeiro() {
             </Info>
           </Infos>
           <ChartReceitasDespesasComCarregamento/>
-          <TableDespesas
-            
-          />
+          <Tabelas>
+            <TableReceitas rows={receitas && receitas}/>
+            <TableDespesas rows={despesas && despesas}/>
+          </Tabelas>
           <Menu anchorEl={fechadoCadas} open={openCadas} onClose={clickCloseCadas} MenuListProps={{
           'aria-labelledby': 'basic-button',
         }} style={{height: '62%', width: '32%'}}>
