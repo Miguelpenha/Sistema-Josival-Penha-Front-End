@@ -29,7 +29,7 @@ export default function Financeiro() {
   const [openDialogCadasCategoriasReceitas, setOpenDialogCadasCategoriasReceitas] = useState(false)
   const [openDialogCadasFontesDespesas, setOpenDialogCadasFontesDespesas] = useState(false)
   const [openDialogCadasFontesReceitas, setOpenDialogCadasFontesReceitas] = useState(false)
-  //console.log(receitas && receitas)
+  
   function clickCadas(event) {
     setFechadoCadas(event.currentTarget)
   }
