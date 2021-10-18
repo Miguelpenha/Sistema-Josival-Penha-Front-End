@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { TableCell as TableCellMUI, TableContainer as TableContainerMUi, TableRow as TableRowMUI } from '@material-ui/core'
 
 export const TableContainer = styled(TableContainerMUi)`
@@ -42,18 +42,21 @@ export const TableRowSele = styled(TableRowMUI)`
 `
 
 export const TableCellValue = styled(TableCell)`
-    && {
-        color: ${props => {
-            if (props.receita) {
-                return '#5AB55E'
-            } else if (props.noColor) {
-                return '#000000'
-            } else {
-                return '#ED3237'
-            }
-        }};
-    }
-`
+        && {
+            color: ${props => {
+                if (props.receita) {
+                    return '#5AB55E'
+                } else if (props.noColor) {
+                    return '#000000'
+                } else {
+                    return '#ED3237'
+                }
+            }};
+            ${props => props.bold && css`
+                font-weight: bold;
+            `}
+        }
+    `
 
 export const TableCellValueBorder = styled(TableCellValue)`
     && {
