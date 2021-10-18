@@ -1,10 +1,13 @@
-import { TableContainer, TableCell, TableCellTitle, TableCellValue, TableCellSaldo, TextSaldo, TextSaldoValue, TableRowSele, TableCellValueBorder, TableCellBorder } from './style'
-import { Paper, Table, TableHead, TableRow, TableBody, TableFooter } from '@material-ui/core'
+import { TableContainer, TableCell, TableCellTitle, TableCellValue, TableCellSaldo, TextSaldo, TextSaldoValue, TableRowSele, TableCellValueBorder, TableCellBorder, IconButton } from './style'
+import { Paper, Table, TableHead, TableRow, TableBody, TableFooter, Tooltip } from '@material-ui/core'
+import { Delete as DeleteIcon } from '@material-ui/icons'
 import CheckAnimation from '../../animations/check'
 import NotCheckAnimation from '../../animations/notCheck'
 
-export default function TableReceitasDespesas({ receitas=[], despesas=[], saldo='' }) {
-    if (typeof receitas != 'string' || typeof despesas != 'string') {
+export default function TableReceitasDespesas({ receitas=[], despesas=[], saldo='', onDeleteDespesas }) {
+    console.log(typeof despesas)
+    console.log(typeof receitas)
+    if (typeof receitas != 'string' && typeof despesas != 'string') {
         despesas.map(despesa => {
             despesa.despesa = true
             despesa.criação.sistema = new Date(despesa.criação.sistema)
@@ -14,11 +17,13 @@ export default function TableReceitasDespesas({ receitas=[], despesas=[], saldo=
             receita.criação.sistema = new Date(receita.criação.sistema)
         })
         let rows = [...receitas, ...despesas]
+        
         function sortDate(a, b) {
             return b.criação.sistema - a.criação.sistema
         }
+
         rows.sort(sortDate)
-        
+
         return (
             <TableContainer component={Paper}>
                 <Table size="medium">
@@ -32,12 +37,12 @@ export default function TableReceitasDespesas({ receitas=[], despesas=[], saldo=
                             <TableCellBorder align="center">Criação</TableCellBorder>
                             <TableCellBorder align="center">Investimento</TableCellBorder>
                             <TableCellBorder align="center">Fixa</TableCellBorder>
-                            <TableCell align="center">Observação</TableCell>
+                            <TableCell align="center">Opções</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {rows.map((row, index) => (
-                            <TableRowSele idreceita={row._id} onClick={e => console.log(e.currentTarget.getAttribute('idreceita'))} key={index}>
+                            <TableRowSele key={index}>
                                 <TableCellValue receita={row.receita && 'true'} component="th" scope="col">{row.nome}</TableCellValue>
                                 <TableCellValueBorder bold receita={row.receita && 'true'}>{row.receita ? '+ ' : '- '}{row.preco}</TableCellValueBorder>
                                 <TableCellValueBorder receita={row.receita && 'true'} align="center">{row.criação.data}</TableCellValueBorder>
@@ -48,7 +53,19 @@ export default function TableReceitasDespesas({ receitas=[], despesas=[], saldo=
                                     {row.fixa ? <CheckAnimation/> : <NotCheckAnimation/>}
                                 </TableCellValueBorder>
                                 <TableCellValueBorder align="center">
-                                    {/* {row.observação} */}
+                                    <Tooltip title={
+                                        <span style={{fontSize: '1vw'}}>Excluir essa despessa</span>
+                                    } arrow placement="bottom">
+                                        <IconButton idreceita={row._id} onClick={e => {
+                                            if (row.receita) {
+
+                                            } else {
+                                                onDeleteDespesas(e.currentTarget.getAttribute('idreceita'))
+                                            }
+                                        }}>
+                                            <DeleteIcon sx={{color: '#ED3237'}}/>
+                                        </IconButton>
+                                    </Tooltip>
                                 </TableCellValueBorder>
                             </TableRowSele>
                         ))}

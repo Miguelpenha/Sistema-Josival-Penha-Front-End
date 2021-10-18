@@ -619,7 +619,14 @@ export default function Financeiro() {
             </Info>
           </Infos>
           <ChartReceitasDespesasComCarregamento/>
-          <TableReceitasDespesas receitas={receitas && receitas} despesas={despesas && despesas} saldo={saldo && saldo.saldo}/>
+          <TableReceitasDespesas receitas={receitas && receitas} despesas={despesas && despesas} onDeleteDespesas={id => {
+            mutateTotalDespesas('/financeiro/despesas/total').then()
+            mutateDespesas('/financeiro/despesas').then()
+            mutateSaldo('/financeiro/saldo').then()
+            api.delete(`/financeiro/despesas/${id}`).then(resu => {
+              console.log(resu)
+            })
+          }} saldo={saldo && saldo.saldo}/>
           <Menu anchorEl={fechadoCadas} open={openCadas} onClose={clickCloseCadas} MenuListProps={{
           'aria-labelledby': 'basic-button',
         }} style={{height: '62%', width: '32%'}}>

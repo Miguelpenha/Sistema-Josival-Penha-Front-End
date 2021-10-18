@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components'
-import { TableCell as TableCellMUI, TableContainer as TableContainerMUi, TableRow as TableRowMUI } from '@material-ui/core'
+import { TableCell as TableCellMUI, TableContainer as TableContainerMUi, TableRow as TableRowMUI, IconButton as IconButtonBruto } from '@material-ui/core'
 
 export const TableContainer = styled(TableContainerMUi)`
     && {
@@ -37,7 +37,7 @@ export const TableRowSele = styled(TableRowMUI)`
     &:hover {
         transition-timing-function: linear;
         transition-duration: 0.2s;
-        background-color: #CCCCCC;
+        /* background-color: #CCCCCC; */
     }
 `
 
@@ -81,5 +81,11 @@ export const TextSaldo = styled.span`
 export const TextSaldoValue = styled.span`
     && {
         color: ${props => props.negative ? '#ED3237' : '#5AB55E'};
+    }
+`
+
+export const IconButton = styled(IconButtonBruto)`
+    && {
+        background-color: #FBD6D7;
     }
 `
