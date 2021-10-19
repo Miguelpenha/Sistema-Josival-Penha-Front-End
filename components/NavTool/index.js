@@ -34,6 +34,7 @@ const Funções = styled.ul`
     font-size: 1.4vw;
     margin-top: 15%;
     height: 80%;
+    max-height: 800px;
 `
 
 const Função = styled.li`
