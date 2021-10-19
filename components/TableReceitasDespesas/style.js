@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components'
-import { TableCell as TableCellMUI, TableContainer as TableContainerMUi, TableRow as TableRowMUI, IconButton as IconButtonBruto } from '@material-ui/core'
+import { TableCell as TableCellMUI, TableContainer as TableContainerMUi, TableRow as TableRowMUI, IconButton as IconButtonBruto, Checkbox } from '@material-ui/core'
 
 export const TableContainer = styled(TableContainerMUi)`
     && {
@@ -28,8 +28,18 @@ export const TableCellTitle = styled(TableCell)`
     && {
         color: #0872FC;
         font-size: 2vw;
-        padding-top: 5%;
-        padding-bottom: 5%;
+        padding-top: 3%;
+        padding-bottom: 3%;
+    }
+`
+
+export const TableCellTitleBorder = styled(TableCell)`
+    && {
+        color: #0872FC;
+        font-size: 2vw;
+        padding-top: 3%;
+        padding-bottom: 3%;
+        border-left: 1px solid #E0E0E0;
     }
 `
 
@@ -87,5 +97,11 @@ export const TextSaldoValue = styled.span`
 export const IconButton = styled(IconButtonBruto)`
     && {
         background-color: #FBD6D7;
+    }
+`
+
+export const CheckBox = styled(Checkbox)`
+    & svg {
+        font-size: 1.5vw;
     }
 `

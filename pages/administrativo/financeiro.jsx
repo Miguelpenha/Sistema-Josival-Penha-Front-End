@@ -625,6 +625,27 @@ export default function Financeiro() {
               mutateDespesas('/financeiro/despesas')
               mutateSaldo('/financeiro/saldo')
             })
+          }} onDeleteReceitas={id => {
+            api.delete(`/financeiro/receitas/${id}`).then(() => {
+              mutateTotalReceitas('/financeiro/receitas/total')
+              mutateReceitas('/financeiro/receitas')
+              mutateSaldo('/financeiro/saldo')
+            })
+          }} onDeleteTodos={() => {
+            despesas.map(despesa => {
+              api.delete(`/financeiro/despesas/${despesa._id}`).then(() => {
+                mutateTotalDespesas('/financeiro/despesas/total')
+                mutateDespesas('/financeiro/despesas')
+                mutateSaldo('/financeiro/saldo')
+              })
+            })
+            receitas.map(receita => {
+              api.delete(`/financeiro/receitas/${receita._id}`).then(() => {
+                mutateTotalReceitas('/financeiro/receitas/total')
+                mutateReceitas('/financeiro/receitas')
+                mutateSaldo('/financeiro/saldo')
+              })
+            })
           }} saldo={saldo && saldo.saldo}/>
           <Menu anchorEl={fechadoCadas} open={openCadas} onClose={clickCloseCadas} MenuListProps={{
           'aria-labelledby': 'basic-button',
