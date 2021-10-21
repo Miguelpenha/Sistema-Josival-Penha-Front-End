@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react'
-import { TableContainer, TableCell, TableCellTitle, TableCellValue, TableCellSaldo, TextSaldo, TextSaldoValue, TableRowSele, TableCellValueBorder, TableCellBorder, IconButton, CheckBox, TableCellTitleBorder } from './style'
+import { TableContainer, TableCell, TableCellTitle, TableCellSaldo, TextSaldo, TextSaldoValue, TableRowSele, TableCellValueBorder, TableCellBorder, IconButton, TableCellTitleBorder } from './style'
 import { Paper, Table, TableHead, TableRow, TableBody, TableFooter, Tooltip } from '@material-ui/core'
 import { Delete as DeleteIcon } from '@material-ui/icons'
 import CheckAnimation from '../../animations/check'
@@ -46,7 +45,7 @@ export default function TableReceitasDespesas({ receitas=[], despesas=[], saldo=
                         <TableRow>
                             <TableCellBorder align="center">Nome</TableCellBorder>
                             <TableCellBorder align="center">Preço</TableCellBorder>
-                            <TableCellBorder align="center">Criação</TableCellBorder>
+                            <TableCellBorder align="center">Data</TableCellBorder>
                             <TableCellBorder align="center">Investimento</TableCellBorder>
                             <TableCellBorder align="center">Fixa</TableCellBorder>
                             <TableCell align="center">Opções</TableCell>
@@ -57,7 +56,7 @@ export default function TableReceitasDespesas({ receitas=[], despesas=[], saldo=
                             <TableRowSele key={index}>
                                 <TableCellValueBorder receita={row.receita && 'true'} component="th" scope="col">{row.nome}</TableCellValueBorder>
                                 <TableCellValueBorder bold receita={row.receita && 'true'}>{row.receita ? '+ ' : '- '}{row.preco}</TableCellValueBorder>
-                                <TableCellValueBorder receita={row.receita && 'true'} align="center">{row.criação.data}</TableCellValueBorder>
+                                <TableCellValueBorder receita={row.receita && 'true'} align="center">{row.data}</TableCellValueBorder>
                                 <TableCellValueBorder noColor align="center">
                                     {row.investimento ? <CheckAnimation/> : <NotCheckAnimation/>}
                                 </TableCellValueBorder>
