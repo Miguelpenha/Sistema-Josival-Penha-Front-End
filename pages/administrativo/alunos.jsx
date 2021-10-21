@@ -2,14 +2,16 @@ import Head from 'next/head'
 import nookies from 'nookies'
 import { Container, Main, AlunosBanner, InfoAdminContainer, InfoAdmin, InfoAdminTit, InfoAdminDado, IconInfoTotalAlunos, IconInfoTotalTurmas, IconInfoMédiaAlunos, IconInfoOcupação, NavInfos } from '../../styles/pages/administrativo/alunos'
 import { NavOptions, LogoJPNome, Funções, Função, LinkFunção, IconAlunosSele, IconFinanceiro, IconAcadêmico, IconDashBoard, IconMarketing, IconColaboradores, TextFunção } from '../../components/NavTool'
-import api from '../../hooks'
+import { get } from '../../hooks'
 import Skeleton from '@material-ui/core/Skeleton'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import TableAlunos from '../../components/TableAlunos'
 
 export default function Alunos() {
-  const { data: quantAlunos } = api('/alunos?quant=true')
-  const { data: quantTurmas } = api('/turmas?quant=true')
+  const { data: quantAlunos, mutate: mutateQuantAlunos } = get('/alunos?quant=true')
+  const { data: quantTurmas, mutate: mutateQuantTurmas } = get('/turmas?quant=true')
+  const { data: alunos, mutate: mutateAlunos } = get('/alunos')
   const [mediaAlunos, setMediaAlunos] = useState(undefined)
   const [mediaOcupação, setMediaOcupação] = useState(undefined)
 
@@ -105,6 +107,21 @@ export default function Alunos() {
               <IconInfoOcupação/>
             </InfoAdmin>
           </InfoAdminContainer>
+          <TableAlunos
+            alunos={alunos && alunos}
+            onDeleteAlunos={id => {
+              api.delete(`/alunos/${id}`).then()
+              mutateAlunos('/alunos')
+              mutateQuantAlunos('/alunos?quant=true')
+              mutateQuantTurmas('/turmas?quant=true')
+            }}
+            onDeleteAlunosTodos={() => {
+              alunos.map(aluno => api.delete(`/alunos/${aluno._id}`).then())
+              mutateAlunos('/alunos')
+              mutateQuantAlunos('/alunos?quant=true')
+              mutateQuantTurmas('/turmas?quant=true')
+            }}
+          />
         </Main>
         <NavInfos>
           asd2

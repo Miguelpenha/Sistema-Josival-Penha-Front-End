@@ -6,14 +6,14 @@ const base = axios.create({
 })
 
 export default function api(url='', config={}) {
-    const { data, error } = useSWR(url, async url => {
+    const { data, error, mutate } = useSWR(url, async url => {
         const response = await base(url, config)
         const data = await response.data
 
         return data
     })
 
-    return { data, error }
+    return { data, error, mutate }
 }
 
 export function get(url='', config={}) {
