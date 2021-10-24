@@ -9,5 +9,8 @@ const withNextEnv = nextEnv()
 module.exports = withNextEnv({
     withImages: withImages({
         esModule: true
-    })
+    }),
+    images: {
+        domains: [process.env.NEXT_STATIC_URL_IMAGES]
+    }
 })

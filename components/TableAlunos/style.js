@@ -1,14 +1,16 @@
 import styled, { css } from 'styled-components'
 import { TableCell as TableCellMUI, TableContainer as TableContainerMUi, TableRow as TableRowMUI, IconButton as IconButtonBruto, Checkbox } from '@material-ui/core'
+import Image from 'next/image'
 
 export const TableContainer = styled(TableContainerMUi)`
     && {
-        width: 85%;
+        width: 95%;
         border-radius: 20px;
         display: block;
         margin-left: auto;
         margin-right: auto;
         margin-top: 5%;
+        margin-bottom: 5%;
     }
 `
 
@@ -85,14 +87,36 @@ export const TextSaldoValue = styled.span`
     }
 `
 
-export const IconButton = styled(IconButtonBruto)`
+export const IconButtonExclu = styled(IconButtonBruto)`
     && {
         background-color: #FBD6D7;
+    }
+`
+
+export const IconButtonMais = styled(IconButtonBruto)`
+    && {
+        background-color: #bfbfbfd3;
     }
 `
 
 export const CheckBox = styled(Checkbox)`
     & svg {
         font-size: 1.5vw;
+    }
+`
+
+export const LinkFotoAluno = styled.a`
+    &:hover {
+        img {
+            border-radius: 20%;
+        }
+    }
+`
+
+export const FotoAluno = styled(Image)`
+    border-radius: 50%;
+
+    &:hover {
+        border-radius: 20%;
     }
 `

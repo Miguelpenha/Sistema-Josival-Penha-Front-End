@@ -649,7 +649,7 @@ export default function Financeiro() {
           }} saldo={saldo && saldo.saldo}/>
           <Menu anchorEl={fechadoCadas} open={openCadas} onClose={clickCloseCadas} MenuListProps={{
           'aria-labelledby': 'basic-button',
-        }} style={{height: '62%', width: '32%'}}>
+          }} style={{height: '62%', width: '32%'}}>
             <MenuItem disableRipple style={{height: '40%', width: '100%', fontSize: '1.2vw', color: '#C6C6C6'}} onClick={() => {
               setOpenDialogCadasDespesas(true)
               setFechadoCadas(false)
