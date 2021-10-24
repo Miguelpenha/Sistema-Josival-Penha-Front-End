@@ -1,4 +1,4 @@
-import { TableContainer, TableCell, TableCellTitle, TableCellTotal, TextTotal, TableRowSele, TableCellValueBorder, TableCellBorder, IconButtonExclu, IconButtonMais, TableCellTitleBorder, LinkFotoAluno, FotoAluno } from './style'
+import { TableContainer, TableCell, TableCellTitle, TableCellTotal, TextTotal, TableRowSele, TableCellValueBorder, TableCellBorder, IconButtonExclu, IconButtonMais, TableCellTitleBorder, LinkFotoAluno, FotoAluno, LimitText } from './style'
 import { Paper, Table, TableHead, TableRow, TableBody, TableFooter, Tooltip, Menu, MenuItem, Checkbox } from '@material-ui/core'
 import { Delete as DeleteIcon, MoreVert as MoreVertIcon } from '@material-ui/icons'
 import CheckAnimation from '../../animations/check'
@@ -54,12 +54,18 @@ export default function TableReceitasDespesas({ alunos=[], onDeleteAlunos, onDel
                     </LinkFotoAluno>
                 </Link>
             </TableCellValueBorder>
-            <TableCellValueBorder component="th" scope="col" align="center">{row.nome}</TableCellValueBorder>
+            <TableCellValueBorder component="th" scope="col" align="center">
+                <LimitText limit={16}>{row.nome}</LimitText>
+            </TableCellValueBorder>
             <TableCellValueBorder component="th" scope="col" align="center">{row.turma}</TableCellValueBorder>
             <TableCellValueBorder component="th" scope="col" align="center">
-                <span>{row.responsavel1}</span>
+                <span>
+                    <LimitText limit={16}>{row.responsavel1}</LimitText>
+                </span>
                 <hr color="#cecece"/>
-                <span>{row.responsavel2}</span>
+                <span>
+                    <LimitText limit={16}>{row.responsavel2}</LimitText>
+                </span>
             </TableCellValueBorder>
             <TableCellValueBorder component="th" scope="col" align="center">{row.nascimento} ({calcIdade(row.nascimento, new Date())} anos)</TableCellValueBorder>
             <TableCellValueBorder align="center">
@@ -122,7 +128,7 @@ export default function TableReceitasDespesas({ alunos=[], onDeleteAlunos, onDel
                             <TableCellBorder>
                                 <Checkbox sx={{'& .MuiSvgIcon-root': {fontSize: 24}}}/>
                             </TableCellBorder>
-                            <TableCellBorder/>
+                            <TableCellBorder align="center">Foto</TableCellBorder>
                             <TableCellBorder align="center">Nome</TableCellBorder>
                             <TableCellBorder align="center">Turma</TableCellBorder>
                             <TableCellBorder align="center">Responsáveis</TableCellBorder>
