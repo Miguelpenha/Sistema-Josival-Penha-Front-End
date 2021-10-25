@@ -8,12 +8,12 @@ import { useState } from 'react'
 export default function TableReceitasDespesas({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos }) {
     if (typeof alunos != 'string' && alunos) {
         const [selecionados, setSelecionados] = useState(['asd'])
-        alunos.map(aluno => aluno.criacao.sistema = new Date(aluno.criacao.sistema))
+        alunos.map(aluno => aluno.criação.sistema = new Date(aluno.criação.sistema))
 
         let rows = alunos
         
         function sortDate(a, b) {
-            return b.criacao.sistema - a.criacao.sistema
+            return b.criação.sistema - a.criação.sistema
         }
         
         rows.sort(sortDate)
@@ -60,11 +60,11 @@ export default function TableReceitasDespesas({ alunos=[], onDeleteAlunos, onDel
             <TableCellValueBorder component="th" scope="col" align="center">{row.turma}</TableCellValueBorder>
             <TableCellValueBorder component="th" scope="col" align="center">
                 <span>
-                    <LimitText limit={16}>{row.responsavel1}</LimitText>
+                    <LimitText limit={16}>{row.responsável1}</LimitText>
                 </span>
                 <hr color="#cecece"/>
                 <span>
-                    <LimitText limit={16}>{row.responsavel2}</LimitText>
+                    <LimitText limit={16}>{row.responsável2}</LimitText>
                 </span>
             </TableCellValueBorder>
             <TableCellValueBorder component="th" scope="col" align="center">{row.nascimento} ({calcIdade(row.nascimento, new Date())} anos)</TableCellValueBorder>

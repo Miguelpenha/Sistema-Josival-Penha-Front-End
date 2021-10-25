@@ -113,7 +113,7 @@ export const LinkFotoAluno = styled.a`
     }
 `
 
-export const FotoAluno = styled(Image)`
+export const FotoAluno = styled.img`
     border-radius: 50%;
 
     &:hover {

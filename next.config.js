@@ -11,6 +11,6 @@ module.exports = withNextEnv({
         esModule: true
     }),
     images: {
-        domains: [process.env.NEXT_STATIC_URL_IMAGES]
+        domains: process.env.NEXT_STATIC_URL_IMAGES.split(',')
     }
 })
