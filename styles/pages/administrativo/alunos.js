@@ -3,20 +3,21 @@ import IconInfoTotalAlunosSVG from '../../../assets/icon-info-total-alunos.svg'
 import IconInfoTotalTurmasSVG from '../../../assets/icon-info-total-turmas.svg'
 import IconInfoMédiaAlunosSVG from '../../../assets/icon-info-média-alunos.svg'
 import IconInfoOcupaçãoSVG from '../../../assets/icon-info-ocupação.svg'
+import { Add as IconAddSVG, AddCircleOutline as IconAddCircleOutlineSVG } from '@material-ui/icons'
 
-const Container = styled.div`
+export const Container = styled.div`
     display: grid;
     grid-template-columns: 0.6fr 2.3fr 0.6fr;
     height: 100%;
 `
 
 
-const Main = styled.main`
+export const Main = styled.main`
     padding: 2%;
     color: black;
 `
 
-const AlunosBanner = styled.div`
+export const AlunosBanner = styled.div`
     background-color: #0872FC;
     width: 60%;
     height: auto;
@@ -31,14 +32,14 @@ const AlunosBanner = styled.div`
     margin-left: 1.6%;
 `
 
-const InfoAdminContainer = styled.div`
+export const InfoAdminContainer = styled.div`
     display: flex;
     height: fit-content;
     flex-direction: row;
     justify-content: space-around;
 `
 
-const InfoAdmin = styled.div`
+export const InfoAdmin = styled.div`
     display: inline-block;
     background-color: #ffffff;
     width: 22%;
@@ -48,13 +49,13 @@ const InfoAdmin = styled.div`
     border-radius: 0.5vw;
 `
 
-const InfoAdminTit = styled.h2`
+export const InfoAdminTit = styled.h2`
     width: 100%;
     font-weight: 100;
     color: #525051;
 `
 
-const InfoAdminDado = styled.span`
+export const InfoAdminDado = styled.span`
     width: 45%;
     font-weight: bolder;
     font-size: 3vw;
@@ -62,35 +63,35 @@ const InfoAdminDado = styled.span`
     height: auto;
 `
 
-const IconInfoTotalAlunos = styled(IconInfoTotalAlunosSVG)`
+export const IconInfoTotalAlunos = styled(IconInfoTotalAlunosSVG)`
     width: 45%;
     float: right;
     margin-top: 2%;
     height: fit-content;
 `
 
-const IconInfoTotalTurmas = styled(IconInfoTotalTurmasSVG)`
+export const IconInfoTotalTurmas = styled(IconInfoTotalTurmasSVG)`
     width: 45%;
     float: right;
     margin-top: 2%;
     height: fit-content;
 `
 
-const IconInfoMédiaAlunos = styled(IconInfoMédiaAlunosSVG)`
+export const IconInfoMédiaAlunos = styled(IconInfoMédiaAlunosSVG)`
     width: 45%;
     float: right;
     margin-top: 2%;
     height: fit-content;
 `
 
-const IconInfoOcupação = styled(IconInfoOcupaçãoSVG)`
+export const IconInfoOcupação = styled(IconInfoOcupaçãoSVG)`
     width: 45%;
     float: right;
     margin-top: 2%;
     height: fit-content;
 `
 
-const NavInfos = styled.nav`
+export const NavInfos = styled.nav`
     padding: 5%;
     background-color: #ffffff;
     border-top-left-radius: 2.5vw;
@@ -98,17 +99,29 @@ const NavInfos = styled.nav`
     color: black;
 `
 
-export { 
-    Container,
-    Main,
-    AlunosBanner,
-    InfoAdminContainer,
-    InfoAdmin,
-    InfoAdminTit,
-    InfoAdminDado,
-    IconInfoTotalAlunos,
-    IconInfoTotalTurmas,
-    IconInfoMédiaAlunos,
-    IconInfoOcupação,
-    NavInfos
-}
+export const IconAdd = styled(IconAddSVG)`
+    && {
+        width: 6%;
+        height: auto;
+        color: #ffffff;
+        background-color: #6A54ED;
+        border-radius: 50%;
+        border: 2px solid #6A54ED;
+        cursor: pointer;
+        margin-top: 4%;
+    }
+
+    &:hover {
+        background-color: #9C59FF;
+        border-color: #9C59FF;
+    }
+`
+
+export const IconAddCircleOutline = styled(IconAddCircleOutlineSVG)`
+    && {
+        color: ${props => props.color};
+        margin-right: 15%;
+        width: 22%;
+        height: auto;
+    }
+`

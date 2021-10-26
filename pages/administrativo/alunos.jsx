@@ -1,12 +1,13 @@
 import Head from 'next/head'
 import nookies from 'nookies'
-import { Container, Main, AlunosBanner, InfoAdminContainer, InfoAdmin, InfoAdminTit, InfoAdminDado, IconInfoTotalAlunos, IconInfoTotalTurmas, IconInfoMédiaAlunos, IconInfoOcupação, NavInfos } from '../../styles/pages/administrativo/alunos'
+import { Container, Main, AlunosBanner, InfoAdminContainer, InfoAdmin, InfoAdminTit, InfoAdminDado, IconInfoTotalAlunos, IconInfoTotalTurmas, IconInfoMédiaAlunos, IconInfoOcupação, NavInfos, IconAdd, IconAddCircleOutline } from '../../styles/pages/administrativo/alunos'
 import { NavOptions, LogoJPNome, Funções, Função, LinkFunção, IconAlunosSele, IconFinanceiro, IconAcadêmico, IconDashBoard, IconMarketing, IconColaboradores, TextFunção } from '../../components/NavTool'
 import { get } from '../../hooks'
 import Skeleton from '@material-ui/core/Skeleton'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import TableAlunos from '../../components/TableAlunos'
+import { Menu, MenuItem } from '@material-ui/core'
 
 export default function Alunos() {
   const { data: quantAlunos, mutate: mutateQuantAlunos } = get('/alunos?quant=true')
@@ -14,6 +15,16 @@ export default function Alunos() {
   const { data: alunos, mutate: mutateAlunos } = get('/alunos')
   const [mediaAlunos, setMediaAlunos] = useState(undefined)
   const [mediaOcupação, setMediaOcupação] = useState(undefined)
+  const [fechadoCadas, setFechadoCadas] = useState(null)
+  const openCadas = Boolean(fechadoCadas)
+
+  function clickCloseCadas() {
+    setFechadoCadas(null)
+  }
+
+  function clickCadas(event) {
+    setFechadoCadas(event.currentTarget)
+  }
 
   useEffect(() => {
     if (quantTurmas && quantAlunos) {
@@ -107,6 +118,17 @@ export default function Alunos() {
               <IconInfoOcupação/>
             </InfoAdmin>
           </InfoAdminContainer>
+          <IconAdd onClick={clickCadas}/>
+          <Menu anchorEl={fechadoCadas} open={openCadas} onClose={clickCloseCadas} MenuListProps={{
+          'aria-labelledby': 'basic-button',
+          }} style={{height: '62%', width: '32%'}}>
+            <MenuItem disableRipple style={{height: '40%', width: '100%', fontSize: '1.2vw', color: '#C6C6C6'}} onClick={() => 
+              setFechadoCadas(false)
+            }>
+              <IconAddCircleOutline color="#0872FC"/>
+              Despesa
+            </MenuItem>
+          </Menu>
           <TableAlunos
             alunos={alunos && alunos}
             onDeleteAlunos={id => {
