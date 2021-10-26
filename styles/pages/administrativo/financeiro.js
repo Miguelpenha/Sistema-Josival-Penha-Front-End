@@ -92,7 +92,7 @@ const Info = styled(Card)`
     padding: 2%;
     width: 27%;
     padding-bottom: 2%;
-    border-radius: 12px;
+    border-radius: 25px;
     margin-left: 2%;
 `
 
