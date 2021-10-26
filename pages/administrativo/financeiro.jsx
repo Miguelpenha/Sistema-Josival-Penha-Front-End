@@ -3,7 +3,8 @@ import nookies from 'nookies'
 import { Container, Main, IconAdd, IconTrendingDown, IconTrendingUp, IconLabel, IconSyncAlt, Infos, Info, InfoTit, InfoDado, IconAccountBalance, IconTrendingUpInfo, IconTrendingDownInfo, DialogCadasDespesa, DialogContentCadasDespesa, InputNomeDespesa, InputNomeReceita, InputDespesa, InputReceita, RealInputDespesa, FormDespesa, InputDespesaObservação, InputReceitaObservação, DescriptionIcon, InputDespesaData, CampoCheckBoxsDespesas, CheckboxCategoriaDespesa, TitCampoCheckBoxDespesa, NomeCategoriaDepesaComCor, NomeCategoriaDepesaSóCor, InvestimentoDespesa, InvestimentoReceita, FixaDespesa, FixaReceita, ButtonSubmitDespesa, ButtonSubmitReceita, IconPayment, ChartReceitasDespesas } from '../../styles/pages/administrativo/financeiro'
 import { NavOptions, LogoJPNome, Funções, Função, LinkFunção, IconAlunos, IconAcadêmico, IconDashBoard, IconMarketing, IconFinanceiroSele, IconColaboradores, TextFunção } from '../../components/NavTool'
 import Link from 'next/link'
-import { Menu, MenuItem, InputAdornment, Snackbar, Alert, TextField, Divider, Skeleton } from '@material-ui/core'
+import { Menu, MenuItem, InputAdornment, Snackbar, Alert, TextField, Divider, Skeleton, SpeedDialAction, SpeedDialIcon, SpeedDial } from '@material-ui/core'
+import { TrendingDown as TrendingDownIcon, Label as LabelIcon, Payment as PaymentIcon, TrendingUp as TrendingUpIcon } from '@material-ui/icons'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { get } from '../../hooks'
@@ -37,6 +38,63 @@ export default function Financeiro() {
   function clickCloseCadas() {
     setFechadoCadas(null)
   }
+
+  const actions = [
+    {
+      icon: <TrendingDownIcon sx={{color: '#ED3237'}}/>,
+      name: 'Despesa',
+      onClick: () => {
+        setOpenDialogCadasDespesas(true)
+        setFechadoCadas(false)
+      },
+      color: '#ED3237'
+    },
+    {
+      icon: <LabelIcon sx={{color: '#ED3237'}}/>,
+      name: 'Categoria',
+      onClick: () => {
+        setOpenDialogCadasCategoriasDespesas(true)
+        setFechadoCadas(false)
+      },
+      color: '#ED3237'
+    },
+    {
+      icon: <PaymentIcon sx={{color: '#ED3237'}}/>,
+      name: 'Fonte',
+      onClick: () => {
+        setOpenDialogCadasFontesDespesas(true)
+        setFechadoCadas(false)
+      },
+      color: '#ED3237'
+    },
+    {
+      icon: <TrendingUpIcon sx={{color: '#5AB55E'}}/>,
+      name: 'Receita',
+      onClick: () => {
+        setOpenDialogCadasReceitas(true)
+        setFechadoCadas(false)
+      },
+      color: '#5AB55E'
+    },
+    {
+      icon: <LabelIcon sx={{color: '#5AB55E'}}/>,
+      name: 'Categoria',
+      onClick: () => {
+        setOpenDialogCadasCategoriasReceitas(true)
+        setFechadoCadas(false)
+      },
+      color: '#5AB55E'
+    },
+    {
+      icon: <PaymentIcon sx={{color: '#5AB55E'}}/>,
+      name: 'Fonte',
+      onClick: () => {
+        setOpenDialogCadasFontesReceitas(true)
+        setFechadoCadas(false)
+      },
+      color: '#5AB55E'
+    }
+  ]
 
   function DialogCadasDespesas({ open }) {
     const { data: categoriasDespesas } = get('/financeiro/despesas/categorias')
@@ -597,7 +655,42 @@ export default function Financeiro() {
           </Funções>
         </NavOptions>
         <Main>
-          <IconAdd onClick={clickCadas}/>
+        <div style={{position: 'relative'}}>
+            <SpeedDial
+              direction="down"
+              ariaLabel="SpeedDial basic example"
+              sx={{position: 'absolute'}}
+              icon={<SpeedDialIcon sx={{'& .MuiSpeedDialIcon-icon': {
+                width: '50%',
+                height: 'auto'
+              }}}/>}
+            >
+              {actions.map((action) => (
+                <SpeedDialAction
+                  key={action.name}
+                  icon={action.icon}
+                  tooltipOpen
+                  tooltipTitle={action.name}
+                  tooltipPlacement="right"
+                  sx={{
+                    '& .MuiSpeedDialAction-staticTooltipLabel': {
+                      backgroundColor: '#ffffff',
+                      color: `${action.color}`,
+                      fontSize: '1.2vw',
+                      padding: '15%',
+                      borderRadius: '15px'
+                    },
+                    '& .MuiSpeedDialAction-fab, & .MuiSpeedDialAction-fab:hover': {
+                      backgroundColor: '#ffffff',
+                      color: '#EFEFEF'
+                    }
+                  }}
+                  onClick={action.onClick}
+                />
+              ))}
+            </SpeedDial>
+          </div>
+          {/* <IconAdd onClick={clickCadas}/> */}
           <Infos>
             <Info>
               <InfoTit>Saldo atual</InfoTit>
@@ -692,13 +785,6 @@ export default function Financeiro() {
             }}>
               <IconPayment color="#5AB55E"/>
               Fonte
-            </MenuItem>
-            <Divider/>
-            <MenuItem disableRipple style={{height: '40%', width: '100%', fontSize: '1.2vw', color: '#C6C6C6'}} onClick={() => {
-              setFechadoCadas(false)
-            }}>
-              <IconSyncAlt color="#0872FC"/>
-              Transferência
             </MenuItem>
           </Menu>
           <Snackbar anchorOrigin={{
