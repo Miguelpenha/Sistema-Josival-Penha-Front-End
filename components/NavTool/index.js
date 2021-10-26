@@ -13,14 +13,14 @@ import IconFinanceiroSeleSVG from '../../assets/icon-nav-admin-financeiro-sele.s
 import IconColaboradoresSVG from '../../assets/icon-nav-admin-financeiro.svg'
 import IconColaboradoresSeleSVG from '../../assets/icon-nav-admin-financeiro-sele.svg'
 
-const NavOptions = styled.nav`
+export const NavOptions = styled.nav`
     background-color: #ffffff;
     border-top-right-radius: 2.5vw;
     border-bottom-right-radius: 2.5vw;
     height: 100%;
 `
 
-const LogoJPNome = styled(LogoJPNomeSemStyle)`
+export const LogoJPNome = styled(LogoJPNomeSemStyle)`
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -29,7 +29,7 @@ const LogoJPNome = styled(LogoJPNomeSemStyle)`
     height: auto;
 `
 
-const Funções = styled.ul`
+export const Funções = styled.ul`
     height: auto;
     font-size: 1.4vw;
     margin-top: 15%;
@@ -37,7 +37,7 @@ const Funções = styled.ul`
     max-height: 800px;
 `
 
-const Função = styled.li`
+export const Função = styled.li`
     color: ${props => props.selected ? '#000000;' :'#9D9D9D;'};
     font-weight: ${props => props.selected ? '500;' :'200;'};
     width: 80%;
@@ -50,7 +50,7 @@ const Função = styled.li`
     height: 10%;
 `
 
-const LinkFunção = styled.a`
+export const LinkFunção = styled.a`
     color: #9D9D9D;
     text-decoration: none;
     width: auto;
@@ -71,99 +71,78 @@ const LinkFunção = styled.a`
     }
 `
 
-const IconAlunos = styled(IconAlunosSVG)`
+export const IconAlunos = styled(IconAlunosSVG)`
     width: 25%;
     margin-right: 4%;
     height: auto;
 `
 
-const IconAlunosSele = styled(IconAlunosSeleSVG)`
+export const IconAlunosSele = styled(IconAlunosSeleSVG)`
     width: 25%;
     margin-right: 4%;
     height: auto;
 `
 
-const IconAcadêmico = styled(IconAcadêmicoSVG)`
+export const IconAcadêmico = styled(IconAcadêmicoSVG)`
     width: 25%;
     margin-right: 4%;
     height: auto;
 `
 
-const IconAcadêmicoSele = styled(IconAcadêmicoSeleSVG)`
+export const IconAcadêmicoSele = styled(IconAcadêmicoSeleSVG)`
     width: 25%;
     margin-right: 4%;
     height: auto;
 `
 
-const IconDashBoard = styled(IconDashBoardSVG)`
+export const IconDashBoard = styled(IconDashBoardSVG)`
     width: 25%;
     margin-right: 4%;
     height: auto;
 `
 
-const IconDashBoardSele = styled(IconDashBoardSeleSVG)`
+export const IconDashBoardSele = styled(IconDashBoardSeleSVG)`
     width: 25%;
     margin-right: 4%;
     height: auto;
 `
 
-const IconMarketing = styled(IconMarketingSVG)`
+export const IconMarketing = styled(IconMarketingSVG)`
     width: 25%;
     margin-right: 4%;
     height: auto;
 `
 
-const IconMarketingSele = styled(IconMarketingSeleSVG)`
+export const IconMarketingSele = styled(IconMarketingSeleSVG)`
     width: 25%;
     margin-right: 4%;
     height: auto;
 `
 
-const IconFinanceiro = styled(IconFinanceiroSVG)`
+export const IconFinanceiro = styled(IconFinanceiroSVG)`
     width: 25%;
     margin-right: 4%;
     height: auto;
 `
 
-const IconFinanceiroSele = styled(IconFinanceiroSeleSVG)`
+export const IconFinanceiroSele = styled(IconFinanceiroSeleSVG)`
     width: 25%;
     margin-right: 4%;
     height: auto;
 `
 
-const IconColaboradores = styled(IconColaboradoresSVG)`
+export const IconColaboradores = styled(IconColaboradoresSVG)`
     width: 25%;
     margin-right: 4%;
     height: auto;
 `
 
-const IconColaboradoresSele = styled(IconColaboradoresSeleSVG)`
+export const IconColaboradoresSele = styled(IconColaboradoresSeleSVG)`
     width: 25%;
     margin-right: 4%;
     height: auto;
 `
 
-const TextFunção = styled.span`
+export const TextFunção = styled.span`
     align-self: center;
 `
-
-export { 
-    NavOptions,
-    LogoJPNome,
-    Funções,
-    Função,
-    LinkFunção,
-    IconAlunos,
-    IconAlunosSele,
-    IconAcadêmico,
-    IconAcadêmicoSele,
-    IconDashBoard,
-    IconDashBoardSele,
-    IconMarketing,
-    IconMarketingSele,
-    IconFinanceiro,
-    IconFinanceiroSele,
-    IconColaboradores,
-    IconColaboradoresSele,
-    TextFunção
-}
