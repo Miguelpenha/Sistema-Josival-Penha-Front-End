@@ -7,7 +7,8 @@ import Skeleton from '@material-ui/core/Skeleton'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import TableAlunos from '../../components/TableAlunos'
-import { Menu, MenuItem } from '@material-ui/core'
+import { SpeedDial, SpeedDialAction, SpeedDialIcon } from '@material-ui/core'
+import { Add as AddIcon } from '@material-ui/icons'
 
 export default function Alunos() {
   const { data: quantAlunos, mutate: mutateQuantAlunos } = get('/alunos?quant=true')
@@ -15,16 +16,6 @@ export default function Alunos() {
   const { data: alunos, mutate: mutateAlunos } = get('/alunos')
   const [mediaAlunos, setMediaAlunos] = useState(undefined)
   const [mediaOcupação, setMediaOcupação] = useState(undefined)
-  const [fechadoCadas, setFechadoCadas] = useState(null)
-  const openCadas = Boolean(fechadoCadas)
-
-  function clickCloseCadas() {
-    setFechadoCadas(null)
-  }
-
-  function clickCadas(event) {
-    setFechadoCadas(event.currentTarget)
-  }
 
   useEffect(() => {
     if (quantTurmas && quantAlunos) {
@@ -32,6 +23,16 @@ export default function Alunos() {
       setMediaOcupação(parseFloat((Number(quantAlunos.quant)*Number(quantTurmas.quant))/100).toFixed(2))
     }
   }, [quantAlunos, quantTurmas])
+
+  const actions = [
+    {
+      icon: <AddIcon/>,
+      name: 'Cadastrar aluno',
+      onClick: () => {
+        console.log('clicou')
+      }
+    }
+  ]
   
   return (
     <>
@@ -92,7 +93,7 @@ export default function Alunos() {
           <AlunosBanner>
             Alunos
           </AlunosBanner>
-          <InfoAdminContainer>
+          <InfoAdminContainer style={{paddingBottom: '9%'}}>
             <InfoAdmin>
               <InfoAdminTit>Total de Alunos</InfoAdminTit>
               {!quantAlunos && <Skeleton variant="rectangular" width={`20%`} height={35} style={{display: 'inline-block', borderRadius: '10px', marginTop: '5%'}} animation="wave"/>}
@@ -118,17 +119,37 @@ export default function Alunos() {
               <IconInfoOcupação/>
             </InfoAdmin>
           </InfoAdminContainer>
-          <IconAdd onClick={clickCadas}/>
-          <Menu anchorEl={fechadoCadas} open={openCadas} onClose={clickCloseCadas} MenuListProps={{
-          'aria-labelledby': 'basic-button',
-          }} style={{height: '62%', width: '32%'}}>
-            <MenuItem disableRipple style={{height: '40%', width: '100%', fontSize: '1.2vw', color: '#C6C6C6'}} onClick={() => 
-              setFechadoCadas(false)
-            }>
-              <IconAddCircleOutline color="#0872FC"/>
-              Despesa
-            </MenuItem>
-          </Menu>
+          <div style={{position: 'relative'}}>
+            <SpeedDial
+              ariaLabel="SpeedDial basic example"
+              sx={{position: 'absolute', bottom: 2.8, left: 12}}
+              icon={<SpeedDialIcon sx={{'& .MuiSpeedDialIcon-icon': {
+                width: '50%',
+                height: 'auto'
+              }}}/>}
+            >
+              {actions.map((action) => (
+                <SpeedDialAction
+                  key={action.name}
+                  icon={action.icon}
+                  tooltipOpen
+                  tooltipTitle={action.name}
+                  tooltipPlacement="right"
+                  sx={{
+                    '& .MuiSpeedDialAction-staticTooltipLabel': {
+                      backgroundColor: '#0872FC',
+                      color: '#ffffff'
+                    },
+                    '& .MuiSpeedDialAction-fab, & .MuiSpeedDialAction-fab:hover': {
+                      backgroundColor: '#0872FC',
+                      color: '#ffffff'
+                    }
+                  }}
+                  onClick={action.onClick}
+                />
+              ))}
+            </SpeedDial>
+          </div>
           <TableAlunos
             alunos={alunos && alunos}
             onDeleteAlunos={id => {
