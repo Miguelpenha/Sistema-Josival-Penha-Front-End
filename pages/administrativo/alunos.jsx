@@ -1,19 +1,20 @@
 import Head from 'next/head'
 import nookies from 'nookies'
-import { Container, Main, AlunosBanner, InfoAdminContainer, InfoAdmin, InfoAdminTit, InfoAdminDado, IconInfoTotalAlunos, IconInfoTotalTurmas, IconInfoMédiaAlunos, IconInfoOcupação, NavInfos, IconAdd, IconAddCircleOutline } from '../../styles/pages/administrativo/alunos'
+import { Container, Main, AlunosBanner, InfoAdminContainer, InfoAdmin, InfoAdminTit, InfoAdminDado, IconInfoTotalAlunos, IconInfoTotalTurmas, IconInfoMédiaAlunos, IconInfoOcupação, NavInfos } from '../../styles/pages/administrativo/alunos'
 import { NavOptions, LogoJPNome, Funções, Função, LinkFunção, IconAlunosSele, IconFinanceiro, IconAcadêmico, IconDashBoard, IconMarketing, IconColaboradores, TextFunção } from '../../components/NavTool'
 import { get } from '../../hooks'
-import Skeleton from '@material-ui/core/Skeleton'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import TableAlunos from '../../components/TableAlunos'
-import { SpeedDial, SpeedDialAction, SpeedDialIcon } from '@material-ui/core'
+import TableTurmas from '../../components/TableTurmas'
+import { SpeedDial, SpeedDialAction, SpeedDialIcon, Skeleton } from '@material-ui/core'
 import { Add as AddIcon } from '@material-ui/icons'
 
 export default function Alunos() {
   const { data: quantAlunos, mutate: mutateQuantAlunos } = get('/alunos?quant=true')
   const { data: quantTurmas, mutate: mutateQuantTurmas } = get('/turmas?quant=true')
   const { data: alunos, mutate: mutateAlunos } = get('/alunos')
+  const { data: turmas, mutate: mutateTurmas } = get('/turmas')
   const [mediaAlunos, setMediaAlunos] = useState(undefined)
   const [mediaOcupação, setMediaOcupação] = useState(undefined)
 
@@ -150,21 +151,36 @@ export default function Alunos() {
               ))}
             </SpeedDial>
           </div>
-          <TableAlunos
+          {alunos ? <TableAlunos
             alunos={alunos && alunos}
             onDeleteAlunos={id => {
               api.delete(`/alunos/${id}`).then()
               mutateAlunos('/alunos')
               mutateQuantAlunos('/alunos?quant=true')
-              mutateQuantTurmas('/turmas?quant=true')
             }}
             onDeleteAlunosTodos={() => {
               alunos.map(aluno => api.delete(`/alunos/${aluno._id}`).then())
               mutateAlunos('/alunos')
               mutateQuantAlunos('/alunos?quant=true')
-              mutateQuantTurmas('/turmas?quant=true')
             }}
-          />
+          /> : <Skeleton variant="rectangular" width={`85.5%`} height={`50%`} style={{display: 'block', marginLeft: 'auto', marginRight: 'auto', borderRadius: '20px', marginTop: '5%'}} animation="wave"/>}
+          {turmas ? <TableTurmas
+            turmas={turmas && turmas}
+            onDeleteTurmas={id => {
+              api.delete(`/turmas/${id}`).then()
+              mutateTurmas('/turmas')
+              mutateQuantTurmas('/turmas?quant=true')
+              mutateAlunos('/alunos')
+              mutateQuantAlunos('/alunos?quant=true')
+            }}
+            onDeleteTurmasTodos={() => {
+              turmas.map(turma => api.delete(`/turmas/${turma._id}`).then())
+              mutateTurmas('/turmas')
+              mutateQuantTurmas('/turmas?quant=true')
+              mutateAlunos('/alunos')
+              mutateQuantAlunos('/alunos?quant=true')
+            }}
+          /> : <Skeleton variant="rectangular" width={`85.5%`} height={`50%`} style={{display: 'block', marginLeft: 'auto', marginRight: 'auto', borderRadius: '20px', marginTop: '5%'}} animation="wave"/>}
         </Main>
         <NavInfos>
           asd2

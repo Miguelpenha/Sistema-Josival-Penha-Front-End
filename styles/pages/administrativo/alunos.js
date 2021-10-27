@@ -47,6 +47,7 @@ export const InfoAdmin = styled.div`
     margin-top: 5%;
     padding: 1.2%;
     border-radius: 0.5vw;
+    border-radius: 20px;
 `
 
 export const InfoAdminTit = styled.h2`
