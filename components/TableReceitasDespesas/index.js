@@ -29,7 +29,7 @@ export default function TableReceitasDespesas({ receitas=[], despesas=[], saldo=
                 <Table size="medium">
                     <TableHead>
                         <TableRow>
-                            <TableCellTitle align="center" scope="col" colSpan={5}>Resumo</TableCellTitle>
+                            <TableCellTitle align="center" scope="col" colSpan={6}>Resumo</TableCellTitle>
                             <TableCellTitleBorder align="center" scope="col" colSpan={1}>
                                 <Tooltip title={
                                     <span style={{fontSize: '1vw'}}>Excluir itens</span>
@@ -46,6 +46,7 @@ export default function TableReceitasDespesas({ receitas=[], despesas=[], saldo=
                             <TableCellBorder align="center">Nome</TableCellBorder>
                             <TableCellBorder align="center">Preço</TableCellBorder>
                             <TableCellBorder align="center">Data</TableCellBorder>
+                            <TableCellBorder align="center">Categorias</TableCellBorder>
                             <TableCellBorder align="center">Investimento</TableCellBorder>
                             <TableCellBorder align="center">Fixa</TableCellBorder>
                             <TableCell align="center">Opções</TableCell>
@@ -57,6 +58,11 @@ export default function TableReceitasDespesas({ receitas=[], despesas=[], saldo=
                                 <TableCellValueBorder receita={row.receita && 'true'} component="th" scope="col">{row.nome}</TableCellValueBorder>
                                 <TableCellValueBorder bold receita={row.receita && 'true'}>{row.receita ? '+ ' : '- '}{row.preco}</TableCellValueBorder>
                                 <TableCellValueBorder receita={row.receita && 'true'} align="center">{row.data}</TableCellValueBorder>
+                                <TableCellValueBorder receita={row.receita && 'true'} align="center">
+                                    {row.categorias.map(categoria => {
+                                        return <span style={{}}>{categoria}</span>
+                                    })}
+                                </TableCellValueBorder>
                                 <TableCellValueBorder noColor align="center">
                                     {row.investimento ? <CheckAnimation/> : <NotCheckAnimation/>}
                                 </TableCellValueBorder>
@@ -83,7 +89,7 @@ export default function TableReceitasDespesas({ receitas=[], despesas=[], saldo=
                     </TableBody>
                     <TableFooter>
                         <TableRow>
-                            <TableCellSaldo align="center" colSpan={6}>
+                            <TableCellSaldo align="center" colSpan={7}>
                                 <TextSaldo negative={saldo.includes('-')}>Saldo</TextSaldo>
                                 {saldo.includes('-') ?
                                     <TextSaldoValue negative={true}>
