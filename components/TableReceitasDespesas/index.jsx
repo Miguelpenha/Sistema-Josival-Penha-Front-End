@@ -3,6 +3,7 @@ import { Paper, Table, TableHead, TableRow, TableBody, TableFooter, Tooltip } fr
 import { Delete as DeleteIcon } from '@material-ui/icons'
 import CheckAnimation from '../../animations/check'
 import NotCheckAnimation from '../../animations/notCheck'
+import { get } from '../../hooks'
 
 export default function TableReceitasDespesas({ receitas=[], despesas=[], saldo='', onDeleteDespesas, onDeleteReceitas, onDeleteTodos }) {
     if (typeof receitas != 'string' && typeof despesas != 'string') {
@@ -47,6 +48,7 @@ export default function TableReceitasDespesas({ receitas=[], despesas=[], saldo=
                             <TableCellBorder align="center">Preço</TableCellBorder>
                             <TableCellBorder align="center">Data</TableCellBorder>
                             <TableCellBorder align="center">Categorias</TableCellBorder>
+                            <TableCellBorder align="center">Fontes</TableCellBorder>
                             <TableCellBorder align="center">Investimento</TableCellBorder>
                             <TableCellBorder align="center">Fixa</TableCellBorder>
                             <TableCell align="center">Opções</TableCell>
@@ -58,10 +60,31 @@ export default function TableReceitasDespesas({ receitas=[], despesas=[], saldo=
                                 <TableCellValueBorder receita={row.receita && 'true'} component="th" scope="col">{row.nome}</TableCellValueBorder>
                                 <TableCellValueBorder bold receita={row.receita && 'true'}>{row.receita ? '+ ' : '- '}{row.preco}</TableCellValueBorder>
                                 <TableCellValueBorder receita={row.receita && 'true'} align="center">{row.data}</TableCellValueBorder>
-                                <TableCellValueBorder receita={row.receita && 'true'} align="center">
-                                    {row.categorias.map(categoria => {
-                                        return <span style={{}}>{categoria}</span>
-                                    })}
+                                <TableCellValueBorder align="center">
+                                    <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'left', alignItems: 'center'}}>
+                                        {row.categorias.map(id => {
+                                            const { data: categoria } = get(`/financeiro/${row.receita ? 'receitas' : 'despesas'}/categorias/${id}`)
+                                            
+                                            return (
+                                                <span key={id} style={{backgroundColor: categoria && categoria.cor, padding: '5%', color: '#ffffff', borderRadius: '25px', margin: '1%'}}>
+                                                    {categoria && categoria.nome}
+                                                </span>
+                                            )
+                                        })}
+                                    </div>
+                                </TableCellValueBorder>
+                                <TableCellValueBorder align="center">
+                                    <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'left', alignItems: 'center'}}>
+                                        {row.fontes.map(id => {
+                                            const { data: fonte } = get(`/financeiro/${row.receita ? 'receitas' : 'despesas'}/fontes/${id}`)
+                                            
+                                            return (
+                                                <span key={id} style={{backgroundColor: fonte && fonte.cor, padding: '5%', color: '#ffffff', borderRadius: '25px', margin: '1%'}}>
+                                                    {fonte && fonte.nome}
+                                                </span>
+                                            )
+                                        })}
+                                    </div>
                                 </TableCellValueBorder>
                                 <TableCellValueBorder noColor align="center">
                                     {row.investimento ? <CheckAnimation/> : <NotCheckAnimation/>}
