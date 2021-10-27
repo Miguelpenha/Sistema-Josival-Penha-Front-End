@@ -5,7 +5,7 @@ import CheckAnimation from '../../animations/check'
 import NotCheckAnimation from '../../animations/notCheck'
 import Link from 'next/link'
 import { useState } from 'react'
-export default function TableReceitasDespesas({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos }) {
+export default function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos }) {
     if (typeof alunos != 'string' && alunos) {
         const [selecionados, setSelecionados] = useState(['asd'])
         alunos.map(aluno => aluno.criação.sistema = new Date(aluno.criação.sistema))
