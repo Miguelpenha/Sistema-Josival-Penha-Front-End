@@ -30,7 +30,7 @@ export default function TableReceitasDespesas({ receitas=[], despesas=[], saldo=
                 <Table size="medium">
                     <TableHead>
                         <TableRow>
-                            <TableCellTitle align="center" scope="col" colSpan={6}>Resumo</TableCellTitle>
+                            <TableCellTitle align="center" scope="col" colSpan={7}>Resumo</TableCellTitle>
                             <TableCellTitleBorder align="center" scope="col" colSpan={1}>
                                 <Tooltip title={
                                     <span style={{fontSize: '1vw'}}>Excluir itens</span>
@@ -112,7 +112,7 @@ export default function TableReceitasDespesas({ receitas=[], despesas=[], saldo=
                     </TableBody>
                     <TableFooter>
                         <TableRow>
-                            <TableCellSaldo align="center" colSpan={7}>
+                            <TableCellSaldo align="center" colSpan={8}>
                                 <TextSaldo negative={saldo.includes('-')}>Saldo</TextSaldo>
                                 {saldo.includes('-') ?
                                     <TextSaldoValue negative={true}>
