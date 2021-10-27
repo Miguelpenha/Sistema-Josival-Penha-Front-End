@@ -66,7 +66,7 @@ export default function TableReceitasDespesas({ receitas=[], despesas=[], saldo=
                                             const { data: categoria } = get(`/financeiro/${row.receita ? 'receitas' : 'despesas'}/categorias/${id}`)
                                             
                                             return (
-                                                <span key={id} style={{backgroundColor: categoria && categoria.cor, padding: '5%', color: '#ffffff', borderRadius: '25px', margin: '1%'}}>
+                                                <span key={id} style={{backgroundColor: categoria && categoria.cor, padding: '5%', color: '#ffffff', borderRadius: '15px', margin: '1%'}}>
                                                     {categoria && categoria.nome}
                                                 </span>
                                             )
@@ -79,7 +79,7 @@ export default function TableReceitasDespesas({ receitas=[], despesas=[], saldo=
                                             const { data: fonte } = get(`/financeiro/${row.receita ? 'receitas' : 'despesas'}/fontes/${id}`)
                                             
                                             return (
-                                                <span key={id} style={{backgroundColor: fonte && fonte.cor, padding: '5%', color: '#ffffff', borderRadius: '25px', margin: '1%'}}>
+                                                <span key={id} style={{backgroundColor: fonte && fonte.cor, padding: '5%', color: '#ffffff', borderRadius: '15px', margin: '1%'}}>
                                                     {fonte && fonte.nome}
                                                 </span>
                                             )
