@@ -68,6 +68,7 @@ export default function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosT
                 </span>
             </TableCellValueBorder>
             <TableCellValueBorder component="th" scope="col" align="center">{row.nascimento} ({calcIdade(row.nascimento, new Date())} anos)</TableCellValueBorder>
+            <TableCellValueBorder component="th" scope="col" align="center">{row.situação}</TableCellValueBorder>
             <TableCellValueBorder align="center">
                 <Tooltip title={
                     <span style={{fontSize: '1vw'}}>Excluir essa despessa</span>
@@ -113,7 +114,7 @@ export default function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosT
                 <Table size="medium">
                     <TableHead>
                         <TableRow>
-                            <TableCellTitle align="center" scope="col" colSpan={6}>Alunos</TableCellTitle>
+                            <TableCellTitle align="center" scope="col" colSpan={7}>Alunos</TableCellTitle>
                             <TableCellTitleBorder align="center" scope="col" colSpan={1}>
                                 <Tooltip title={
                                     <span style={{fontSize: '1vw'}}>Excluir itens</span>
@@ -133,6 +134,7 @@ export default function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosT
                             <TableCellBorder align="center">Turma</TableCellBorder>
                             <TableCellBorder align="center">Responsáveis</TableCellBorder>
                             <TableCellBorder align="center">Nascimento</TableCellBorder>
+                            <TableCellBorder align="center">Situação</TableCellBorder>
                             <TableCell align="center">Opções</TableCell>
                         </TableRow>
                     </TableHead>
@@ -143,7 +145,7 @@ export default function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosT
                     </TableBody>
                     <TableFooter>
                         <TableRow>
-                            <TableCellTotal align="center" colSpan={7}>
+                            <TableCellTotal align="center" colSpan={8}>
                                 <TextTotal>{rows.length}{rows.length === 1 ? ' aluno' : ' alunos'}</TextTotal>
                             </TableCellTotal>
                         </TableRow>
