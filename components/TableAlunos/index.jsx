@@ -1,6 +1,6 @@
 import { TableContainer, TableCell, TableCellTitle, TableCellTotal, TextTotal, TableRowSele, TableCellValueBorder, TableCellBorder, IconButtonExclu, IconButtonMais, TableCellTitleBorder, LinkFotoAluno, FotoAluno, LimitText } from './style'
 import { Paper, Table, TableHead, TableRow, TableBody, TableFooter, Tooltip, Menu, MenuItem, Checkbox } from '@material-ui/core'
-import { Delete as DeleteIcon, MoreVert as MoreVertIcon } from '@material-ui/icons'
+import { Delete as DeleteIcon, MoreVert as MoreVertIcon, Download as DownloadIcon } from '@material-ui/icons'
 import CheckAnimation from '../../animations/check'
 import NotCheckAnimation from '../../animations/notCheck'
 import Link from 'next/link'
@@ -73,7 +73,7 @@ export default function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosT
                 <Tooltip title={
                     <span style={{fontSize: '1vw'}}>Excluir essa despessa</span>
                 } arrow placement="bottom">
-                    <IconButtonExclu  style={{right: '10%'}} onClick={() => onDeleteAlunos(row._id)}>
+                    <IconButtonExclu bg="#FBD6D7" style={{right: '10%'}} onClick={() => onDeleteAlunos(row._id)}>
                         <DeleteIcon sx={{color: '#ED3237'}}/>
                     </IconButtonExclu>
                 </Tooltip>
@@ -106,7 +106,6 @@ export default function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosT
                 </MenuItem>
             </Menu>
         </TableRowSele>
-        
         }
         
         return (
@@ -114,13 +113,20 @@ export default function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosT
                 <Table size="medium">
                     <TableHead>
                         <TableRow>
-                            <TableCellTitle align="center" scope="col" colSpan={7}>Alunos</TableCellTitle>
-                            <TableCellTitleBorder align="center" scope="col" colSpan={1}>
+                            <TableCellTitle align="center" scope="col" colSpan={6}>Alunos</TableCellTitle>
+                            <TableCellTitleBorder align="center" scope="col" colSpan={2}>
                                 <Tooltip title={
                                     <span style={{fontSize: '1vw'}}>Excluir itens</span>
                                 } arrow placement="bottom">
-                                    <IconButtonExclu onClick={() => onDeleteAlunosTodos()}>
+                                    <IconButtonExclu style={{right: '10%'}} bg="#FBD6D7" onClick={() => onDeleteAlunosTodos()}>
                                         <DeleteIcon sx={{color: '#ED3237'}}/>
+                                    </IconButtonExclu>
+                                </Tooltip>
+                                <Tooltip title={
+                                    <span style={{fontSize: '1vw'}}>Baixar planilha de alunos</span>
+                                } arrow placement="bottom">
+                                    <IconButtonExclu style={{left: '10%'}} bg="#0872fc5a" onClick={() => onDeleteAlunosTodos()}>
+                                        <DownloadIcon sx={{color: '#0872FC'}}/>
                                     </IconButtonExclu>
                                 </Tooltip>
                             </TableCellTitleBorder>

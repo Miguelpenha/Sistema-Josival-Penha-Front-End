@@ -1,6 +1,5 @@
 import styled, { css } from 'styled-components'
 import { TableCell as TableCellMUI, TableContainer as TableContainerMUi, TableRow as TableRowMUI, IconButton as IconButtonBruto, Checkbox } from '@material-ui/core'
-import Image from 'next/image'
 
 export const TableContainer = styled(TableContainerMUi)`
     && {
@@ -89,7 +88,7 @@ export const TextSaldoValue = styled.span`
 
 export const IconButtonExclu = styled(IconButtonBruto)`
     && {
-        background-color: #FBD6D7;
+        background-color: ${props => props.bg};
     }
 `
 
