@@ -712,7 +712,7 @@ export default function Financeiro() {
             </Info>
           </Infos>
           <ChartReceitasDespesasComCarregamento/>
-          <TableReceitasDespesas receitas={receitas && receitas} despesas={despesas && despesas} onDeleteDespesas={id => {
+          {receitas && despesas ? <TableReceitasDespesas receitas={receitas && receitas} despesas={despesas && despesas} onDeleteDespesas={id => {
             api.delete(`/financeiro/despesas/${id}`).then(() => {
               mutateTotalDespesas('/financeiro/despesas/total')
               mutateDespesas('/financeiro/despesas')
@@ -739,7 +739,7 @@ export default function Financeiro() {
                 mutateSaldo('/financeiro/saldo')
               })
             })
-          }} saldo={saldo && saldo.saldo}/>
+          }} saldo={saldo && saldo.saldo}/> : <Skeleton variant="rectangular" width={`85.5%`} height={`50%`} style={{display: 'block', marginLeft: 'auto', marginRight: 'auto', borderRadius: '20px', marginTop: '5%'}} animation="wave"/>}
           <Menu anchorEl={fechadoCadas} open={openCadas} onClose={clickCloseCadas} MenuListProps={{
           'aria-labelledby': 'basic-button',
           }} style={{height: '62%', width: '32%'}}>
