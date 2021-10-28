@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components'
-import { TableCell as TableCellMUI, TableContainer as TableContainerMUi, TableRow as TableRowMUI, IconButton as IconButtonBruto, Checkbox } from '@material-ui/core'
+import { TableCell as TableCellMUI, TableContainer as TableContainerMUi, TableRow as TableRowMUI, IconButton as IconButtonBruto, Checkbox, Dialog, TextField, Button } from '@material-ui/core'
 
 export const TableContainer = styled(TableContainerMUi)`
     && {
@@ -135,3 +135,52 @@ export function LimitText({ children='', limit=0, points=true }) {
         return children
     }
 }
+
+export const DialogGerarDeclaração = styled(Dialog).attrs({
+    fullWidth: true
+})`
+    && {
+        height: 100%;
+    }
+`
+
+export const FormGerarDeclaração = styled.form`
+    && {
+        padding-bottom: 15%;
+    }
+`
+
+export const InputPorcentagemGerarDeclaração = styled(TextField)`
+    && {
+        margin-top: 5%;
+        width: 20%;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    & .MuiInput-underline {
+        font-size: 1vw;
+    }
+
+    & .MuiInput-underline:after, .MuiInput-underline:before {
+        border-bottom-color: #0872FC;
+    }
+`
+
+export const ButtonSubmitGerarDeclaração = styled(Button)`
+    && {
+        float: right;
+        border-radius: 20px;
+        background-color: #0872FC;
+        font-size: 1vw;
+        width: 30%;
+        margin-top: 6%;
+        margin-bottom: 30%;
+        height: auto;
+    }
+
+    &&:hover {
+        background-color: #0852FF;
+    }
+`

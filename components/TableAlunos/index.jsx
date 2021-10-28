@@ -1,11 +1,14 @@
-import { TableContainer, TableCell, TableCellTitle, TableCellTotal, TextTotal, TableRowSele, TableCellValueBorder, TableCellBorder, IconButtonExclu, IconButtonMais, TableCellTitleBorder, LinkFotoAluno, FotoAluno, LimitText } from './style'
-import { Paper, Table, TableHead, TableRow, TableBody, TableFooter, Tooltip, Menu, MenuItem, Checkbox } from '@material-ui/core'
+import { TableContainer, TableCell, TableCellTitle, TableCellTotal, TextTotal, TableRowSele, TableCellValueBorder, TableCellBorder, IconButtonExclu, IconButtonMais, TableCellTitleBorder, LinkFotoAluno, FotoAluno, LimitText, DialogGerarDeclaração, FormGerarDeclaração, InputPorcentagemGerarDeclaração, ButtonSubmitGerarDeclaração } from './style'
+import { Paper, Table, TableHead, TableRow, TableBody, TableFooter, Tooltip, Menu, MenuItem, Checkbox, DialogContent } from '@material-ui/core'
 import { Delete as DeleteIcon, MoreVert as MoreVertIcon, Download as DownloadIcon } from '@material-ui/icons'
 import CheckAnimation from '../../animations/check'
 import NotCheckAnimation from '../../animations/notCheck'
 import Link from 'next/link'
 import { useState } from 'react'
-export default function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos }) {
+import { useForm } from 'react-hook-form'
+import Router from 'next/router'
+
+export default function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, setAlert }) {
     if (typeof alunos != 'string' && alunos) {
         const [selecionados, setSelecionados] = useState(['asd'])
         alunos.map(aluno => aluno.criação.sistema = new Date(aluno.criação.sistema))
@@ -38,10 +41,57 @@ export default function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosT
 
         function Row({row, index}) {
             const [fechadoCadas, setFechadoCadas] = useState(null)
+            const [openDialogGerarDeclaração, setOpenDialogGerarDeclaração] = useState(false)
+
             function clickCloseCadas() {
                 setFechadoCadas(null)
             }
+
             const openCadas = Boolean(fechadoCadas)
+
+            function ModelGerarDeclaração({ open }) {
+                const { register, handleSubmit, reset } = useForm()
+
+                async function enviarDeclaração(data, event) {
+                    let { porcentagem: porcentagemData } = data
+
+                    setAlert({
+                        open: true,
+                        text: 'Declaração gerada com sucesso!',
+                        variant: 'filled',
+                        severity: 'success'
+                    })
+                    limparCampos()
+                    setOpenDialogGerarDeclaração(false)
+                    event.preventDefault()
+                    setTimeout(() => window.open(`${process.env.NEXT_STATIC_API_URL}/alunos/exportar/${row._id}/${porcentagemData}`, '_blank'), 500)
+                }
+                function limparCampos() {
+                    reset()
+                }
+                if (open) {
+                    return (
+                        <DialogGerarDeclaração open={true} onClose={() => {
+                            setOpenDialogGerarDeclaração(false)
+                            limparCampos()
+                        }}>
+                            <DialogContent>
+                                <FormGerarDeclaração onSubmit={handleSubmit(enviarDeclaração)}>
+                                    <InputPorcentagemGerarDeclaração required {...register('porcentagem')} placeholder="Porcentagem de aulas sem faltas" type="number" InputProps={{
+                                        inputProps: {
+                                            max: 100,
+                                            min: 0
+                                        }
+                                    }} defaultValue={98} name="porcentagem" variant="standard"/>
+                                    <span style={{fontSize: '0.8vw'}}>Porcentagem de aulas sem faltas</span>
+                                    <ButtonSubmitGerarDeclaração style={{marginBottom: '0%'}} type="submit" variant="contained">Gerar</ButtonSubmitGerarDeclaração>
+                                </FormGerarDeclaração>
+                            </DialogContent>
+                        </DialogGerarDeclaração>
+                    )
+                }
+                return null
+            }
             
             return <TableRowSele key={index} onClick={() => clickSele(row._id)}>
                 <TableCellValueBorder component="th" scope="col" align="center">
@@ -84,7 +134,7 @@ export default function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosT
                         <MoreVertIcon sx={{color: '#ffffff'}}/>
                     </IconButtonMais>
                 </Tooltip>
-                
+                <ModelGerarDeclaração open={openDialogGerarDeclaração}/>
             </TableCellValueBorder>
             <Menu
                 anchorEl={fechadoCadas} 
@@ -95,15 +145,23 @@ export default function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosT
                 }}
                 style={{height: '62%', width: '32%'}}
             >
-                <MenuItem 
-                    disableRipple 
-                    style={{height: '40%', width: '100%', fontSize: '1.2vw', color: '#C6C6C6'}}
-                    onClick={() => {
-                        setFechadoCadas(false)
-                    }}
-                >
-                    Transferência
-                </MenuItem>
+                <Tooltip title={
+                        <span style={{fontSize: '1vw'}}>Baixar planilha de alunos</span>
+                } arrow placement="bottom">
+                    <MenuItem 
+                        disableRipple 
+                        style={{height: '40%', width: '100%', fontSize: '1.2vw', color: '#C6C6C6'}}
+                        onClick={() => {
+                            setFechadoCadas(false)
+                            setOpenDialogGerarDeclaração(true)
+                        }}
+                    >
+                        <IconButtonExclu style={{marginRight: '3%'}} bg="#0872fc5a">
+                            <DownloadIcon sx={{color: '#0872FC'}}/>
+                        </IconButtonExclu>
+                        Baixar declaração do aluno
+                    </MenuItem>
+                </Tooltip>
             </Menu>
         </TableRowSele>
         }
@@ -113,20 +171,13 @@ export default function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosT
                 <Table size="medium">
                     <TableHead>
                         <TableRow>
-                            <TableCellTitle align="center" scope="col" colSpan={6}>Alunos</TableCellTitle>
-                            <TableCellTitleBorder align="center" scope="col" colSpan={2}>
+                            <TableCellTitle align="center" scope="col" colSpan={7}>Alunos</TableCellTitle>
+                            <TableCellTitleBorder align="center" scope="col" colSpan={1}>
                                 <Tooltip title={
                                     <span style={{fontSize: '1vw'}}>Excluir itens</span>
                                 } arrow placement="bottom">
                                     <IconButtonExclu style={{right: '10%'}} bg="#FBD6D7" onClick={() => onDeleteAlunosTodos()}>
                                         <DeleteIcon sx={{color: '#ED3237'}}/>
-                                    </IconButtonExclu>
-                                </Tooltip>
-                                <Tooltip title={
-                                    <span style={{fontSize: '1vw'}}>Baixar planilha de alunos</span>
-                                } arrow placement="bottom">
-                                    <IconButtonExclu style={{left: '10%'}} bg="#0872fc5a" onClick={() => onDeleteAlunosTodos()}>
-                                        <DownloadIcon sx={{color: '#0872FC'}}/>
                                     </IconButtonExclu>
                                 </Tooltip>
                             </TableCellTitleBorder>

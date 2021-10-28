@@ -7,8 +7,9 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import TableAlunos from '../../components/TableAlunos'
 import TableTurmas from '../../components/TableTurmas'
-import { SpeedDial, SpeedDialAction, SpeedDialIcon, Skeleton } from '@material-ui/core'
+import { SpeedDial, SpeedDialAction, SpeedDialIcon, Skeleton, Snackbar, Alert } from '@material-ui/core'
 import { Add as AddIcon } from '@material-ui/icons'
+import api from '../../services/api/base'
 
 export default function Alunos() {
   const { data: quantAlunos, mutate: mutateQuantAlunos } = get('/alunos?quant=true')
@@ -17,6 +18,9 @@ export default function Alunos() {
   const { data: turmas, mutate: mutateTurmas } = get('/turmas')
   const [mediaAlunos, setMediaAlunos] = useState(undefined)
   const [mediaOcupação, setMediaOcupação] = useState(undefined)
+  const [alert, setAlert] = useState({
+    open: false
+  })
 
   useEffect(() => {
     if (quantTurmas && quantAlunos) {
@@ -152,6 +156,7 @@ export default function Alunos() {
             </SpeedDial>
           </div>
           {alunos ? <TableAlunos
+            setAlert={setAlert}
             alunos={alunos && alunos}
             onDeleteAlunos={id => {
               api.delete(`/alunos/${id}`).then()
@@ -185,6 +190,20 @@ export default function Alunos() {
         <NavInfos>
           asd2
         </NavInfos>
+        <Snackbar anchorOrigin={{
+            horizontal: 'right',
+            vertical: 'bottom'
+          }} open={alert.open} onClose={() => setAlert({
+            open: false
+          })} autoHideDuration={3000}>
+            <Alert variant={alert.variant} severity={alert.severity} onClose={() => 
+              setAlert({
+                open: false
+              })
+            }>
+              <h1>{alert.text}</h1>
+            </Alert>
+          </Snackbar>
       </Container>
     </>
   )
