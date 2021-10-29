@@ -52,7 +52,7 @@ export default function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosT
                     return (
                         <DialogGerarDeclaração open={true} onClose={() => setOpenDialogGerarDeclaração(false)}>
                             <DialogContent>
-                                <form method="POST" target="_blank" action="http://localhost:3000/api/alunos/exportar">
+                                <form method="POST" target="_blank" action={`${process.env.NEXT_STATIC_API_URL}/alunos/exportar`}>
                                     <InputPorcentagemGerarDeclaração name="frequencia" required placeholder="Porcentagem de aulas sem faltas" type="number" InputProps={{
                                         inputProps: {
                                             max: 100,
