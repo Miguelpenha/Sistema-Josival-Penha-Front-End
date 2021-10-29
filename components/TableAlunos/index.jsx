@@ -1,12 +1,10 @@
-import { TableContainer, TableCell, TableCellTitle, TableCellTotal, TextTotal, TableRowSele, TableCellValueBorder, TableCellBorder, IconButtonExclu, IconButtonMais, TableCellTitleBorder, LinkFotoAluno, FotoAluno, LimitText, DialogGerarDeclaração, FormGerarDeclaração, InputPorcentagemGerarDeclaração, ButtonSubmitGerarDeclaração } from './style'
+import { TableContainer, TableCell, TableCellTitle, TableCellTotal, TextTotal, TableRowSele, TableCellValueBorder, TableCellBorder, IconButtonExclu, IconButtonMais, TableCellTitleBorder, LinkFotoAluno, FotoAluno, LimitText, DialogGerarDeclaração, InputPorcentagemGerarDeclaração, ButtonSubmitGerarDeclaração, InputNIS } from './style'
 import { Paper, Table, TableHead, TableRow, TableBody, TableFooter, Tooltip, Menu, MenuItem, Checkbox, DialogContent } from '@material-ui/core'
 import { Delete as DeleteIcon, MoreVert as MoreVertIcon, Download as DownloadIcon } from '@material-ui/icons'
 import CheckAnimation from '../../animations/check'
 import NotCheckAnimation from '../../animations/notCheck'
 import Link from 'next/link'
 import { useState } from 'react'
-import { useForm } from 'react-hook-form'
-import Router from 'next/router'
 
 export default function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, setAlert }) {
     if (typeof alunos != 'string' && alunos) {
@@ -50,42 +48,28 @@ export default function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosT
             const openCadas = Boolean(fechadoCadas)
 
             function ModelGerarDeclaração({ open }) {
-                const { register, handleSubmit, reset } = useForm()
-
-                async function enviarDeclaração(data, event) {
-                    let { porcentagem: porcentagemData } = data
-
-                    setAlert({
-                        open: true,
-                        text: 'Declaração gerada com sucesso!',
-                        variant: 'filled',
-                        severity: 'success'
-                    })
-                    limparCampos()
-                    setOpenDialogGerarDeclaração(false)
-                    event.preventDefault()
-                    setTimeout(() => window.open(`${process.env.NEXT_STATIC_API_URL}/alunos/exportar/${row._id}/${porcentagemData}`, '_blank'), 500)
-                }
-                function limparCampos() {
-                    reset()
-                }
                 if (open) {
                     return (
-                        <DialogGerarDeclaração open={true} onClose={() => {
-                            setOpenDialogGerarDeclaração(false)
-                            limparCampos()
-                        }}>
+                        <DialogGerarDeclaração open={true} onClose={() => setOpenDialogGerarDeclaração(false)}>
                             <DialogContent>
-                                <FormGerarDeclaração onSubmit={handleSubmit(enviarDeclaração)}>
-                                    <InputPorcentagemGerarDeclaração required {...register('porcentagem')} placeholder="Porcentagem de aulas sem faltas" type="number" InputProps={{
+                                <form method="POST" target="_blank" action="http://localhost:3000/api/alunos/exportar">
+                                    <InputPorcentagemGerarDeclaração name="frequencia" required placeholder="Porcentagem de aulas sem faltas" type="number" InputProps={{
                                         inputProps: {
                                             max: 100,
                                             min: 0
                                         }
-                                    }} defaultValue={98} name="porcentagem" variant="standard"/>
+                                    }} defaultValue={98} variant="standard"/>
                                     <span style={{fontSize: '0.8vw'}}>Porcentagem de aulas sem faltas</span>
+                                    <InputNIS name="nis" required placeholder="Número de Identificação Social (NIS)" type="text" InputProps={{
+                                        inputProps: {
+                                            max: 100,
+                                            min: 0
+                                        }
+                                    }} variant="standard"/>
+                                    <span style={{fontSize: '0.8vw'}}>Número de Identificação Social (NIS)</span>
+                                    <input type="hidden" name="id" value={row._id}/>
                                     <ButtonSubmitGerarDeclaração style={{marginBottom: '0%'}} type="submit" variant="contained">Gerar</ButtonSubmitGerarDeclaração>
-                                </FormGerarDeclaração>
+                                </form>
                             </DialogContent>
                         </DialogGerarDeclaração>
                     )

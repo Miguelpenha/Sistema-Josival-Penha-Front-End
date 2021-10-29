@@ -144,16 +144,28 @@ export const DialogGerarDeclaração = styled(Dialog).attrs({
     }
 `
 
-export const FormGerarDeclaração = styled.form`
-    && {
-        padding-bottom: 15%;
-    }
-`
-
 export const InputPorcentagemGerarDeclaração = styled(TextField)`
     && {
         margin-top: 5%;
         width: 20%;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    & .MuiInput-underline {
+        font-size: 1vw;
+    }
+
+    & .MuiInput-underline:after, .MuiInput-underline:before {
+        border-bottom-color: #0872FC;
+    }
+`
+
+export const InputNIS = styled(TextField)`
+    && {
+        margin-top: 5%;
+        width: 75%;
         display: block;
         margin-left: auto;
         margin-right: auto;
