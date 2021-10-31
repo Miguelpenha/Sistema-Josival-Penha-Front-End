@@ -162,6 +162,7 @@ export default function Alunos() {
               api.delete(`/alunos/${id}`).then()
               mutateAlunos('/alunos')
               mutateQuantAlunos('/alunos?quant=true')
+              mutateTurmas('/turmas')
             }}
             onDeleteAlunosTodos={() => {
               alunos.map(aluno => api.delete(`/alunos/${aluno._id}`).then())

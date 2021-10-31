@@ -1,6 +1,6 @@
 import { TableContainer, TableCell, TableCellTitle, TableCellTotal, TextTotal, TableRowSele, TableCellValueBorder, TableCellBorder, IconButtonExclu, IconButtonMais, TableCellTitleBorder, LinkFotoAluno, FotoAluno, LimitText, DialogGerarDeclaração, InputPorcentagemGerarDeclaração, ButtonSubmitGerarDeclaração, InputNIS } from './style'
-import { Paper, Table, TableHead, TableRow, TableBody, TableFooter, Tooltip, Menu, MenuItem, Checkbox, DialogContent } from '@material-ui/core'
-import { Delete as DeleteIcon, MoreVert as MoreVertIcon, Download as DownloadIcon } from '@material-ui/icons'
+import { Paper, Table, TableHead, TableRow, TableBody, TableFooter, Tooltip, Menu, MenuItem, Checkbox, DialogContent, SpeedDial, SpeedDialIcon , SpeedDialAction} from '@material-ui/core'
+import { Delete as DeleteIcon, MoreVert as MoreVertIcon, Download as DownloadIcon, Add as AddIcon } from '@material-ui/icons'
 import CheckAnimation from '../../animations/check'
 import NotCheckAnimation from '../../animations/notCheck'
 import Link from 'next/link'
@@ -41,6 +41,21 @@ export default function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosT
             const [fechadoCadas, setFechadoCadas] = useState(null)
             const [openDialogGerarDeclaração, setOpenDialogGerarDeclaração] = useState(false)
 
+            // BG iconDelete: #FBD6D7
+        // <IconButtonExclu bg="#FBD6D7" style={{right: '10%'}} onClick={() => onDeleteAlunos(row._id)}>
+        //     <DeleteIcon sx={{color: '#ED3237'}}/>
+        // </IconButtonExclu>
+        const actions = [
+            {
+                icon: <DeleteIcon sx={{color: '#ED3237'}}/>,
+                name: 'Excluir aluno',
+                onClick: () => {
+                    onDeleteAlunos(row._id)
+                },
+                background: '#FBD6D7'
+            }
+        ]
+
             function clickCloseCadas() {
                 setFechadoCadas(null)
             }
@@ -77,7 +92,7 @@ export default function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosT
                 return null
             }
             
-            return <TableRowSele key={index} onClick={() => clickSele(row._id)}>
+            return <TableRowSele key={index}>
                 <TableCellValueBorder component="th" scope="col" align="center">
                     <Checkbox sx={{'& .MuiSvgIcon-root': {fontSize: 20}}}/>
                 </TableCellValueBorder>
@@ -104,20 +119,37 @@ export default function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosT
             <TableCellValueBorder component="th" scope="col" align="center">{row.nascimento} ({calcIdade(row.nascimento, new Date())} anos)</TableCellValueBorder>
             <TableCellValueBorder component="th" scope="col" align="center">{row.situação}</TableCellValueBorder>
             <TableCellValueBorder align="center">
-                <Tooltip title={
-                    <span style={{fontSize: '1vw'}}>Excluir essa despessa</span>
-                } arrow placement="bottom">
-                    <IconButtonExclu bg="#FBD6D7" style={{right: '10%'}} onClick={() => onDeleteAlunos(row._id)}>
-                        <DeleteIcon sx={{color: '#ED3237'}}/>
-                    </IconButtonExclu>
-                </Tooltip>
-                <Tooltip title={
-                    <span style={{fontSize: '1vw'}}>Mais opções</span>
-                } arrow placement="bottom">
-                    <IconButtonMais style={{left: '10%'}} onClick={event => setFechadoCadas(event.currentTarget)}>
-                        <MoreVertIcon sx={{color: '#ffffff'}}/>
-                    </IconButtonMais>
-                </Tooltip>
+                <div style={{position: 'relative', bottom: 100}}>
+                    <SpeedDial
+                        ariaLabel="SpeedDial basic example"
+                        sx={{position: 'absolute'}}
+                        icon={<SpeedDialIcon sx={{'& .MuiSpeedDialIcon-icon': {
+                            width: '50%',
+                            height: 'auto'
+                        }}}/>}
+                    >
+                            {actions.map((action) => (
+                                <SpeedDialAction
+                                    key={action.name}
+                                    icon={action.icon}
+                                    tooltipOpen
+                                    tooltipTitle={action.name}
+                                    tooltipPlacement="left"
+                                    sx={{
+                                        '& .MuiSpeedDialAction-staticTooltipLabel': {
+                                            backgroundColor: '#0872FC',
+                                            color: '#ffffff'
+                                        },
+                                        '& .MuiSpeedDialAction-fab, & .MuiSpeedDialAction-fab:hover': {
+                                            backgroundColor: action.background ? action.background :'#0872FC',
+                                            color: '#ffffff'
+                                        }
+                                    }}
+                                    onClick={action.onClick}
+                                />
+                            ))}
+                    </SpeedDial>
+                </div>
                 <ModelGerarDeclaração open={openDialogGerarDeclaração}/>
             </TableCellValueBorder>
             <Menu
