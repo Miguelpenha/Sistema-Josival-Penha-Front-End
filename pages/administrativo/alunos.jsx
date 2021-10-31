@@ -159,10 +159,13 @@ export default function Alunos() {
             setAlert={setAlert}
             alunos={alunos && alunos}
             onDeleteAlunos={id => {
-              api.delete(`/alunos/${id}`).then()
-              mutateAlunos('/alunos')
-              mutateQuantAlunos('/alunos?quant=true')
-              mutateTurmas('/turmas')
+              api.delete(`/alunos/${id}`).then(() => {
+                mutateAlunos('/alunos')
+                mutateAlunos('/alunos')
+                mutateQuantAlunos('/alunos?quant=true')
+                mutateTurmas('/turmas')
+                mutateQuantTurmas('/turmas?quant=true')
+              })
             }}
             onDeleteAlunosTodos={() => {
               alunos.map(aluno => api.delete(`/alunos/${aluno._id}`).then())

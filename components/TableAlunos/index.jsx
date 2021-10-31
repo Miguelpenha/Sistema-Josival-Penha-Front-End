@@ -1,12 +1,10 @@
-import { TableContainer, TableCell, TableCellTitle, TableCellTotal, TextTotal, TableRowSele, TableCellValueBorder, TableCellBorder, IconButtonExclu, IconButtonMais, TableCellTitleBorder, LinkFotoAluno, FotoAluno, LimitText, DialogGerarDeclaração, InputPorcentagemGerarDeclaração, ButtonSubmitGerarDeclaração, InputNIS } from './style'
-import { Paper, Table, TableHead, TableRow, TableBody, TableFooter, Tooltip, Menu, MenuItem, Checkbox, DialogContent, SpeedDial, SpeedDialIcon , SpeedDialAction} from '@material-ui/core'
-import { Delete as DeleteIcon, MoreVert as MoreVertIcon, Download as DownloadIcon, Add as AddIcon } from '@material-ui/icons'
-import CheckAnimation from '../../animations/check'
-import NotCheckAnimation from '../../animations/notCheck'
+import { TableContainer, TableCell, TableCellTitle, TableCellTotal, TextTotal, TableRowSele, TableCellValueBorder, TableCellBorder, IconButtonExclu, TableCellTitleBorder, LinkFotoAluno, FotoAluno, LimitText, DialogGerarDeclaração, InputPorcentagemGerarDeclaração, ButtonSubmitGerarDeclaração, InputNIS } from './style'
+import { Paper, Table, TableHead, TableRow, TableBody, TableFooter, Tooltip, Menu, MenuItem, Checkbox, DialogContent, SpeedDial, SpeedDialAction} from '@material-ui/core'
+import { Delete as DeleteIcon, Download as DownloadIcon, Edit as EditIcon } from '@material-ui/icons'
 import Link from 'next/link'
 import { useState } from 'react'
 
-export default function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, setAlert }) {
+export default function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos }) {
     if (typeof alunos != 'string' && alunos) {
         const [selecionados, setSelecionados] = useState(['asd'])
         alunos.map(aluno => aluno.criação.sistema = new Date(aluno.criação.sistema))
@@ -24,37 +22,23 @@ export default function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosT
             return Math.floor(Math.ceil(Math.abs(nascimento.getTime()-hoje.getTime())/(1000*3600*24))/365.25)
         }
 
-        function clickSele(id) {
-            let index = selecionados.indexOf(id)
-            console.log(index)
-            if (index === -1) {
-                selecionados.push(id)
-                setSelecionados(selecionados)
-                console.log(selecionados)
-            } else {
-                let newSelecionados = selecionados.map(selecionado => selecionado != id && selecionado)
-                console.log(newSelecionados)
-            }
-        }
-
         function Row({row, index}) {
             const [fechadoCadas, setFechadoCadas] = useState(null)
             const [openDialogGerarDeclaração, setOpenDialogGerarDeclaração] = useState(false)
-
-            // BG iconDelete: #FBD6D7
-        // <IconButtonExclu bg="#FBD6D7" style={{right: '10%'}} onClick={() => onDeleteAlunos(row._id)}>
-        //     <DeleteIcon sx={{color: '#ED3237'}}/>
-        // </IconButtonExclu>
-        const actions = [
-            {
-                icon: <DeleteIcon sx={{color: '#ED3237'}}/>,
-                name: 'Excluir aluno',
-                onClick: () => {
-                    onDeleteAlunos(row._id)
+            const actions = [
+                {
+                    icon: <DeleteIcon sx={{color: '#ED3237'}}/>,
+                    name: 'Excluir aluno',
+                    onClick: () => onDeleteAlunos(row._id),
+                    background: '#FBD6D7'
                 },
-                background: '#FBD6D7'
-            }
-        ]
+                {
+                    icon: <DownloadIcon sx={{color: '#0872FC'}}/>,
+                    name: 'Baixar declaração do aluno',
+                    onClick: () => setOpenDialogGerarDeclaração(true),
+                    background: '#A8CDFE'
+                }
+            ]
 
             function clickCloseCadas() {
                 setFechadoCadas(null)
@@ -75,13 +59,6 @@ export default function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosT
                                         }
                                     }} defaultValue={98} variant="standard"/>
                                     <span style={{fontSize: '0.8vw'}}>Porcentagem de aulas sem faltas</span>
-                                    <InputNIS name="nis" required placeholder="Número de Identificação Social (NIS)" type="text" InputProps={{
-                                        inputProps: {
-                                            max: 100,
-                                            min: 0
-                                        }
-                                    }} variant="standard"/>
-                                    <span style={{fontSize: '0.8vw'}}>Número de Identificação Social (NIS)</span>
                                     <input type="hidden" name="id" value={row._id}/>
                                     <ButtonSubmitGerarDeclaração style={{marginBottom: '0%'}} type="submit" variant="contained">Gerar</ButtonSubmitGerarDeclaração>
                                 </form>
@@ -119,14 +96,11 @@ export default function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosT
             <TableCellValueBorder component="th" scope="col" align="center">{row.nascimento} ({calcIdade(row.nascimento, new Date())} anos)</TableCellValueBorder>
             <TableCellValueBorder component="th" scope="col" align="center">{row.situação}</TableCellValueBorder>
             <TableCellValueBorder align="center">
-                <div style={{position: 'relative', bottom: 100}}>
+                <div style={{position: 'relative', bottom: 155}}>
                     <SpeedDial
                         ariaLabel="SpeedDial basic example"
                         sx={{position: 'absolute'}}
-                        icon={<SpeedDialIcon sx={{'& .MuiSpeedDialIcon-icon': {
-                            width: '50%',
-                            height: 'auto'
-                        }}}/>}
+                        icon={<EditIcon sx={{width: '50%', height: 'auto'}}/>}
                     >
                             {actions.map((action) => (
                                 <SpeedDialAction
