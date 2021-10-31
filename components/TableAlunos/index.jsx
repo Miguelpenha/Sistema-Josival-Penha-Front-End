@@ -1,4 +1,4 @@
-import { TableContainer, TableCell, TableCellTitle, TableCellTotal, TextTotal, TableRowSele, TableCellValueBorder, TableCellBorder, IconButtonExclu, TableCellTitleBorder, LinkFotoAluno, FotoAluno, LimitText, DialogGerarDeclaração, InputPorcentagemGerarDeclaração, ButtonSubmitGerarDeclaração, InputNIS } from './style'
+import { TableContainer, TableCell, TableCellTitle, TableCellTotal, TextTotal, TableRowSele, TableCellValueBorder, TableCellBorder, IconButtonExclu, TableCellTitleBorder, LinkFotoAluno, FotoAluno, LimitText, DialogGerarDeclaração, InputPorcentagemGerarDeclaração, ButtonSubmitGerarDeclaração, BolsistaSwitch } from './style'
 import { Paper, Table, TableHead, TableRow, TableBody, TableFooter, Tooltip, Menu, MenuItem, Checkbox, DialogContent, SpeedDial, SpeedDialAction} from '@material-ui/core'
 import { Delete as DeleteIcon, Download as DownloadIcon, Edit as EditIcon } from '@material-ui/icons'
 import Link from 'next/link'
@@ -34,7 +34,7 @@ export default function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosT
                 },
                 {
                     icon: <DownloadIcon sx={{color: '#0872FC'}}/>,
-                    name: 'Baixar declaração do aluno',
+                    name: 'Baixar declaração de frequência do aluno',
                     onClick: () => setOpenDialogGerarDeclaração(true),
                     background: '#A8CDFE'
                 }
@@ -60,6 +60,8 @@ export default function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosT
                                     }} defaultValue={98} variant="standard"/>
                                     <span style={{fontSize: '0.8vw'}}>Porcentagem de aulas sem faltas</span>
                                     <input type="hidden" name="id" value={row._id}/>
+                                    <br/>
+                                    <BolsistaSwitch name="bolsista"/>Bolsista
                                     <ButtonSubmitGerarDeclaração style={{marginBottom: '0%'}} type="submit" variant="contained">Gerar</ButtonSubmitGerarDeclaração>
                                 </form>
                             </DialogContent>
@@ -100,28 +102,37 @@ export default function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosT
                     <SpeedDial
                         ariaLabel="SpeedDial basic example"
                         sx={{position: 'absolute'}}
-                        icon={<EditIcon sx={{width: '50%', height: 'auto'}}/>}
+                        icon={<EditIcon sx={{width: '40%', height: 'auto'}}/>}
                     >
-                            {actions.map((action) => (
-                                <SpeedDialAction
-                                    key={action.name}
-                                    icon={action.icon}
-                                    tooltipOpen
-                                    tooltipTitle={action.name}
-                                    tooltipPlacement="left"
-                                    sx={{
-                                        '& .MuiSpeedDialAction-staticTooltipLabel': {
-                                            backgroundColor: '#0872FC',
-                                            color: '#ffffff'
-                                        },
-                                        '& .MuiSpeedDialAction-fab, & .MuiSpeedDialAction-fab:hover': {
-                                            backgroundColor: action.background ? action.background :'#0872FC',
-                                            color: '#ffffff'
-                                        }
-                                    }}
-                                    onClick={action.onClick}
-                                />
-                            ))}
+                        {actions.map((action) => (
+                            <SpeedDialAction
+                                tooltipOpen
+                                key={action.name}
+                                icon={action.icon}
+                                tooltipPlacement="left"
+                                onClick={action.onClick}
+                                tooltipTitle={action.name}
+                                sx={{
+                                    '& .MuiSpeedDialAction-staticTooltipLabel': {
+                                        backgroundColor: '#0872FC',
+                                        color: '#ffffff',
+                                        width: 'max-content',
+                                        fontSize: '1vw'
+                                    },
+                                    '& .MuiSpeedDialAction-fab, & .MuiSpeedDialAction-fab:hover': {
+                                        backgroundColor: action.background ? action.background :'#0872FC',
+                                        color: '#ffffff'
+                                    },
+                                    '& .MuiSpeedDialAction-fab:hover': {
+                                        opacity: '85%'
+                                    },
+                                    '& svg': {
+                                        width: '70%',
+                                        height: 'auto'
+                                    }
+                                }}
+                            />
+                        ))}
                     </SpeedDial>
                 </div>
                 <ModelGerarDeclaração open={openDialogGerarDeclaração}/>

@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components'
-import { TableCell as TableCellMUI, TableContainer as TableContainerMUi, TableRow as TableRowMUI, IconButton as IconButtonBruto, Checkbox, Dialog, TextField, Button } from '@material-ui/core'
+import { TableCell as TableCellMUI, TableContainer as TableContainerMUi, TableRow as TableRowMUI, IconButton as IconButtonBruto, Checkbox, Dialog, TextField, Button, Switch } from '@material-ui/core'
 
 export const TableContainer = styled(TableContainerMUi)`
     && {
@@ -162,24 +162,6 @@ export const InputPorcentagemGerarDeclaração = styled(TextField)`
     }
 `
 
-export const InputNIS = styled(TextField)`
-    && {
-        margin-top: 5%;
-        width: 75%;
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-    }
-    
-    & .MuiInput-underline {
-        font-size: 1vw;
-    }
-
-    & .MuiInput-underline:after, .MuiInput-underline:before {
-        border-bottom-color: #0872FC;
-    }
-`
-
 export const ButtonSubmitGerarDeclaração = styled(Button)`
     && {
         float: right;
@@ -194,5 +176,15 @@ export const ButtonSubmitGerarDeclaração = styled(Button)`
 
     &&:hover {
         background-color: #0852FF;
+    }
+`
+
+export const BolsistaSwitch = styled(Switch)`
+    & .MuiSwitch-switchBase.Mui-checked {
+        color: #0872FC;
+    }
+    
+    & .MuiSwitch-switchBase.Mui-checked+.MuiSwitch-track {
+        background-color: #0872FC;
     }
 `
