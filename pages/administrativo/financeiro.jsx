@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import nookies from 'nookies'
-import { Container, Main, IconAdd, IconTrendingDown, IconTrendingUp, IconLabel, IconSyncAlt, Infos, Info, InfoTit, InfoDado, IconAccountBalance, IconTrendingUpInfo, IconTrendingDownInfo, DialogCadasDespesa, DialogContentCadasDespesa, InputNomeDespesa, InputNomeReceita, InputDespesa, InputReceita, RealInputDespesa, FormDespesa, InputDespesaObservação, InputReceitaObservação, DescriptionIcon, InputDespesaData, CampoCheckBoxsDespesas, CheckboxCategoriaDespesa, TitCampoCheckBoxDespesa, NomeCategoriaDepesaComCor, NomeCategoriaDepesaSóCor, InvestimentoDespesa, InvestimentoReceita, FixaDespesa, FixaReceita, ButtonSubmitDespesa, ButtonSubmitReceita, IconPayment, ChartReceitasDespesas } from '../../styles/pages/administrativo/financeiro'
+import { Container, Main, IconAdd, IconTrendingDown, IconTrendingUp, IconLabel, IconSyncAlt, Infos, Info, InfoTit, InfoDado, IconAccountBalance, IconTrendingUpInfo, IconTrendingDownInfo, DialogCadasDespesa, DialogContentCadasDespesa, InputNomeDespesa, InputNomeReceita, InputDespesa, InputReceita, RealInputDespesa, FormDespesa, InputDespesaObservação, InputReceitaObservação, DescriptionIcon, InputDespesaData, CampoCheckBoxsDespesas, CheckboxCategoriaDespesa, TitCampoCheckBoxDespesa, NomeCategoriaDepesaComCor, NomeCategoriaDepesaSóCor, InvestimentoDespesa, InvestimentoReceita, FixaDespesa, FixaReceita, ButtonSubmitDespesa, ButtonSubmitReceita, IconPayment, ChartReceitasDespesas, Charts } from '../../styles/pages/administrativo/financeiro'
 import { NavOptions, LogoJPNome, Funções, Função, LinkFunção, IconAlunos, IconAcadêmico, IconDashBoard, IconMarketing, IconFinanceiroSele, IconColaboradores, TextFunção } from '../../components/NavTool'
 import Link from 'next/link'
 import { Menu, MenuItem, InputAdornment, Snackbar, Alert, TextField, Divider, Skeleton, SpeedDialAction, SpeedDialIcon, SpeedDial } from '@material-ui/core'
@@ -17,6 +17,8 @@ export default function Financeiro() {
   const { data: despesas, mutate: mutateDespesas } = get('/financeiro/despesas')
   const { data: receitas, mutate: mutateReceitas } = get('/financeiro/receitas')
   const { data: saldo, mutate: mutateSaldo } = get('/financeiro/saldo')
+  const { data: categoriasReceitasTotal, mutate: mutateCategoriasReceitasTotal } = get('/financeiro/receitas/categorias/total')
+  const { data: categoriasDespesasTotal, mutate: mutateCategoriasDespesasTotal } = get('/financeiro/despesas/categorias/total')
   const [fechadoCadas, setFechadoCadas] = useState(null)
   const [alert, setAlert] = useState({
     open: false
@@ -580,7 +582,7 @@ export default function Financeiro() {
 
   function ChartReceitasDespesasComCarregamento() {
     if (totalReceitas && totalDespesas) {
-      return <ChartReceitasDespesas width="500px" height="300px" chartType="PieChart" data={[
+      return <ChartReceitasDespesas style={{marginTop: '4.5%'}} width="500px" height="300px" chartType="PieChart" data={[
         ['Linguagens', 'Quantidade'],
         ['Receitas', totalDespesas && totalReceitas && totalReceitas.totalBruto],
         ['Despesas', totalReceitas && totalDespesas && totalDespesas.totalBruto]
@@ -590,6 +592,60 @@ export default function Financeiro() {
         title: totalReceitas && totalDespesas && totalReceitas.totalBruto==totalDespesas.totalBruto ? 'Iguais' : totalReceitas.totalBruto>totalDespesas.totalBruto ? 'Receitas' : 'Despesas',
         titleTextStyle: {
           color: totalReceitas && totalDespesas && totalReceitas.totalBruto==totalDespesas.totalBruto ? '#009CDE' : totalReceitas.totalBruto>totalDespesas.totalBruto ? '#5AB55E' : '#ED3237',
+          fontSize: 20
+        },
+        pieStartAngle: 180
+      }}/>
+    } else {
+      return <Skeleton variant="rectangular" width={500} height={300} style={{marginTop: '3%', borderRadius: '20px'}} animation="wave"/>
+    }
+  }
+
+  function ChartCategoriasReceitasComCarregamento() {
+    if (categoriasReceitasTotal) {
+      let categoriasReceitasBrutas = []
+      let colors = []
+      categoriasReceitasTotal.map(categoria => {
+        categoriasReceitasBrutas.push([categoria.nome, categoria.total])
+        colors.push(categoria.cor)
+      })
+      
+      return <ChartReceitasDespesas width="500px" height="300px" chartType="PieChart" data={[
+        ['Nome', 'Total'],
+        ...categoriasReceitasBrutas
+      ]} options={{
+        colors,
+        pieHole: 0.4,
+        title: 'Categorias receitas',
+        titleTextStyle: {
+          color: '#5AB55E',
+          fontSize: 20
+        },
+        pieStartAngle: 180
+      }}/>
+    } else {
+      return <Skeleton variant="rectangular" width={500} height={300} style={{marginTop: '3%', borderRadius: '20px'}} animation="wave"/>
+    }
+  }
+
+  function ChartCategoriasDespesasComCarregamento() {
+    if (categoriasDespesasTotal) {
+      let categoriasDespesasBrutas = []
+      let colors = []
+      categoriasDespesasTotal.map(categoria => {
+        categoriasDespesasBrutas.push([categoria.nome, categoria.total])
+        colors.push(categoria.cor)
+      })
+      
+      return <ChartReceitasDespesas width="500px" height="300px" chartType="PieChart" data={[
+        ['Nome', 'Total'],
+        ...categoriasDespesasBrutas
+      ]} options={{
+        colors,
+        pieHole: 0.4,
+        title: 'Categorias despesas',
+        titleTextStyle: {
+          color: '#ED3237',
           fontSize: 20
         },
         pieStartAngle: 180
@@ -655,158 +711,162 @@ export default function Financeiro() {
           </Funções>
         </NavOptions>
         <Main>
-        <div style={{position: 'relative'}}>
-            <SpeedDial
-              direction="down"
-              ariaLabel="SpeedDial basic example"
-              sx={{position: 'absolute'}}
-              icon={<SpeedDialIcon sx={{'& .MuiSpeedDialIcon-icon': {
-                width: '50%',
-                height: 'auto'
-              }}}/>}
-            >
-              {actions.map((action) => (
-                <SpeedDialAction
-                  key={action.name}
-                  icon={action.icon}
-                  tooltipOpen
-                  tooltipTitle={action.name}
-                  tooltipPlacement="right"
-                  sx={{
-                    '& .MuiSpeedDialAction-staticTooltipLabel': {
-                      backgroundColor: '#ffffff',
-                      color: `${action.color}`,
-                      fontSize: '1.2vw',
-                      padding: '15%',
-                      borderRadius: '15px'
-                    },
-                    '& .MuiSpeedDialAction-fab, & .MuiSpeedDialAction-fab:hover': {
-                      backgroundColor: '#ffffff',
-                      color: '#EFEFEF'
-                    }
-                  }}
-                  onClick={action.onClick}
-                />
-              ))}
-            </SpeedDial>
-          </div>
-          {/* <IconAdd onClick={clickCadas}/> */}
-          <Infos>
-            <Info>
-              <InfoTit>Saldo atual</InfoTit>
-              <br/>
-              {saldo ? <InfoDado color="#0872FC">{saldo.saldo}</InfoDado> : <Skeleton variant="rectangular" width={`60%`} height={35} style={{display: 'inline-block', borderRadius: '10px', marginTop: '5%'}} animation="wave"/>}
-              <IconAccountBalance color="#009CDE" bg="#A7E7FF"/>
-            </Info>
-            <Info>
-              <InfoTit>Receitas</InfoTit>
-              <br/>
-              {totalReceitas ? <InfoDado color="#60BF92">{totalReceitas.total}</InfoDado> : <Skeleton variant="rectangular" width={`60%`} height={35} style={{display: 'inline-block', borderRadius: '10px', marginTop: '5%'}} animation="wave"/>}
-              <IconTrendingUpInfo color="#ffffff" bg="#60BF92"/>
-            </Info>
-            <Info>
-              <InfoTit>Despesas</InfoTit>
-              <br/>
-              {totalDespesas ? <InfoDado color="#EF5252">{totalDespesas.total}</InfoDado> : <Skeleton variant="rectangular" width={`60%`} height={35} style={{display: 'inline-block', borderRadius: '10px', marginTop: '5%'}} animation="wave"/>}
-              <IconTrendingDownInfo color="#ffffff" bg="#EF5252"/>
-            </Info>
-          </Infos>
-          <ChartReceitasDespesasComCarregamento/>
-          {receitas && despesas ? <TableReceitasDespesas receitas={receitas && receitas} despesas={despesas && despesas} onDeleteDespesas={id => {
-            api.delete(`/financeiro/despesas/${id}`).then(() => {
-              mutateTotalDespesas('/financeiro/despesas/total')
-              mutateDespesas('/financeiro/despesas')
-              mutateSaldo('/financeiro/saldo')
-            })
-          }} onDeleteReceitas={id => {
-            api.delete(`/financeiro/receitas/${id}`).then(() => {
-              mutateTotalReceitas('/financeiro/receitas/total')
-              mutateReceitas('/financeiro/receitas')
-              mutateSaldo('/financeiro/saldo')
-            })
-          }} onDeleteTodos={() => {
-            despesas.map(despesa => {
-              api.delete(`/financeiro/despesas/${despesa._id}`).then(() => {
+          <div style={{position: 'relative'}}>
+              <SpeedDial
+                direction="down"
+                ariaLabel="SpeedDial basic example"
+                sx={{position: 'absolute'}}
+                icon={<SpeedDialIcon sx={{'& .MuiSpeedDialIcon-icon': {
+                  width: '50%',
+                  height: 'auto'
+                }}}/>}
+              >
+                {actions.map((action) => (
+                  <SpeedDialAction
+                    key={action.name}
+                    icon={action.icon}
+                    tooltipOpen
+                    tooltipTitle={action.name}
+                    tooltipPlacement="right"
+                    sx={{
+                      '& .MuiSpeedDialAction-staticTooltipLabel': {
+                        backgroundColor: '#ffffff',
+                        color: `${action.color}`,
+                        fontSize: '1.2vw',
+                        padding: '15%',
+                        borderRadius: '15px'
+                      },
+                      '& .MuiSpeedDialAction-fab, & .MuiSpeedDialAction-fab:hover': {
+                        backgroundColor: '#ffffff',
+                        color: '#EFEFEF'
+                      }
+                    }}
+                    onClick={action.onClick}
+                  />
+                ))}
+              </SpeedDial>
+            </div>
+            {/* <IconAdd onClick={clickCadas}/> */}
+            <Infos>
+              <Info>
+                <InfoTit>Saldo atual</InfoTit>
+                <br/>
+                {saldo ? <InfoDado color="#0872FC">{saldo.saldo}</InfoDado> : <Skeleton variant="rectangular" width={`60%`} height={35} style={{display: 'inline-block', borderRadius: '10px', marginTop: '5%'}} animation="wave"/>}
+                <IconAccountBalance color="#009CDE" bg="#A7E7FF"/>
+              </Info>
+              <Info>
+                <InfoTit>Receitas</InfoTit>
+                <br/>
+                {totalReceitas ? <InfoDado color="#60BF92">{totalReceitas.total}</InfoDado> : <Skeleton variant="rectangular" width={`60%`} height={35} style={{display: 'inline-block', borderRadius: '10px', marginTop: '5%'}} animation="wave"/>}
+                <IconTrendingUpInfo color="#ffffff" bg="#60BF92"/>
+              </Info>
+              <Info>
+                <InfoTit>Despesas</InfoTit>
+                <br/>
+                {totalDespesas ? <InfoDado color="#EF5252">{totalDespesas.total}</InfoDado> : <Skeleton variant="rectangular" width={`60%`} height={35} style={{display: 'inline-block', borderRadius: '10px', marginTop: '5%'}} animation="wave"/>}
+                <IconTrendingDownInfo color="#ffffff" bg="#EF5252"/>
+              </Info>
+            </Infos>
+            <Charts>
+              <ChartCategoriasReceitasComCarregamento/>
+              <ChartCategoriasDespesasComCarregamento/>
+              <ChartReceitasDespesasComCarregamento/>
+            </Charts>
+            {receitas && despesas ? <TableReceitasDespesas receitas={receitas && receitas} despesas={despesas && despesas} onDeleteDespesas={id => {
+              api.delete(`/financeiro/despesas/${id}`).then(() => {
                 mutateTotalDespesas('/financeiro/despesas/total')
                 mutateDespesas('/financeiro/despesas')
                 mutateSaldo('/financeiro/saldo')
               })
-            })
-            receitas.map(receita => {
-              api.delete(`/financeiro/receitas/${receita._id}`).then(() => {
+            }} onDeleteReceitas={id => {
+              api.delete(`/financeiro/receitas/${id}`).then(() => {
                 mutateTotalReceitas('/financeiro/receitas/total')
                 mutateReceitas('/financeiro/receitas')
                 mutateSaldo('/financeiro/saldo')
               })
-            })
-          }} saldo={saldo && saldo.saldo}/> : <Skeleton variant="rectangular" width={`85.5%`} height={`50%`} style={{display: 'block', marginLeft: 'auto', marginRight: 'auto', borderRadius: '20px', marginTop: '5%'}} animation="wave"/>}
-          <Menu anchorEl={fechadoCadas} open={openCadas} onClose={clickCloseCadas} MenuListProps={{
-          'aria-labelledby': 'basic-button',
-          }} style={{height: '62%', width: '32%'}}>
-            <MenuItem disableRipple style={{height: '40%', width: '100%', fontSize: '1.2vw', color: '#C6C6C6'}} onClick={() => {
-              setOpenDialogCadasDespesas(true)
-              setFechadoCadas(false)
-            }}>
-              <IconTrendingDown color="#ED3237"/>
-              Despesa
-            </MenuItem>
-            <MenuItem disableRipple style={{height: '40%', width: '100%', fontSize: '1.2vw', color: '#C6C6C6'}} onClick={() => {
-              setOpenDialogCadasCategoriasDespesas(true)
-              setFechadoCadas(false)
-            }}>
-              <IconLabel color="#ED3237"/>
-              Categoria
-            </MenuItem>
-            <MenuItem disableRipple style={{height: '40%', width: '100%', fontSize: '1.2vw', color: '#C6C6C6'}} onClick={() => {
-              setOpenDialogCadasFontesDespesas(true)
-              setFechadoCadas(false)
-            }}>
-              <IconPayment color="#ED3237"/>
-              Fonte
-            </MenuItem>
-            <Divider/>
-            <MenuItem disableRipple style={{height: '40%', width: '100%', fontSize: '1.2vw', color: '#C6C6C6'}} onClick={() => {
-              setOpenDialogCadasReceitas(true)
-              setFechadoCadas(false)
-            }}>
-              <IconTrendingUp color="#5AB55E"/>
-              Receita
-            </MenuItem>
-            <MenuItem disableRipple style={{height: '40%', width: '100%', fontSize: '1.2vw', color: '#C6C6C6'}} onClick={() => {
-              setOpenDialogCadasCategoriasReceitas(true)
-              setFechadoCadas(false)
-            }}>
-              <IconLabel color="#5AB55E"/>
-              Categoria
-            </MenuItem>
-            <MenuItem disableRipple style={{height: '40%', width: '100%', fontSize: '1.2vw', color: '#C6C6C6'}} onClick={() => {
-              setOpenDialogCadasFontesReceitas(true)
-              setFechadoCadas(false)
-            }}>
-              <IconPayment color="#5AB55E"/>
-              Fonte
-            </MenuItem>
-          </Menu>
-          <Snackbar anchorOrigin={{
-            horizontal: 'right',
-            vertical: 'bottom'
-          }} open={alert.open} onClose={() => setAlert({
-            open: false
-          })} autoHideDuration={3000}>
-            <Alert variant={alert.variant} severity={alert.severity} onClose={() => 
-              setAlert({
-                open: false
+            }} onDeleteTodos={() => {
+              despesas.map(despesa => {
+                api.delete(`/financeiro/despesas/${despesa._id}`).then(() => {
+                  mutateTotalDespesas('/financeiro/despesas/total')
+                  mutateDespesas('/financeiro/despesas')
+                  mutateSaldo('/financeiro/saldo')
+                })
               })
-            }>
-              <h1>{alert.text}</h1>
-            </Alert>
-          </Snackbar>
-          <DialogCadasDespesas open={openDialogCadasDespesas}/>
-          <DialogCadasCategoriasDespesas open={openDialogCadasCategoriasDespesas}/>
-          <DialogCadasFontesDespesas open={openDialogCadasFontesDespesas}/>
-          <DialogCadasReceitas open={openDialogCadasReceitas}/>
-          <DialogCadasCategoriasReceitas open={openDialogCadasCategoriasReceitas}/>
-          <DialogCadasFontesReceitas open={openDialogCadasFontesReceitas}/>
+              receitas.map(receita => {
+                api.delete(`/financeiro/receitas/${receita._id}`).then(() => {
+                  mutateTotalReceitas('/financeiro/receitas/total')
+                  mutateReceitas('/financeiro/receitas')
+                  mutateSaldo('/financeiro/saldo')
+                })
+              })
+            }} saldo={saldo && saldo.saldo}/> : <Skeleton variant="rectangular" width={`85.5%`} height={`50%`} style={{display: 'block', marginLeft: 'auto', marginRight: 'auto', borderRadius: '20px', marginTop: '5%'}} animation="wave"/>}
+            <Menu anchorEl={fechadoCadas} open={openCadas} onClose={clickCloseCadas} MenuListProps={{
+            'aria-labelledby': 'basic-button',
+            }} style={{height: '62%', width: '32%'}}>
+              <MenuItem disableRipple style={{height: '40%', width: '100%', fontSize: '1.2vw', color: '#C6C6C6'}} onClick={() => {
+                setOpenDialogCadasDespesas(true)
+                setFechadoCadas(false)
+              }}>
+                <IconTrendingDown color="#ED3237"/>
+                Despesa
+              </MenuItem>
+              <MenuItem disableRipple style={{height: '40%', width: '100%', fontSize: '1.2vw', color: '#C6C6C6'}} onClick={() => {
+                setOpenDialogCadasCategoriasDespesas(true)
+                setFechadoCadas(false)
+              }}>
+                <IconLabel color="#ED3237"/>
+                Categoria
+              </MenuItem>
+              <MenuItem disableRipple style={{height: '40%', width: '100%', fontSize: '1.2vw', color: '#C6C6C6'}} onClick={() => {
+                setOpenDialogCadasFontesDespesas(true)
+                setFechadoCadas(false)
+              }}>
+                <IconPayment color="#ED3237"/>
+                Fonte
+              </MenuItem>
+              <Divider/>
+              <MenuItem disableRipple style={{height: '40%', width: '100%', fontSize: '1.2vw', color: '#C6C6C6'}} onClick={() => {
+                setOpenDialogCadasReceitas(true)
+                setFechadoCadas(false)
+              }}>
+                <IconTrendingUp color="#5AB55E"/>
+                Receita
+              </MenuItem>
+              <MenuItem disableRipple style={{height: '40%', width: '100%', fontSize: '1.2vw', color: '#C6C6C6'}} onClick={() => {
+                setOpenDialogCadasCategoriasReceitas(true)
+                setFechadoCadas(false)
+              }}>
+                <IconLabel color="#5AB55E"/>
+                Categoria
+              </MenuItem>
+              <MenuItem disableRipple style={{height: '40%', width: '100%', fontSize: '1.2vw', color: '#C6C6C6'}} onClick={() => {
+                setOpenDialogCadasFontesReceitas(true)
+                setFechadoCadas(false)
+              }}>
+                <IconPayment color="#5AB55E"/>
+                Fonte
+              </MenuItem>
+            </Menu>
+            <Snackbar anchorOrigin={{
+              horizontal: 'right',
+              vertical: 'bottom'
+            }} open={alert.open} onClose={() => setAlert({
+              open: false
+            })} autoHideDuration={3000}>
+              <Alert variant={alert.variant} severity={alert.severity} onClose={() => 
+                setAlert({
+                  open: false
+                })
+              }>
+                <h1>{alert.text}</h1>
+              </Alert>
+            </Snackbar>
+            <DialogCadasDespesas open={openDialogCadasDespesas}/>
+            <DialogCadasCategoriasDespesas open={openDialogCadasCategoriasDespesas}/>
+            <DialogCadasFontesDespesas open={openDialogCadasFontesDespesas}/>
+            <DialogCadasReceitas open={openDialogCadasReceitas}/>
+            <DialogCadasCategoriasReceitas open={openDialogCadasCategoriasReceitas}/>
+            <DialogCadasFontesReceitas open={openDialogCadasFontesReceitas}/>
         </Main>
       </Container>
     </>

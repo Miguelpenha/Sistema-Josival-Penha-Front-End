@@ -3,21 +3,21 @@ import { Add as IconAddSVG, TrendingDown as IconTrendingDownSVG, TrendingUp as I
 import { Card, Dialog, DialogContent, TextField, Button, Checkbox, Switch } from '@material-ui/core'
 import Chart from 'react-google-charts'
 
-const Container = styled.div`
+export const Container = styled.div`
     display: grid;
     grid-template-columns: 0.5fr 2.3fr;
     height: 100%;
     width: 100%;
 `
 
-const Main = styled.main`
+export const Main = styled.main`
     padding: 2%;
     color: black;
     height: 100%;
     width: 100%;
 `
 
-const IconAdd = styled(IconAddSVG)`
+export const IconAdd = styled(IconAddSVG)`
     && {
         width: 6%;
         height: auto;
@@ -34,7 +34,7 @@ const IconAdd = styled(IconAddSVG)`
     }
 `
 
-const IconTrendingDown = styled(IconTrendingDownSVG)`
+export const IconTrendingDown = styled(IconTrendingDownSVG)`
     && {
         color: ${props => props.color};
         margin-right: 15%;
@@ -43,7 +43,7 @@ const IconTrendingDown = styled(IconTrendingDownSVG)`
     }
 `
 
-const IconTrendingUp = styled(IconTrendingUpSVG)`
+export const IconTrendingUp = styled(IconTrendingUpSVG)`
     && {
         color: ${props => props.color};
         margin-right: 15%;
@@ -52,7 +52,7 @@ const IconTrendingUp = styled(IconTrendingUpSVG)`
     }
 `
 
-const IconLabel = styled(IconLabelSVG)`
+export const IconLabel = styled(IconLabelSVG)`
     && {
         color: ${props => props.color};
         margin-right: 15%;
@@ -61,7 +61,7 @@ const IconLabel = styled(IconLabelSVG)`
     }
 `
 
-const IconPayment = styled(IconPaymentSVG)`
+export const IconPayment = styled(IconPaymentSVG)`
     && {
         color: ${props => props.color};
         margin-right: 15%;
@@ -70,7 +70,7 @@ const IconPayment = styled(IconPaymentSVG)`
     }
 `
 
-const IconSyncAlt = styled(IconSyncAltSVG)`
+export const IconSyncAlt = styled(IconSyncAltSVG)`
     && {
         color: ${props => props.color};
         margin-right: 15%;
@@ -79,7 +79,7 @@ const IconSyncAlt = styled(IconSyncAltSVG)`
     }
 `
 
-const Infos = styled.section`
+export const Infos = styled.section`
     padding-top: 5%;
     width: 100%;
     display: flex;
@@ -87,7 +87,7 @@ const Infos = styled.section`
     padding-right: 2%;
 `
 
-const Info = styled(Card)`
+export const Info = styled(Card)`
     background-color: #ffffff;
     padding: 2%;
     width: 27%;
@@ -96,11 +96,11 @@ const Info = styled(Card)`
     margin-left: 2%;
 `
 
-const InfoTit = styled.span`
+export const InfoTit = styled.span`
     font-size: 1vw;
 `
 
-const InfoDado = styled.span`
+export const InfoDado = styled.span`
     display: inline-block;
     font-size: 2vw;
     color: ${props => props.color};
@@ -108,7 +108,7 @@ const InfoDado = styled.span`
     padding-top: 6%;
 `
 
-const IconAccountBalance = styled(IconAccountBalanceSVG)`
+export const IconAccountBalance = styled(IconAccountBalanceSVG)`
     && {
         color: ${props => props.color};
         ${props => {
@@ -127,7 +127,7 @@ const IconAccountBalance = styled(IconAccountBalanceSVG)`
     }
 `
 
-const IconTrendingUpInfo = styled(IconTrendingUpSVG)`
+export const IconTrendingUpInfo = styled(IconTrendingUpSVG)`
     && {
         color: ${props => props.color};
         ${props => {
@@ -146,7 +146,7 @@ const IconTrendingUpInfo = styled(IconTrendingUpSVG)`
     }
 `
 
-const IconTrendingDownInfo = styled(IconTrendingDownSVG)`
+export const IconTrendingDownInfo = styled(IconTrendingDownSVG)`
     && {
         color: ${props => props.color};
         ${props => {
@@ -165,7 +165,7 @@ const IconTrendingDownInfo = styled(IconTrendingDownSVG)`
     }
 `
 
-const DialogCadasDespesa = styled(Dialog).attrs({
+export const DialogCadasDespesa = styled(Dialog).attrs({
     fullWidth: true
 })`
     && {
@@ -173,17 +173,17 @@ const DialogCadasDespesa = styled(Dialog).attrs({
     }
 `
 
-const DialogContentCadasDespesa = styled(DialogContent)`
+export const DialogContentCadasDespesa = styled(DialogContent)`
     
 `
 
-const FormDespesa = styled.form`
+export const FormDespesa = styled.form`
     && {
         padding-bottom: 15%;
     }
 `
 
-const InputNomeDespesa = styled(TextField)`
+export const InputNomeDespesa = styled(TextField)`
     && {
         margin-top: 5%;
     }
@@ -197,7 +197,7 @@ const InputNomeDespesa = styled(TextField)`
     }
 `
 
-const InputNomeReceita = styled(TextField)`
+export const InputNomeReceita = styled(TextField)`
     && {
         margin-top: 5%;
     }
@@ -211,7 +211,7 @@ const InputNomeReceita = styled(TextField)`
     }
 `
 
-const InputDespesa = styled(TextField)`
+export const InputDespesa = styled(TextField)`
     & input {
         color: #ED3237;
     }
@@ -225,7 +225,7 @@ const InputDespesa = styled(TextField)`
     }
 `
 
-const InputReceita = styled(TextField)`
+export const InputReceita = styled(TextField)`
     & input {
         color: #5AB55E;
     }
@@ -239,11 +239,11 @@ const InputReceita = styled(TextField)`
     }
 `
 
-const RealInputDespesa = styled.span`
+export const RealInputDespesa = styled.span`
     font-size: 1.5vw;
 `
 
-const InputDespesaData = styled.input`
+export const InputDespesaData = styled.input`
     margin-top: 5%;
     width: 100%;
     font-family: 'Roboto', sans-serif;
@@ -252,7 +252,7 @@ const InputDespesaData = styled.input`
     padding: 1%;
 `
 
-const InputDespesaObservação = styled(TextField)`
+export const InputDespesaObservação = styled(TextField)`
     && {
         margin-top: 5%;
     }
@@ -266,7 +266,7 @@ const InputDespesaObservação = styled(TextField)`
     }
 `
 
-const InputReceitaObservação = styled(TextField)`
+export const InputReceitaObservação = styled(TextField)`
     && {
         margin-top: 5%;
     }
@@ -280,11 +280,11 @@ const InputReceitaObservação = styled(TextField)`
     }
 `
 
-const DescriptionIcon = styled(DescriptionIconSVG)`
+export const DescriptionIcon = styled(DescriptionIconSVG)`
     
 `
 
-const CampoCheckBoxsDespesas = styled.div`
+export const CampoCheckBoxsDespesas = styled.div`
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -295,22 +295,22 @@ const CampoCheckBoxsDespesas = styled.div`
     width: 70%;
 `
 
-const CheckboxCategoriaDespesa = styled(Checkbox)`
+export const CheckboxCategoriaDespesa = styled(Checkbox)`
     & .MuiSvgIcon-root {
         font-size: 1.5vw;
     }
 `
 
-const NomeCategoriaDepesaComCor = styled.span`
+export const NomeCategoriaDepesaComCor = styled.span`
     font-size: 0.8vw;
 `
 
-const TitCampoCheckBoxDespesa = styled.h1`
+export const TitCampoCheckBoxDespesa = styled.h1`
     text-align: center;
     padding-top: 2%;
 `
 
-const NomeCategoriaDepesaSóCor = styled.span`
+export const NomeCategoriaDepesaSóCor = styled.span`
     background-color: ${props => props.color ? props.color : '#53BDE8'};
     padding: 0.1%;
     border-radius: 50%;
@@ -318,7 +318,7 @@ const NomeCategoriaDepesaSóCor = styled.span`
     padding-left: 4%;
 `
 
-const InvestimentoDespesa = styled(Switch)`
+export const InvestimentoDespesa = styled(Switch)`
     & .MuiSwitch-switchBase.Mui-checked {
         color: #ED3237;
     }
@@ -328,7 +328,7 @@ const InvestimentoDespesa = styled(Switch)`
     }
 `
 
-const InvestimentoReceita = styled(Switch)`
+export const InvestimentoReceita = styled(Switch)`
     & .MuiSwitch-switchBase.Mui-checked {
         color: #5AB55E;
     }
@@ -338,7 +338,7 @@ const InvestimentoReceita = styled(Switch)`
     }
 `
 
-const FixaDespesa = styled(Switch)`
+export const FixaDespesa = styled(Switch)`
     & .MuiSwitch-switchBase.Mui-checked {
         color: #ED3237;
     }
@@ -348,7 +348,7 @@ const FixaDespesa = styled(Switch)`
     }
 `
 
-const FixaReceita = styled(Switch)`
+export const FixaReceita = styled(Switch)`
     & .MuiSwitch-switchBase.Mui-checked {
         color: #5AB55E;
     }
@@ -358,7 +358,7 @@ const FixaReceita = styled(Switch)`
     }
 `
 
-const ButtonSubmitDespesa = styled(Button)`
+export const ButtonSubmitDespesa = styled(Button)`
     && {
         float: right;
         border-radius: 20px;
@@ -375,7 +375,7 @@ const ButtonSubmitDespesa = styled(Button)`
     }
 `
 
-const ButtonSubmitReceita = styled(Button)`
+export const ButtonSubmitReceita = styled(Button)`
     && {
         float: right;
         border-radius: 20px;
@@ -392,7 +392,7 @@ const ButtonSubmitReceita = styled(Button)`
     }
 `
 
-const ChartReceitasDespesas = styled(Chart)`
+export const ChartReceitasDespesas = styled(Chart)`
     margin-top: 7%;
 
     & svg {
@@ -400,52 +400,16 @@ const ChartReceitasDespesas = styled(Chart)`
     }
 `
 
-const Tabelas = styled.div`
+export const Tabelas = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
     margin-top: 4%;
 `
 
-export { 
-    Container,
-    Main,
-    IconAdd,
-    IconTrendingDown,
-    IconTrendingUp,
-    IconLabel,
-    IconPayment,
-    IconSyncAlt,
-    Infos,
-    Info,
-    InfoTit,
-    InfoDado,
-    IconAccountBalance,
-    IconTrendingUpInfo,
-    IconTrendingDownInfo,
-    DialogCadasDespesa,
-    DialogContentCadasDespesa,
-    FormDespesa,
-    InputNomeDespesa,
-    InputNomeReceita,
-    InputDespesa,
-    InputReceita,
-    RealInputDespesa,
-    InputDespesaData,
-    InputDespesaObservação,
-    InputReceitaObservação,
-    DescriptionIcon,
-    CampoCheckBoxsDespesas,
-    CheckboxCategoriaDespesa,
-    NomeCategoriaDepesaComCor,
-    NomeCategoriaDepesaSóCor,
-    InvestimentoDespesa,
-    InvestimentoReceita,
-    FixaDespesa,
-    FixaReceita,
-    ButtonSubmitDespesa,
-    ButtonSubmitReceita,
-    TitCampoCheckBoxDespesa,
-    ChartReceitasDespesas,
-    Tabelas
-}
+export const Charts = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-around;
+`
