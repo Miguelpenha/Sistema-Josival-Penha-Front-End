@@ -147,5 +147,6 @@ export const DialogTurma = styled(Dialog).attrs({
 })`
     && {
         height: 100%;
+        width: 100%;
     }
 `

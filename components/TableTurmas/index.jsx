@@ -1,9 +1,11 @@
 import { TableContainer, TableCellTitle, TableCellTotal, TextTotal, TableRowSele, TableCellValueBorder, TableCellBorder, IconButtonExclu, TableCellTitleBorder, LimitText, DialogTurma } from './style'
-import { Paper, Table, TableHead, TableRow, TableBody, TableFooter, Tooltip, Checkbox, DialogContent } from '@material-ui/core'
+import { Paper, Table, TableHead, TableRow, TableBody, TableFooter, Tooltip, Checkbox, DialogContent, Skeleton } from '@material-ui/core'
 import { Delete as DeleteIcon } from '@material-ui/icons'
 import { useState } from 'react'
+import TableAlunos from '../TableAlunos'
+import { get } from '../../hooks'
 
-export default function TableTurmas({ turmas=[], onDeleteTurmas, onDeleteTurmasTodos }) {
+export default function TableTurmas({ turmas=[], alunos=[], onDeleteTurmas, onDeleteTurmasTodos, setAlert, onDeleteAlunos, onDeleteAlunosTodos }) {
     if (typeof turmas != 'string' && turmas) {
         const [selecionados, setSelecionados] = useState([])
         turmas.map(turma => turma.criacao.sistema = new Date(turma.criacao.sistema))
@@ -31,11 +33,19 @@ export default function TableTurmas({ turmas=[], onDeleteTurmas, onDeleteTurmasT
             }
 
             function ModelTurma({ open }) {
+                const { data: alunos, mutate: mutateAlunos } = get(`/turmas/alunos/${row._id}`)
+
                 if (open) {
                     return (
-                        <DialogTurma open={true} onClose={() => setOpenDialogTurma(false)}>
+                        <DialogTurma open={true} onClose={() => setOpenDialogTurma(false)} maxWidth="lg">
                             <DialogContent>
-                                Turma {row._id}
+                            {alunos ? <TableAlunos
+                                        bg="#f0f0f0"
+                                        setAlert={setAlert}
+                                        alunos={alunos && alunos}
+                                        onDeleteAlunos={onDeleteAlunos}
+                                        onDeleteAlunosTodos={onDeleteAlunosTodos}
+                                    /> : <Skeleton variant="rectangular" width={`85.5%`} height={`50%`} style={{display: 'block', marginLeft: 'auto', marginRight: 'auto', borderRadius: '20px', marginTop: '5%'}} animation="wave"/>}
                             </DialogContent>
                         </DialogTurma>
                     )

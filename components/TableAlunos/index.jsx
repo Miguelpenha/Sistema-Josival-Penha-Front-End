@@ -4,7 +4,7 @@ import { Delete as DeleteIcon, Download as DownloadIcon, Edit as EditIcon } from
 import Link from 'next/link'
 import { useState } from 'react'
 
-export default function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos }) {
+export default function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg }) {
     if (typeof alunos != 'string' && alunos) {
         const [selecionados, setSelecionados] = useState(['asd'])
         alunos.map(aluno => aluno.criação.sistema = new Date(aluno.criação.sistema))
@@ -168,7 +168,7 @@ export default function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosT
         }
         
         return (
-            <TableContainer component={Paper}>
+            <TableContainer component={Paper} sx={{backgroundColor: bg && bg}}>
                 <Table size="medium">
                     <TableHead>
                         <TableRow>
