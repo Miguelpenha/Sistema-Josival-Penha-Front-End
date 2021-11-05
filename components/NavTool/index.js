@@ -9,7 +9,6 @@ import IconDashBoardSeleSVG from '../../assets/icon-nav-admin-dashBoard-sele.svg
 import IconMarketingSVG from '../../assets/icon-nav-admin-marketing.svg'
 import IconMarketingSeleSVG from '../../assets/icon-nav-admin-marketing-sele.svg'
 import { MonetizationOn as IconFinanceiroSVG, Group as IconColaboradoresSVG } from '@material-ui/icons'
-import IconColaboradoresSeleSVG from '../../assets/icon-nav-admin-financeiro-sele.svg'
 
 export const NavOptions = styled.nav`
     background-color: #ffffff;
@@ -139,7 +138,7 @@ export const IconColaboradores = styled(IconColaboradoresSVG)`
     height: auto;
 `
 
-export const IconColaboradoresSele = styled(IconColaboradoresSeleSVG)`
+export const IconColaboradoresSele = styled(IconColaboradoresSVG)`
     width: 20%;
     margin-right: 6%;
     margin-left: 4%;
