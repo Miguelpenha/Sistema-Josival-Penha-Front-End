@@ -1,5 +1,5 @@
-import { TableContainer, TableCellTitle, TableCellTotal, TextTotal, TableRowSele, TableCellValueBorder, TableCellBorder, IconButtonExclu, TableCellTitleBorder, LimitText } from './style'
-import { Paper, Table, TableHead, TableRow, TableBody, TableFooter, Tooltip, Checkbox } from '@material-ui/core'
+import { TableContainer, TableCellTitle, TableCellTotal, TextTotal, TableRowSele, TableCellValueBorder, TableCellBorder, IconButtonExclu, TableCellTitleBorder, LimitText, DialogTurma } from './style'
+import { Paper, Table, TableHead, TableRow, TableBody, TableFooter, Tooltip, Checkbox, DialogContent } from '@material-ui/core'
 import { Delete as DeleteIcon } from '@material-ui/icons'
 import { useState } from 'react'
 
@@ -16,18 +16,37 @@ export default function TableTurmas({ turmas=[], onDeleteTurmas, onDeleteTurmasT
         
         rows.sort(sortDate)
 
-        function clickSele(id) {
-            let index = selecionados.indexOf(id)
-            if (index === -1) {
-                selecionados.push(id)
-                setSelecionados(selecionados)
-            } else {
-                let newSelecionados = selecionados.map(selecionado => selecionado != id && selecionado)
-            }
-        }
-
         function Row({row, index}) {
-            return <TableRowSele key={index} onClick={() => clickSele(row._id)}>
+            const [openDialogTurma, setOpenDialogTurma] = useState(false)
+
+            function clickSele(id) {
+                let index = selecionados.indexOf(id)
+                if (index === -1) {
+                    selecionados.push(id)
+                    setSelecionados(selecionados)
+                } else {
+                    let newSelecionados = selecionados.map(selecionado => selecionado != id && selecionado)
+                }
+                setOpenDialogTurma(true)
+            }
+
+            function ModelTurma({ open }) {
+                if (open) {
+                    return (
+                        <DialogTurma open={true} onClose={() => setOpenDialogTurma(false)}>
+                            <DialogContent>
+                                Turma {row._id}
+                            </DialogContent>
+                        </DialogTurma>
+                    )
+                }
+
+                return null
+            }
+
+            return (
+                <>
+                    <TableRowSele key={index} onClick={() => clickSele(row._id)}>
                         <TableCellValueBorder component="th" scope="col" align="center">
                             <Checkbox sx={{'& .MuiSvgIcon-root': {fontSize: 20}}}/>
                         </TableCellValueBorder>
@@ -47,8 +66,10 @@ export default function TableTurmas({ turmas=[], onDeleteTurmas, onDeleteTurmasT
                                 </IconButtonExclu>
                             </Tooltip>       
                         </TableCellValueBorder>
-                </TableRowSele>
-        
+                    </TableRowSele>
+                    <ModelTurma open={openDialogTurma}/>
+                </>
+            )
         }
         
         return (

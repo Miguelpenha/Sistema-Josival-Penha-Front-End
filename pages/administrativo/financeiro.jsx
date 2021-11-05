@@ -582,7 +582,7 @@ export default function Financeiro() {
 
   function ChartReceitasDespesasComCarregamento() {
     if (totalReceitas && totalDespesas) {
-      return <ChartReceitasDespesas style={{marginTop: '4.5%'}} width="500px" height="300px" chartType="PieChart" data={[
+      return <ChartReceitasDespesas style={{marginTop: '4.5%'}} width="550px" height="300px" chartType="PieChart" data={[
         ['Linguagens', 'Quantidade'],
         ['Receitas', totalDespesas && totalReceitas && totalReceitas.totalBruto],
         ['Despesas', totalReceitas && totalDespesas && totalDespesas.totalBruto]
@@ -610,7 +610,7 @@ export default function Financeiro() {
         colors.push(categoria.cor)
       })
       
-      return <ChartReceitasDespesas width="500px" height="300px" chartType="PieChart" data={[
+      return <ChartReceitasDespesas width="550px" height="300px" chartType="PieChart" data={[
         ['Nome', 'Total'],
         ...categoriasReceitasBrutas
       ]} options={{
@@ -637,7 +637,7 @@ export default function Financeiro() {
         colors.push(categoria.cor)
       })
       
-      return <ChartReceitasDespesas width="500px" height="300px" chartType="PieChart" data={[
+      return <ChartReceitasDespesas width="550px" height="300px" chartType="PieChart" data={[
         ['Nome', 'Total'],
         ...categoriasDespesasBrutas
       ]} options={{

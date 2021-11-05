@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components'
-import { TableCell as TableCellMUI, TableContainer as TableContainerMUi, TableRow as TableRowMUI, IconButton as IconButtonBruto, Checkbox } from '@material-ui/core'
+import { TableCell as TableCellMUI, TableContainer as TableContainerMUi, TableRow as TableRowMUI, IconButton as IconButtonBruto, Checkbox, Dialog } from '@material-ui/core'
 import Image from 'next/image'
 
 export const TableContainer = styled(TableContainerMUi)`
@@ -49,6 +49,11 @@ export const TableRowSele = styled(TableRowMUI)`
     &:hover {
         transition-timing-function: linear;
         transition-duration: 0.2s;
+        background-color: #E0E0E0;
+    }
+
+    & {
+        cursor: pointer;
     }
 `
 
@@ -136,3 +141,11 @@ export function LimitText({ children='', limit=0, points=true }) {
         return children
     }
 }
+
+export const DialogTurma = styled(Dialog).attrs({
+    fullWidth: true
+})`
+    && {
+        height: 100%;
+    }
+`
