@@ -81,7 +81,7 @@ export default function TableTurmas({ turmas=[], onDeleteTurmas, onDeleteTurmasT
                     </TableHead>
                     <TableBody>
                         {rows.map((row, index) => (
-                            <Row row={row} index={index}/>
+                            <Row key={index} row={row} index={index}/>
                         ))}
                     </TableBody>
                     <TableFooter>

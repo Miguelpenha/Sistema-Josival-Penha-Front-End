@@ -53,7 +53,7 @@ export default function Alunos() {
               <TextFunção>Alunos</TextFunção>
             </Função>
             <Função>
-              <Link href="academico" passHref>
+              <Link href="/administrativo/academico" passHref>
                 <LinkFunção>
                   <IconAcadêmico/>
                   <TextFunção>Acadêmico</TextFunção>
@@ -61,7 +61,7 @@ export default function Alunos() {
               </Link>
             </Função>
             <Função>
-              <Link href="dashboard" passHref>
+              <Link href="/administrativo/dashboard" passHref>
                 <LinkFunção>
                   <IconDashBoard/>
                   <TextFunção>Dashboard</TextFunção>
@@ -69,7 +69,7 @@ export default function Alunos() {
               </Link>
             </Função>
             <Função>
-              <Link href="marketing" passHref>
+              <Link href="/administrativo/marketing" passHref>
                 <LinkFunção>
                   <IconMarketing/>
                   <TextFunção>Marketing</TextFunção>
@@ -77,7 +77,7 @@ export default function Alunos() {
               </Link>
             </Função>
             <Função>
-              <Link href="financeiro" passHref>
+              <Link href="/administrativo/financeiro" passHref>
                 <LinkFunção>
                   <IconFinanceiro/>
                   <TextFunção>Financeiro</TextFunção>
@@ -85,7 +85,7 @@ export default function Alunos() {
               </Link>
             </Função>
             <Função>
-              <Link href="colaboradores" passHref>
+              <Link href="/administrativo/colaboradores" passHref>
                 <LinkFunção>
                   <IconColaboradores/>
                   <TextFunção>Colaboradores</TextFunção>

@@ -198,7 +198,7 @@ export default function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosT
                     </TableHead>
                     <TableBody>
                         {rows.map((row, index) => (
-                            <Row row={row} index={index}/>
+                            <Row key={index} row={row} index={index}/>
                         ))}
                     </TableBody>
                     <TableFooter>

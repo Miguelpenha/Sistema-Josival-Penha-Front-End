@@ -39,14 +39,14 @@ export const getServerSideProps = async ctx => {
   if (tokenProf) {
     return {
       redirect: {
-        destination: '/professoras',
+        destination: 'professoras',
         permanent: false
       }
     }
   } else if (tokenAdmin) {
     return {
       redirect: {
-        destination: '/administrativo/alunos',
+        destination: 'administrativo/alunos',
         permanent: false
       }
     }

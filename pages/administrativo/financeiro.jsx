@@ -665,7 +665,7 @@ export default function Financeiro() {
           <LogoJPNome/>
           <Funções>
             <Função>
-              <Link href="alunos" passHref>
+              <Link href="/administrativo/alunos" passHref>
                 <LinkFunção>
                   <IconAlunos/>
                   <TextFunção>Alunos</TextFunção>
@@ -673,7 +673,7 @@ export default function Financeiro() {
               </Link>
             </Função>
             <Função>
-              <Link href="academico" passHref>
+              <Link href="/administrativo/academico" passHref>
                 <LinkFunção>
                   <IconAcadêmico/>
                   <TextFunção>Acadêmico</TextFunção>
@@ -681,7 +681,7 @@ export default function Financeiro() {
               </Link>
             </Função>
             <Função>
-              <Link href="dashboard" passHref>
+              <Link href="/administrativo/dashboard" passHref>
                 <LinkFunção>
                   <IconDashBoard/>
                   <TextFunção>Dashboard</TextFunção>
@@ -689,7 +689,7 @@ export default function Financeiro() {
               </Link>
             </Função>
             <Função>
-              <Link href="marketing" passHref>
+              <Link href="/administrativo/marketing" passHref>
                 <LinkFunção>
                   <IconMarketing/>
                   <TextFunção>Marketing</TextFunção>
@@ -701,7 +701,7 @@ export default function Financeiro() {
               <TextFunção>Financeiro</TextFunção>
             </Função>
             <Função>
-              <Link href="colaboradores" passHref>
+              <Link href="/administrativo/colaboradores" passHref>
                 <LinkFunção>
                   <IconColaboradores/>
                   <TextFunção>Colaboradores</TextFunção>

@@ -8,9 +8,7 @@ import IconDashBoardSVG from '../../assets/icon-nav-admin-dashBoard.svg'
 import IconDashBoardSeleSVG from '../../assets/icon-nav-admin-dashBoard-sele.svg'
 import IconMarketingSVG from '../../assets/icon-nav-admin-marketing.svg'
 import IconMarketingSeleSVG from '../../assets/icon-nav-admin-marketing-sele.svg'
-import IconFinanceiroSVG from '../../assets/icon-nav-admin-financeiro.svg'
-import IconFinanceiroSeleSVG from '../../assets/icon-nav-admin-financeiro-sele.svg'
-import IconColaboradoresSVG from '../../assets/icon-nav-admin-financeiro.svg'
+import { MonetizationOn as IconFinanceiroSVG, Group as IconColaboradoresSVG } from '@material-ui/icons'
 import IconColaboradoresSeleSVG from '../../assets/icon-nav-admin-financeiro-sele.svg'
 
 export const NavOptions = styled.nav`
@@ -120,27 +118,33 @@ export const IconMarketingSele = styled(IconMarketingSeleSVG)`
 `
 
 export const IconFinanceiro = styled(IconFinanceiroSVG)`
-    width: 25%;
-    margin-right: 4%;
+    width: 20%;
+    margin-right: 6%;
+    margin-left: 4%;
     height: auto;
 `
 
-export const IconFinanceiroSele = styled(IconFinanceiroSeleSVG)`
-    width: 25%;
-    margin-right: 4%;
+export const IconFinanceiroSele = styled(IconFinanceiroSVG)`
+    width: 20%;
+    margin-right: 6%;
+    margin-left: 4%;
     height: auto;
+    color: #0872FC;
 `
 
 export const IconColaboradores = styled(IconColaboradoresSVG)`
-    width: 25%;
-    margin-right: 4%;
+    width: 20%;
+    margin-right: 6%;
+    margin-left: 4%;
     height: auto;
 `
 
 export const IconColaboradoresSele = styled(IconColaboradoresSeleSVG)`
-    width: 25%;
-    margin-right: 4%;
+    width: 20%;
+    margin-right: 6%;
+    margin-left: 4%;
     height: auto;
+    color: #0872FC;
 `
 
 export const TextFunção = styled.span`
