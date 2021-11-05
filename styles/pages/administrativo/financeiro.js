@@ -88,12 +88,14 @@ export const Infos = styled.section`
 `
 
 export const Info = styled(Card)`
-    background-color: #ffffff;
-    padding: 2%;
-    width: 27%;
-    padding-bottom: 2%;
-    border-radius: 25px;
-    margin-left: 2%;
+    && {
+        background-color: #ffffff;
+        padding: 2%;
+        width: 27%;
+        padding-bottom: 2%;
+        border-radius: 25px;
+        margin-left: 2%;
+    }
 `
 
 export const InfoTit = styled.span`
