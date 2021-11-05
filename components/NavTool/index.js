@@ -117,33 +117,41 @@ export const IconMarketingSele = styled(IconMarketingSeleSVG)`
 `
 
 export const IconFinanceiro = styled(IconFinanceiroSVG)`
-    width: 20%;
-    margin-right: 6%;
-    margin-left: 4%;
-    height: auto;
+    && {
+        width: 20%;
+        margin-right: 6%;
+        margin-left: 4%;
+        height: auto;
+    }
 `
 
 export const IconFinanceiroSele = styled(IconFinanceiroSVG)`
-    width: 20%;
-    margin-right: 6%;
-    margin-left: 4%;
-    height: auto;
-    color: #0872FC;
+    && {
+        width: 20%;
+        margin-right: 6%;
+        margin-left: 4%;
+        height: auto;
+        color: #0872FC;
+    }
 `
 
 export const IconColaboradores = styled(IconColaboradoresSVG)`
-    width: 20%;
-    margin-right: 6%;
-    margin-left: 4%;
-    height: auto;
+    && {
+        width: 20%;
+        margin-right: 6%;
+        margin-left: 4%;
+        height: auto;
+    }
 `
 
 export const IconColaboradoresSele = styled(IconColaboradoresSVG)`
-    width: 20%;
-    margin-right: 6%;
-    margin-left: 4%;
-    height: auto;
-    color: #0872FC;
+    && {
+        width: 20%;
+        margin-right: 6%;
+        margin-left: 4%;
+        height: auto;
+        color: #0872FC;
+    }
 `
 
 export const TextFunção = styled.span`
