@@ -2,9 +2,9 @@ import { TableContainer, TableCell, TableCellTitle, TableCellTotal, TextTotal, T
 import { Paper, Table, TableHead, TableRow, TableBody, TableFooter, Tooltip, Menu, MenuItem, Checkbox, DialogContent, SpeedDial, SpeedDialAction} from '@material-ui/core'
 import { Delete as DeleteIcon, Download as DownloadIcon, Edit as EditIcon } from '@material-ui/icons'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, memo } from 'react'
 
-export default function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg }) {
+function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg }) {
     if (typeof alunos != 'string' && alunos) {
         const [selecionados, setSelecionados] = useState(['asd'])
         alunos.map(aluno => aluno.criação.sistema = new Date(aluno.criação.sistema))
@@ -215,3 +215,5 @@ export default function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosT
         return null
     }
 }
+
+export default memo(TableAlunos)

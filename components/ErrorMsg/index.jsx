@@ -1,6 +1,7 @@
+import { memo } from 'react'
 import { Alert, Icon } from './style'
 
-export default function ErrorMsg({ children }) {
+function ErrorMsg({ children }) {
     return (
         <Alert>
             <Icon/>
@@ -8,3 +9,5 @@ export default function ErrorMsg({ children }) {
         </Alert>
     )
 }
+
+export default memo(ErrorMsg)

@@ -1,11 +1,11 @@
 import { TableContainer, TableCellTitle, TableCellTotal, TextTotal, TableRowSele, TableCellValueBorder, TableCellBorder, IconButtonExclu, TableCellTitleBorder, LimitText, DialogTurma } from './style'
 import { Paper, Table, TableHead, TableRow, TableBody, TableFooter, Tooltip, Checkbox, DialogContent, Skeleton } from '@material-ui/core'
 import { Delete as DeleteIcon } from '@material-ui/icons'
-import { useState } from 'react'
+import { useState, memo } from 'react'
 import TableAlunos from '../TableAlunos'
 import { get } from '../../hooks'
 
-export default function TableTurmas({ turmas=[], alunos=[], onDeleteTurmas, onDeleteTurmasTodos, setAlert, onDeleteAlunos, onDeleteAlunosTodos }) {
+function TableTurmas({ turmas, alunos, onDeleteTurmas, onDeleteTurmasTodos, setAlert, onDeleteAlunos, onDeleteAlunosTodos }) {
     if (typeof turmas != 'string' && turmas) {
         const [selecionados, setSelecionados] = useState([])
         turmas.map(turma => turma.criacao.sistema = new Date(turma.criacao.sistema))
@@ -29,7 +29,8 @@ export default function TableTurmas({ turmas=[], alunos=[], onDeleteTurmas, onDe
                 } else {
                     let newSelecionados = selecionados.map(selecionado => selecionado != id && selecionado)
                 }
-                setOpenDialogTurma(true)
+
+                //setOpenDialogTurma(true)
             }
 
             function ModelTurma({ open }) {
@@ -68,7 +69,7 @@ export default function TableTurmas({ turmas=[], alunos=[], onDeleteTurmas, onDe
                         <TableCellValueBorder component="th" scope="col" align="center">{row.serie}</TableCellValueBorder>
                         <TableCellValueBorder component="th" scope="col" align="center">{row.turno}</TableCellValueBorder>
                         <TableCellValueBorder align="center">
-                            <Tooltip title={
+                            <Tooltip  title={
                                 <span style={{fontSize: '1vw'}}>Excluir essa turma</span>
                             } arrow placement="bottom">
                                 <IconButtonExclu onClick={() => onDeleteTurmas(row._id)}>
@@ -129,3 +130,5 @@ export default function TableTurmas({ turmas=[], alunos=[], onDeleteTurmas, onDe
         return null
     }
 }
+
+export default memo(TableTurmas)

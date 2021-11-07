@@ -173,7 +173,7 @@ export default function Alunos() {
               mutateQuantAlunos('/alunos?quant=true')
             }}
           /> : <Skeleton variant="rectangular" width={`85.5%`} height={`50%`} style={{display: 'block', marginLeft: 'auto', marginRight: 'auto', borderRadius: '20px', marginTop: '5%'}} animation="wave"/>}
-          {turmas ? <TableTurmas
+          {turmas ? <TableTurmas            
             turmas={turmas && turmas}
             alunos={alunos && alunos}
             setAlert={setAlert}
@@ -192,11 +192,12 @@ export default function Alunos() {
               mutateQuantAlunos('/alunos?quant=true')
           }}
             onDeleteTurmas={id => {
-              api.delete(`/turmas/${id}`).then()
-              mutateTurmas('/turmas')
-              mutateQuantTurmas('/turmas?quant=true')
-              mutateAlunos('/alunos')
-              mutateQuantAlunos('/alunos?quant=true')
+              api.delete(`/turmas/${id}`).then(() => {
+                mutateTurmas('/turmas')
+                mutateQuantTurmas('/turmas?quant=true')
+                mutateAlunos('/alunos')
+                mutateQuantAlunos('/alunos?quant=true')
+              })
             }}
             onDeleteTurmasTodos={() => {
               turmas.map(turma => api.delete(`/turmas/${turma._id}`).then())

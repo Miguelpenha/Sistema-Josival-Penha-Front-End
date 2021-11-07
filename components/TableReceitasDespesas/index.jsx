@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import { TableContainer, TableCell, TableCellTitle, TableCellSaldo, TextSaldo, TextSaldoValue, TableRowSele, TableCellValueBorder, TableCellBorder, IconButton, TableCellTitleBorder } from './style'
 import { Paper, Table, TableHead, TableRow, TableBody, TableFooter, Tooltip } from '@material-ui/core'
 import { Delete as DeleteIcon } from '@material-ui/icons'
@@ -5,7 +6,7 @@ import CheckAnimation from '../../animations/check'
 import NotCheckAnimation from '../../animations/notCheck'
 import { get } from '../../hooks'
 
-export default function TableReceitasDespesas({ receitas=[], despesas=[], saldo='', onDeleteDespesas, onDeleteReceitas, onDeleteTodos }) {
+function TableReceitasDespesas({ receitas=[], despesas=[], saldo='', onDeleteDespesas, onDeleteReceitas, onDeleteTodos }) {
     if (typeof receitas != 'string' && typeof despesas != 'string') {
         despesas.map(despesa => {
             despesa.despesa = true
@@ -132,3 +133,5 @@ export default function TableReceitasDespesas({ receitas=[], despesas=[], saldo=
         return null
     }
 }
+
+export default memo(TableReceitasDespesas)
