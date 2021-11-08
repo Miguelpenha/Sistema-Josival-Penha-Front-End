@@ -8,6 +8,10 @@ const base = axios.create({
     }
 })
 
+base.defaults.headers = {
+    'Authorization': `key ${process.env.NEXT_STATIC_API_KEY}`
+}
+
 export default function api(url='', config={}) {
     const { data, error, mutate } = useSWR(url, async url => {
         const response = await base(url, config)
