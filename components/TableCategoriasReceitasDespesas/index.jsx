@@ -6,9 +6,8 @@ import CheckAnimation from '../../animations/check'
 import NotCheckAnimation from '../../animations/notCheck'
 import { get } from '../../hooks'
 
-function TableReceitasDespesas({ receitas=[], despesas=[], saldo='', onDeleteDespesas, onDeleteReceitas, onDeleteTodos }) {
+function TableCategoriasReceitasDespesas({ categoriasReceitas=[], categoriasDespesas=[], saldo='', onDeleteDespesas, onDeleteReceitas, onDeleteTodos }) {
     if (typeof receitas != 'string' && typeof despesas != 'string') {
-        console.log(despesas)
         despesas.map(despesa => {
             despesa.despesa = true
             despesa.criação.sistema = new Date(despesa.criação.sistema)
