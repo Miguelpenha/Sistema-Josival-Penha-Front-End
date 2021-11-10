@@ -51,7 +51,7 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg }) {
                     return (
                         <DialogGerarDeclaração open={true} onClose={() => setOpenDialogGerarDeclaração(false)}>
                             <DialogContent>
-                                <form method="POST" target="_blank" action={`${process.env.NEXT_STATIC_API_URL}/alunos/exportar`}>
+                                <form method="POST" target="_blank" action={`${process.env.NEXT_STATIC_API_URL}/alunos/documents/declaration`}>
                                     <InputPorcentagemGerarDeclaração name="frequencia" required placeholder="Porcentagem de aulas sem faltas" type="number" InputProps={{
                                         inputProps: {
                                             max: 100,
@@ -60,6 +60,7 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg }) {
                                     }} defaultValue={98} variant="standard"/>
                                     <span style={{fontSize: '0.8vw'}}>Porcentagem de aulas sem faltas</span>
                                     <input type="hidden" name="id" value={row._id}/>
+                                    <input type="hidden" name="keyapi" value={process.env.NEXT_STATIC_API_KEY}/>
                                     <br/>
                                     <BolsistaSwitch name="bolsista"/>Bolsista
                                     <ButtonSubmitGerarDeclaração style={{marginBottom: '0%'}} type="submit" variant="contained">Gerar</ButtonSubmitGerarDeclaração>
