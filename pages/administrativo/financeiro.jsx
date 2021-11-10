@@ -905,6 +905,7 @@ export default function Financeiro() {
     </>
   )
 }
+
 export const getServerSideProps = async ctx => {
   const { [process.env.NEXT_STATIC_NAME_COOKIE_PROFESSORAS]:tokenProf } = nookies.get(ctx)
   const { [process.env.NEXT_STATIC_NAME_COOKIE_ADMINISTRATIVO]:tokenAdmin } = nookies.get(ctx)
