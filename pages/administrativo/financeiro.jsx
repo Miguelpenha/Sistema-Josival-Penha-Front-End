@@ -10,6 +10,7 @@ import { useForm } from 'react-hook-form'
 import { get } from '../../hooks'
 import api from '../../services/api/base'
 import TableReceitasDespesas from '../../components/TableReceitasDespesas'
+import TableCategoriasReceitasDespesas from '../../components/TableCategoriasReceitasDespesas'
 
 export default function Financeiro() {
   const { data: totalReceitas, mutate: mutateTotalReceitas } = get('/financeiro/receitas/total')
@@ -603,7 +604,8 @@ export default function Financeiro() {
 
   function ChartCategoriasReceitasComCarregamento() {
     if (categoriasReceitasTotal) {
-      let categoriasReceitasBrutas = []
+      try {
+        let categoriasReceitasBrutas = []
       let colors = []
       categoriasReceitasTotal.map(categoria => {
         categoriasReceitasBrutas.push([categoria.nome, categoria.total])
@@ -623,6 +625,9 @@ export default function Financeiro() {
         },
         pieStartAngle: 180
       }}/>
+      } catch {
+        return null
+      }
     } else {
       return <Skeleton variant="rectangular" width={500} height={300} style={{marginTop: '3%', borderRadius: '20px'}} animation="wave"/>
     }
@@ -630,31 +635,35 @@ export default function Financeiro() {
 
   function ChartCategoriasDespesasComCarregamento() {
     if (categoriasDespesasTotal) {
-      let categoriasDespesasBrutas = []
-      let colors = []
-      categoriasDespesasTotal.map(categoria => {
-        categoriasDespesasBrutas.push([categoria.nome, categoria.total])
-        colors.push(categoria.cor)
-      })
-      
-      return <ChartReceitasDespesas width="550px" height="300px" chartType="PieChart" data={[
-        ['Nome', 'Total'],
-        ...categoriasDespesasBrutas
-      ]} options={{
-        colors,
-        pieHole: 0.4,
-        title: 'Categorias despesas',
-        titleTextStyle: {
-          color: '#ED3237',
-          fontSize: 20
-        },
-        pieStartAngle: 180
-      }}/>
+      try {
+        let categoriasDespesasBrutas = []
+        let colors = []
+        categoriasDespesasTotal.map(categoria => {
+          categoriasDespesasBrutas.push([categoria.nome, categoria.total])
+          colors.push(categoria.cor)
+        })
+        
+        return <ChartReceitasDespesas width="550px" height="300px" chartType="PieChart" data={[
+          ['Nome', 'Total'],
+          ...categoriasDespesasBrutas
+        ]} options={{
+          colors,
+          pieHole: 0.4,
+          title: 'Categorias despesas',
+          titleTextStyle: {
+            color: '#ED3237',
+            fontSize: 20
+          },
+          pieStartAngle: 180
+        }}/>
+      } catch {
+        return null
+      }
     } else {
       return <Skeleton variant="rectangular" width={500} height={300} style={{marginTop: '3%', borderRadius: '20px'}} animation="wave"/>
     }
   }
-
+  
   return (
     <>
       <Head>
@@ -797,6 +806,30 @@ export default function Financeiro() {
                   mutateTotalReceitas('/financeiro/receitas/total')
                   mutateReceitas('/financeiro/receitas')
                   mutateSaldo('/financeiro/saldo')
+                })
+              })
+            }} saldo={saldo && saldo.saldo}/> : <Skeleton variant="rectangular" width={`85.5%`} height={`50%`} style={{display: 'block', marginLeft: 'auto', marginRight: 'auto', borderRadius: '20px', marginTop: '5%'}} animation="wave"/>}
+            {categoriasReceitasTotal && categoriasDespesasTotal ? <TableCategoriasReceitasDespesas categoriasReceitas={categoriasReceitasTotal && categoriasReceitasTotal} categoriasDespesas={categoriasDespesasTotal && categoriasDespesasTotal} onDeleteCategoriaReceita={id => {
+              api.delete(`/financeiro/despesas/categorias/${id}`).then(() => {
+                mutateDespesas('/financeiro/despesas')
+                mutateCategoriasDespesasTotal('/financeiro/despesas/categorias/total')
+              })
+            }} onDeleteCategoriaDespesa={id => {
+              api.delete(`/financeiro/receitas/categorias/${id}`).then(() => {
+                mutateReceitas('/financeiro/receitas')
+                mutateCategoriasReceitasTotal('/financeiro/receitas/categorias/total')
+              })
+            }} onDeleteTodos={() => {
+              categoriasReceitasTotal.map(categoriaReceita => {
+                api.delete(`/financeiro/receitas/categorias/${categoriaReceita._id}`).then(() => {
+                  mutateReceitas('/financeiro/receitas')
+                  mutateCategoriasReceitasTotal('/financeiro/receitas/categorias/total')
+                })
+              })
+              categoriasDespesasTotal.map(categoriaDespesa => {
+                api.delete(`/financeiro/despesas/categorias/${categoriaDespesa._id}`).then(() => {
+                  mutateDespesas('/financeiro/despesas')
+                  mutateCategoriasDespesasTotal('/financeiro/despesas/categorias/total')
                 })
               })
             }} saldo={saldo && saldo.saldo}/> : <Skeleton variant="rectangular" width={`85.5%`} height={`50%`} style={{display: 'block', marginLeft: 'auto', marginRight: 'auto', borderRadius: '20px', marginTop: '5%'}} animation="wave"/>}

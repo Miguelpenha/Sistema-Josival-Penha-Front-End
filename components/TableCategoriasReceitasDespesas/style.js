@@ -83,7 +83,7 @@ export const TableCellSaldo = styled(TableCell)`
 
 export const TextSaldo = styled.span`
     && {
-        color: ${props => props.negative ? '#ED3237' : '#5AB55E'};
+        color: #0872FC;
         margin-right: 2%;
     }
 `
