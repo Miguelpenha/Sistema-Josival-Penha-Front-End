@@ -605,6 +605,7 @@ export default function Financeiro() {
   function ChartCategoriasReceitasComCarregamento() {
     if (categoriasReceitasTotal) {
       try {
+        console.log(categoriasReceitasTotal)
         let categoriasReceitasBrutas = []
       let colors = []
       categoriasReceitasTotal.map(categoria => {
