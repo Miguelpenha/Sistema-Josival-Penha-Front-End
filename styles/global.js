@@ -18,4 +18,10 @@ export default createGlobalStyle`
         color: ${props => props.theme.colors.text};
         font: ${props => props.theme.fonts.global}
     }
+
+    body {
+        .css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root {
+            font-size: 1vw;
+        }
+    }
 `

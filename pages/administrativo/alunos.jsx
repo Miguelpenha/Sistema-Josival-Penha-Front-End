@@ -1,13 +1,13 @@
 import Head from 'next/head'
 import nookies from 'nookies'
-import { Container, Main, AlunosBanner, InfoAdminContainer, InfoAdmin, InfoAdminTit, InfoAdminDado, IconInfoTotalAlunos, IconInfoTotalTurmas, IconInfoMédiaAlunos, IconInfoOcupação, NavInfos, DialogCadasAluno, InputNomeCadasAluno, ButtonSubmitCadasAluno, CampoInputCadasAluno } from '../../styles/pages/administrativo/alunos'
+import { Container, Main, AlunosBanner, InfoAdminContainer, InfoAdmin, InfoAdminTit, InfoAdminDado, IconInfoTotalAlunos, IconInfoTotalTurmas, IconInfoMédiaAlunos, IconInfoOcupação, NavInfos, DialogCadasAluno, InputNomeCadasAluno, ButtonSubmitCadasAluno, CampoInputCadasAluno, InputSelectCadasAluno } from '../../styles/pages/administrativo/alunos'
 import { NavOptions, LogoJPNome, Funções, Função, LinkFunção, IconAlunosSele, IconFinanceiro, IconAcadêmico, IconDashBoard, IconMarketing, IconColaboradores, TextFunção } from '../../components/NavTool'
 import { get } from '../../hooks'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import TableAlunos from '../../components/TableAlunos'
 import TableTurmas from '../../components/TableTurmas'
-import { SpeedDial, SpeedDialAction, SpeedDialIcon, Skeleton, Snackbar, Alert, DialogContent } from '@material-ui/core'
+import { SpeedDial, SpeedDialAction, SpeedDialIcon, Skeleton, Snackbar, Alert, DialogContent, MenuItem } from '@material-ui/core'
 import { Add as AddIcon } from '@material-ui/icons'
 import api from '../../services/api/base'
 
@@ -30,8 +30,22 @@ export default function Alunos() {
               <DialogContent>
                   <form >
                       <CampoInputCadasAluno>
-                        <span style={{fontSize: '1vw', width: 'fit-content'}}>Nome</span>
+                        <span style={{fontSize: '1vw', width: 'fit-content', color: '#8a8a8a'}}>Nome</span>
                         <InputNomeCadasAluno name="nome" required placeholder="Nome do aluno" type="text" variant="standard"/>
+                      </CampoInputCadasAluno>
+                      <CampoInputCadasAluno>
+                        <span style={{fontSize: '1vw', width: 'fit-content', color: '#8a8a8a'}}>Turma</span>
+                        <InputSelectCadasAluno id="turma">
+                          {turmas.map(turma => <MenuItem value={turma._id}>{turma.nome}</MenuItem>)}
+                          <MenuItem value="asd">asd</MenuItem>
+                        </InputSelectCadasAluno>
+                      </CampoInputCadasAluno>
+                      <CampoInputCadasAluno>
+                        <span style={{fontSize: '1vw', width: 'fit-content', color: '#8a8a8a'}}>Sexo</span>
+                        <InputSelectCadasAluno id="sexo">
+                          <MenuItem value="Masculino">Masculino</MenuItem>
+                          <MenuItem value="Feminino">Feminino</MenuItem>
+                        </InputSelectCadasAluno>
                       </CampoInputCadasAluno>
                       <ButtonSubmitCadasAluno style={{marginBottom: '0%'}} type="submit" variant="contained">Cadastrar</ButtonSubmitCadasAluno>
                   </form>
