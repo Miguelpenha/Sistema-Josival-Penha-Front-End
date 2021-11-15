@@ -1,13 +1,13 @@
 import Head from 'next/head'
 import nookies from 'nookies'
-import { Container, Main, AlunosBanner, InfoAdminContainer, InfoAdmin, InfoAdminTit, InfoAdminDado, IconInfoTotalAlunos, IconInfoTotalTurmas, IconInfoMédiaAlunos, IconInfoOcupação, NavInfos } from '../../styles/pages/administrativo/alunos'
+import { Container, Main, AlunosBanner, InfoAdminContainer, InfoAdmin, InfoAdminTit, InfoAdminDado, IconInfoTotalAlunos, IconInfoTotalTurmas, IconInfoMédiaAlunos, IconInfoOcupação, NavInfos, DialogCadasAluno, InputNomeCadasAluno, ButtonSubmitCadasAluno, CampoInputCadasAluno } from '../../styles/pages/administrativo/alunos'
 import { NavOptions, LogoJPNome, Funções, Função, LinkFunção, IconAlunosSele, IconFinanceiro, IconAcadêmico, IconDashBoard, IconMarketing, IconColaboradores, TextFunção } from '../../components/NavTool'
 import { get } from '../../hooks'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import TableAlunos from '../../components/TableAlunos'
 import TableTurmas from '../../components/TableTurmas'
-import { SpeedDial, SpeedDialAction, SpeedDialIcon, Skeleton, Snackbar, Alert } from '@material-ui/core'
+import { SpeedDial, SpeedDialAction, SpeedDialIcon, Skeleton, Snackbar, Alert, DialogContent } from '@material-ui/core'
 import { Add as AddIcon } from '@material-ui/icons'
 import api from '../../services/api/base'
 
@@ -18,9 +18,30 @@ export default function Alunos() {
   const { data: turmas, mutate: mutateTurmas } = get('/turmas')
   const [mediaAlunos, setMediaAlunos] = useState(undefined)
   const [mediaOcupação, setMediaOcupação] = useState(undefined)
+  const [openModelAlunosCadastrar, setOpenModelAlunosCadastrar] = useState(false)
   const [alert, setAlert] = useState({
     open: false
   })
+
+  function ModelAlunosCadastrar({ open }) {
+    if (open) {
+        return (
+          <DialogCadasAluno open={true} onClose={() => setOpenModelAlunosCadastrar(false)}>
+              <DialogContent>
+                  <form >
+                      <CampoInputCadasAluno>
+                        <span style={{fontSize: '1vw', width: 'fit-content'}}>Nome</span>
+                        <InputNomeCadasAluno name="nome" required placeholder="Nome do aluno" type="text" variant="standard"/>
+                      </CampoInputCadasAluno>
+                      <ButtonSubmitCadasAluno style={{marginBottom: '0%'}} type="submit" variant="contained">Cadastrar</ButtonSubmitCadasAluno>
+                  </form>
+              </DialogContent>
+          </DialogCadasAluno>
+        )
+    }
+
+    return null
+  }
 
   useEffect(() => {
     if (quantTurmas && quantAlunos) {
@@ -34,7 +55,7 @@ export default function Alunos() {
       icon: <AddIcon/>,
       name: 'Cadastrar aluno',
       onClick: () => {
-        console.log('clicou')
+        setOpenModelAlunosCadastrar(true)
       }
     }
   ]
@@ -225,6 +246,7 @@ export default function Alunos() {
               <h1>{alert.text}</h1>
             </Alert>
           </Snackbar>
+          <ModelAlunosCadastrar open={openModelAlunosCadastrar}/>
       </Container>
     </>
   )

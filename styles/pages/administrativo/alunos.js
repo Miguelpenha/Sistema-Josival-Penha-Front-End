@@ -4,6 +4,7 @@ import IconInfoTotalTurmasSVG from '../../../assets/icon-info-total-turmas.svg'
 import IconInfoMédiaAlunosSVG from '../../../assets/icon-info-média-alunos.svg'
 import IconInfoOcupaçãoSVG from '../../../assets/icon-info-ocupação.svg'
 import { Add as IconAddSVG, AddCircleOutline as IconAddCircleOutlineSVG } from '@material-ui/icons'
+import { Dialog, TextField, Button } from '@material-ui/core'
 
 export const Container = styled.div`
     display: grid;
@@ -124,5 +125,49 @@ export const IconAddCircleOutline = styled(IconAddCircleOutlineSVG)`
         margin-right: 15%;
         width: 22%;
         height: auto;
+    }
+`
+
+export const DialogCadasAluno = styled(Dialog).attrs({
+    fullWidth: true
+})`
+    && {
+        height: 100%;
+    }
+`
+
+export const CampoInputCadasAluno = styled.div`
+    display: flex;
+    flex-direction: column;
+`
+
+export const InputNomeCadasAluno = styled(TextField)`
+    && {
+        width: 44%;
+    }
+    
+    & .MuiInput-underline {
+        font-size: 1vw;
+    }
+
+    & .MuiInput-underline:after, .MuiInput-underline:before {
+        border-bottom-color: #0872FC;
+    }
+`
+
+export const ButtonSubmitCadasAluno = styled(Button)`
+    && {
+        float: right;
+        border-radius: 20px;
+        background-color: #0872FC;
+        font-size: 1vw;
+        width: 30%;
+        margin-top: 6%;
+        margin-bottom: 30%;
+        height: auto;
+    }
+
+    &&:hover {
+        background-color: #0852FF;
     }
 `
