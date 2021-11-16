@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import nookies from 'nookies'
-import { Container, Main, AlunosBanner, InfoAdminContainer, InfoAdmin, InfoAdminTit, InfoAdminDado, IconInfoTotalAlunos, IconInfoTotalTurmas, IconInfoMédiaAlunos, IconInfoOcupação, NavInfos, DialogCadasAluno, InputNomeCadasAluno, ButtonSubmitCadasAluno, CampoInputCadasAluno, InputSelectCadasAluno } from '../../styles/pages/administrativo/alunos'
+import { Container, Main, AlunosBanner, InfoAdminContainer, InfoAdmin, InfoAdminTit, InfoAdminDado, IconInfoTotalAlunos, IconInfoTotalTurmas, IconInfoMédiaAlunos, IconInfoOcupação, NavInfos, DialogCadasAluno, InputNomeCadasAluno, ButtonSubmitCadasAluno, CampoInputCadasAluno, InputSelectCadasAluno, InputDespesaData } from '../../styles/pages/administrativo/alunos'
 import { NavOptions, LogoJPNome, Funções, Função, LinkFunção, IconAlunosSele, IconFinanceiro, IconAcadêmico, IconDashBoard, IconMarketing, IconColaboradores, TextFunção } from '../../components/NavTool'
 import { get } from '../../hooks'
 import { useEffect, useState } from 'react'
@@ -10,6 +10,7 @@ import TableTurmas from '../../components/TableTurmas'
 import { SpeedDial, SpeedDialAction, SpeedDialIcon, Skeleton, Snackbar, Alert, DialogContent, MenuItem } from '@material-ui/core'
 import { Add as AddIcon } from '@material-ui/icons'
 import api from '../../services/api/base'
+import InputMask from 'react-input-mask'
 
 export default function Alunos() {
   const { data: quantAlunos, mutate: mutateQuantAlunos } = get('/alunos?quant=true')
@@ -22,6 +23,8 @@ export default function Alunos() {
   const [alert, setAlert] = useState({
     open: false
   })
+  let atualDateBruta = new Date()
+  const [atualDate] = useState(`${atualDateBruta.toLocaleDateString().split('/')[2]}-${atualDateBruta.toLocaleDateString().split('/')[1]}-${atualDateBruta.toLocaleDateString().split('/')[0]}`)
 
   function ModelAlunosCadastrar({ open }) {
     if (open) {
@@ -46,6 +49,40 @@ export default function Alunos() {
                           <MenuItem value="Masculino">Masculino</MenuItem>
                           <MenuItem value="Feminino">Feminino</MenuItem>
                         </InputSelectCadasAluno>
+                      </CampoInputCadasAluno>
+                      <CampoInputCadasAluno>
+                        <span style={{fontSize: '1vw', width: 'fit-content', color: '#8a8a8a'}}>Data de nascimento</span>
+                        <InputDespesaData defaultValue={atualDate} type="date" required name="date"/>
+                      </CampoInputCadasAluno>
+                      <CampoInputCadasAluno>
+                        <span style={{fontSize: '1vw', width: 'fit-content', color: '#8a8a8a'}}>CPF</span>
+                        <InputMask
+                          mask="999.999.999-99"
+                          alwaysShowMask={true}
+                        >
+                          {() => <InputNomeCadasAluno name="cpf" required placeholder="CPF do aluno" type="text" variant="standard"/>}
+                        </InputMask>
+                      </CampoInputCadasAluno>
+                      <CampoInputCadasAluno>
+                        <span style={{fontSize: '1vw', width: 'fit-content', color: '#8a8a8a'}}>Primeiro responsável</span>
+                        <InputNomeCadasAluno name="res1" required placeholder="Nome do primeiro responsável" type="text" variant="standard"/>
+                      </CampoInputCadasAluno>
+                      <CampoInputCadasAluno>
+                        <span style={{fontSize: '1vw', width: 'fit-content', color: '#8a8a8a'}}>Segundo responsável</span>
+                        <InputNomeCadasAluno name="res2" required placeholder="Nome do segundo responsável" type="text" variant="standard"/>
+                      </CampoInputCadasAluno>
+                      <CampoInputCadasAluno>
+                        <span style={{fontSize: '1vw', width: 'fit-content', color: '#8a8a8a'}}>Telefone</span>
+                        <InputMask
+                          mask="(99) 99999-9999"
+                          alwaysShowMask={true}
+                        >
+                          {() => <InputNomeCadasAluno name="telefone" required placeholder="Telefone do aluno" type="tel" variant="standard"/>}
+                        </InputMask>
+                      </CampoInputCadasAluno>
+                      <CampoInputCadasAluno>
+                        <span style={{fontSize: '1vw', width: 'fit-content', color: '#8a8a8a'}}>E-mail</span>
+                        <InputNomeCadasAluno name="email" required placeholder="E-mail do aluno" type="email" variant="standard"/>
                       </CampoInputCadasAluno>
                       <ButtonSubmitCadasAluno style={{marginBottom: '0%'}} type="submit" variant="contained">Cadastrar</ButtonSubmitCadasAluno>
                   </form>

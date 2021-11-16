@@ -164,8 +164,8 @@ export const ButtonSubmitCadasAluno = styled(Button)`
         font-size: 1vw;
         width: 30%;
         margin-top: 6%;
-        margin-bottom: 30%;
         height: auto;
+        margin-bottom: 5%;
     }
 
     &&:hover {
@@ -177,5 +177,10 @@ export const InputSelectCadasAluno = styled(Select)`
     && {
         margin-top: 1%;
         height: 10%;
+        font-size: 1vw;
     }
+`
+
+export const InputDespesaData = styled(TextField)`
+    
 `
