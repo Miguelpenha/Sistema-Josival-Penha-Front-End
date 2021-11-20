@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import nookies from 'nookies'
-import { Container, Main, AlunosBanner, InfoAdminContainer, InfoAdmin, InfoAdminTit, InfoAdminDado, IconInfoTotalAlunos, IconInfoTotalTurmas, IconInfoMédiaAlunos, IconInfoOcupação, NavInfos, DialogCadasAluno, InputNomeCadasAluno, ButtonSubmitCadasAluno, CampoInputCadasAluno, InputSelectCadasAluno, InputDespesaData } from '../../styles/pages/administrativo/alunos'
+import { Container, Main, AlunosBanner, InfoAdminContainer, InfoAdmin, InfoAdminTit, InfoAdminDado, IconInfoTotalAlunos, IconInfoTotalTurmas, IconInfoMédiaAlunos, IconInfoOcupação, NavInfos, DialogCadasAluno, InputNomeCadasAluno, ButtonSubmitCadasAluno, CampoInputCadasAluno, InputSelectCadasAluno, InputDespesaData, LabelInputStyle, LabelInputStyleReq } from '../../styles/pages/administrativo/alunos'
 import { NavOptions, LogoJPNome, Funções, Função, LinkFunção, IconAlunosSele, IconFinanceiro, IconAcadêmico, IconDashBoard, IconMarketing, IconColaboradores, TextFunção } from '../../components/NavTool'
 import { get } from '../../hooks'
 import { useEffect, useState } from 'react'
@@ -26,63 +26,116 @@ export default function Alunos() {
   let atualDateBruta = new Date()
   const [atualDate] = useState(`${atualDateBruta.toLocaleDateString().split('/')[2]}-${atualDateBruta.toLocaleDateString().split('/')[1]}-${atualDateBruta.toLocaleDateString().split('/')[0]}`)
 
+  function LabelInput({ children, required }) {
+    if (required) {
+      return (
+        <>
+          <LabelInputStyle>
+            {children}
+            <LabelInputStyleReq>*</LabelInputStyleReq>
+          </LabelInputStyle>
+        </>
+      )
+    } else {
+      return <LabelInputStyle>{children}</LabelInputStyle>
+    }
+  }
+
   function ModelAlunosCadastrar({ open }) {
     if (open) {
         return (
           <DialogCadasAluno open={true} onClose={() => setOpenModelAlunosCadastrar(false)}>
               <DialogContent>
-                  <form >
+                  <form style={{paddingBottom: '17%'}}>
                       <CampoInputCadasAluno>
-                        <span style={{fontSize: '1vw', width: 'fit-content', color: '#8a8a8a'}}>Nome</span>
+                        <LabelInput required>Nome</LabelInput>
                         <InputNomeCadasAluno name="nome" required placeholder="Nome do aluno" type="text" variant="standard"/>
                       </CampoInputCadasAluno>
                       <CampoInputCadasAluno>
-                        <span style={{fontSize: '1vw', width: 'fit-content', color: '#8a8a8a'}}>Turma</span>
-                        <InputSelectCadasAluno id="turma">
-                          {turmas.map(turma => <MenuItem value={turma._id}>{turma.nome}</MenuItem>)}
-                          <MenuItem value="asd">asd</MenuItem>
-                        </InputSelectCadasAluno>
-                      </CampoInputCadasAluno>
-                      <CampoInputCadasAluno>
-                        <span style={{fontSize: '1vw', width: 'fit-content', color: '#8a8a8a'}}>Sexo</span>
+                        <LabelInput required>Sexo</LabelInput>
                         <InputSelectCadasAluno id="sexo">
                           <MenuItem value="Masculino">Masculino</MenuItem>
                           <MenuItem value="Feminino">Feminino</MenuItem>
                         </InputSelectCadasAluno>
                       </CampoInputCadasAluno>
                       <CampoInputCadasAluno>
-                        <span style={{fontSize: '1vw', width: 'fit-content', color: '#8a8a8a'}}>Data de nascimento</span>
-                        <InputDespesaData defaultValue={atualDate} type="date" required name="date"/>
+                        <LabelInput required>Turma</LabelInput>
+                        <InputSelectCadasAluno id="turma">
+                          {turmas.map(turma => <MenuItem value={turma._id}>{turma.nome}</MenuItem>)}
+                        </InputSelectCadasAluno>
                       </CampoInputCadasAluno>
                       <CampoInputCadasAluno>
-                        <span style={{fontSize: '1vw', width: 'fit-content', color: '#8a8a8a'}}>CPF</span>
-                        <InputMask
-                          mask="999.999.999-99"
-                          alwaysShowMask={true}
-                        >
-                          {() => <InputNomeCadasAluno name="cpf" required placeholder="CPF do aluno" type="text" variant="standard"/>}
-                        </InputMask>
-                      </CampoInputCadasAluno>
-                      <CampoInputCadasAluno>
-                        <span style={{fontSize: '1vw', width: 'fit-content', color: '#8a8a8a'}}>Primeiro responsável</span>
+                        <LabelInput required>Primeiro responsável(a)</LabelInput>
                         <InputNomeCadasAluno name="res1" required placeholder="Nome do primeiro responsável" type="text" variant="standard"/>
                       </CampoInputCadasAluno>
                       <CampoInputCadasAluno>
-                        <span style={{fontSize: '1vw', width: 'fit-content', color: '#8a8a8a'}}>Segundo responsável</span>
+                        <LabelInput>Segundo responsável(a)</LabelInput>
                         <InputNomeCadasAluno name="res2" required placeholder="Nome do segundo responsável" type="text" variant="standard"/>
                       </CampoInputCadasAluno>
                       <CampoInputCadasAluno>
-                        <span style={{fontSize: '1vw', width: 'fit-content', color: '#8a8a8a'}}>Telefone</span>
-                        <InputMask
-                          mask="(99) 99999-9999"
-                          alwaysShowMask={true}
-                        >
+                        <LabelInput required>Telefone</LabelInput>
+                        <InputMask mask="(99) 99999-9999">
                           {() => <InputNomeCadasAluno name="telefone" required placeholder="Telefone do aluno" type="tel" variant="standard"/>}
                         </InputMask>
                       </CampoInputCadasAluno>
                       <CampoInputCadasAluno>
-                        <span style={{fontSize: '1vw', width: 'fit-content', color: '#8a8a8a'}}>E-mail</span>
+                        <LabelInput required>Situação</LabelInput>
+                        <InputSelectCadasAluno name="situacao" defaultValue="Ativo">
+                          <MenuItem value="Ativo">Ativo</MenuItem>
+                          <MenuItem value="Cancelado">Cancelado</MenuItem>
+                        </InputSelectCadasAluno>
+                      </CampoInputCadasAluno>
+                      <CampoInputCadasAluno>
+                        <LabelInput>Data de nascimento</LabelInput>
+                        <InputDespesaData defaultValue={atualDate} type="date" required name="date"/>
+                      </CampoInputCadasAluno>
+                      <CampoInputCadasAluno>
+                        <LabelInput>CPF</LabelInput>
+                        <InputMask mask="999.999.999-99">
+                          {() => <InputNomeCadasAluno name="cpf" required placeholder="CPF do aluno" type="text" variant="standard"/>}
+                        </InputMask>
+                      </CampoInputCadasAluno>
+                      <CampoInputCadasAluno>
+                        <LabelInput>E-mail</LabelInput>
                         <InputNomeCadasAluno name="email" required placeholder="E-mail do aluno" type="email" variant="standard"/>
+                      </CampoInputCadasAluno>
+                      <CampoInputCadasAluno>
+                        <LabelInput>CEP</LabelInput>
+                        <InputMask mask="99.999-999">
+                          {() => <InputNomeCadasAluno name="cep" required placeholder="CEP do aluno" type="tel" variant="standard"/>}
+                        </InputMask>
+                      </CampoInputCadasAluno>
+                      <CampoInputCadasAluno>
+                        <LabelInput>Número</LabelInput>
+                        <InputNomeCadasAluno name="num" required placeholder="Número da casa" type="number" variant="standard"/>
+                      </CampoInputCadasAluno>
+                      <CampoInputCadasAluno>
+                        <LabelInput>Complemento</LabelInput>
+                        <InputNomeCadasAluno name="complemento" required placeholder="Complemento da casa" type="text" variant="standard"/>
+                      </CampoInputCadasAluno>
+                      <CampoInputCadasAluno>
+                        <LabelInput>Bairro</LabelInput>
+                        <InputNomeCadasAluno name="bairro" required placeholder="Bairro do aluno" type="text" variant="standard"/>
+                      </CampoInputCadasAluno>
+                      <CampoInputCadasAluno>
+                        <LabelInput>Cidade</LabelInput>
+                        <InputNomeCadasAluno name="cidade" required placeholder="Cidade do aluno" type="text" variant="standard"/>
+                      </CampoInputCadasAluno>
+                      <CampoInputCadasAluno>
+                        <LabelInput>Rua</LabelInput>
+                        <InputNomeCadasAluno name="rua" required placeholder="Rua do aluno" type="text" variant="standard"/>
+                      </CampoInputCadasAluno>
+                      <CampoInputCadasAluno>
+                        <LabelInput>Matrícula</LabelInput>
+                        <InputNomeCadasAluno name="matricula" required placeholder="Matrícula do aluno" type="text" variant="standard"/>
+                      </CampoInputCadasAluno>
+                      <CampoInputCadasAluno>
+                        <LabelInput>Observação</LabelInput>
+                        <InputNomeCadasAluno name="observacao" required placeholder="Digite a observação" type="text" multiline variant="standard" rows={2}/>
+                      </CampoInputCadasAluno>
+                      <CampoInputCadasAluno>
+                        <LabelInput>Foto</LabelInput>
+                        <input name="foto" required type="file" accept="image/*,application/x-shockwave-flash,application/octet-stream" style={{border: '1px solid #0872FC', borderRadius: '5px', padding: '1%'}}/>
                       </CampoInputCadasAluno>
                       <ButtonSubmitCadasAluno style={{marginBottom: '0%'}} type="submit" variant="contained">Cadastrar</ButtonSubmitCadasAluno>
                   </form>

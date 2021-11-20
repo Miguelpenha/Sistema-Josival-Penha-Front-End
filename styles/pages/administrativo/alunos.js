@@ -5,6 +5,7 @@ import IconInfoMédiaAlunosSVG from '../../../assets/icon-info-média-alunos.svg
 import IconInfoOcupaçãoSVG from '../../../assets/icon-info-ocupação.svg'
 import { Add as IconAddSVG, AddCircleOutline as IconAddCircleOutlineSVG } from '@material-ui/icons'
 import { Dialog, TextField, Button, Select } from '@material-ui/core'
+import { memo } from 'react'
 
 export const Container = styled.div`
     display: grid;
@@ -128,7 +129,7 @@ export const IconAddCircleOutline = styled(IconAddCircleOutlineSVG)`
     }
 `
 
-export const DialogCadasAluno = styled(Dialog).attrs({
+const DialogCadasAlunoStyle = styled(Dialog).attrs({
     fullWidth: true
 })`
     && {
@@ -136,13 +137,15 @@ export const DialogCadasAluno = styled(Dialog).attrs({
     }
 `
 
+export const DialogCadasAluno = memo(DialogCadasAlunoStyle)
+
 export const CampoInputCadasAluno = styled.div`
     display: flex;
     flex-direction: column;
     margin-top: 3.5%;
 `
 
-export const InputNomeCadasAluno = styled(TextField)`
+const InputNomeCadasAlunoStyle = styled(TextField)`
     && {
         width: 100%;
     }
@@ -156,6 +159,8 @@ export const InputNomeCadasAluno = styled(TextField)`
     }
 `
 
+export const InputNomeCadasAluno = memo(InputNomeCadasAlunoStyle)
+
 export const ButtonSubmitCadasAluno = styled(Button)`
     && {
         float: right;
@@ -165,7 +170,7 @@ export const ButtonSubmitCadasAluno = styled(Button)`
         width: 30%;
         margin-top: 6%;
         height: auto;
-        margin-bottom: 5%;
+        margin-bottom: 30%;
     }
 
     &&:hover {
@@ -183,4 +188,15 @@ export const InputSelectCadasAluno = styled(Select)`
 
 export const InputDespesaData = styled(TextField)`
     
+`
+
+export const LabelInputStyle = styled.span`
+    font-size: 1vw;
+    width: fit-content;
+    color: #8a8a8a;
+`
+
+export const LabelInputStyleReq = styled.span`
+    color: #D93025;
+    margin-left: 10%;
 `
