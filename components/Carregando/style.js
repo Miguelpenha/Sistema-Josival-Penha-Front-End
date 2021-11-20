@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { CircularProgress } from '@material-ui/core'
 
 export const Carregando = styled(CircularProgress).attrs({
     style: {color: '#0872FC'},
