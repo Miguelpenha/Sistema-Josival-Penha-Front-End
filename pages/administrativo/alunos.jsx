@@ -11,6 +11,7 @@ import { SpeedDial, SpeedDialAction, SpeedDialIcon, Skeleton, Snackbar, Alert, D
 import { Add as AddIcon } from '@material-ui/icons'
 import api from '../../services/api/base'
 import InputMask from 'react-input-mask'
+import { useForm } from 'react-hook-form'
 
 export default function Alunos() {
   const { data: quantAlunos, mutate: mutateQuantAlunos } = get('/alunos?quant=true')
@@ -43,105 +44,131 @@ export default function Alunos() {
 
   function ModelAlunosCadastrar({ open }) {
     if (open) {
-        return (
-          <DialogCadasAluno open={true} onClose={() => setOpenModelAlunosCadastrar(false)}>
-              <DialogContent>
-                  <form style={{paddingBottom: '17%'}}>
-                      <CampoInputCadasAluno>
-                        <LabelInput required>Nome</LabelInput>
-                        <InputNomeCadasAluno name="nome" required placeholder="Nome do aluno" type="text" variant="standard"/>
-                      </CampoInputCadasAluno>
-                      <CampoInputCadasAluno>
-                        <LabelInput required>Sexo</LabelInput>
-                        <InputSelectCadasAluno id="sexo">
-                          <MenuItem value="Masculino">Masculino</MenuItem>
-                          <MenuItem value="Feminino">Feminino</MenuItem>
-                        </InputSelectCadasAluno>
-                      </CampoInputCadasAluno>
-                      <CampoInputCadasAluno>
-                        <LabelInput required>Turma</LabelInput>
-                        <InputSelectCadasAluno id="turma">
-                          {turmas.map(turma => <MenuItem value={turma._id}>{turma.nome}</MenuItem>)}
-                        </InputSelectCadasAluno>
-                      </CampoInputCadasAluno>
-                      <CampoInputCadasAluno>
-                        <LabelInput required>Primeiro responsável(a)</LabelInput>
-                        <InputNomeCadasAluno name="res1" required placeholder="Nome do primeiro responsável" type="text" variant="standard"/>
-                      </CampoInputCadasAluno>
-                      <CampoInputCadasAluno>
-                        <LabelInput>Segundo responsável(a)</LabelInput>
-                        <InputNomeCadasAluno name="res2" required placeholder="Nome do segundo responsável" type="text" variant="standard"/>
-                      </CampoInputCadasAluno>
-                      <CampoInputCadasAluno>
-                        <LabelInput required>Telefone</LabelInput>
-                        <InputMask mask="(99) 99999-9999">
-                          {() => <InputNomeCadasAluno name="telefone" required placeholder="Telefone do aluno" type="tel" variant="standard"/>}
-                        </InputMask>
-                      </CampoInputCadasAluno>
-                      <CampoInputCadasAluno>
-                        <LabelInput required>Situação</LabelInput>
-                        <InputSelectCadasAluno name="situacao" defaultValue="Ativo">
-                          <MenuItem value="Ativo">Ativo</MenuItem>
-                          <MenuItem value="Cancelado">Cancelado</MenuItem>
-                        </InputSelectCadasAluno>
-                      </CampoInputCadasAluno>
-                      <CampoInputCadasAluno>
-                        <LabelInput>Data de nascimento</LabelInput>
-                        <InputDespesaData defaultValue={atualDate} type="date" required name="date"/>
-                      </CampoInputCadasAluno>
-                      <CampoInputCadasAluno>
-                        <LabelInput>CPF</LabelInput>
-                        <InputMask mask="999.999.999-99">
-                          {() => <InputNomeCadasAluno name="cpf" required placeholder="CPF do aluno" type="text" variant="standard"/>}
-                        </InputMask>
-                      </CampoInputCadasAluno>
-                      <CampoInputCadasAluno>
-                        <LabelInput>E-mail</LabelInput>
-                        <InputNomeCadasAluno name="email" required placeholder="E-mail do aluno" type="email" variant="standard"/>
-                      </CampoInputCadasAluno>
-                      <CampoInputCadasAluno>
-                        <LabelInput>CEP</LabelInput>
-                        <InputMask mask="99.999-999">
-                          {() => <InputNomeCadasAluno name="cep" required placeholder="CEP do aluno" type="tel" variant="standard"/>}
-                        </InputMask>
-                      </CampoInputCadasAluno>
-                      <CampoInputCadasAluno>
-                        <LabelInput>Número</LabelInput>
-                        <InputNomeCadasAluno name="num" required placeholder="Número da casa" type="number" variant="standard"/>
-                      </CampoInputCadasAluno>
-                      <CampoInputCadasAluno>
-                        <LabelInput>Complemento</LabelInput>
-                        <InputNomeCadasAluno name="complemento" required placeholder="Complemento da casa" type="text" variant="standard"/>
-                      </CampoInputCadasAluno>
-                      <CampoInputCadasAluno>
-                        <LabelInput>Bairro</LabelInput>
-                        <InputNomeCadasAluno name="bairro" required placeholder="Bairro do aluno" type="text" variant="standard"/>
-                      </CampoInputCadasAluno>
-                      <CampoInputCadasAluno>
-                        <LabelInput>Cidade</LabelInput>
-                        <InputNomeCadasAluno name="cidade" required placeholder="Cidade do aluno" type="text" variant="standard"/>
-                      </CampoInputCadasAluno>
-                      <CampoInputCadasAluno>
-                        <LabelInput>Rua</LabelInput>
-                        <InputNomeCadasAluno name="rua" required placeholder="Rua do aluno" type="text" variant="standard"/>
-                      </CampoInputCadasAluno>
-                      <CampoInputCadasAluno>
-                        <LabelInput>Matrícula</LabelInput>
-                        <InputNomeCadasAluno name="matricula" required placeholder="Matrícula do aluno" type="text" variant="standard"/>
-                      </CampoInputCadasAluno>
-                      <CampoInputCadasAluno>
-                        <LabelInput>Observação</LabelInput>
-                        <InputNomeCadasAluno name="observacao" required placeholder="Digite a observação" type="text" multiline variant="standard" rows={2}/>
-                      </CampoInputCadasAluno>
-                      <CampoInputCadasAluno>
-                        <LabelInput>Foto</LabelInput>
-                        <input name="foto" required type="file" accept="image/*,application/x-shockwave-flash,application/octet-stream" style={{border: '1px solid #0872FC', borderRadius: '5px', padding: '1%'}}/>
-                      </CampoInputCadasAluno>
-                      <ButtonSubmitCadasAluno style={{marginBottom: '0%'}} type="submit" variant="contained">Cadastrar</ButtonSubmitCadasAluno>
-                  </form>
-              </DialogContent>
-          </DialogCadasAluno>
-        )
+      const { register, handleSubmit, reset } = useForm()
+      
+      async function enviarAluno(data, event) {
+        let { nome, turma, sexo, cpf, res1, res2, telefone, email, cep, num, complemento, bairro, rua, matricula, nascimento, situacao, observacao, foto } = data
+        
+        let date = `${nascimento.split('-')[1]}/${nascimento.split('-')[2]}/${nascimento.split('-')[0]}`
+        const aluno = {
+          nome, turma, sexo, cpf, res1, res2, telefone, email, cep, num, complemento, bairro, rua, matricula, date, situacao, observacao, foto, criação: new Date().toISOString()
+        }
+
+        await api.post('/alunos', aluno)
+        setAlert({
+          open: true,
+          text: 'Aluno cadastrado com sucesso!',
+          variant: 'filled',
+          severity: 'success'
+        })
+        reset()
+        setOpenModelAlunosCadastrar(false)
+        event.preventDefault()
+        mutateAlunos('/alunos')
+        mutateQuantAlunos('/alunos?quant=true')
+        mutateTurmas('turmas')
+        mutateQuantTurmas('turmas?quant=true')
+      }
+
+      return (
+        <DialogCadasAluno open={true} onClose={() => setOpenModelAlunosCadastrar(false)}>
+          <DialogContent>
+            <form style={{paddingBottom: '17%'}} onSubmit={handleSubmit(enviarAluno)}>
+                <CampoInputCadasAluno>
+                  <LabelInput required>Nome</LabelInput>
+                  <InputNomeCadasAluno name="nome" required {...register('nome')} placeholder="Nome do aluno" type="text" variant="standard"/>
+                </CampoInputCadasAluno>
+                <CampoInputCadasAluno>
+                  <LabelInput required>Sexo</LabelInput>
+                  <InputSelectCadasAluno id="sexo" {...register('sexo')}>
+                    <MenuItem value="Masculino">Masculino</MenuItem>
+                    <MenuItem value="Feminino">Feminino</MenuItem>
+                  </InputSelectCadasAluno>
+                </CampoInputCadasAluno>
+                <CampoInputCadasAluno>
+                  <LabelInput required>Turma</LabelInput>
+                  <InputSelectCadasAluno id="turma" {...register('turma')}>
+                    {turmas.map(turma => <MenuItem value={turma.nome}>{turma.nome}</MenuItem>)}
+                  </InputSelectCadasAluno>
+                </CampoInputCadasAluno>
+                <CampoInputCadasAluno>
+                  <LabelInput required>Primeiro responsável(a)</LabelInput>
+                  <InputNomeCadasAluno name="res1" required {...register('res1')} placeholder="Nome do primeiro responsável" type="text" variant="standard"/>
+                </CampoInputCadasAluno>
+                <CampoInputCadasAluno>
+                  <LabelInput>Segundo responsável(a)</LabelInput>
+                  <InputNomeCadasAluno name="res2" {...register('res2')} placeholder="Nome do segundo responsável" type="text" variant="standard"/>
+                </CampoInputCadasAluno>
+                <CampoInputCadasAluno>
+                  <LabelInput required>Telefone</LabelInput>
+                  <InputMask mask="(99) 99999-9999" {...register('telefone')}>
+                    {() => <InputNomeCadasAluno name="telefone" required placeholder="Telefone do aluno" type="tel" variant="standard"/>}
+                  </InputMask>
+                </CampoInputCadasAluno>
+                <CampoInputCadasAluno>
+                  <LabelInput required>Situação</LabelInput>
+                  <InputSelectCadasAluno name="situacao" {...register('situacao')} defaultValue="Ativo">
+                    <MenuItem value="Ativo">Ativo</MenuItem>
+                    <MenuItem value="Cancelado">Cancelado</MenuItem>
+                  </InputSelectCadasAluno>
+                </CampoInputCadasAluno>
+                <CampoInputCadasAluno>
+                  <LabelInput>Data de nascimento</LabelInput>
+                  <InputDespesaData defaultValue={atualDate} type="date" name="nascimento" {...register('nascimento')}/>
+                </CampoInputCadasAluno>
+                <CampoInputCadasAluno>
+                  <LabelInput>CPF</LabelInput>
+                  <InputMask mask="999.999.999-99" {...register('cpf')}>
+                    {() => <InputNomeCadasAluno name="cpf" placeholder="CPF do aluno" type="text" variant="standard"/>}
+                  </InputMask>
+                </CampoInputCadasAluno>
+                <CampoInputCadasAluno>
+                  <LabelInput>E-mail</LabelInput>
+                  <InputNomeCadasAluno name="email" {...register('email')} placeholder="E-mail do aluno" type="email" variant="standard"/>
+                </CampoInputCadasAluno>
+                <CampoInputCadasAluno>
+                  <LabelInput>CEP</LabelInput>
+                  <InputMask mask="99.999-999" {...register('cep')}>
+                    {() => <InputNomeCadasAluno name="cep" placeholder="CEP do aluno" type="tel" variant="standard"/>}
+                  </InputMask>
+                </CampoInputCadasAluno>
+                <CampoInputCadasAluno>
+                  <LabelInput>Número</LabelInput>
+                  <InputNomeCadasAluno name="num" {...register('num')} placeholder="Número da casa" type="number" variant="standard"/>
+                </CampoInputCadasAluno>
+                <CampoInputCadasAluno>
+                  <LabelInput>Complemento</LabelInput>
+                  <InputNomeCadasAluno name="complemento" {...register('complemento')} placeholder="Complemento da casa" type="text" variant="standard"/>
+                </CampoInputCadasAluno>
+                <CampoInputCadasAluno>
+                  <LabelInput>Bairro</LabelInput>
+                  <InputNomeCadasAluno name="bairro" {...register('bairro')} placeholder="Bairro do aluno" type="text" variant="standard"/>
+                </CampoInputCadasAluno>
+                <CampoInputCadasAluno>
+                  <LabelInput>Cidade</LabelInput>
+                  <InputNomeCadasAluno name="cidade" {...register('cidade')} placeholder="Cidade do aluno" type="text" variant="standard"/>
+                </CampoInputCadasAluno>
+                <CampoInputCadasAluno>
+                  <LabelInput>Rua</LabelInput>
+                  <InputNomeCadasAluno name="rua" {...register('rua')} placeholder="Rua do aluno" type="text" variant="standard"/>
+                </CampoInputCadasAluno>
+                <CampoInputCadasAluno>
+                  <LabelInput>Matrícula</LabelInput>
+                  <InputNomeCadasAluno name="matricula" {...register('matricula')} placeholder="Matrícula do aluno" type="text" variant="standard"/>
+                </CampoInputCadasAluno>
+                <CampoInputCadasAluno>
+                  <LabelInput>Observação</LabelInput>
+                  <InputNomeCadasAluno name="observacao" {...register('observacao')} placeholder="Digite a observação" type="text" multiline variant="standard" rows={2}/>
+                </CampoInputCadasAluno>
+                <CampoInputCadasAluno>
+                  <LabelInput>Foto</LabelInput>
+                  <input name="foto" {...register('foto')} type="file" accept="image/*,application/x-shockwave-flash,application/octet-stream" style={{border: '1px solid #0872FC', borderRadius: '5px', padding: '1%'}}/>
+                </CampoInputCadasAluno>
+                <ButtonSubmitCadasAluno style={{marginBottom: '0%'}} type="submit" variant="contained">Cadastrar</ButtonSubmitCadasAluno>
+            </form>
+          </DialogContent>
+        </DialogCadasAluno>
+      )
     }
 
     return null
