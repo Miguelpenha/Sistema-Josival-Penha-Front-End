@@ -9,15 +9,18 @@ import IconDashBoardSeleSVG from '../../assets/icon-nav-admin-dashBoard-sele.svg
 import IconMarketingSVG from '../../assets/icon-nav-admin-marketing.svg'
 import IconMarketingSeleSVG from '../../assets/icon-nav-admin-marketing-sele.svg'
 import { MonetizationOn as IconFinanceiroSVG, Group as IconColaboradoresSVG } from '@material-ui/icons'
+import { memo } from 'react'
 
-export const NavOptions = styled.nav`
+const NavOptionsStyle = styled.nav`
     background-color: #ffffff;
     border-top-right-radius: 2.5vw;
     border-bottom-right-radius: 2.5vw;
     height: 100%;
 `
 
-export const LogoJPNome = styled(LogoJPNomeSemStyle)`
+export const NavOptions = memo(NavOptionsStyle)
+
+const LogoJPNomeStyle = styled(LogoJPNomeSemStyle)`
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -26,7 +29,9 @@ export const LogoJPNome = styled(LogoJPNomeSemStyle)`
     height: auto;
 `
 
-export const Funções = styled.ul`
+export const LogoJPNome = memo(LogoJPNomeStyle)
+
+export const FunçõesStyle = styled.ul`
     height: auto;
     font-size: 1.4vw;
     margin-top: 15%;
@@ -34,7 +39,9 @@ export const Funções = styled.ul`
     max-height: 800px;
 `
 
-export const Função = styled.li`
+export const Funções = memo(FunçõesStyle)
+
+const FunçãoStyle = styled.li`
     color: ${props => props.selected ? '#000000;' :'#9D9D9D;'};
     font-weight: ${props => props.selected ? '500;' :'200;'};
     width: 80%;
@@ -47,7 +54,9 @@ export const Função = styled.li`
     height: 10%;
 `
 
-export const LinkFunção = styled.a`
+export const Função = memo(FunçãoStyle)
+
+const LinkFunçãoStyle = styled.a`
     color: #9D9D9D;
     text-decoration: none;
     width: auto;
@@ -68,55 +77,73 @@ export const LinkFunção = styled.a`
     }
 `
 
-export const IconAlunos = styled(IconAlunosSVG)`
+export const LinkFunção = memo(LinkFunçãoStyle)
+
+const IconAlunosStyle = styled(IconAlunosSVG)`
     width: 25%;
     margin-right: 4%;
     height: auto;
 `
 
-export const IconAlunosSele = styled(IconAlunosSeleSVG)`
+export const IconAlunos = memo(IconAlunosStyle)
+
+const IconAlunosSeleStyle = styled(IconAlunosSeleSVG)`
     width: 25%;
     margin-right: 4%;
     height: auto;
 `
 
-export const IconAcadêmico = styled(IconAcadêmicoSVG)`
+export const IconAlunosSele = memo(IconAlunosSeleStyle)
+
+const IconAcadêmicoStyle = styled(IconAcadêmicoSVG)`
     width: 25%;
     margin-right: 4%;
     height: auto;
 `
 
-export const IconAcadêmicoSele = styled(IconAcadêmicoSeleSVG)`
+export const IconAcadêmico = memo(IconAcadêmicoStyle)
+
+const IconAcadêmicoSeleStyle = styled(IconAcadêmicoSeleSVG)`
     width: 25%;
     margin-right: 4%;
     height: auto;
 `
 
-export const IconDashBoard = styled(IconDashBoardSVG)`
+export const IconAcadêmicoSele = memo(IconAcadêmicoSeleStyle)
+
+const IconDashBoardStyle = styled(IconDashBoardSVG)`
     width: 25%;
     margin-right: 4%;
     height: auto;
 `
 
-export const IconDashBoardSele = styled(IconDashBoardSeleSVG)`
+export const IconDashBoard = memo(IconDashBoardStyle)
+
+const IconDashBoardSeleStyle = styled(IconDashBoardSeleSVG)`
     width: 25%;
     margin-right: 4%;
     height: auto;
 `
 
-export const IconMarketing = styled(IconMarketingSVG)`
+export const IconDashBoardSele = memo(IconDashBoardSeleStyle)
+
+const IconMarketingStyle = styled(IconMarketingSVG)`
     width: 25%;
     margin-right: 4%;
     height: auto;
 `
 
-export const IconMarketingSele = styled(IconMarketingSeleSVG)`
+export const IconMarketing = memo(IconMarketingStyle)
+
+const IconMarketingSeleStyle = styled(IconMarketingSeleSVG)`
     width: 25%;
     margin-right: 4%;
     height: auto;
 `
 
-export const IconFinanceiro = styled(IconFinanceiroSVG)`
+export const IconMarketingSele = memo(IconMarketingSeleStyle)
+
+const IconFinanceiroStyle = styled(IconFinanceiroSVG)`
     && {
         width: 20%;
         margin-right: 6%;
@@ -125,7 +152,9 @@ export const IconFinanceiro = styled(IconFinanceiroSVG)`
     }
 `
 
-export const IconFinanceiroSele = styled(IconFinanceiroSVG)`
+export const IconFinanceiro = memo(IconFinanceiroStyle)
+
+const IconFinanceiroSeleStyle = styled(IconFinanceiroSVG)`
     && {
         width: 20%;
         margin-right: 6%;
@@ -135,7 +164,9 @@ export const IconFinanceiroSele = styled(IconFinanceiroSVG)`
     }
 `
 
-export const IconColaboradores = styled(IconColaboradoresSVG)`
+export const IconFinanceiroSele = memo(IconFinanceiroSeleStyle)
+
+const IconColaboradoresStyle = styled(IconColaboradoresSVG)`
     && {
         width: 20%;
         margin-right: 6%;
@@ -144,7 +175,9 @@ export const IconColaboradores = styled(IconColaboradoresSVG)`
     }
 `
 
-export const IconColaboradoresSele = styled(IconColaboradoresSVG)`
+export const IconColaboradores = memo(IconColaboradoresStyle)
+
+const IconColaboradoresSeleStyle = styled(IconColaboradoresSVG)`
     && {
         width: 20%;
         margin-right: 6%;
@@ -154,6 +187,10 @@ export const IconColaboradoresSele = styled(IconColaboradoresSVG)`
     }
 `
 
-export const TextFunção = styled.span`
+export const IconColaboradoresSele = memo(IconColaboradoresSeleStyle)
+
+const TextFunçãoStyle = styled.span`
     align-self: center;
 `
+
+export const TextFunção = memo(TextFunçãoStyle)

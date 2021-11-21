@@ -9,7 +9,7 @@ export function ApiProvider({ children }) {
     const { data } = get(`${process.env.NEXT_STATIC_API_URL}/alunos`)
     
     return (
-        <ApiContext.Provider>
+        <ApiContext.Provider value={{}}>
             {data ? children : <>
                 <Head>
                     <title>Buscando dados</title>
