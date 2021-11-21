@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import nookies from 'nookies'
-import { Container, Main, AlunosBanner, InfoAdminContainer, InfoAdmin, InfoAdminTit, InfoAdminDado, IconInfoTotalAlunos, IconInfoTotalTurmas, IconInfoMédiaAlunos, IconInfoOcupação, NavInfos, DialogCadasAluno, InputNomeCadasAluno, ButtonSubmitCadasAluno, CampoInputCadasAluno, InputSelectCadasAluno, InputDespesaData, LabelInputStyle, LabelInputStyleReq } from '../../styles/pages/administrativo/alunos'
+import { Container, Main, AlunosBanner, InfoAdminContainer, InfoAdmin, InfoAdminTit, InfoAdminDado, IconInfoTotalAlunos, IconInfoTotalTurmas, IconInfoMédiaAlunos, IconInfoOcupação, NavInfos, DialogCadasAluno, InputNomeCadasAluno, ButtonSubmitCadasAluno, CampoInputCadasAluno, InputSelectCadasAluno, InputDespesaData, LabelInputStyle, LabelInputStyleReq, ErrorInput } from '../../styles/pages/administrativo/alunos'
 import { NavOptions, LogoJPNome, Funções, Função, LinkFunção, IconAlunosSele, IconFinanceiro, IconAcadêmico, IconDashBoard, IconMarketing, IconColaboradores, TextFunção } from '../../components/NavTool'
 import { get } from '../../hooks'
 import { useEffect, useState } from 'react'
@@ -44,30 +44,45 @@ export default function Alunos() {
 
   function ModelAlunosCadastrar({ open }) {
     if (open) {
-      const { register, handleSubmit, reset } = useForm()
+      const [nomeError, setNomeError] = useState(false)
+      const { register, handleSubmit, reset, watch, setValue } = useForm()
+
+      watch(async (value, { name, type }) => {
+        if (name === 'nome') {
+          let nomes = []
+          alunos.map(aluno => nomes.push(aluno.nome))
+          if (nomes.includes(value.nome)) {
+            setNomeError(true)
+          } else {
+            setNomeError(false)
+          }
+        }
+      })
       
       async function enviarAluno(data, event) {
-        let { nome, turma, sexo, cpf, res1, res2, telefone, email, cep, num, complemento, bairro, rua, matricula, nascimento, situacao, observacao, foto } = data
-        
-        let date = `${nascimento.split('-')[1]}/${nascimento.split('-')[2]}/${nascimento.split('-')[0]}`
-        const aluno = {
-          nome, turma, sexo, cpf, res1, res2, telefone, email, cep, num, complemento, bairro, rua, matricula, date, situacao, observacao, foto, criação: new Date().toISOString()
-        }
+        if (!nomeError) {
+          let { nome, turma, sexo, cpf, res1, res2, telefone, email, cep, num, complemento, bairro, rua, matricula, nascimento, situacao, observacao, foto } = data
+          
+          let date = `${nascimento.split('-')[1]}/${nascimento.split('-')[2]}/${nascimento.split('-')[0]}`
+          const aluno = {
+            nome, turma, sexo, cpf, res1, res2, telefone, email, cep, num, complemento, bairro, rua, matricula, date, situacao, observacao, foto, criação: new Date().toISOString()
+          }
 
-        await api.post('/alunos', aluno)
-        setAlert({
-          open: true,
-          text: 'Aluno cadastrado com sucesso!',
-          variant: 'filled',
-          severity: 'success'
-        })
-        reset()
-        setOpenModelAlunosCadastrar(false)
-        event.preventDefault()
-        mutateAlunos('/alunos')
-        mutateQuantAlunos('/alunos?quant=true')
-        mutateTurmas('turmas')
-        mutateQuantTurmas('turmas?quant=true')
+          await api.post('/alunos', aluno)
+          setAlert({
+            open: true,
+            text: 'Aluno cadastrado com sucesso!',
+            variant: 'filled',
+            severity: 'success'
+          })
+          reset()
+          setOpenModelAlunosCadastrar(false)
+          event.preventDefault()
+          mutateAlunos('/alunos')
+          mutateQuantAlunos('/alunos?quant=true')
+          mutateTurmas('turmas')
+          mutateQuantTurmas('turmas?quant=true')
+        }
       }
 
       return (
@@ -77,6 +92,7 @@ export default function Alunos() {
                 <CampoInputCadasAluno>
                   <LabelInput required>Nome</LabelInput>
                   <InputNomeCadasAluno name="nome" required {...register('nome')} placeholder="Nome do aluno" type="text" variant="standard"/>
+                  {nomeError && <ErrorInput>Já existe um aluno cadastrado com esse nome</ErrorInput>}
                 </CampoInputCadasAluno>
                 <CampoInputCadasAluno>
                   <LabelInput required>Sexo</LabelInput>
