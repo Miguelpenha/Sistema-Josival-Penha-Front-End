@@ -6,9 +6,9 @@ import { useState, memo } from 'react'
 
 function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg }) {
     if (typeof alunos != 'string' && alunos) {
-        const [selecionados, setSelecionados] = useState(['asd'])
+        const [openModelPlanilha, setOpenModelPlanilha] = useState(false)
         alunos.map(aluno => aluno.criação.sistema = new Date(aluno.criação.sistema))
-
+        
         let rows = alunos
         
         function sortDate(a, b) {
@@ -20,6 +20,25 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg }) {
         function calcIdade(nascimento='', hoje) {
             nascimento = new Date(`${nascimento.split('/')[2]}-${nascimento.split('/')[1]}-${nascimento.split('/')[0]}`)
             return Math.floor(Math.ceil(Math.abs(nascimento.getTime()-hoje.getTime())/(1000*3600*24))/365.25)
+        }
+
+        function ModelPlanilha({ open }) {
+            if (open) {
+                return (
+                    <DialogGerarDeclaração open={true} onClose={() => setOpenModelPlanilha(false)}>
+                        <DialogContent>
+                            <form method="POST" action={`${process.env.NEXT_STATIC_API_URL}/alunos/exportar`}>
+                                <input type="hidden" name="keyapi" value={process.env.NEXT_STATIC_API_KEY}/>
+                                <BolsistaSwitch defaultChecked name="protegido"/>Protegido
+                                <InputPorcentagemGerarDeclaração name="senha" placeholder="Senha para proteção da planilha" type="password" variant="standard" style={{width: '100%'}}/>
+                                <ButtonSubmitGerarDeclaração style={{marginBottom: '0%'}} type="submit" variant="contained">Gerar</ButtonSubmitGerarDeclaração>
+                            </form>
+                        </DialogContent>
+                    </DialogGerarDeclaração>
+                )
+            }
+
+            return null
         }
 
         function Row({row, index}) {
@@ -69,6 +88,7 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg }) {
                         </DialogGerarDeclaração>
                     )
                 }
+
                 return null
             }
             
@@ -148,7 +168,7 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg }) {
                 style={{height: '62%', width: '32%'}}
             >
                 <Tooltip title={
-                        <span style={{fontSize: '1vw'}}>Baixar planilha de alunos</span>
+                    <span style={{fontSize: '1vw'}}>Baixar declaração do aluno</span>
                 } arrow placement="bottom">
                     <MenuItem 
                         disableRipple 
@@ -185,13 +205,11 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg }) {
                                 <Tooltip title={
                                     <span style={{fontSize: '1vw'}}>Baixar planilha</span>
                                 } arrow placement="bottom">
-                                    <form method="POST" style={{display: 'inline-block'}} action={`${process.env.NEXT_STATIC_API_URL}/alunos/exportar`}>
-                                        <input type="hidden" name="keyapi" value={process.env.NEXT_STATIC_API_KEY}/>
-                                        <IconButtonExclu type="submit" style={{left: '5%'}} bg="#B5D5FE">
-                                            <DownloadIcon sx={{color: '#0872FC'}}/>
-                                        </IconButtonExclu>
-                                    </form>
+                                    <IconButtonExclu type="submit" style={{left: '5%'}} bg="#B5D5FE" onClick={() => setOpenModelPlanilha(true)}>
+                                        <DownloadIcon sx={{color: '#0872FC'}}/>
+                                    </IconButtonExclu>
                                 </Tooltip>
+                                <ModelPlanilha open={openModelPlanilha}/>
                             </TableCellTitleBorder>
                         </TableRow>
                         <TableRow>

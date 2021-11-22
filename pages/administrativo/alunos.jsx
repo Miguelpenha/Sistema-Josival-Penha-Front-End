@@ -45,7 +45,7 @@ export default function Alunos() {
   function ModelAlunosCadastrar({ open }) {
     if (open) {
       const [nomeError, setNomeError] = useState(false)
-      const { register, handleSubmit, reset, watch, setValue } = useForm()
+      const { register, handleSubmit, reset, watch } = useForm()
 
       watch(async (value, { name, type }) => {
         if (name === 'nome') {
