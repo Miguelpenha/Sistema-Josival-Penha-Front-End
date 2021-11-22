@@ -158,7 +158,7 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg }) {
                             setOpenDialogGerarDeclaração(true)
                         }}
                     >
-                        <IconButtonExclu style={{marginRight: '3%'}} bg="#0872fc5a">
+                        <IconButtonExclu style={{marginRight: '3%'}} bg="#B5D5FE">
                             <DownloadIcon sx={{color: '#0872FC'}}/>
                         </IconButtonExclu>
                         Baixar declaração do aluno
@@ -173,14 +173,24 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg }) {
                 <Table size="medium">
                     <TableHead>
                         <TableRow>
-                            <TableCellTitle align="center" scope="col" colSpan={7}>Alunos</TableCellTitle>
-                            <TableCellTitleBorder align="center" scope="col" colSpan={1}>
+                            <TableCellTitle align="center" scope="col" colSpan={6}>Alunos</TableCellTitle>
+                            <TableCellTitleBorder align="center" scope="col" colSpan={2}>
                                 <Tooltip title={
                                     <span style={{fontSize: '1vw'}}>Excluir itens</span>
                                 } arrow placement="bottom">
                                     <IconButtonExclu style={{right: '10%'}} bg="#FBD6D7" onClick={() => onDeleteAlunosTodos()}>
                                         <DeleteIcon sx={{color: '#ED3237'}}/>
                                     </IconButtonExclu>
+                                </Tooltip>
+                                <Tooltip title={
+                                    <span style={{fontSize: '1vw'}}>Baixar planilha</span>
+                                } arrow placement="bottom">
+                                    <form method="POST" style={{display: 'inline-block'}} action={`${process.env.NEXT_STATIC_API_URL}/alunos/exportar`}>
+                                        <input type="hidden" name="keyapi" value={process.env.NEXT_STATIC_API_KEY}/>
+                                        <IconButtonExclu type="submit" style={{left: '5%'}} bg="#B5D5FE">
+                                            <DownloadIcon sx={{color: '#0872FC'}}/>
+                                        </IconButtonExclu>
+                                    </form>
                                 </Tooltip>
                             </TableCellTitleBorder>
                         </TableRow>
