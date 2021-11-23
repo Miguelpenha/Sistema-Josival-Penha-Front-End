@@ -1,5 +1,6 @@
-import { TableContainer, TableCell, TableCellTitle, TableCellTotal, TextTotal, TableRowSele, TableCellValueBorder, TableCellBorder, IconButtonExclu, TableCellTitleBorder, LinkFotoAluno, FotoAluno, LimitText, DialogGerarDeclaração, InputPorcentagemGerarDeclaração, ButtonSubmitGerarDeclaração, BolsistaSwitch } from './style'
+import { TableContainer, TableCell, TableCellTitle, TableCellTotal, TextTotal, TableRowSele, TableCellValueBorder, TableCellBorder, IconButtonExclu, TableCellTitleBorder, LinkFotoAluno, FotoAluno, DialogGerarDeclaração, InputPorcentagemGerarDeclaração, ButtonSubmitGerarDeclaração, BolsistaSwitch } from './style'
 import { Paper, Table, TableHead, TableRow, TableBody, TableFooter, Tooltip, Menu, MenuItem, Checkbox, DialogContent, SpeedDial, SpeedDialAction} from '@material-ui/core'
+import LimitText from '../LimitText'
 import { Delete as DeleteIcon, Download as DownloadIcon, Edit as EditIcon } from '@material-ui/icons'
 import Link from 'next/link'
 import { useState, memo } from 'react'
@@ -91,10 +92,12 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg }) {
                 <span>
                     <LimitText limit={16}>{row.responsável1}</LimitText>
                 </span>
-                <hr color="#cecece"/>
-                <span>
-                    <LimitText limit={16}>{row.responsável2}</LimitText>
-                </span>
+                {row.responsável2 && <>
+                    <hr color="#cecece"/>
+                    <span>
+                        <LimitText limit={16}>{row.responsável2}</LimitText>
+                    </span>
+                </>}
             </TableCellValueBorder>
             <TableCellValueBorder component="th" scope="col" align="center">{row.nascimento} ({calcIdade(row.nascimento, new Date())} anos)</TableCellValueBorder>
             <TableCellValueBorder component="th" scope="col" align="center">{row.situação}</TableCellValueBorder>

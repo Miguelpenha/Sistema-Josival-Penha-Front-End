@@ -63,12 +63,14 @@ export default function Alunos() {
         if (!nomeError) {
           let { nome, turma, sexo, cpf, res1, res2, telefone, email, cep, num, complemento, bairro, rua, matricula, nascimento, situacao, observacao, foto } = data
           
-          let date = `${nascimento.split('-')[1]}/${nascimento.split('-')[2]}/${nascimento.split('-')[0]}`
+          let date = `${nascimento.split('-')[2]}/${nascimento.split('-')[1]}/${nascimento.split('-')[0]}`
+
           const aluno = {
-            nome, turma, sexo, cpf, res1, res2, telefone, email, cep, num, complemento, bairro, rua, matricula, date, situacao, observacao, foto, criação: new Date().toISOString()
+            nome, turma, sexo, cpf, responsável1: res1, responsável2: res2, telefone, email, cep, número: num, complemento, bairro, rua, matrícula: matricula, nascimento: date, situação: situacao, observação: observacao, foto, criação: new Date().toISOString()
           }
 
           await api.post('/alunos', aluno)
+
           setAlert({
             open: true,
             text: 'Aluno cadastrado com sucesso!',

@@ -1,6 +1,7 @@
-import { TableContainer, TableCellTitle, TableCellTotal, TextTotal, TableRowSele, TableCellValueBorder, TableCellBorder, IconButtonExclu, TableCellTitleBorder, LimitText, DialogTurma } from './style'
+import { TableContainer, TableCellTitle, TableCellTotal, TextTotal, TableRowSele, TableCellValueBorder, TableCellBorder, IconButtonExclu, TableCellTitleBorder, DialogTurma } from './style'
 import { Paper, Table, TableHead, TableRow, TableBody, TableFooter, Tooltip, Checkbox, DialogContent, Skeleton } from '@material-ui/core'
 import { Delete as DeleteIcon } from '@material-ui/icons'
+import LimitText from '../LimitText'
 import { useState, memo } from 'react'
 import TableAlunos from '../TableAlunos'
 import { get } from '../../hooks'
