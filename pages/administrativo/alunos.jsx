@@ -21,7 +21,6 @@ export default function Alunos() {
   const [mediaAlunos, setMediaAlunos] = useState(undefined)
   const [mediaOcupação, setMediaOcupação] = useState(undefined)
   const [openModelAlunosCadastrar, setOpenModelAlunosCadastrar] = useState(false)
-  const [openModelAlunosAdicionarFoto, setOpenModelAlunosAdicionarFoto] = useState(false)
   const [alert, setAlert] = useState({
     open: false
   })
@@ -193,63 +192,6 @@ export default function Alunos() {
     return null
   }
 
-  function ModelAlunosAdicionarFoto({ open }) {
-    if (open) {
-      const [nomeError, setNomeError] = useState(false)
-      const { register, handleSubmit, reset } = useForm()
-      
-      async function enviarAluno(data, event) {
-        if (!nomeError) {
-          let { nome, turma, sexo, cpf, res1, res2, telefone, email, cep, num, complemento, bairro, rua, matricula, nascimento, situacao, observacao, foto } = data
-          
-          let date = `${nascimento.split('-')[2]}/${nascimento.split('-')[1]}/${nascimento.split('-')[0]}`
-
-          const aluno = {
-            nome, turma, sexo, cpf, responsável1: res1, responsável2: res2, telefone, email, cep, número: num, complemento, bairro, rua, matrícula: matricula, nascimento: date, situação: situacao, observação: observacao, foto, criação: new Date().toISOString()
-          }
-
-          await api.post('/alunos', aluno)
-
-          setAlert({
-            open: true,
-            text: 'Aluno cadastrado com sucesso!',
-            variant: 'filled',
-            severity: 'success'
-          })
-          reset()
-          setOpenModelAlunosCadastrar(false)
-          event.preventDefault()
-          mutateAlunos('/alunos')
-          mutateQuantAlunos('/alunos?quant=true')
-          mutateTurmas('turmas')
-          mutateQuantTurmas('turmas?quant=true')
-        }
-      }
-
-      return (
-        <DialogCadasAluno open={true} onClose={() => setOpenModelAlunosAdicionarFoto(false)}>
-          <DialogContent>
-            <form style={{paddingBottom: '17%'}} onSubmit={handleSubmit(enviarAluno)}>
-                <CampoInputCadasAluno>
-                  <LabelInput required>Selecione um aluno para adicionar uma foto</LabelInput>
-                  <InputSelectCadasAluno id="aluno" {...register('aluno')}>
-                    {alunos.map(aluno => <MenuItem value={aluno.nome}>{aluno.nome}</MenuItem>)}
-                  </InputSelectCadasAluno>
-                </CampoInputCadasAluno>
-                <CampoInputCadasAluno>
-                  <LabelInput>Foto</LabelInput>
-                  <input name="foto" {...register('foto')} type="file" accept="image/*,application/x-shockwave-flash,application/octet-stream" style={{border: '1px solid #0872FC', borderRadius: '5px', padding: '1%'}}/>
-                </CampoInputCadasAluno>
-                <ButtonSubmitCadasAluno style={{marginBottom: '0%'}} type="submit" variant="contained">Cadastrar</ButtonSubmitCadasAluno>
-            </form>
-          </DialogContent>
-        </DialogCadasAluno>
-      )
-    }
-
-    return null
-  }
-
   useEffect(() => {
     if (quantTurmas && quantAlunos) {
       setMediaAlunos(parseFloat(Number(quantAlunos.quant)/Number(quantTurmas.quant)).toFixed(2))
@@ -263,13 +205,6 @@ export default function Alunos() {
       name: 'Cadastrar aluno',
       onClick: () => {
         setOpenModelAlunosCadastrar(true)
-      }
-    },
-    {
-      icon: <PhotoCamera/>,
-      name: 'Adicionar foto a aluno',
-      onClick: () => {
-        setOpenModelAlunosAdicionarFoto(true)
       }
     }
   ]
@@ -461,7 +396,6 @@ export default function Alunos() {
             </Alert>
           </Snackbar>
           <ModelAlunosCadastrar open={openModelAlunosCadastrar}/>
-          <ModelAlunosAdicionarFoto open={openModelAlunosAdicionarFoto}/>
       </Container>
     </>
   )

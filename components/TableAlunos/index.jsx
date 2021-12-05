@@ -25,7 +25,7 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg }) {
         function Row({row, index}) {
             const [fechadoCadas, setFechadoCadas] = useState(null)
             const [openDialogGerarDeclaração, setOpenDialogGerarDeclaração] = useState(false)
-            const [openDialogAdicionarFoto, setOpenDialogAdicionarFoto] = useState(false)
+
             const actions = [
                 {
                     icon: <DeleteIcon sx={{color: '#ED3237'}}/>,
@@ -38,12 +38,6 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg }) {
                     name: 'Baixar declaração de frequência do aluno',
                     onClick: () => setOpenDialogGerarDeclaração(true),
                     background: '#A8CDFE'
-                },
-                {
-                    icon: <PhotoCamera sx={{color: '#0872FC'}}/>,
-                    name: 'Adicionar foto a esse aluno',
-                    onClick: () => setOpenDialogAdicionarFoto(true),
-                    background: '#A8CDFE'
                 }
             ]
 
@@ -52,21 +46,6 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg }) {
             }
 
             const openCadas = Boolean(fechadoCadas)
-
-            function LabelInput({ children, required }) {
-                if (required) {
-                  return (
-                    <>
-                      <LabelInputStyle>
-                        {children}
-                        <LabelInputStyleReq>*</LabelInputStyleReq>
-                      </LabelInputStyle>
-                    </>
-                  )
-                } else {
-                  return <LabelInputStyle>{children}</LabelInputStyle>
-                }
-              }
 
             function ModelGerarDeclaração({ open }) {
                 if (open) {
@@ -86,33 +65,6 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg }) {
                                             {turmas.map(turma => <MenuItem value={turma.nome}>{turma.nome}</MenuItem>)}
                                         </InputSelectCadasAluno>
                                     </CampoInputCadasAluno>
-                                    <span style={{fontSize: '0.8vw'}}>Porcentagem de aulas sem faltas</span>
-                                    <input type="hidden" name="id" value={row._id}/>
-                                    <input type="hidden" name="keyapi" value={process.env.NEXT_STATIC_API_KEY}/>
-                                    <br/>
-                                    <BolsistaSwitch name="bolsista"/>Bolsista
-                                    <ButtonSubmitGerarDeclaração style={{marginBottom: '0%'}} type="submit" variant="contained">Gerar</ButtonSubmitGerarDeclaração>
-                                </form>
-                            </DialogContent>
-                        </DialogGerarDeclaração>
-                    )
-                }
-
-                return null
-            }
-
-            function ModelAdicionarFoto({ open }) {
-                if (open) {
-                    return (
-                        <DialogGerarDeclaração open={true} onClose={() => setOpenDialogAdicionarFoto(false)}>
-                            <DialogContent>
-                                <form method="POST" target="_blank" action={`${process.env.NEXT_STATIC_API_URL}/alunos/documents/declaration`}>
-                                    <InputPorcentagemGerarDeclaração name="frequencia" required placeholder="Porcentagem de aulas sem faltas" type="number" InputProps={{
-                                        inputProps: {
-                                            max: 100,
-                                            min: 0
-                                        }
-                                    }} defaultValue={98} variant="standard"/>
                                     <span style={{fontSize: '0.8vw'}}>Porcentagem de aulas sem faltas</span>
                                     <input type="hidden" name="id" value={row._id}/>
                                     <input type="hidden" name="keyapi" value={process.env.NEXT_STATIC_API_KEY}/>
@@ -157,7 +109,7 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg }) {
             <TableCellValueBorder component="th" scope="col" align="center">{row.nascimento} ({calcIdade(row.nascimento, new Date())} anos)</TableCellValueBorder>
             <TableCellValueBorder component="th" scope="col" align="center">{row.situação}</TableCellValueBorder>
             <TableCellValueBorder align="center">
-                <div style={{position: 'relative', bottom: 210}}>
+                <div style={{position: 'relative', bottom: 155}}>
                     <SpeedDial
                         ariaLabel="SpeedDial basic example"
                         sx={{position: 'absolute'}}
@@ -195,7 +147,6 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg }) {
                     </SpeedDial>
                 </div>
                 <ModelGerarDeclaração open={openDialogGerarDeclaração}/>
-                <ModelAdicionarFoto open={openDialogAdicionarFoto}/>
             </TableCellValueBorder>
             <Menu
                 anchorEl={fechadoCadas} 

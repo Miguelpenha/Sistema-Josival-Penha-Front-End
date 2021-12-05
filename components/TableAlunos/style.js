@@ -178,30 +178,3 @@ export const CampoInputCadasAluno = styled.div`
     flex-direction: column;
     margin-top: 3.5%;
 `
-
-export const LabelInputStyle = styled.span`
-    font-size: 1vw;
-    width: fit-content;
-    color: #8a8a8a;
-`
-
-export const LabelInputStyleReq = styled.span`
-    color: #D93025;
-    margin-left: 10%;
-`
-
-export const InputSelectCadasAluno = styled(Select)`
-    && {
-        margin-top: 1%;
-        height: 10%;
-        font-size: 1vw;
-    }
-`
-
-export const InputSelectCadasAluno = styled()`
-
-`
-
-export const MenuItem = styled()`
-
-`
