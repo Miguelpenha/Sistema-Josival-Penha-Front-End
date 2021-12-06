@@ -14,6 +14,7 @@ export default function Login() {
   const { register, handleSubmit } = useForm()
   const [error, setError] = useState(false)
   const [errorMsg, setErrorMsg] = useState('')
+  
   async function enviar(data, event) {
     const { login, senha } = data
     const token = await api.administrativo.login(login, senha, false)
@@ -24,7 +25,7 @@ export default function Login() {
         login,
         senha
       }, 'administrativo', window.navigator.userAgent.split('(')[1].split(')')[0].split(';').map(info => info.trim())).then(() => {
-        router.push('/administrativo/alunos').then()
+        window.desktop ? router.push('/desktop/administrativo').then() : router.push('/administrativo/alunos').then()
       })
     } else {
       event.preventDefault()
@@ -63,18 +64,19 @@ export default function Login() {
 export const getServerSideProps = async ctx => {
   const { [process.env.NEXT_STATIC_NAME_COOKIE_PROFESSORAS]:tokenProf } = nookies.get(ctx)
   const { [process.env.NEXT_STATIC_NAME_COOKIE_ADMINISTRATIVO]:tokenAdmin } = nookies.get(ctx)
-
+  const { [process.env.NEXT_STATIC_NAME_COOKIE_DESKTOP]:tokenDesktop } = nookies.get(ctx)
+  
   if (tokenProf) {
     return {
       redirect: {
-        destination: '/professoras',
+        destination: tokenDesktop ? '/desktop/professoras' : '/professoras',
         permanent: false
       }
     }
   } else if (tokenAdmin) {
     return {
       redirect: {
-        destination: '/administrativo/alunos',
+        destination: tokenDesktop ? '/desktop/administrativo' : '/administrativo/alunos',
         permanent: false
       }
     }

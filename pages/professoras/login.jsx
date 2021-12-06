@@ -25,7 +25,7 @@ export default function Login() {
           login,
           senha
         }, 'professora').then(() => {
-          router.push('/professoras').then()
+          window.desktop ? router.push('/desktop/administrativo').then() : router.push('/professoras').then()
         })
       } else {
         event.preventDefault()
@@ -65,18 +65,19 @@ export default function Login() {
 export const getServerSideProps = async ctx => {
   const { [process.env.NEXT_STATIC_NAME_COOKIE_PROFESSORAS]:tokenProf } = nookies.get(ctx)
   const { [process.env.NEXT_STATIC_NAME_COOKIE_ADMINISTRATIVO]:tokenAdmin } = nookies.get(ctx)
+  const { [process.env.NEXT_STATIC_NAME_COOKIE_DESKTOP]:tokenDesktop } = nookies.get(ctx)
 
   if (tokenProf) {
     return {
       redirect: {
-        destination: '/professoras',
+        destination: tokenDesktop ? '/desktop/professoras' : '/professoras',
         permanent: false
       }
     }
   } else if (tokenAdmin) {
     return {
       redirect: {
-        destination: '/administrativo/alunos',
+        destination: tokenDesktop ? '/desktop/administrativo' : '/administrativo/alunos',
         permanent: false
       }
     }
