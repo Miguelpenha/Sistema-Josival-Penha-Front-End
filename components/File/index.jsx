@@ -1,6 +1,6 @@
 import { File, Image, Container, Title, Options, Option, OptionText, OptionDelete, OptionEdit, OptionInNew } from './style'
-import { IconButton } from '@material-ui/core'
 import { CheckCircleOutline, Close } from '@material-ui/icons'
+import api from '../../services/api/base'
 
 export default function FileComp({ foto, setAlert, reload }) {
     return (
@@ -10,13 +10,11 @@ export default function FileComp({ foto, setAlert, reload }) {
                 <Title>{foto.fileName}</Title>
                 <Options>
                     <Option color="error" onClick={() => {
-                        window.electron.ipcRenderer.deleteApi('/alunos/fotos', {
-                            key: foto.Key
-                        })
-
-                        window.electron.ipcRenderer.on('api-delete-/alunos/fotos', () => {
-                            reload()
-                        })
+                        api.delete('/alunos/fotos', {
+                            data: {
+                                key: foto.Key
+                            }
+                        }).then(() => reload())
                     }}>
                         <OptionDelete fontSize="large"/>
                     </Option>
@@ -31,7 +29,7 @@ export default function FileComp({ foto, setAlert, reload }) {
                             time: 3000
                         })
                         
-                        window.electron.openURL(foto.url)
+                        window.desktop.openURL(foto.url)
                     }}>
                         <OptionInNew fontSize="large"/>
                     </Option>
