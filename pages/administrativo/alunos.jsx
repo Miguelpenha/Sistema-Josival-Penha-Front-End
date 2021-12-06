@@ -212,23 +212,23 @@ export default function Alunos() {
     }
   ]
 
-  useEffect(() => {
-    setInterval(() => {
-      html2canvas(window.document.body, {
-        backgroundColor: theme.colors.backgrounds.primary,
-        height: window.innerHeight
-      }).then(canvas => {
-        let img = new Image()
+  // useEffect(() => {
+  //   setInterval(() => {
+  //     html2canvas(window.document.body, {
+  //       backgroundColor: theme.colors.backgrounds.primary,
+  //       height: window.innerHeight
+  //     }).then(canvas => {
+  //       let img = new Image()
 
-        img.onload = () => {
-          img.onload = null
-          window.document.getElementById('output').appendChild(img)
-        }
+        // img.onload = () => {
+          // img.onload = null
+          // window.document.getElementById('output').appendChild(img)
+        // }
 
-        img.src = canvas.toDataURL('image/png')
-      })
-    }, 10000);
-  }, [])
+        // img.src = canvas.toDataURL('image/png')
+      // })
+    // }, 10000);
+  // }, [])
   
   return (
     <>

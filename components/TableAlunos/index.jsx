@@ -1,4 +1,4 @@
-import { TableContainer, TableCell, TableCellTitle, TableCellTotal, TextTotal, TableRowSele, TableCellValueBorder, TableCellBorder, IconButtonExclu, TableCellTitleBorder, LinkFotoAluno, FotoAluno, DialogGerarDeclaração, InputPorcentagemGerarDeclaração, ButtonSubmitGerarDeclaração, BolsistaSwitch } from './style'
+import { TableContainer, TableCell, TableCellTitle, TableCellTotal, TextTotal, TableRowSele, TableCellValueBorder, TableCellBorder, IconButtonExclu, TableCellTitleBorder, LinkFotoAluno, FotoAluno, DialogGerarDeclaração, InputPorcentagemGerarDeclaração, ButtonSubmitGerarDeclaração, BolsistaSwitch, CampoInputCadasAluno,LabelInputStyle, LabelInputStyleReq, InputSelectCadasAluno } from './style'
 import { Paper, Table, TableHead, TableRow, TableBody, TableFooter, Tooltip, Menu, MenuItem, Checkbox, DialogContent, SpeedDial, SpeedDialAction } from '@material-ui/core'
 import LimitText from '../LimitText'
 import { Delete as DeleteIcon, Download as DownloadIcon, Edit as EditIcon, PhotoCamera } from '@material-ui/icons'
@@ -47,6 +47,21 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg }) {
 
             const openCadas = Boolean(fechadoCadas)
 
+            function LabelInput({ children, required }) {
+                if (required) {
+                  return (
+                    <>
+                      <LabelInputStyle>
+                        {children}
+                        <LabelInputStyleReq>*</LabelInputStyleReq>
+                      </LabelInputStyle>
+                    </>
+                  )
+                } else {
+                  return <LabelInputStyle>{children}</LabelInputStyle>
+                }
+            }
+
             function ModelGerarDeclaração({ open }) {
                 if (open) {
                     return (
@@ -59,12 +74,6 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg }) {
                                             min: 0
                                         }
                                     }} defaultValue={98} variant="standard"/>
-                                    <CampoInputCadasAluno>
-                                        <LabelInput required>Turma</LabelInput>
-                                        <InputSelectCadasAluno id="turma" {...register('turma')}>
-                                            {turmas.map(turma => <MenuItem value={turma.nome}>{turma.nome}</MenuItem>)}
-                                        </InputSelectCadasAluno>
-                                    </CampoInputCadasAluno>
                                     <span style={{fontSize: '0.8vw'}}>Porcentagem de aulas sem faltas</span>
                                     <input type="hidden" name="id" value={row._id}/>
                                     <input type="hidden" name="keyapi" value={process.env.NEXT_STATIC_API_KEY}/>
