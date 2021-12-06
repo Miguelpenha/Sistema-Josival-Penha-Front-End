@@ -1,6 +1,6 @@
 import styled from 'styled-components'
-import { Button } from '@material-ui/core'
-import { InsertDriveFile } from '@material-ui/icons'
+import { Button, IconButton } from '@material-ui/core'
+import { InsertDriveFile, ExitToApp } from '@material-ui/icons'
 import Lottie from 'react-lottie'
 
 export const Container = styled.div`
@@ -33,5 +33,13 @@ export const IconFile = styled(InsertDriveFile)`
 export const AnimationControl = styled(Lottie).attrs({
     width: '50%'
 })`
+    
+`
+
+export const IconButtonBack = styled(IconButton)`
+    width: fit-content;
+`
+
+export const IconBack = styled(ExitToApp)`
     
 `

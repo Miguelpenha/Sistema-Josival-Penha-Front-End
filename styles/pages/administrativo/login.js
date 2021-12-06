@@ -1,5 +1,7 @@
 import styled from 'styled-components'
 import LogoJPNome from '../../../components/LogoJPNome'
+import { IconButton } from '@material-ui/core'
+import { ArrowBack } from '@material-ui/icons'
 
 const LoginStyle = styled.div`
     @media (max-width: 1036px) {
@@ -147,4 +149,12 @@ LoginStyle.PartRight.Form.Btn = styled.button`
     cursor: pointer;
 `
 
-export default LoginStyle
+export const LoginStyleGlobal = LoginStyle
+
+export const IconButtonBack = styled(IconButton)`
+    width: fit-content;
+`
+
+export const IconBack = styled(ArrowBack)`
+    
+`

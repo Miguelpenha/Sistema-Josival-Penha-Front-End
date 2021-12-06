@@ -4,6 +4,8 @@ import LogoJPNome from '../../components/LogoJPNome'
 import IconLinkAdmin from '../../assets/icon-link-admin.svg'
 import IconLinkProfessoras from '../../assets/icon-link-professoras.svg'
 import IconExit from '../../assets/icon-exit.svg'
+import { IconButton } from '@material-ui/core'
+import { ArrowBack } from '@material-ui/icons'
 
 const HomeStyle = styled.div`
     @media (max-width: 1036px) {
@@ -117,4 +119,4 @@ HomeStyle.LinkProfessoras.Icon = styled(IconLinkProfessoras)`
     margin-right: 5%;
 `
 
-export default HomeStyle
+export const HomeStyleGlobal = HomeStyle

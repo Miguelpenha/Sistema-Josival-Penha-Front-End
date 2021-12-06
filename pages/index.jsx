@@ -1,7 +1,8 @@
 import Head from 'next/head'
-import HomeStyle from '../styles/pages'
+import { HomeStyleGlobal as HomeStyle } from '../styles/pages'
 import Link from 'next/link'
 import nookies from 'nookies'
+
 
 export default function Home() {
   return (

@@ -1,4 +1,4 @@
-import LoginStyle from '../../styles/pages/professoras/login'
+import { LoginStyleGlobal as LoginStyle, IconButtonBack, IconBack } from '../../styles/pages/professoras/login'
 import Head from 'next/head'
 import { useContext, useState } from 'react'
 import api from '../../services/api/api'
@@ -7,6 +7,7 @@ import { useRouter } from 'next/router'
 import { AuthContext } from '../../contexts/AuthContext'
 import nookies from 'nookies'
 import ErrorMsg from '../../components/ErrorMsg'
+import Link from 'next/link'
 
 export default function Login() {
   const { sigIn } = useContext(AuthContext)
@@ -40,6 +41,11 @@ export default function Login() {
       <Head>
         <title>Login Professoras</title>
       </Head>
+      <Link href="/">
+        <IconButtonBack color="primary" component="a">
+            <IconBack fontSize="large"/>
+        </IconButtonBack>
+      </Link>
       <LoginStyle>
         <LoginStyle.PartLeft>
             <LoginStyle.PartLeft.LogoJPNome/>

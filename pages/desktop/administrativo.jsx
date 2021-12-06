@@ -1,10 +1,15 @@
 import nookies from 'nookies'
-import { Container, Title, ButtonFile, IconFile, AnimationControl } from '../../styles/pages/desktop/administrativo'
+import { Container, Title, ButtonFile, IconFile, AnimationControl, IconBack, IconButtonBack } from '../../styles/pages/desktop/administrativo'
 import Link from 'next/link'
 
 export default function Administrativo() {
   return (
     <Container>
+      <Link href="/">
+        <IconButtonBack color="primary" component="a" onClick={() => window.desktop.logout()}>
+            <IconBack fontSize="large"/>
+        </IconButtonBack>
+      </Link>
       <Title>Painel de controle Josival Penha</Title>
       <Link href="arquivos">
         <ButtonFile variant="contained" component="a">

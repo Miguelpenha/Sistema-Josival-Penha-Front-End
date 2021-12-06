@@ -1,4 +1,4 @@
-import LoginStyle from '../../styles/pages/administrativo/login'
+import { LoginStyleGlobal as LoginStyle, IconButtonBack, IconBack } from '../../styles/pages/administrativo/login'
 import Head from 'next/head'
 import { useContext, useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -7,6 +7,7 @@ import { AuthContext } from '../../contexts/AuthContext'
 import nookies from 'nookies'
 import ErrorMsg from '../../components/ErrorMsg'
 import api from '../../services/api/api'
+import Link from 'next/link'
 
 export default function Login() {
   const { sigIn } = useContext(AuthContext)
@@ -39,9 +40,14 @@ export default function Login() {
       <Head>
         <title>Login Administrativo</title>
       </Head>
+      <Link href="/">
+        <IconButtonBack color="primary" component="a">
+            <IconBack fontSize="large"/>
+        </IconButtonBack>
+      </Link>
       <LoginStyle>
         <LoginStyle.PartLeft>
-            <LoginStyle.PartLeft.LogoJPNome/>
+          <LoginStyle.PartLeft.LogoJPNome/>
         </LoginStyle.PartLeft>
         <LoginStyle.PartRight>
             {error && <ErrorMsg>{errorMsg}</ErrorMsg>}
