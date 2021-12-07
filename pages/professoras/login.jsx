@@ -41,11 +41,11 @@ export default function Login() {
       <Head>
         <title>Login Professoras</title>
       </Head>
-      <Link href="/">
+      {window.desktop && <Link href="/">
         <IconButtonBack color="primary" component="a">
             <IconBack fontSize="large"/>
         </IconButtonBack>
-      </Link>
+      </Link>}
       <LoginStyle>
         <LoginStyle.PartLeft>
             <LoginStyle.PartLeft.LogoJPNome/>
