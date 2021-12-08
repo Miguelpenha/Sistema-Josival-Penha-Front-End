@@ -2,9 +2,21 @@ import Head from 'next/head'
 import { HomeStyleGlobal as HomeStyle } from '../styles/pages'
 import Link from 'next/link'
 import nookies from 'nookies'
+import { useEffect } from 'react'
 
 
 export default function Home() {
+  useEffect(() => {
+    if (window.desktop) {
+      nookies.set(undefined, process.env.NEXT_STATIC_NAME_COOKIE_DESKTOP, true, {
+        path: '/',
+        secure: true,
+        domain: process.env.NEXT_STATIC_DOMAIN,
+        maxAge: 52560000 * 60 * 1 // 100 year
+      })
+    }
+  }, [])
+
   return (
     <HomeStyle>
       <Head>
