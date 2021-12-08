@@ -36,18 +36,19 @@ export default function Home() {
 export const getServerSideProps = async ctx => {
   const { [process.env.NEXT_STATIC_NAME_COOKIE_PROFESSORAS]:tokenProf } = nookies.get(ctx)
   const { [process.env.NEXT_STATIC_NAME_COOKIE_ADMINISTRATIVO]:tokenAdmin } = nookies.get(ctx)
+  const { [process.env.NEXT_STATIC_NAME_COOKIE_DESKTOP]:tokenDesktop } = nookies.get(ctx)
 
   if (tokenProf) {
     return {
       redirect: {
-        destination: 'professoras',
+        destination: tokenDesktop ? 'desktop/professoras' : 'professoras',
         permanent: false
       }
     }
   } else if (tokenAdmin) {
     return {
       redirect: {
-        destination: 'administrativo/alunos',
+        destination: tokenDesktop ? 'desktop/administrativo' : 'administrativo/alunos',
         permanent: false
       }
     }

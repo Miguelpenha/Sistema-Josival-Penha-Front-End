@@ -22,13 +22,13 @@ export default function Arquivos() {
                 open: false
             })}>
                 <Alert onClose={() => setAlert({
-                open: false
+                    open: false
                 })} severity={alert.severity} action={
                 <IconButton color="info" onClick={() => setAlert({
                     open: false
                 })}>
                     <Close fontSize="large" sx={{'&&': {
-                    color: '#014361'
+                        color: '#014361'
                     }}}/>
                 </IconButton>
                 }>{alert.text}</Alert>
@@ -45,7 +45,7 @@ export default function Arquivos() {
             </Link>
             <Title>Arquivos</Title>
             <Files>
-                {fotosAlunos && fotosAlunos.map((foto, key) => <File foto={foto} key={key} setAlert={data => setAlert(data)} reload={() => mutateFotosAlunos('/alunos/fotos')}/>)}
+                {fotosAlunos && typeof fotosAlunos === 'object' && fotosAlunos.map((foto, key) => <File foto={foto} key={key} setAlert={data => setAlert(data)} reload={() => mutateFotosAlunos('/alunos/fotos')}/>)}
             </Files>
             <AlertFunction/>
         </Container>

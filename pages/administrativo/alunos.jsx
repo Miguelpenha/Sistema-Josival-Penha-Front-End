@@ -12,7 +12,7 @@ import { Add as AddIcon } from '@material-ui/icons'
 import api from '../../services/api/base'
 import InputMask from 'react-input-mask'
 import { useForm } from 'react-hook-form'
-import html2canvas from 'html2canvas'
+// import html2canvas from 'html2canvas'
 import theme from '../../styles/theme'
 
 export default function Alunos() {

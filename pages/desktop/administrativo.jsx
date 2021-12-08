@@ -52,8 +52,17 @@ export const getServerSideProps = async ctx => {
                   destination: '/administrativo/alunos',
                   permanent: false
                 }
-              }
+            }
         }
+    }
+
+    if (!tokenAdmin || tokenProf) {
+      return {
+        redirect: {
+          destination: '/',
+          permanent: false
+        }
+    }
     }
   
     return {
