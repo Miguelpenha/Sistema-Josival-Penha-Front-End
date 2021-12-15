@@ -1,16 +1,17 @@
 import Head from 'next/head'
 import nookies from 'nookies'
-import { Container, Main, IconAdd, IconTrendingDown, IconTrendingUp, IconLabel, IconSyncAlt, Infos, Info, InfoTit, InfoDado, IconAccountBalance, IconTrendingUpInfo, IconTrendingDownInfo, DialogCadasDespesa, DialogContentCadasDespesa, InputNomeDespesa, InputNomeReceita, InputDespesa, InputReceita, RealInputDespesa, FormDespesa, InputDespesaObservação, InputReceitaObservação, DescriptionIcon, InputDespesaData, CampoCheckBoxsDespesas, CheckboxCategoriaDespesa, TitCampoCheckBoxDespesa, NomeCategoriaDepesaComCor, NomeCategoriaDepesaSóCor, InvestimentoDespesa, InvestimentoReceita, FixaDespesa, FixaReceita, ButtonSubmitDespesa, ButtonSubmitReceita, IconPayment, ChartReceitasDespesas, Charts } from '../../styles/pages/administrativo/financeiro'
+import { FormContainer, LogoJP, FormAccess, InputFormFinanceiro, ButtonFormFinanceiro, Container, Main, IconTrendingDown, IconTrendingUp, IconLabel, Infos, Info, InfoTit, InfoDado, IconAccountBalance, IconTrendingUpInfo, IconTrendingDownInfo, DialogCadasDespesa, DialogContentCadasDespesa, InputNomeDespesa, InputNomeReceita, InputDespesa, InputReceita, RealInputDespesa, FormDespesa, InputDespesaObservação, InputReceitaObservação, DescriptionIcon, InputDespesaData, CampoCheckBoxsDespesas, CheckboxCategoriaDespesa, TitCampoCheckBoxDespesa, NomeCategoriaDepesaComCor, NomeCategoriaDepesaSóCor, InvestimentoDespesa, InvestimentoReceita, FixaDespesa, FixaReceita, ButtonSubmitDespesa, ButtonSubmitReceita, IconPayment, ChartReceitasDespesas, Charts } from '../../styles/pages/administrativo/financeiro'
 import { NavOptions, LogoJPNome, Funções, Função, LinkFunção, IconAlunos, IconAcadêmico, IconDashBoard, IconMarketing, IconFinanceiroSele, IconColaboradores, TextFunção } from '../../components/NavTool'
 import Link from 'next/link'
-import { Menu, MenuItem, InputAdornment, Snackbar, Alert, TextField, Divider, Skeleton, SpeedDialAction, SpeedDialIcon, SpeedDial } from '@material-ui/core'
-import { TrendingDown as TrendingDownIcon, Label as LabelIcon, Payment as PaymentIcon, TrendingUp as TrendingUpIcon } from '@material-ui/icons'
+import { Menu, MenuItem, InputAdornment, Snackbar, Alert, TextField, Divider, Skeleton, SpeedDialAction, SpeedDialIcon, SpeedDial, IconButton } from '@material-ui/core'
+import { TrendingDown as TrendingDownIcon, Label as LabelIcon, Payment as PaymentIcon, TrendingUp as TrendingUpIcon, Lock as LockIcon, KeyboardBackspace as ArrowBackIcon } from '@material-ui/icons'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { get } from '../../hooks'
 import api from '../../services/api/base'
 import TableReceitasDespesas from '../../components/TableReceitasDespesas'
 import TableCategoriasReceitasDespesas from '../../components/TableCategoriasReceitasDespesas'
+import { memo } from 'react'
 
 export default function Financeiro() {
   const { data: totalReceitas, mutate: mutateTotalReceitas } = get('/financeiro/receitas/total')
@@ -33,10 +34,6 @@ export default function Financeiro() {
   const [openDialogCadasCategoriasReceitas, setOpenDialogCadasCategoriasReceitas] = useState(false)
   const [openDialogCadasFontesDespesas, setOpenDialogCadasFontesDespesas] = useState(false)
   const [openDialogCadasFontesReceitas, setOpenDialogCadasFontesReceitas] = useState(false)
-  
-  function clickCadas(event) {
-    setFechadoCadas(event.currentTarget)
-  }
 
   function clickCloseCadas() {
     setFechadoCadas(null)
@@ -664,9 +661,49 @@ export default function Financeiro() {
       return <Skeleton variant="rectangular" width={500} height={300} style={{marginTop: '3%', borderRadius: '20px'}} animation="wave"/>
     }
   }
+
+  function Verification({ children }) {
+    const [veri, setVeri] = useState(false)
+    
+    if (veri) {
+      return children
+    } else {
+      return (
+        <FormContainer>
+          <Link href="/administrativo/alunos">
+            <IconButton component="a" sx={{justifySelf: 'flex-start', width: 'fit-content'}}>
+              <ArrowBackIcon sx={{color: '#0872FC', fontSize: '3vw'}}/>
+            </IconButton>
+          </Link>
+          <FormAccess onSubmit={ev => {
+            ev.preventDefault()
+          }}>
+            <InputFormFinanceiro 
+              required 
+              id="senha" 
+              name="senha" 
+              type="password" 
+              variant="standard" 
+              placeholder="Senha de acesso financeiro" 
+              InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <LockIcon sx={{color: '#0872FC'}} fontSize="large"/>
+                      </InputAdornment>
+                    )
+                  }}
+            />
+            <ButtonFormFinanceiro type="submit" variant="contained">Entrar</ButtonFormFinanceiro>
+          </FormAccess>
+        </FormContainer>
+      )
+    }
+  }
+
+  const VerificationMemo = memo(Verification)
   
   return (
-    <>
+    <VerificationMemo>
       <Head>
         <title>Administrativo (Financeiro)</title>
       </Head>
@@ -903,7 +940,7 @@ export default function Financeiro() {
             <DialogCadasFontesReceitas open={openDialogCadasFontesReceitas}/>
         </Main>
       </Container>
-    </>
+    </VerificationMemo>
   )
 }
 

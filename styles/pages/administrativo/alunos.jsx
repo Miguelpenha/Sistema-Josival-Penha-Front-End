@@ -13,7 +13,6 @@ export const Container = styled.div`
     height: 100%;
 `
 
-
 export const Main = styled.main`
     padding: 2%;
     color: black;

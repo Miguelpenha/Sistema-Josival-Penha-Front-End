@@ -3,6 +3,53 @@ import { Add as IconAddSVG, TrendingDown as IconTrendingDownSVG, TrendingUp as I
 import { Card, Dialog, DialogContent, TextField, Button, Checkbox, Switch } from '@material-ui/core'
 import Chart from 'react-google-charts'
 
+export const FormContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+`
+
+export const FormAccess = styled.form`
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 45%;
+    border-radius: 10px;
+    align-self: center;
+    margin-top: auto;
+    margin-bottom: auto;
+`
+
+export const InputFormFinanceiro = styled(TextField)`
+    && {
+        width: 70%;
+        margin-top: 8%;
+    }
+
+    & .MuiInput-underline {
+        font-size: 2vw;
+        color: #0872FC;
+    }
+
+    & .MuiInput-underline:after, .MuiInput-underline:before {
+        border-bottom-color: #0872FC;
+    }
+`
+
+export const ButtonFormFinanceiro = styled(Button)`
+    && {
+        background-color: #0872FC;
+        width: 60%;
+        font-size: 1.5vw;
+        border-radius: 40px;
+        margin-top: 6%;
+        margin-bottom: 8%;
+        padding: 2%;
+    }
+`
+
 export const Container = styled.div`
     display: grid;
     grid-template-columns: 0.5fr 2.3fr;
