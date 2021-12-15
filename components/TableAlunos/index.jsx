@@ -1,11 +1,12 @@
-import { TableContainer, TableCell, TableCellTitle, TableCellTotal, TextTotal, TableRowSele, TableCellValueBorder, TableCellBorder, IconButtonExclu, TableCellTitleBorder, LinkFotoAluno, FotoAluno, DialogGerarDeclaração, InputPorcentagemGerarDeclaração, ButtonSubmitGerarDeclaração, BolsistaSwitch, CampoInputCadasAluno,LabelInputStyle, LabelInputStyleReq, InputSelectCadasAluno } from './style'
+import { TableContainer, TableCell, TableCellTitle, TableCellTotal, TextTotal, TableRowSele, TableCellValueBorder, TableCellBorder, IconButtonExclu, TableCellTitleBorder, LinkFotoAluno, FotoAluno, DialogGerarDeclaração, InputPorcentagemGerarDeclaração, ButtonSubmitGerarDeclaração, BolsistaSwitch } from './style'
 import { Paper, Table, TableHead, TableRow, TableBody, TableFooter, Tooltip, Menu, MenuItem, Checkbox, DialogContent, SpeedDial, SpeedDialAction } from '@material-ui/core'
 import LimitText from '../LimitText'
-import { Delete as DeleteIcon, Download as DownloadIcon, Edit as EditIcon, PhotoCamera } from '@material-ui/icons'
+import { Delete as DeleteIcon, Download as DownloadIcon, Edit as EditIcon } from '@material-ui/icons'
 import Link from 'next/link'
 import { useState, memo } from 'react'
+import api from '../../services/api/base'
 
-function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg }) {
+function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg, onDefaultFoto }) {
     if (typeof alunos != 'string' && alunos) {
         alunos.map(aluno => aluno.criação.sistema = new Date(aluno.criação.sistema))
         
@@ -26,41 +27,51 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg }) {
             const [fechadoCadas, setFechadoCadas] = useState(null)
             const [openDialogGerarDeclaração, setOpenDialogGerarDeclaração] = useState(false)
 
-            const actions = [
-                {
-                    icon: <DeleteIcon sx={{color: '#ED3237'}}/>,
-                    name: 'Excluir aluno',
-                    onClick: () => onDeleteAlunos(row._id),
-                    background: '#FBD6D7'
-                },
-                {
-                    icon: <DownloadIcon sx={{color: '#0872FC'}}/>,
-                    name: 'Baixar declaração de frequência do aluno',
-                    onClick: () => setOpenDialogGerarDeclaração(true),
-                    background: '#A8CDFE'
-                }
-            ]
+            let actions = []
+
+            if (row.foto.key === 'Padrão.jpg') {
+                actions = [
+                    {
+                        icon: <DeleteIcon sx={{color: '#ED3237'}}/>,
+                        name: 'Excluir aluno',
+                        onClick: () => onDeleteAlunos(row._id),
+                        background: '#FBD6D7'
+                    },
+                    {
+                        icon: <DownloadIcon sx={{color: '#0872FC'}}/>,
+                        name: 'Baixar declaração de frequência do aluno',
+                        onClick: () => setOpenDialogGerarDeclaração(true),
+                        background: '#A8CDFE'
+                    }
+                ]
+            } else {
+                actions = [
+                    {
+                        icon: <DeleteIcon sx={{color: '#ED3237'}}/>,
+                        name: 'Excluir aluno',
+                        onClick: () => onDeleteAlunos(row._id),
+                        background: '#FBD6D7'
+                    },
+                    {
+                        icon: <DeleteIcon sx={{color: '#ED3237'}}/>,
+                        name: 'Excluir foto do aluno',
+                        onClick: () => api.patch('alunos/fotos/default', { id: row._id }).then(() => onDefaultFoto()),
+                        background: '#FBD6D7'
+                    },
+                    {
+                        icon: <DownloadIcon sx={{color: '#0872FC'}}/>,
+                        name: 'Baixar declaração de frequência do aluno',
+                        onClick: () => setOpenDialogGerarDeclaração(true),
+                        background: '#A8CDFE'
+                    }
+                ]
+            }
 
             function clickCloseCadas() {
                 setFechadoCadas(null)
             }
 
             const openCadas = Boolean(fechadoCadas)
-
-            function LabelInput({ children, required }) {
-                if (required) {
-                  return (
-                    <>
-                      <LabelInputStyle>
-                        {children}
-                        <LabelInputStyleReq>*</LabelInputStyleReq>
-                      </LabelInputStyle>
-                    </>
-                  )
-                } else {
-                  return <LabelInputStyle>{children}</LabelInputStyle>
-                }
-            }
 
             function ModelGerarDeclaração({ open }) {
                 if (open) {
@@ -118,7 +129,7 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg }) {
             <TableCellValueBorder component="th" scope="col" align="center">{row.nascimento} ({calcIdade(row.nascimento, new Date())} anos)</TableCellValueBorder>
             <TableCellValueBorder component="th" scope="col" align="center">{row.situação}</TableCellValueBorder>
             <TableCellValueBorder align="center">
-                <div style={{position: 'relative', bottom: 155}}>
+                <div style={{position: 'relative', bottom: row.foto.key === 'Padrão.jpg' ? 155 : 215}}>
                     <SpeedDial
                         ariaLabel="SpeedDial basic example"
                         sx={{position: 'absolute'}}

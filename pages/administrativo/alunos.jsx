@@ -364,6 +364,9 @@ export default function Alunos() {
               mutateAlunos('/alunos')
               mutateQuantAlunos('/alunos?quant=true')
             }}
+            onDefaultFoto={() => {
+              mutateAlunos('/alunos')
+            }}
           /> : <Skeleton variant="rectangular" width={`85.5%`} height={`50%`} style={{display: 'block', marginLeft: 'auto', marginRight: 'auto', borderRadius: '20px', marginTop: '5%'}} animation="wave"/>}
           {turmas ? <TableTurmas            
             turmas={turmas && turmas}
