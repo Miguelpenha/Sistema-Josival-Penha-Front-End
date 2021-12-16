@@ -1,9 +1,9 @@
 import Head from 'next/head'
 import nookies from 'nookies'
-import { FormContainer, LogoJP, FormAccess, InputFormFinanceiro, ButtonFormFinanceiro, Container, Main, IconTrendingDown, IconTrendingUp, IconLabel, Infos, Info, InfoTit, InfoDado, IconAccountBalance, IconTrendingUpInfo, IconTrendingDownInfo, DialogCadasDespesa, DialogContentCadasDespesa, InputNomeDespesa, InputNomeReceita, InputDespesa, InputReceita, RealInputDespesa, FormDespesa, InputDespesaObservação, InputReceitaObservação, DescriptionIcon, InputDespesaData, CampoCheckBoxsDespesas, CheckboxCategoriaDespesa, TitCampoCheckBoxDespesa, NomeCategoriaDepesaComCor, NomeCategoriaDepesaSóCor, InvestimentoDespesa, InvestimentoReceita, FixaDespesa, FixaReceita, ButtonSubmitDespesa, ButtonSubmitReceita, IconPayment, ChartReceitasDespesas, Charts } from '../../styles/pages/administrativo/financeiro'
+import { FormContainer, FormAccess, InputFormFinanceiro, ButtonFormFinanceiro, Container, Main, IconTrendingDown, IconTrendingUp, IconLabel, Infos, Info, InfoTit, InfoDado, IconAccountBalance, IconTrendingUpInfo, IconTrendingDownInfo, DialogCadasDespesa, DialogContentCadasDespesa, InputNomeDespesa, InputNomeReceita, InputDespesa, InputReceita, RealInputDespesa, FormDespesa, InputDespesaObservação, InputReceitaObservação, DescriptionIcon, InputDespesaData, CampoCheckBoxsDespesas, CheckboxCategoriaDespesa, TitCampoCheckBoxDespesa, NomeCategoriaDepesaComCor, NomeCategoriaDepesaSóCor, InvestimentoDespesa, InvestimentoReceita, FixaDespesa, FixaReceita, ButtonSubmitDespesa, ButtonSubmitReceita, IconPayment, ChartReceitasDespesas, Charts } from '../../styles/pages/administrativo/financeiro'
 import { NavOptions, LogoJPNome, Funções, Função, LinkFunção, IconAlunos, IconAcadêmico, IconDashBoard, IconMarketing, IconFinanceiroSele, IconColaboradores, TextFunção } from '../../components/NavTool'
 import Link from 'next/link'
-import { Menu, MenuItem, InputAdornment, Snackbar, Alert, TextField, Divider, Skeleton, SpeedDialAction, SpeedDialIcon, SpeedDial, IconButton } from '@material-ui/core'
+import { Menu, MenuItem, InputAdornment, Snackbar, Alert, TextField, Divider, Skeleton, SpeedDialAction, SpeedDialIcon, SpeedDial, IconButton, AlertTitle } from '@material-ui/core'
 import { TrendingDown as TrendingDownIcon, Label as LabelIcon, Payment as PaymentIcon, TrendingUp as TrendingUpIcon, Lock as LockIcon, KeyboardBackspace as ArrowBackIcon } from '@material-ui/icons'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -664,6 +664,7 @@ export default function Financeiro() {
 
   function Verification({ children }) {
     const [veri, setVeri] = useState(false)
+    const [error, setError] = useState(false)
     
     if (veri) {
       return children
@@ -671,28 +672,41 @@ export default function Financeiro() {
       return (
         <FormContainer>
           <Link href="/administrativo/alunos">
-            <IconButton component="a" sx={{justifySelf: 'flex-start', width: 'fit-content'}}>
+            <IconButton component="a" sx={{justifySelf: 'flex-start', width: 'fit-content', margin: '1%'}}>
               <ArrowBackIcon sx={{color: '#0872FC', fontSize: '3vw'}}/>
             </IconButton>
           </Link>
-          <FormAccess onSubmit={ev => {
+          <FormAccess onSubmit={async ev => {
             ev.preventDefault()
+            const authorized = (await api.post('financeiro/verify', {
+              password: ev.target[0].value
+            })).data.authorized
+            
+            if (authorized) {
+              setError(false)
+              setVeri(true)
+            } else {
+              setError(true)
+            }
           }}>
-            <InputFormFinanceiro 
-              required 
-              id="senha" 
-              name="senha" 
-              type="password" 
-              variant="standard" 
-              placeholder="Senha de acesso financeiro" 
+            <InputFormFinanceiro
+              autoFocus
+              required
+              id="senha"
+              name="senha"
+              type="password"
+              error={error}
+              variant="standard"
+              placeholder="Senha de acesso financeiro"
               InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
-                        <LockIcon sx={{color: '#0872FC'}} fontSize="large"/>
+                        <LockIcon sx={{color: error ? '#F06360' : '#0872FC'}} fontSize="large"/>
                       </InputAdornment>
                     )
                   }}
             />
+            {error && <Alert variant="standard" severity="error" sx={{fontSize: '1vw', width: 'fit-content', borderRadius: '10px', alignSelf: 'flex-start', marginLeft: '15%'}}>Senha incorreta</Alert>}
             <ButtonFormFinanceiro type="submit" variant="contained">Entrar</ButtonFormFinanceiro>
           </FormAccess>
         </FormContainer>

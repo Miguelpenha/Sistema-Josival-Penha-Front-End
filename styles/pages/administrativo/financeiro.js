@@ -26,15 +26,16 @@ export const InputFormFinanceiro = styled(TextField)`
     && {
         width: 70%;
         margin-top: 8%;
+        margin-bottom: 4%;
     }
 
     & .MuiInput-underline {
         font-size: 2vw;
-        color: #0872FC;
+        color: ${props => props.error ? '#F06360' : '#0872FC'};
     }
 
     & .MuiInput-underline:after, .MuiInput-underline:before {
-        border-bottom-color: #0872FC;
+        border-bottom-color: ${props => props.error ? '#F06360' : '#0872FC'};
     }
 `
 
@@ -47,6 +48,11 @@ export const ButtonFormFinanceiro = styled(Button)`
         margin-top: 6%;
         margin-bottom: 8%;
         padding: 2%;
+    }
+
+
+    &:hover {
+        background-color: #0890FC;
     }
 `
 
