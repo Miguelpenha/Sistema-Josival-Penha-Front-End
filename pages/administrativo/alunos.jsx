@@ -12,8 +12,6 @@ import { Add as AddIcon } from '@material-ui/icons'
 import api from '../../services/api/base'
 import InputMask from 'react-input-mask'
 import { useForm } from 'react-hook-form'
-// import html2canvas from 'html2canvas'
-import theme from '../../styles/theme'
 
 export default function Alunos() {
   const { data: quantAlunos, mutate: mutateQuantAlunos } = get('/alunos?quant=true')
@@ -211,24 +209,6 @@ export default function Alunos() {
       }
     }
   ]
-
-  // useEffect(() => {
-  //   setInterval(() => {
-  //     html2canvas(window.document.body, {
-  //       backgroundColor: theme.colors.backgrounds.primary,
-  //       height: window.innerHeight
-  //     }).then(canvas => {
-  //       let img = new Image()
-
-        // img.onload = () => {
-          // img.onload = null
-          // window.document.getElementById('output').appendChild(img)
-        // }
-
-        // img.src = canvas.toDataURL('image/png')
-      // })
-    // }, 10000);
-  // }, [])
   
   return (
     <>
@@ -236,7 +216,6 @@ export default function Alunos() {
         <title>Administrativo (Alunos)</title>
       </Head>
       <Container>
-        <div id="output" style={{display: 'none'}}></div>
         <NavOptions>
           <LogoJPNome/>
           <Funções>
