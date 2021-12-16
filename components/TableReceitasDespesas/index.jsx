@@ -1,14 +1,13 @@
 import { memo } from 'react'
 import { TableContainer, TableCell, TableCellTitle, TableCellSaldo, TextSaldo, TextSaldoValue, TableRowSele, TableCellValueBorder, TableCellBorder, IconButton, TableCellTitleBorder } from './style'
 import { Paper, Table, TableHead, TableRow, TableBody, TableFooter, Tooltip } from '@material-ui/core'
-import { Delete as DeleteIcon } from '@material-ui/icons'
+import { Delete as DeleteIcon, Edit as EditIcon } from '@material-ui/icons'
 import CheckAnimation from '../../animations/check'
 import NotCheckAnimation from '../../animations/notCheck'
 import { get } from '../../hooks'
 
-function TableReceitasDespesas({ receitas=[], despesas=[], saldo='', onDeleteDespesas, onDeleteReceitas, onDeleteTodos }) {
+function TableReceitasDespesas({ receitas=[], despesas=[], saldo='', onDeleteDespesas, onDeleteReceitas, onDeleteTodos, onEditReceita, onEditDespesa }) {
     if (typeof receitas != 'string' && typeof despesas != 'string') {
-        console.log(despesas)
         despesas.map(despesa => {
             despesa.despesa = true
             despesa.criação.sistema = new Date(despesa.criação.sistema)
@@ -106,6 +105,19 @@ function TableReceitasDespesas({ receitas=[], despesas=[], saldo='', onDeleteDes
                                             }
                                         }}>
                                             <DeleteIcon sx={{color: '#ED3237'}}/>
+                                        </IconButton>
+                                    </Tooltip>
+                                    <Tooltip title={
+                                        <span style={{fontSize: '1vw'}}>Editar essa despessa</span>
+                                    } arrow placement="bottom">
+                                        <IconButton bg="#a0c9ff" idfinanceiro={row._id} onClick={e => {
+                                            if (row.receita) {
+                                                onEditReceita(e.currentTarget.getAttribute('idfinanceiro'))
+                                            } else {
+                                                onEditDespesa(e.currentTarget.getAttribute('idfinanceiro'))
+                                            }
+                                        }}>
+                                            <EditIcon sx={{color: '#0872FC'}}/>
                                         </IconButton>
                                     </Tooltip>
                                 </TableCellValueBorder>

@@ -96,7 +96,13 @@ export const TextSaldoValue = styled.span`
 
 export const IconButton = styled(IconButtonBruto)`
     && {
-        background-color: #FBD6D7;
+        background-color: ${props => {
+            if (!props.bg) {
+                return '#FBD6D7;'
+            } else {
+                return `${props.bg};`
+            }
+        }};
     }
 `
 

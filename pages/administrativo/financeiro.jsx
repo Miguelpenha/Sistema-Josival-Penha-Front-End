@@ -4,7 +4,7 @@ import { FormContainer, FormAccess, InputFormFinanceiro, ButtonFormFinanceiro, C
 import { NavOptions, LogoJPNome, Funções, Função, LinkFunção, IconAlunos, IconAcadêmico, IconDashBoard, IconMarketing, IconFinanceiroSele, IconColaboradores, TextFunção } from '../../components/NavTool'
 import Link from 'next/link'
 import { Menu, MenuItem, InputAdornment, Snackbar, Alert, TextField, Divider, Skeleton, SpeedDialAction, SpeedDialIcon, SpeedDial, IconButton } from '@material-ui/core'
-import { TrendingDown as TrendingDownIcon, Label as LabelIcon, Payment as PaymentIcon, TrendingUp as TrendingUpIcon, Lock as LockIcon, KeyboardBackspace as ArrowBackIcon } from '@material-ui/icons'
+import { TrendingDown as TrendingDownIcon, Label as LabelIcon, Payment as PaymentIcon, TrendingUp as TrendingUpIcon, Lock as LockIcon, KeyboardBackspace as ArrowBackIcon, Edit as EditIcon } from '@material-ui/icons'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { get } from '../../hooks'
@@ -22,7 +22,7 @@ export default function Financeiro() {
   const { data: categoriasReceitasTotal, mutate: mutateCategoriasReceitasTotal } = get('/financeiro/receitas/categorias/total')
   const { data: categoriasDespesasTotal, mutate: mutateCategoriasDespesasTotal } = get('/financeiro/despesas/categorias/total')
   const [fechadoCadas, setFechadoCadas] = useState(null)
-  const [veri, setVeri] = useState(false)
+  const [veri, setVeri] = useState(true)
   const [alert, setAlert] = useState({
     open: false
   })
@@ -794,7 +794,8 @@ export default function Financeiro() {
                         color: `${action.color}`,
                         fontSize: '1.2vw',
                         padding: '15%',
-                        borderRadius: '15px'
+                        borderRadius: '15px',
+                        width: 'max-content'
                       },
                       '& .MuiSpeedDialAction-fab, & .MuiSpeedDialAction-fab:hover': {
                         backgroundColor: '#ffffff',
@@ -859,7 +860,7 @@ export default function Financeiro() {
                   mutateSaldo('/financeiro/saldo')
                 })
               })
-            }} saldo={saldo && saldo.saldo}/> : <Skeleton variant="rectangular" width={`85.5%`} height={`50%`} style={{display: 'block', marginLeft: 'auto', marginRight: 'auto', borderRadius: '20px', marginTop: '5%'}} animation="wave"/>}
+            }} onEditReceita={() => {}} onEditDespesa={() => {}} saldo={saldo && saldo.saldo}/> : <Skeleton variant="rectangular" width={`85.5%`} height={`50%`} style={{display: 'block', marginLeft: 'auto', marginRight: 'auto', borderRadius: '20px', marginTop: '5%'}} animation="wave"/>}
             {categoriasReceitasTotal && categoriasDespesasTotal ? <TableCategoriasReceitasDespesas categoriasReceitas={categoriasReceitasTotal && categoriasReceitasTotal} categoriasDespesas={categoriasDespesasTotal && categoriasDespesasTotal} onDeleteCategoriaReceita={id => {
               api.delete(`/financeiro/despesas/categorias/${id}`).then(() => {
                 mutateDespesas('/financeiro/despesas')
