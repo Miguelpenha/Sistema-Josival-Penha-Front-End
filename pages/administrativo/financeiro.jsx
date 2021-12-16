@@ -22,7 +22,7 @@ export default function Financeiro() {
   const { data: categoriasReceitasTotal, mutate: mutateCategoriasReceitasTotal } = get('/financeiro/receitas/categorias/total')
   const { data: categoriasDespesasTotal, mutate: mutateCategoriasDespesasTotal } = get('/financeiro/despesas/categorias/total')
   const [fechadoCadas, setFechadoCadas] = useState(null)
-  const [veri, setVeri] = useState(true)
+  const [veri, setVeri] = useState(false)
   const [alert, setAlert] = useState({
     open: false
   })
