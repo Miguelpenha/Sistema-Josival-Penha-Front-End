@@ -55,6 +55,7 @@ export const InfoAdminTit = styled.h2`
     width: 100%;
     font-weight: 100;
     color: #525051;
+    font-size: 1.3vw;
 `
 
 export const InfoAdminDado = styled.span`

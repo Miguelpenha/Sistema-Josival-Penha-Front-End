@@ -1,122 +1,51 @@
 import styled from 'styled-components'
-import Link from '../../components/Link'
-import LogoJPNome from '../../components/LogoJPNome'
-import IconLinkAdmin from '../../assets/icon-link-admin.svg'
-import IconLinkProfessoras from '../../assets/icon-link-professoras.svg'
+import LogoJP from '../../components/LogoJPNome'
+import LinkNext from '../../components/Link'
 import IconExit from '../../assets/icon-exit.svg'
-import { IconButton } from '@material-ui/core'
-import { ArrowBack } from '@material-ui/icons'
 
-const HomeStyle = styled.div`
-    @media (max-width: 1036px) {
-        .part-right>a {
-            font-size: 2rem;
-        }
-
-        .part-right>a>svg {
-            width: 32px;
-            height: 32px;
-        }
-    }
-
-    @media (max-width: 864.5px) {
-        .part-left {
-            display: flex;
-            width: 100%;
-            height: 35%;
-            padding-top: 5%;
-            padding-bottom: 5%;
-            align-items: center;
-            justify-content: space-evenly;
-            flex-direction: column;
-        }
-
-        .part-left>img {
-            min-width: 280px;
-        }
-
-        .part-right {
-            display: flex;
-            width: 100%;
-            height: 75%;
-            align-items: center;
-            justify-content: space-evenly;
-            flex-direction: column;
-            padding-bottom: 5%;
-            padding-top: 7%;
-        }
-
-        .part-right>a {
-            margin: 0;
-            padding: 5%;
-            width: 75%;
-            font-size: 2.3rem;
-        }
-
-        .part-right>a>svg {
-            width: 35px;
-            height: 35px;
-        }
-    }
-`
-
-HomeStyle.PartLeft = styled.div`
-    background-color: ${props => props.theme.colors.backgrounds.secondary};
-    width: 50%;
+export const Container = styled.main`
     height: 100%;
-    align-items: center;
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    float: left;
-    padding-top: 18.5%;
-    padding-bottom: 18.5%;
 `
 
-HomeStyle.Exit = styled(IconExit)`
-    width: 30px;
-    height: 30px;
-    margin-top: 40%;
-    margin-left: 40%;
-`
-
-HomeStyle.LogoJPNome = styled(LogoJPNome)`
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 70%;
-    height: auto;
-    min-width: 380px;
-`
-
-HomeStyle.PartRight = styled.div`
+export const ContainerLogo = styled.div`
+    flex: 0.5;
     display: flex;
-    width: 50%;
-    height: 100%;
-    float: right;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: center;
+    background-color: #ffffff;
+`
+
+export const Logo = styled(LogoJP)`
+    width: 70%;
+`
+
+export const ContainerLinks = styled.div`
+    flex: 0.5;
+    display: flex;
+    padding-top: 10%;
+    align-items: center;
+    padding-bottom: 10%;
     flex-direction: column;
-    padding-top: 14.445%;
-    padding-bottom: 14.445%;
+    justify-content: space-evenly;
 `
 
-HomeStyle.LinkAdmin = styled(Link)`
+export const Link = styled.a`
+    width: 60%;
     padding: 1.5%;
-    margin-bottom: 12%;
-`
+    color: #ffffff;
+    font-size: 1.5vw;
+    display: flex;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 10px;
+    align-items: center;
+    text-decoration: none;
+    justify-content: center;
+    background-color: ${props => props.bg};
 
-HomeStyle.LinkAdmin.Icon = styled(IconLinkAdmin)`
-    margin-right: 5%;
+    svg {
+        margin-right: 5%;
+    }
 `
-
-HomeStyle.LinkProfessoras = styled(Link)`
-    padding: 1.5%;
-`
-
-HomeStyle.LinkProfessoras.Icon = styled(IconLinkProfessoras)`
-    margin-right: 5%;
-`
-
-export const HomeStyleGlobal = HomeStyle

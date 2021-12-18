@@ -1,6 +1,7 @@
 import Head from 'next/head'
-import { HomeStyleGlobal as HomeStyle } from '../styles/pages'
-import Link from 'next/link'
+import { Container, ContainerLogo, Logo, ContainerLinks, Link } from '../styles/pages'
+import IconAdmin from '../assets/icon-link-admin.svg'
+import IconProf from '../assets/icon-link-professoras.svg'
 import nookies from 'nookies'
 import { useEffect } from 'react'
 
@@ -18,30 +19,26 @@ export default function Home() {
   }, [])
 
   return (
-    <HomeStyle>
+    <>
       <Head>
         <title>Home</title>
       </Head>
-      <main>
-        <HomeStyle.PartLeft className="part-left">
-          <HomeStyle.LogoJPNome/>
-        </HomeStyle.PartLeft>
-        <HomeStyle.PartRight className="part-right">
-          <Link href="/administrativo/login" passHref>
-            <HomeStyle.LinkAdmin>
-              <HomeStyle.LinkAdmin.Icon/>
-              Administrativo
-            </HomeStyle.LinkAdmin>
+      <Container>
+        <ContainerLogo>
+          <Logo/>
+        </ContainerLogo>
+        <ContainerLinks>
+          <Link href="/administrativo" bg="#0872FC">
+            <IconAdmin/>
+            Administrativo
           </Link>
-          <Link href="/professoras/login" passHref>
-            <HomeStyle.LinkProfessoras background="secondary">
-              <HomeStyle.LinkProfessoras.Icon/>
-              Professoras
-            </HomeStyle.LinkProfessoras>
+          <Link href="/administrativo" bg="#6A54ED">
+          <IconProf/>
+            Professoras
           </Link>
-        </HomeStyle.PartRight>
-      </main>
-    </HomeStyle>
+        </ContainerLinks>
+      </Container>
+    </>
   )
 }
 
