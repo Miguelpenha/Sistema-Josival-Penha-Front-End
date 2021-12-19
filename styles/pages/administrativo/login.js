@@ -28,23 +28,23 @@ export const ContainerForm = styled.div`
 `
 
 export const Form = styled.form`
-    display: flex;
     width: 70%;
-    margin-left: 10%;
     height: 60%;
+    display: flex;
+    margin-left: 10%;
     flex-direction: column;
 `
 
 export const Title = styled.h1`
-    font-size: 2.45vw;
     color: #000000;
+    font-size: 2.45vw;
     margin-bottom: 5%;
 `
 
 export const Campo = styled.div`
-    flex-direction: column;
     display: flex;
     margin-top: 5%;
+    flex-direction: column;
 `
 
 export const Label = styled.label`
@@ -55,12 +55,12 @@ export const Label = styled.label`
 `
 
 export const Input = styled.input`
-    background-color: #C6D9F1;
-    border: none;
-    border-radius: 10px;
     padding: 3%;
+    border: none;
     color: #0872FC;
     font-size: 1.2vw;
+    border-radius: 10px;
+    background-color: #C6D9F1;
 
     :focus{
         outline: none;
@@ -69,15 +69,15 @@ export const Input = styled.input`
 `
 
 export const Button = styled.button`
-    background-color: #6A54ED;
+    padding: 3%;
     border: none;
     color: #ffffff;
-    font-size: 1.5vw;
-    padding: 3%;
-    font-weight: bold;
-    border-radius: 10px;
     margin-top: 10%;
     cursor: pointer;
+    font-size: 1.5vw;
+    font-weight: bold;
+    border-radius: 10px;
+    background-color: #6A54ED;
 
     :hover {
         opacity: 0.85;
