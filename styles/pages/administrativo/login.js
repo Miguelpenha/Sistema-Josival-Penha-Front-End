@@ -1,155 +1,88 @@
 import styled from 'styled-components'
-import LogoJPNome from '../../../components/LogoJPNome'
+import LogoJP from '../../../components/LogoJPNome'
 import { IconButton } from '@material-ui/core'
 import { ArrowBack } from '@material-ui/icons'
 
-const LoginStyle = styled.div`
-    @media (max-width: 1036px) {
-        
-    }
-
-    @media (max-width: 864.5px) {
-        .part-left {
-            display: flex;
-            width: 100%;
-            height: 35%;
-            padding-top: 5%;
-            padding-bottom: 5%;
-            align-items: center;
-            justify-content: space-evenly;
-            flex-direction: column;
-        }
-
-        .part-left>img {
-            min-width: 280px;
-        }
-
-        .part-right {
-            display: flex;
-            width: 100%;
-            height: 75%;
-            align-items: center;
-            justify-content: space-evenly;
-            flex-direction: column;
-            padding-bottom: 5%;
-            padding-top: 7%;
-        }
-
-        .part-right>a {
-            margin: 0;
-            padding: 5%;
-            width: 75%;
-            font-size: 2.3rem;
-        }
-
-        .part-right>a>svg {
-            width: 35px;
-            height: 35px;
-        }
-    }
-`
-
-LoginStyle.PartLeft = styled.div`
-    background-color: ${props => props.theme.colors.backgrounds.secondary};
-    width: 50%;
+export const Container = styled.main`
     height: 100%;
-    align-items: center;
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    float: left;
 `
 
-LoginStyle.PartLeft.LogoJPNome = styled(LogoJPNome)`
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 70%;
-    height: auto;
-    min-width: 380px;
-`
-
-LoginStyle.PartRight = styled.div`
+export const ContainerLogo = styled.div`
+    flex: 0.5;
     display: flex;
-    width: 50%;
-    height: 100%;
-    float: right;
-    justify-content: space-between;
-    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffffff;
 `
 
-LoginStyle.PartRight.Form = styled.form`
-    ${props => {
-        if (props.error) {
-            return 'margin-top: 0%;'
-        } else {
-            return 'margin-bottom: 4%;\nmargin-top: 20%;'
-        }
-    }}
-    margin-left: 10%;
+export const Logo = styled(LogoJP)`
     width: 70%;
-    height: auto;
 `
 
-LoginStyle.PartRight.Form.Tit = styled.h1`
-    width: 100%;
+export const ContainerForm = styled.div`
+    flex: 0.5;
+    display: flex;
+    align-items: center;
+`
+
+export const Form = styled.form`
+    display: flex;
+    width: 70%;
+    margin-left: 10%;
+    height: 60%;
+    flex-direction: column;
+`
+
+export const Title = styled.h1`
+    font-size: 2.45vw;
     color: #000000;
-    font: ${props => props.theme.fonts.link};
-    flex-grow: 1;
-    height: auto;
-    text-align: left;
-    font-size: 3.7rem;
-    padding-bottom: 7%;
+    margin-bottom: 5%;
 `
 
-LoginStyle.PartRight.Form.Label = styled.label`
-    display: block;
-    height: auto;
+export const Campo = styled.div`
+    flex-direction: column;
+    display: flex;
+    margin-top: 5%;
+`
+
+export const Label = styled.label`
+    color: #0872FC;
+    font-size: 1.5vw;
+    font-weight: bold;
     margin-bottom: 2%;
-    margin-top: 2%;
-    font: ${props => props.theme.fonts.link};
-    font-size: 2.3rem;
-    color: ${props => props.theme.colors.secondary};
 `
 
-LoginStyle.PartRight.Form.Input = styled.input`
-    width: 100%;
-    flex-grow: 1;
-    height: 10%;
-    align-self: stretch;
+export const Input = styled.input`
     background-color: #C6D9F1;
     border: none;
     border-radius: 10px;
-    margin-bottom: 3%;
-    &:focus {
-        box-shadow: 0 0 0 0;
-        border: 0 none;
-        outline: 0;
-    }
     padding: 3%;
-    color: ${props => props.theme.colors.secondary};
-    font: ${props => props.theme.fonts.input};
+    color: #0872FC;
+    font-size: 1.2vw;
+
+    :focus{
+        outline: none;
+        opacity: 0.85;
+    }
 `
 
-LoginStyle.PartRight.Form.Btn = styled.button`
-    width: 100%;
-    flex-grow: 1;
-    height: auto;
-    align-self: stretch;
-    margin-top: 8%;
-    background-color: ${props => props.theme.colors.backgrounds.links.secondary};
-    color: ${props => props.theme.colors.text};
+export const Button = styled.button`
+    background-color: #6A54ED;
     border: none;
+    color: #ffffff;
+    font-size: 1.5vw;
+    padding: 3%;
+    font-weight: bold;
     border-radius: 10px;
-    padding-bottom: 3%;
-    padding-top: 3%;
-    font: ${props => props.theme.fonts.link};
-    font-size: 2.5rem;
+    margin-top: 10%;
     cursor: pointer;
-`
 
-export const LoginStyleGlobal = LoginStyle
+    :hover {
+        opacity: 0.85;
+    }
+`
 
 export const IconButtonBack = styled(IconButton)`
     width: fit-content;

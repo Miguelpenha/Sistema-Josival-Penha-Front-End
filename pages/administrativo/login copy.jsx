@@ -1,4 +1,4 @@
-import { Container, ContainerLogo, Logo, ContainerForm, Form, Title, Campo, Label, Input, Button, IconButtonBack, IconBack } from '../../styles/pages/administrativo/login'
+import { LoginStyleGlobal as LoginStyle, IconButtonBack, IconBack } from '../../styles/pages/administrativo/login'
 import Head from 'next/head'
 import { useContext, useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -45,26 +45,24 @@ export default function Login() {
             <IconBack fontSize="large"/>
         </IconButtonBack>
       </Link>}
-      <Container>
-        <ContainerLogo>
-          <Logo/>
-        </ContainerLogo>
-        <ContainerForm>
-          <Form action='/administrativo' onSubmit={handleSubmit(enviar)} error={error}>
-            <Title>Seja bem vindo!</Title>
+      <LoginStyle>
+        <LoginStyle.PartLeft>
+          <LoginStyle.PartLeft.LogoJPNome/>
+        </LoginStyle.PartLeft>
+        <LoginStyle.PartRight>
             {error && <ErrorMsg>{errorMsg}</ErrorMsg>}
-            <Campo>
-              <Label>Login de acesso</Label>
-              <Input {...register('login')} name="login" type="text" required/>
-            </Campo>
-            <Campo>
-              <Label>Senha de acesso</Label>
-              <Input {...register('senha')} name="senha" type="password" required/>
-            </Campo>
-            <Button type="submit">Entrar</Button>
-          </Form>
-        </ContainerForm>
-      </Container>
+            <LoginStyle.PartRight.Form action='/administrativo' onSubmit={handleSubmit(enviar)} error={error}>
+                <LoginStyle.PartRight.Form.Tit>
+                    Seja bem vindo!
+                </LoginStyle.PartRight.Form.Tit>
+                <LoginStyle.PartRight.Form.Label>Login de acesso</LoginStyle.PartRight.Form.Label>
+                <LoginStyle.PartRight.Form.Input {...register('login')} name="login" type="text" required/>
+                <LoginStyle.PartRight.Form.Label>Senha de acesso</LoginStyle.PartRight.Form.Label>
+                <LoginStyle.PartRight.Form.Input {...register('senha')} name="senha" type="password" required/>
+                <LoginStyle.PartRight.Form.Btn type="submit">Entrar</LoginStyle.PartRight.Form.Btn>
+            </LoginStyle.PartRight.Form>
+        </LoginStyle.PartRight>
+      </LoginStyle>
     </>
   )
 }

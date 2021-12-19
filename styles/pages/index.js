@@ -1,7 +1,5 @@
 import styled from 'styled-components'
 import LogoJP from '../../components/LogoJPNome'
-import LinkNext from '../../components/Link'
-import IconExit from '../../assets/icon-exit.svg'
 
 export const Container = styled.main`
     height: 100%;
@@ -31,7 +29,7 @@ export const ContainerLinks = styled.div`
     justify-content: space-evenly;
 `
 
-export const Link = styled.a`
+export const LinkButton = styled.a`
     width: 60%;
     padding: 1.5%;
     color: #ffffff;
@@ -44,6 +42,10 @@ export const Link = styled.a`
     text-decoration: none;
     justify-content: center;
     background-color: ${props => props.bg};
+
+    :hover {
+        opacity: 0.85;
+    }
 
     svg {
         margin-right: 5%;

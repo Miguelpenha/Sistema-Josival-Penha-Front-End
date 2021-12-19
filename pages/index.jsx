@@ -1,10 +1,10 @@
+import { useEffect } from 'react'
+import nookies from 'nookies'
 import Head from 'next/head'
-import { Container, ContainerLogo, Logo, ContainerLinks, Link } from '../styles/pages'
+import { Container, ContainerLogo, Logo, ContainerLinks, LinkButton } from '../styles/pages'
+import Link from 'next/link'
 import IconAdmin from '../assets/icon-link-admin.svg'
 import IconProf from '../assets/icon-link-professoras.svg'
-import nookies from 'nookies'
-import { useEffect } from 'react'
-
 
 export default function Home() {
   useEffect(() => {
@@ -28,13 +28,17 @@ export default function Home() {
           <Logo/>
         </ContainerLogo>
         <ContainerLinks>
-          <Link href="/administrativo" bg="#0872FC">
-            <IconAdmin/>
-            Administrativo
+          <Link href="/administrativo/login" passHref>
+            <LinkButton bg="#0872FC">
+              <IconAdmin/>
+              Administrativo
+            </LinkButton>
           </Link>
-          <Link href="/administrativo" bg="#6A54ED">
-          <IconProf/>
-            Professoras
+          <Link href="/administrativo/login" passHref>
+            <LinkButton bg="#6A54ED">
+              <IconProf/>
+              Professoras
+            </LinkButton>
           </Link>
         </ContainerLinks>
       </Container>
