@@ -603,13 +603,12 @@ export default function Financeiro() {
   function ChartCategoriasReceitasComCarregamento() {
     if (categoriasReceitasTotal) {
       try {
-        console.log(categoriasReceitasTotal)
         let categoriasReceitasBrutas = []
-      let colors = []
-      categoriasReceitasTotal.map(categoria => {
-        categoriasReceitasBrutas.push([categoria.nome, categoria.total])
-        colors.push(categoria.cor)
-      })
+        let colors = []
+        categoriasReceitasTotal.map(categoria => {
+          categoriasReceitasBrutas.push([categoria.nome, categoria.total])
+          colors.push(categoria.cor)
+        })
       
       return <ChartReceitasDespesas width="500px" height="300px" chartType="PieChart" data={[
         ['Nome', 'Total'],
@@ -829,8 +828,8 @@ export default function Financeiro() {
               </Info>
             </Infos>
             <Charts>
-              <ChartCategoriasReceitasComCarregamento/>
-              <ChartCategoriasDespesasComCarregamento/>
+              {categoriasReceitasTotal && categoriasReceitasTotal.length > 0 && <ChartCategoriasReceitasComCarregamento/>}
+              {categoriasDespesasTotal && categoriasDespesasTotal.length > 0 && <ChartCategoriasDespesasComCarregamento/>}
               <ChartReceitasDespesasComCarregamento/>
             </Charts>
             {receitas && despesas ? <TableReceitasDespesas receitas={receitas && receitas} despesas={despesas && despesas} onDeleteDespesas={id => {
