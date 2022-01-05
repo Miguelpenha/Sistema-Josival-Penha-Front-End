@@ -1,7 +1,7 @@
 import { TableContainer, TableCell, TableCellTitle, TableCellTotal, TextTotal, TableRowSele, TableCellValueBorder, TableCellBorder, IconButtonExclu, TableCellTitleBorder, LinkFotoAluno, FotoAluno, DialogGerarDeclaração, InputPorcentagemGerarDeclaração, ButtonSubmitGerarDeclaração, BolsistaSwitch } from './style'
 import { Paper, Table, TableHead, TableRow, TableBody, TableFooter, Tooltip, Menu, MenuItem, Checkbox, DialogContent, SpeedDial, SpeedDialAction } from '@material-ui/core'
 import LimitText from '../LimitText'
-import { Delete as DeleteIcon, Download as DownloadIcon, Edit as EditIcon } from '@material-ui/icons'
+import { Delete as DeleteIcon, Download as DownloadIcon, Edit as EditIcon, Send as SendIcon } from '@material-ui/icons'
 import Link from 'next/link'
 import { useState, memo } from 'react'
 import api from '../../services/api/base'
@@ -38,6 +38,12 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg, onDef
                         background: '#FBD6D7'
                     },
                     {
+                        icon: <SendIcon sx={{color: '#0872FC'}}/>,
+                        name: 'Enviar e-mail para o responsável',
+                        onClick: () => setOpenDialogGerarDeclaração(true),
+                        background: '#A8CDFE'
+                    },
+                    {
                         icon: <DownloadIcon sx={{color: '#0872FC'}}/>,
                         name: 'Baixar declaração de frequência do aluno',
                         onClick: () => setOpenDialogGerarDeclaração(true),
@@ -62,6 +68,11 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg, onDef
                         icon: <DownloadIcon sx={{color: '#0872FC'}}/>,
                         name: 'Baixar declaração de frequência do aluno',
                         onClick: () => setOpenDialogGerarDeclaração(true),
+                        background: '#A8CDFE'
+                    },
+                    {
+                        icon: <SendIcon sx={{color: '#0872FC'}}/>,
+                        name: 'Enviar e-mail para o responsável',
                         background: '#A8CDFE'
                     }
                 ]
@@ -129,13 +140,13 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg, onDef
             <TableCellValueBorder component="th" scope="col" align="center">{row.nascimento} ({calcIdade(row.nascimento, new Date())} anos)</TableCellValueBorder>
             <TableCellValueBorder component="th" scope="col" align="center">{row.situação}</TableCellValueBorder>
             <TableCellValueBorder align="center">
-                <div style={{position: 'relative', bottom: row.foto.key === 'Padrão.jpg' ? 155 : 215}}>
+                <div style={{position: 'relative', bottom: row.foto.key === 'Padrão.jpg' ? 210 : 270}}>
                     <SpeedDial
                         ariaLabel="SpeedDial basic example"
                         sx={{position: 'absolute'}}
                         icon={<EditIcon sx={{width: '40%', height: 'auto'}}/>}
                     >
-                        {actions.map((action) => (
+                        {actions.map(action => (
                             <SpeedDialAction
                                 tooltipOpen
                                 key={action.name}
