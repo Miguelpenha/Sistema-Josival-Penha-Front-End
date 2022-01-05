@@ -5,8 +5,8 @@ export default createGlobalStyle`
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-        transition-timing-function: linear;
         transition-duration: 0.2s;
+        transition-timing-function: linear;
     }
 
     html, body, body>div:first-child, div#__next, div#__next>div {

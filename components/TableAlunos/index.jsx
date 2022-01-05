@@ -5,9 +5,12 @@ import { Delete as DeleteIcon, Download as DownloadIcon, Edit as EditIcon, Send 
 import Link from 'next/link'
 import { useState, memo } from 'react'
 import api from '../../services/api/base'
+import { useRouter } from 'next/router'
 
 function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg, onDefaultFoto }) {
     if (typeof alunos != 'string' && alunos) {
+        const router = useRouter()
+
         alunos.map(aluno => aluno.criação.sistema = new Date(aluno.criação.sistema))
         
         let rows = alunos
@@ -40,7 +43,7 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg, onDef
                     {
                         icon: <SendIcon sx={{color: '#0872FC'}}/>,
                         name: 'Enviar e-mail para o responsável',
-                        onClick: () => setOpenDialogGerarDeclaração(true),
+                        onClick: () => router.push(`/email/responsible/${row._id}`),
                         background: '#A8CDFE'
                     },
                     {
@@ -73,6 +76,7 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg, onDef
                     {
                         icon: <SendIcon sx={{color: '#0872FC'}}/>,
                         name: 'Enviar e-mail para o responsável',
+                        onClick: () => router.push(`/email/responsible/${row._id}`),
                         background: '#A8CDFE'
                     }
                 ]

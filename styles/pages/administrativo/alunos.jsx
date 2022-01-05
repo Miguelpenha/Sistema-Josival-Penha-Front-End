@@ -4,7 +4,7 @@ import IconInfoTotalTurmasSVG from '../../../assets/icon-info-total-turmas.svg'
 import IconInfoMédiaAlunosSVG from '../../../assets/icon-info-média-alunos.svg'
 import IconInfoOcupaçãoSVG from '../../../assets/icon-info-ocupação.svg'
 import { Add as IconAddSVG, AddCircleOutline as IconAddCircleOutlineSVG } from '@material-ui/icons'
-import { Dialog, TextField, Button, Select } from '@material-ui/core'
+import { Card, Dialog, TextField, Button, Select } from '@material-ui/core'
 import { memo } from 'react'
 
 export const Container = styled.div`
@@ -40,7 +40,7 @@ export const InfoAdminContainer = styled.div`
     justify-content: space-around;
 `
 
-export const InfoAdmin = styled.div`
+export const InfoAdmin = styled(Card)`
     display: inline-block;
     background-color: #ffffff;
     width: 22%;
