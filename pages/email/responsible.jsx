@@ -47,9 +47,10 @@ export default function Responsible() {
             {aluno && (
                 <ButtonSubmit
                     disabled={!textEmail && true}
-                    onClick={() => (
-                        api.post('/emails/responsible', { id: aluno, msg: textEmail }).then(() => router.push('/administrativo/alunos'))
-                    )}
+                    onClick={() => {
+                        api.post('/emails/responsible', { id: aluno, msg: textEmail }).then()
+                        router.push('/administrativo/alunos')
+                    }}
                 >
                     Enviar E-mail
                 </ButtonSubmit>
