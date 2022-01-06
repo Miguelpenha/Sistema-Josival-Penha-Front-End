@@ -1,16 +1,13 @@
 import { TableContainer, TableCell, TableCellTitle, TableCellTotal, TextTotal, TableRowSele, TableCellValueBorder, TableCellBorder, IconButtonExclu, TableCellTitleBorder, LinkFotoAluno, FotoAluno, DialogGerarDeclaração, InputPorcentagemGerarDeclaração, ButtonSubmitGerarDeclaração, BolsistaSwitch } from './style'
-import { Paper, Table, TableHead, TableRow, TableBody, TableFooter, Tooltip, Menu, MenuItem, Checkbox, DialogContent, SpeedDial, SpeedDialAction } from '@material-ui/core'
+import { Paper, Table, TableHead, TableRow, TableBody, TableFooter, Tooltip, Menu, MenuItem, Checkbox, DialogContent, SpeedDial, SpeedDialAction, IconButton } from '@material-ui/core'
 import LimitText from '../LimitText'
 import { Delete as DeleteIcon, Download as DownloadIcon, Edit as EditIcon, Send as SendIcon } from '@material-ui/icons'
 import Link from 'next/link'
 import { useState, memo } from 'react'
 import api from '../../services/api/base'
-import { useRouter } from 'next/router'
 
 function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg, onDefaultFoto }) {
     if (typeof alunos != 'string' && alunos) {
-        const router = useRouter()
-
         alunos.map(aluno => aluno.criação.sistema = new Date(aluno.criação.sistema))
         
         let rows = alunos
@@ -41,12 +38,6 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg, onDef
                         background: '#FBD6D7'
                     },
                     {
-                        icon: <SendIcon sx={{color: '#0872FC'}}/>,
-                        name: 'Enviar e-mail para o responsável',
-                        onClick: () => router.push(`/email/responsible/${row._id}`),
-                        background: '#A8CDFE'
-                    },
-                    {
                         icon: <DownloadIcon sx={{color: '#0872FC'}}/>,
                         name: 'Baixar declaração de frequência do aluno',
                         onClick: () => setOpenDialogGerarDeclaração(true),
@@ -71,12 +62,6 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg, onDef
                         icon: <DownloadIcon sx={{color: '#0872FC'}}/>,
                         name: 'Baixar declaração de frequência do aluno',
                         onClick: () => setOpenDialogGerarDeclaração(true),
-                        background: '#A8CDFE'
-                    },
-                    {
-                        icon: <SendIcon sx={{color: '#0872FC'}}/>,
-                        name: 'Enviar e-mail para o responsável',
-                        onClick: () => router.push(`/email/responsible/${row._id}`),
                         background: '#A8CDFE'
                     }
                 ]
@@ -144,7 +129,7 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg, onDef
             <TableCellValueBorder component="th" scope="col" align="center">{row.nascimento} ({calcIdade(row.nascimento, new Date())} anos)</TableCellValueBorder>
             <TableCellValueBorder component="th" scope="col" align="center">{row.situação}</TableCellValueBorder>
             <TableCellValueBorder align="center">
-                <div style={{position: 'relative', bottom: row.foto.key === 'Padrão.jpg' ? 210 : 270}}>
+                <div style={{position: 'relative', bottom: row.foto.key === 'Padrão.jpg' ? 210 : 210}}>
                     <SpeedDial
                         ariaLabel="SpeedDial basic example"
                         sx={{position: 'absolute'}}
@@ -236,6 +221,13 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg, onDef
                                             <DownloadIcon sx={{color: '#0872FC'}}/>
                                         </IconButtonExclu>
                                     </form>
+                                </Tooltip>
+                                <Tooltip title={
+                                    <span style={{fontSize: '1vw'}}>Enviar e-mail para o responsável</span>
+                                } arrow placement="bottom">
+                                    <IconButtonExclu style={{left: '10%'}} title="Enviar e-mail para o responsável" bg="#A8CDFE" component="a" href="/email/responsible">
+                                        <SendIcon sx={{color: '#0872FC'}}/>
+                                    </IconButtonExclu>
                                 </Tooltip>
                             </TableCellTitleBorder>
                         </TableRow>

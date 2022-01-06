@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { Select } from '@material-ui/core'
 
 export const Container = styled.main`
     display: flex;
@@ -22,37 +23,53 @@ export const IconBack = styled.svg`
     fill: #1976D2;
 `
 
-export const ContainerEmail = styled.section`
-    width: 70%;
+export const ContainerEmail = styled.div`
     display: flex;
-    color: #000000;
-    font-size: 1.2vw;
-    align-self: center;
-    border-radius: 10px;
     flex-direction: column;
+    align-self: center;
+    width: 50%;
     background-color: #ffffff;
-    box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
+    border-radius: 10px;
+`
+
+export const ContainerAlunoSelect = styled.div`
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+`
+
+export const LabelAlunoSelect = styled.label`
+    padding: 2%;
+    font-size: 2vw;
+    color: #8a8a8a;
+`
+
+export const AlunoSelect = styled(Select)`
+    && {
+        border-end-start-radius: 0;
+        border-end-end-radius: 0;
+        width: 60%;
+        font-size: 1.2vw;
+    }
 `
 
 export const TextEmail = styled.textarea`    
     padding: 1%;
     border: none;
+    border-end-start-radius: 10px;
+    border-end-end-radius: 10px;
     resize: vertical;
-    font-size: 1.5vw;
+    font-size: 2vw;
     font-family: 'Roboto', sans-serif;
+    border: 1px solid #cccccc;
+    box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
+    width: 100%;
 
     :focus {
         outline: none;
         border-radius: 4px;
         border: 2px solid ${props => props.theme.colors.secondary};
     }
-`
-
-export const ResultEmail = styled.div`
-    padding: 5%;
-    padding-top: 5%;
-    align-self: center;
-    padding-bottom: 10%;
 `
 
 export const ButtonSubmit = styled.button`
@@ -63,7 +80,6 @@ export const ButtonSubmit = styled.button`
     margin-top: 2%;
     cursor: pointer;
     font-size: 2.5vw;
-    margin-bottom: 7%;
     text-align: center;
     align-self: center;
     border-radius: 25px;
@@ -71,5 +87,12 @@ export const ButtonSubmit = styled.button`
 
     :hover {
         background-color: #12599f;
+    }
+
+    :disabled {
+        pointer-events: none;
+        cursor: default;
+        color: #999999;
+        background-color: #0c3c6c;
     }
 `
