@@ -24,18 +24,19 @@ export const IconBack = styled.svg`
 `
 
 export const ContainerEmail = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-self: center;
     width: 50%;
-    background-color: #ffffff;
+    display: flex;
+    align-self: center;
     border-radius: 10px;
+    flex-direction: column;
+    background-color: #ffffff;
+    ${props => props.aluno && 'padding-bottom: 1%;'}
 `
 
 export const ContainerAlunoSelect = styled.div`
+    width: 100%;
     display: flex;
     justify-content: space-between;
-    width: 100%;
 `
 
 export const LabelAlunoSelect = styled.label`
@@ -46,29 +47,88 @@ export const LabelAlunoSelect = styled.label`
 
 export const AlunoSelect = styled(Select)`
     && {
-        border-end-start-radius: 0;
-        border-end-end-radius: 0;
-        width: 60%;
         font-size: 1.2vw;
+        width: ${props => !props.fullWidth && '60%'};
     }
 `
 
-export const TextEmail = styled.textarea`    
+export const TextEmail = styled.textarea`
+    width: 100%;
     padding: 1%;
     border: none;
-    border-end-start-radius: 10px;
-    border-end-end-radius: 10px;
-    resize: vertical;
     font-size: 2vw;
-    font-family: 'Roboto', sans-serif;
+    resize: vertical;
     border: 1px solid #cccccc;
+    border-end-end-radius: 10px;
+    border-end-start-radius: 10px;
+    font-family: 'Roboto', sans-serif;
     box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
-    width: 100%;
 
     :focus {
         outline: none;
         border-radius: 4px;
         border: 2px solid ${props => props.theme.colors.secondary};
+    }
+`
+
+export const ContainerLinks = styled.div`
+    display: flex;
+    flex-direction: column;
+`
+
+export const TitleLinks = styled.h2`
+    color: #1976D2;
+    font-size: 2.5vw;
+    text-align: center;
+    margin-top: 2%;
+    margin-bottom: 2%;
+`
+
+export const ContainerLink = styled.div`
+    display: flex;
+    padding: 1%;
+`
+
+export const InputLink = styled.input`
+    width: 100%;
+    border: 1px solid #cccccc;
+    border-radius: 10px;
+    font-size: 1.5vw;
+    padding: 0.5%;
+    color: #1976D2;
+
+    :focus {
+        outline: none;
+    }
+
+    :hover, :focus {
+        border: 1px solid #999999;
+    }
+`
+
+export const IconAddLink = styled.svg`
+    width: 8%;
+    height: auto;
+    fill: #1976D2;
+    border-radius: 50%;
+    margin-left: 1%;
+    cursor: pointer;
+
+    :hover {
+        background-color: #1976d23b;
+    }
+`
+
+export const IconRemoveLink = styled.svg`
+    width: 8%;
+    height: auto;
+    fill: #1976D2;
+    border-radius: 50%;
+    margin-left: 1%;
+    cursor: pointer;
+
+    :hover {
+        background-color: #1976d23b;
     }
 `
 
@@ -84,15 +144,16 @@ export const ButtonSubmit = styled.button`
     align-self: center;
     border-radius: 25px;
     background-color: #1976D2;
+    margin-bottom: 5%;
 
     :hover {
         background-color: #12599f;
     }
 
     :disabled {
-        pointer-events: none;
-        cursor: default;
         color: #999999;
+        cursor: default;
+        pointer-events: none;
         background-color: #0c3c6c;
     }
 `
