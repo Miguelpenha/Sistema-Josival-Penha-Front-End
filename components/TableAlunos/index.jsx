@@ -1,7 +1,7 @@
 import { TableContainer, TableCell, TableCellTitle, TableCellTotal, TextTotal, TableRowSele, TableCellValueBorder, TableCellBorder, IconButtonExclu, TableCellTitleBorder, LinkFotoAluno, FotoAluno, DialogGerarDeclaração, InputPorcentagemGerarDeclaração, ButtonSubmitGerarDeclaração, BolsistaSwitch } from './style'
-import { Paper, Table, TableHead, TableRow, TableBody, TableFooter, Tooltip, Menu, MenuItem, Checkbox, DialogContent, SpeedDial, SpeedDialAction, IconButton } from '@material-ui/core'
+import { Paper, Table, TableHead, TableRow, TableBody, TableFooter, Tooltip, Menu, MenuItem, Checkbox, DialogContent, SpeedDial, SpeedDialAction } from '@material-ui/core'
 import LimitText from '../LimitText'
-import { Delete as DeleteIcon, Download as DownloadIcon, Edit as EditIcon, Send as SendIcon } from '@material-ui/icons'
+import { Delete as DeleteIcon, Download as DownloadIcon, Edit as EditIcon, Send as SendIcon, ListAlt as ListAltIcon } from '@material-ui/icons'
 import Link from 'next/link'
 import { useState, memo } from 'react'
 import api from '../../services/api/base'
@@ -208,7 +208,7 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg, onDef
                                 <Tooltip title={
                                     <span style={{fontSize: '1vw'}}>Excluir itens</span>
                                 } arrow placement="bottom">
-                                    <IconButtonExclu style={{right: '10%'}} bg="#FBD6D7" onClick={() => onDeleteAlunosTodos()}>
+                                    <IconButtonExclu style={{left: '-8%'}} bg="#FBD6D7" onClick={() => onDeleteAlunosTodos()}>
                                         <DeleteIcon sx={{color: '#ED3237'}}/>
                                     </IconButtonExclu>
                                 </Tooltip>
@@ -217,7 +217,7 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg, onDef
                                 } arrow placement="bottom">
                                     <form method="POST" action={`${process.env.NEXT_STATIC_API_URL}/alunos/exportar`} style={{display: 'inline-block'}}>
                                         <input type="hidden" name="keyapi" value={process.env.NEXT_STATIC_API_KEY}/>
-                                        <IconButtonExclu type="submit" style={{left: '5%'}} bg="#B5D5FE">
+                                        <IconButtonExclu type="submit" style={{left: '3%'}} bg="#B5D5FE">
                                             <DownloadIcon sx={{color: '#0872FC'}}/>
                                         </IconButtonExclu>
                                     </form>
@@ -225,8 +225,15 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg, onDef
                                 <Tooltip title={
                                     <span style={{fontSize: '1vw'}}>Enviar e-mail para o responsável</span>
                                 } arrow placement="bottom">
-                                    <IconButtonExclu style={{left: '10%'}} title="Enviar e-mail para o responsável" bg="#A8CDFE" component="a" href="/email/responsible">
+                                    <IconButtonExclu style={{left: '7%'}} title="Enviar e-mail para o responsável" bg="#A8CDFE" component="a" href="/email/responsible">
                                         <SendIcon sx={{color: '#0872FC'}}/>
+                                    </IconButtonExclu>
+                                </Tooltip>
+                                <Tooltip title={
+                                    <span style={{fontSize: '1vw'}}>Ver boletim de aluno</span>
+                                } arrow placement="bottom">
+                                    <IconButtonExclu style={{left: '10%'}} title="Ver boletim de aluno" bg="#A8CDFE" component="a" href="/boletim">
+                                        <ListAltIcon sx={{color: '#0872FC'}}/>
                                     </IconButtonExclu>
                                 </Tooltip>
                             </TableCellTitleBorder>
