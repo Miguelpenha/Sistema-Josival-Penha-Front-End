@@ -30,11 +30,14 @@ export default function Responsible() {
     let [links, setLinks] = useState([{
         id: uuid(),
         link: '',
-        add: true
+        add: true,
+        focus: false
     }])
     const router = useRouter()
 
     useEffect(() => aluno && window.document.getElementById('email').focus(), [aluno])
+
+    useEffect(() => links.map(link => link.focus && window.document.getElementById('link-'+link.id).focus()), [links])
 
     return (
         <Container>
@@ -80,6 +83,7 @@ export default function Responsible() {
                         {links.map((link, index) => (
                             <ContainerLink key={index}>
                                 <InputLink
+                                    id={'link-'+link.id}
                                     type="url"
                                     key={index}
                                     value={link.link}
@@ -99,15 +103,18 @@ export default function Responsible() {
                                         xmlns="http://www.w3.org/2000/svg"
                                         onClick={() => {
                                             let linksNews = links
+                                            const idProx = uuid()
                                             linksNews.push({
-                                                id: uuid(),
+                                                id: idProx,
                                                 link: '',
-                                                add: true
+                                                add: true,
+                                                focus: true
                                             })
                                             
                                             setLinks(links.map(linkMap => linkMap.id === link.id ? {
                                                 ...linkMap,
-                                                add: false
+                                                add: false,
+                                                focus: false
                                             } : linkMap))
                                         }}
                                     >

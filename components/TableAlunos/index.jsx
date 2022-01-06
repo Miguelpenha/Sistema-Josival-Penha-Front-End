@@ -129,7 +129,7 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg, onDef
             <TableCellValueBorder component="th" scope="col" align="center">{row.nascimento} ({calcIdade(row.nascimento, new Date())} anos)</TableCellValueBorder>
             <TableCellValueBorder component="th" scope="col" align="center">{row.situação}</TableCellValueBorder>
             <TableCellValueBorder align="center">
-                <div style={{position: 'relative', bottom: row.foto.key === 'Padrão.jpg' ? 210 : 210}}>
+                <div style={{position: 'relative', bottom: row.foto.key === 'Padrão.jpg' ? 160 : 210}}>
                     <SpeedDial
                         ariaLabel="SpeedDial basic example"
                         sx={{position: 'absolute'}}

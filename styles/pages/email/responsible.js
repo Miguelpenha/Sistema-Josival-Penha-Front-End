@@ -55,12 +55,9 @@ export const AlunoSelect = styled(Select)`
 export const TextEmail = styled.textarea`
     width: 100%;
     padding: 1%;
-    border: none;
     font-size: 2vw;
     resize: vertical;
     border: 1px solid #cccccc;
-    border-end-end-radius: 10px;
-    border-end-start-radius: 10px;
     font-family: 'Roboto', sans-serif;
     box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
 
