@@ -53,7 +53,7 @@ export const AlunoSelect = styled(Select)`
 `
 
 export const TableBoletim = styled.table`
-    color: #7f7f7f;
+    color: #1976D2;
 
     th {
         text-align: center;
@@ -64,11 +64,22 @@ export const TableBoletim = styled.table`
             width: 100%;
             padding: 4%;
             font-size: 1.5vw;
+            color: #1976D2;
+            border-radius: 3px;
+            border: 1.5px solid #7f7f7f;
+            font-weight: bold;
+
+            :focus {
+                outline: none;
+                border: 2px solid #1976D2;
+                padding: 3.5%;
+            }
         }
     }
 
     .matter {
         border: 1px solid #7f7f7f;
+        border-radius: 3px;
         text-align: left;
         font-size: 1.3vw;
         padding: 1%;
@@ -78,10 +89,13 @@ export const TableBoletim = styled.table`
 export const TitleTableBoletim = styled.th`
     font-size: 2.5vw;
     border: 1px solid #7f7f7f;
+    border-radius: 3px;
+    padding: 1%;
 `
 
 export const HeaderTableBoletim = styled.tr`
     border: 1px solid #7f7f7f;
+    border-radius: 3px;
     font-size: 1.5vw;
 
     #matters {
@@ -90,6 +104,7 @@ export const HeaderTableBoletim = styled.tr`
 
     th {
         border: 1px solid #7f7f7f;
+        border-radius: 3px;
         padding: 1%;
     }
 `
