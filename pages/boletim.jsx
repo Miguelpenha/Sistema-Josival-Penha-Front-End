@@ -14,6 +14,7 @@ import {
 import Link from 'next/link'
 import { MenuItem } from '@material-ui/core'
 import namesMatters from '../namesMatters.json'
+import nookies from 'nookies'
 
 export default function Responsible() {
     const { data: alunos } = get('/alunos')
@@ -76,4 +77,22 @@ export default function Responsible() {
             </Container>
         </>
     )
+}
+
+export const getServerSideProps = async ctx => {
+    const { [process.env.NEXT_STATIC_NAME_COOKIE_PROFESSORAS]:tokenProf } = nookies.get(ctx)
+    const { [process.env.NEXT_STATIC_NAME_COOKIE_ADMINISTRATIVO]:tokenAdmin } = nookies.get(ctx)
+
+    if (tokenAdmin || tokenAdmin) {
+      return {
+        props: {}
+      }
+    } else if (!tokenAdmin && !tokenProf) {
+      return {
+        redirect: {
+          destination: '/',
+          permanent: false
+        }
+      }
+    }
 }
