@@ -52,6 +52,23 @@ export const AlunoSelect = styled(Select)`
     }
 `
 
+export const TableBoleto = styled.table`
+    color: #cccccc;
+
+    th {
+        font-size: 2.5vw;
+        text-align: center;
+    }
+
+    td {
+        border: 1px solid #cccccc;
+
+        input {
+            width: 100%;
+        }
+    }
+`
+
 export const ButtonSubmit = styled.button`
     width: 30%;
     padding: 2%;

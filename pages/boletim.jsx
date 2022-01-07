@@ -1,5 +1,6 @@
 import { get } from '../hooks'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
 import Head from 'next/head'
 import {
     Container,
@@ -9,17 +10,29 @@ import {
     ContainerAlunoSelect,
     LabelAlunoSelect,
     AlunoSelect,
+    TableBoleto,
     ButtonSubmit
 } from '../styles/pages/boletim'
 import Link from 'next/link'
 import { MenuItem } from '@material-ui/core'
 import namesMatters from '../namesMatters.json'
+import api from '../services/api/base'
 import nookies from 'nookies'
 
 export default function Responsible() {
     const { data: alunos } = get('/alunos')
     const [aluno, setAluno] = useState('')
     const [edit, setEdit] = useState(false)
+    const [matters, setMatters] = useState({})
+    const router = useRouter()
+
+    useEffect(() => aluno && setMatters(alunos.map(alunoMap => alunoMap.id === aluno && { ...alunoMap.matérias })[0]), [aluno])
+
+    useEffect(() => {
+        if (aluno && matters) {
+            alunos.map(alunoMap => alunoMap.id === aluno && JSON.stringify(alunoMap.matérias) !== JSON.stringify(matters) ? setEdit(true) : setEdit(false))
+        }
+    }, [matters])
 
     return (
         <>
@@ -48,27 +61,147 @@ export default function Responsible() {
                             fullWidth={aluno ? true : false}
                             onChange={ev => setAluno(ev.target.value)}
                         >
-                            {alunos && alunos.map((aluno, index) => aluno.email && 
-                                <MenuItem key={index} value={aluno.id}>{aluno.nome}</MenuItem>
-                            )}
+                            {alunos && alunos.map((aluno, index) => <MenuItem key={index} value={aluno.id}>{aluno.nome}</MenuItem>)}
                         </AlunoSelect>
                     </ContainerAlunoSelect>
                     {aluno && <>
-                        <h1>boletim</h1>
-                        <table>
-                            {namesMatters.map((matter, index) => (
-                                <tr key={index}>
-                                    <td>{matter.name}</td>
+                        <TableBoleto>
+                            <thead>
+                                <tr>
+                                    <th colSpan="5">Boletim</th>
                                 </tr>
-                            ))}
-                        </table>
+                            </thead>
+                            <tbody>
+                                {namesMatters.map((matter, index) => (
+                                    <tr key={index}>
+                                        <td>{matter.displayName}</td>
+                                        <td>
+                                            <input
+                                                type="number"
+                                                value={matters[matter.name] ? Number(matters[matter.name].primeira) ? Number(matters[matter.name].primeira) : 0 : 0}
+                                                onChange={ev => {
+                                                    if (0 <= Number(ev.target.value) <= 10) {
+                                                        let newsMatters = matters
+
+                                                        if (!newsMatters[matter.name]) {
+                                                            newsMatters[matter.name] = {
+                                                                primeira: Number(ev.target.value)
+                                                            }
+                                                            setMatters({
+                                                                ...newsMatters
+                                                            })
+                                                        } else {
+                                                            newsMatters[matter.name] = {
+                                                                ...newsMatters[matter.name],
+                                                                primeira: Number(ev.target.value)
+                                                            }
+                                                            setMatters({
+                                                                ...newsMatters
+                                                            })
+                                                        }
+                                                    }
+                                                }}
+                                            />
+                                        </td>
+                                        <td>
+                                            <input
+                                                type="number"
+                                                value={matters[matter.name] ? Number(matters[matter.name].segunda) ? Number(matters[matter.name].segunda) : 0 : 0}
+                                                onChange={ev => {
+                                                    if (0 <= Number(ev.target.value) <= 10) {
+                                                        let newsMatters = matters
+
+                                                        if (!newsMatters[matter.name]) {
+                                                            newsMatters[matter.name] = {
+                                                                segunda: Number(ev.target.value)
+                                                            }
+                                                            setMatters({
+                                                                ...newsMatters
+                                                            })
+                                                        } else {
+                                                            newsMatters[matter.name] = {
+                                                                ...newsMatters[matter.name],
+                                                                segunda: Number(ev.target.value)
+                                                            }
+                                                            setMatters({
+                                                                ...newsMatters
+                                                            })
+                                                        }
+                                                    }
+                                                }}
+                                            />
+                                        </td>
+                                        <td>
+                                            <input
+                                                type="number"
+                                                value={matters[matter.name] ? Number(matters[matter.name].terceira) ? Number(matters[matter.name].terceira) : 0 : 0}
+                                                onChange={ev => {
+                                                    if (0 <= Number(ev.target.value) <= 10) {
+                                                        let newsMatters = matters
+
+                                                        if (!newsMatters[matter.name]) {
+                                                            newsMatters[matter.name] = {
+                                                                terceira: Number(ev.target.value)
+                                                            }
+                                                            setMatters({
+                                                                ...newsMatters
+                                                            })
+                                                        } else {
+                                                            newsMatters[matter.name] = {
+                                                                ...newsMatters[matter.name],
+                                                                terceira: Number(ev.target.value)
+                                                            }
+                                                            setMatters({
+                                                                ...newsMatters
+                                                            })
+                                                        }
+                                                    }
+                                                }}
+                                            />
+                                        </td>
+                                        <td>
+                                            <input
+                                                type="number"
+                                                value={matters[matter.name] ? Number(matters[matter.name].quarta) ? Number(matters[matter.name].quarta) : 0 : 0}
+                                                onChange={ev => {
+                                                    if (0 <= Number(ev.target.value) <= 10) {
+                                                        let newsMatters = matters
+
+                                                        if (!newsMatters[matter.name]) {
+                                                            newsMatters[matter.name] = {
+                                                                quarta: Number(ev.target.value)
+                                                            }
+                                                            setMatters({
+                                                                ...newsMatters
+                                                            })
+                                                        } else {
+                                                            newsMatters[matter.name] = {
+                                                                ...newsMatters[matter.name],
+                                                                quarta: Number(ev.target.value)
+                                                            }
+                                                            setMatters({
+                                                                ...newsMatters
+                                                            })
+                                                        }
+                                                    }
+                                                }}
+                                            />
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </TableBoleto>
                     </>}
                 </ContainerBoletim>
                 {aluno && (
                     <ButtonSubmit
                         disabled={!edit && true}
                         onClick={() => {
-                            
+                            api.post('/alunos/matters', {
+                                id: aluno,
+                                matters
+                            }).then()
+                            router.push('/administrativo/alunos')
                         }}
                     >
                         Editar boletim
