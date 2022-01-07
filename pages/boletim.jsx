@@ -11,6 +11,8 @@ import {
     LabelAlunoSelect,
     AlunoSelect,
     TableBoletim,
+    TitleTableBoletim,
+    HeaderTableBoletim,
     ButtonSubmit
 } from '../styles/pages/boletim'
 import Link from 'next/link'
@@ -82,13 +84,20 @@ export default function Responsible() {
                         <TableBoletim>
                             <thead>
                                 <tr>
-                                    <th colSpan="5">Boletim</th>
+                                    <TitleTableBoletim colSpan="5">Boletim</TitleTableBoletim>
                                 </tr>
+                                <HeaderTableBoletim>
+                                    <th id="matters">Matérias</th>
+                                    <th>1° unidade</th>
+                                    <th>2° unidade</th>
+                                    <th>3° unidade</th>
+                                    <th>4° unidade</th>
+                                </HeaderTableBoletim>
                             </thead>
                             <tbody>
                                 {namesMatters.map((matter, index) => (
                                     <tr key={index}>
-                                        <td>{matter.displayName}</td>
+                                        <th className="matter">{matter.displayName}</th>
                                         <td>
                                             <input
                                                 type="text"

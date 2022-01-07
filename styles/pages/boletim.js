@@ -24,7 +24,7 @@ export const IconBack = styled.svg`
 `
 
 export const ContainerBoletim = styled.div`
-    width: 50%;
+    width: 60%;
     display: flex;
     align-self: center;
     border-radius: 10px;
@@ -53,28 +53,53 @@ export const AlunoSelect = styled(Select)`
 `
 
 export const TableBoletim = styled.table`
-    color: #cccccc;
+    color: #7f7f7f;
 
     th {
-        font-size: 2.5vw;
         text-align: center;
     }
 
     td {
-        border: 1px solid #cccccc;
-
         input {
             width: 100%;
+            padding: 4%;
+            font-size: 1.5vw;
         }
+    }
+
+    .matter {
+        border: 1px solid #7f7f7f;
+        text-align: left;
+        font-size: 1.3vw;
+        padding: 1%;
+    }
+`
+
+export const TitleTableBoletim = styled.th`
+    font-size: 2.5vw;
+    border: 1px solid #7f7f7f;
+`
+
+export const HeaderTableBoletim = styled.tr`
+    border: 1px solid #7f7f7f;
+    font-size: 1.5vw;
+
+    #matters {
+        width: 25%;
+    }
+
+    th {
+        border: 1px solid #7f7f7f;
+        padding: 1%;
     }
 `
 
 export const ButtonSubmit = styled.button`
-    width: 30%;
-    padding: 2%;
+    width: 25%;
+    padding: 1.5%;
     border: none;
     color: #ffffff;
-    margin-top: 2%;
+    margin-top: 1%;
     cursor: pointer;
     font-size: 2.5vw;
     text-align: center;
