@@ -52,7 +52,7 @@ export const AlunoSelect = styled(Select)`
     }
 `
 
-export const TableBoleto = styled.table`
+export const TableBoletim = styled.table`
     color: #cccccc;
 
     th {

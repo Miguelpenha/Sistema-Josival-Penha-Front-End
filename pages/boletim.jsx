@@ -10,7 +10,7 @@ import {
     ContainerAlunoSelect,
     LabelAlunoSelect,
     AlunoSelect,
-    TableBoleto,
+    TableBoletim,
     ButtonSubmit
 } from '../styles/pages/boletim'
 import Link from 'next/link'
@@ -65,7 +65,7 @@ export default function Responsible() {
                         </AlunoSelect>
                     </ContainerAlunoSelect>
                     {aluno && <>
-                        <TableBoleto>
+                        <TableBoletim>
                             <thead>
                                 <tr>
                                     <th colSpan="5">Boletim</th>
@@ -190,7 +190,7 @@ export default function Responsible() {
                                     </tr>
                                 ))}
                             </tbody>
-                        </TableBoleto>
+                        </TableBoletim>
                     </>}
                 </ContainerBoletim>
                 {aluno && (
