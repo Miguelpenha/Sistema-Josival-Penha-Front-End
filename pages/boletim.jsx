@@ -24,16 +24,30 @@ export default function Responsible() {
     const [aluno, setAluno] = useState('')
     const [edit, setEdit] = useState(false)
     const [matters, setMatters] = useState({})
+    let [mattersOriginal, setMattersOriginal] = useState('')
     const router = useRouter()
-
-    useEffect(() => aluno && setMatters(alunos.map(alunoMap => alunoMap.id === aluno && { ...alunoMap.matérias })[0]), [aluno])
+    
+    useEffect(() => {
+        if (aluno) {
+            alunos.map(alunoMap => {
+                if (alunoMap.id === aluno) {
+                    setMatters(alunoMap.matérias)
+                    setMattersOriginal(JSON.stringify(alunoMap.matérias))
+                }
+            })
+        }
+    }, [aluno])
 
     useEffect(() => {
         if (aluno && matters) {
-            alunos.map(alunoMap => alunoMap.id === aluno && JSON.stringify(alunoMap.matérias) !== JSON.stringify(matters) ? setEdit(true) : setEdit(false))
+            if (mattersOriginal !== JSON.stringify(matters)) {
+                setEdit(true)
+            } else {
+                setEdit(false)
+            }
         }
     }, [matters])
-
+    
     return (
         <>
             <Head>
@@ -77,12 +91,12 @@ export default function Responsible() {
                                         <td>{matter.displayName}</td>
                                         <td>
                                             <input
-                                                type="number"
+                                                type="text"
                                                 value={matters[matter.name] ? Number(matters[matter.name].primeira) ? Number(matters[matter.name].primeira) : 0 : 0}
                                                 onChange={ev => {
-                                                    if (0 <= Number(ev.target.value) <= 10) {
+                                                    if (Number(ev.target.value) <= 10 && Number(ev.target.value) >= 0) {
                                                         let newsMatters = matters
-
+                                                        
                                                         if (!newsMatters[matter.name]) {
                                                             newsMatters[matter.name] = {
                                                                 primeira: Number(ev.target.value)
@@ -105,10 +119,10 @@ export default function Responsible() {
                                         </td>
                                         <td>
                                             <input
-                                                type="number"
+                                                type="text"
                                                 value={matters[matter.name] ? Number(matters[matter.name].segunda) ? Number(matters[matter.name].segunda) : 0 : 0}
                                                 onChange={ev => {
-                                                    if (0 <= Number(ev.target.value) <= 10) {
+                                                    if (Number(ev.target.value) <= 10 && Number(ev.target.value) >= 0) {
                                                         let newsMatters = matters
 
                                                         if (!newsMatters[matter.name]) {
@@ -133,10 +147,10 @@ export default function Responsible() {
                                         </td>
                                         <td>
                                             <input
-                                                type="number"
+                                                type="text"
                                                 value={matters[matter.name] ? Number(matters[matter.name].terceira) ? Number(matters[matter.name].terceira) : 0 : 0}
                                                 onChange={ev => {
-                                                    if (0 <= Number(ev.target.value) <= 10) {
+                                                    if (Number(ev.target.value) <= 10 && Number(ev.target.value) >= 0) {
                                                         let newsMatters = matters
 
                                                         if (!newsMatters[matter.name]) {
@@ -161,10 +175,10 @@ export default function Responsible() {
                                         </td>
                                         <td>
                                             <input
-                                                type="number"
+                                                type="text"
                                                 value={matters[matter.name] ? Number(matters[matter.name].quarta) ? Number(matters[matter.name].quarta) : 0 : 0}
                                                 onChange={ev => {
-                                                    if (0 <= Number(ev.target.value) <= 10) {
+                                                    if (Number(ev.target.value) <= 10 && Number(ev.target.value) >= 0) {
                                                         let newsMatters = matters
 
                                                         if (!newsMatters[matter.name]) {
