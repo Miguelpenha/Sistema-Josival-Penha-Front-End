@@ -41,14 +41,15 @@ export const InfoAdminContainer = styled.div`
 `
 
 export const InfoAdmin = styled(Card)`
-    display: inline-block;
-    background-color: #ffffff;
-    width: 22%;
-    height: fit-content;
-    margin-top: 5%;
-    padding: 1.2%;
-    border-radius: 0.5vw;
-    border-radius: 20px;
+    && {
+        display: inline-block;
+        background-color: #ffffff;
+        width: 22%;
+        height: fit-content;
+        margin-top: 5%;
+        padding: 1.2%;
+        border-radius: 20px;
+    }
 `
 
 export const InfoAdminTit = styled.h2`
