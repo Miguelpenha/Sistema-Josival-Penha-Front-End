@@ -12,6 +12,8 @@ import {
     AlunoSelect,
     TableBoletim,
     TitleTableBoletim,
+    TitleTableBoletimOpções,
+    IconReloadTitleTableBoletim,
     HeaderTableBoletim,
     ButtonSubmit
 } from '../styles/pages/boletim'
@@ -83,6 +85,48 @@ export default function Responsible() {
                     {aluno && <>
                         <TableBoletim>
                             <thead>
+                                <tr>
+                                    <TitleTableBoletimOpções colSpan="5">
+                                        <IconReloadTitleTableBoletim onClick={() => {
+                                            let newsMatters = matters
+                                            
+                                            namesMatters.map(name => 
+                                                newsMatters[name.name] = {
+                                                    primeira: 0,
+                                                    segunda: 0,
+                                                    terceira: 0,
+                                                    quarta: 0
+                                                }
+                                            )
+
+                                            setMatters({
+                                                ...newsMatters
+                                            })
+                                        }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                                            <path fillRule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
+                                            <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
+                                        </IconReloadTitleTableBoletim>
+                                        <IconReloadTitleTableBoletim onClick={() => {
+                                            let newsMatters = matters
+                                            
+                                            namesMatters.map(name => 
+                                                newsMatters[name.name] = {
+                                                    primeira: 0,
+                                                    segunda: 0,
+                                                    terceira: 0,
+                                                    quarta: 0
+                                                }
+                                            )
+
+                                            setMatters({
+                                                ...newsMatters
+                                            })
+                                        }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                                            <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                                            <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+                                        </IconReloadTitleTableBoletim>
+                                    </TitleTableBoletimOpções>
+                                </tr>
                                 <tr>
                                     <TitleTableBoletim colSpan="5">Boletim</TitleTableBoletim>
                                 </tr>

@@ -93,6 +93,21 @@ export const TitleTableBoletim = styled.th`
     padding: 1%;
 `
 
+export const TitleTableBoletimOpções = styled.th`
+    border: 1px solid #7f7f7f;
+`
+
+export const IconReloadTitleTableBoletim = styled.svg`
+    width: 5%;
+    fill: #1976D2;
+    height: auto;
+    cursor: pointer;
+
+    :hover {
+        background-color: #1976d23b;
+    }
+`
+
 export const HeaderTableBoletim = styled.tr`
     border: 1px solid #7f7f7f;
     border-radius: 3px;
