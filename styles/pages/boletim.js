@@ -93,6 +93,16 @@ export const TitleTableBoletim = styled.th`
     padding: 1%;
 `
 
+export const ContainerTableHeader = styled.div`
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+
+    span {
+        align-self: center;
+    }
+`
+
 export const IconReloadTitleTableBoletim = styled.svg`
     width: ${props => props.maxTamanho ? '100%' : '5%'};
     fill: #1976D2;

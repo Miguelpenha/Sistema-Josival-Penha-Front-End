@@ -12,6 +12,7 @@ import {
     AlunoSelect,
     TableBoletim,
     TitleTableBoletim,
+    ContainerTableHeader,
     IconReloadTitleTableBoletim,
     FormTable,
     ButtonSubmitTable,
@@ -88,7 +89,7 @@ export default function Responsible() {
                             <thead>
                                 <tr>
                                     <TitleTableBoletim colSpan="5">
-                                        <div style={{display: 'flex', width: '100%', justifyContent: 'space-evenly'}}>
+                                        <ContainerTableHeader>
                                             <IconReloadTitleTableBoletim onClick={() => {
                                                 let newsMatters = matters
                                                 
@@ -119,7 +120,7 @@ export default function Responsible() {
                                                     </IconReloadTitleTableBoletim>
                                                 </ButtonSubmitTable>
                                             </FormTable>
-                                        </div>
+                                        </ContainerTableHeader>
                                     </TitleTableBoletim>
                                 </tr>
                                 <HeaderTableBoletim>
