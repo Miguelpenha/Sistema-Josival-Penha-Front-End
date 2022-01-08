@@ -94,7 +94,7 @@ export const TitleTableBoletim = styled.th`
 `
 
 export const IconReloadTitleTableBoletim = styled.svg`
-    width: 5%;
+    width: ${props => props.maxTamanho ? '100%' : '5%'};
     fill: #1976D2;
     height: auto;
     cursor: pointer;
@@ -102,6 +102,16 @@ export const IconReloadTitleTableBoletim = styled.svg`
     :hover {
         background-color: #1976d23b;
     }
+`
+
+export const FormTable = styled.form`
+    width: 6%;
+`
+
+export const ButtonSubmitTable = styled.button`
+    background-color: transparent;
+    width: 100%;
+    border: none;
 `
 
 export const HeaderTableBoletim = styled.tr`
