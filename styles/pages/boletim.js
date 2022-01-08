@@ -93,10 +93,6 @@ export const TitleTableBoletim = styled.th`
     padding: 1%;
 `
 
-export const TitleTableBoletimOpções = styled.th`
-    border: 1px solid #7f7f7f;
-`
-
 export const IconReloadTitleTableBoletim = styled.svg`
     width: 5%;
     fill: #1976D2;
