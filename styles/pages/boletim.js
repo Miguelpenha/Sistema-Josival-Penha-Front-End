@@ -30,7 +30,6 @@ export const ContainerBoletim = styled.div`
     border-radius: 10px;
     flex-direction: column;
     background-color: #ffffff;
-    ${props => props.aluno && 'padding-bottom: 1%;'}
 `
 
 export const ContainerAlunoSelect = styled.div`

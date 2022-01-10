@@ -68,7 +68,7 @@ export default function Responsible() {
                         </IconBack>
                     </ContainerIconBack>
                 </Link>
-                <ContainerBoletim aluno={aluno}>
+                <ContainerBoletim>
                     <ContainerAlunoSelect>
                         {!aluno && (
                             <LabelAlunoSelect htmlFor="Selecione um aluno">
