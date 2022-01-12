@@ -36,6 +36,7 @@ export const ContainerAlunoSelect = styled.div`
     width: 100%;
     display: flex;
     justify-content: space-between;
+    align-items: center;
 `
 
 export const LabelAlunoSelect = styled.label`
