@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import nookies from 'nookies'
 import { FormContainer, FormAccess, InputFormFinanceiro, ButtonFormFinanceiro, Container, Main, IconTrendingDown, IconTrendingUp, IconLabel, Infos, Info, InfoTit, InfoDado, IconAccountBalance, IconTrendingUpInfo, IconTrendingDownInfo, DialogCadasDespesa, DialogContentCadasDespesa, InputNomeDespesa, InputNomeReceita, InputDespesa, InputReceita, RealInputDespesa, FormDespesa, InputDespesaObservação, InputReceitaObservação, DescriptionIcon, InputDespesaData, CampoCheckBoxsDespesas, CheckboxCategoriaDespesa, TitCampoCheckBoxDespesa, NomeCategoriaDepesaComCor, NomeCategoriaDepesaSóCor, InvestimentoDespesa, InvestimentoReceita, FixaDespesa, FixaReceita, ButtonSubmitDespesa, ButtonSubmitReceita, IconPayment, ChartReceitasDespesas, Charts } from '../../styles/pages/administrativo/financeiro'
+import ResumeFinanceiro from '../../components/ResumeFinanceiro'
 import { NavOptions, LogoJPNome, Funções, Função, LinkFunção, IconAlunos, IconAcadêmico, IconDashBoard, IconMarketing, IconFinanceiroSele, IconColaboradores, TextFunção } from '../../components/NavTool'
 import Link from 'next/link'
 import { Menu, MenuItem, InputAdornment, Snackbar, Alert, TextField, Divider, Skeleton, SpeedDialAction, SpeedDialIcon, SpeedDial, IconButton } from '@material-ui/core'
@@ -817,16 +818,17 @@ export default function Financeiro() {
               <Info>
                 <InfoTit>Receitas</InfoTit>
                 <br/>
-                {totalReceitas ? <InfoDado color="#60BF92">{totalReceitas.total}</InfoDado> : <Skeleton variant="rectangular" width={`60%`} height={35} style={{display: 'inline-block', borderRadius: '10px', marginTop: '5%'}} animation="wave"/>}
+                {totalReceitas ? <InfoDado color="#60BF92">+{totalReceitas.total}</InfoDado> : <Skeleton variant="rectangular" width={`60%`} height={35} style={{display: 'inline-block', borderRadius: '10px', marginTop: '5%'}} animation="wave"/>}
                 <IconTrendingUpInfo color="#ffffff" bg="#60BF92"/>
               </Info>
               <Info>
                 <InfoTit>Despesas</InfoTit>
                 <br/>
-                {totalDespesas ? <InfoDado color="#EF5252">{totalDespesas.total}</InfoDado> : <Skeleton variant="rectangular" width={`60%`} height={35} style={{display: 'inline-block', borderRadius: '10px', marginTop: '5%'}} animation="wave"/>}
+                {totalDespesas ? <InfoDado color="#EF5252">-{totalDespesas.total}</InfoDado> : <Skeleton variant="rectangular" width={`60%`} height={35} style={{display: 'inline-block', borderRadius: '10px', marginTop: '5%'}} animation="wave"/>}
                 <IconTrendingDownInfo color="#ffffff" bg="#EF5252"/>
               </Info>
             </Infos>
+            <ResumeFinanceiro receitas={receitas} despesas={despesas}/>
             <Charts>
               {categoriasReceitasTotal && categoriasReceitasTotal.length > 0 && <ChartCategoriasReceitasComCarregamento/>}
               {categoriasDespesasTotal && categoriasDespesasTotal.length > 0 && <ChartCategoriasDespesasComCarregamento/>}
