@@ -4,16 +4,56 @@ export const Container = styled.div`
     display: flex;
     border-bottom: 2px solid ${props => props.receita ? '#60BF92' : '#EF5252'};
     color: #7f7f7f;
-    padding: 1%;
-    margin-bottom: 2%;
-    width: 80%;
-    flex-direction: column;
-`
-
-export const NomeReceitaOrDespesa = styled.div`
+    padding: 0.5%;
     margin-bottom: 1%;
+    width: 90%;
+    flex-direction: column;
+    border-start-start-radius: 10px;
+    border-start-end-radius: 10px;
+    cursor: pointer;
+
+    :hover {
+        background-color: ${props => props.receita ? '#e0ffda' : '#ffdcdc'};
+    }
 `
 
-export const ValueReceitaOrDespesa = styled.div`
+export const Row1 = styled.div`
+
+`
+
+export const Nome = styled.div`
+    margin-bottom: 0.5%;
+`
+
+export const Row2 = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+`
+
+export const Value = styled.span`
     color: ${props => props.receita ? '#60BF92' : '#EF5252'};
+    width: 100%;
+    height: min-content;
+`
+
+export const Options = styled.div`
+    display: flex;
+    justify-content: right;
+`
+
+export const ContainerIconOptions = styled.a`
+    width: 11%;
+    padding: 2%;
+    border-radius: 50%;
+
+    :hover {
+        background-color: ${props => props.bg};
+    }
+`
+
+export const IconOptions = styled.svg`
+    width: 100%;
+    height: 100%;
+    fill: ${props => props.color};
 `

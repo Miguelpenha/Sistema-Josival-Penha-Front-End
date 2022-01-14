@@ -828,7 +828,19 @@ export default function Financeiro() {
                 <IconTrendingDownInfo color="#ffffff" bg="#EF5252"/>
               </Info>
             </Infos>
-            <ResumeFinanceiro receitas={receitas} despesas={despesas}/>
+            <ResumeFinanceiro receitas={receitas} despesas={despesas} onDeleteReceita={id => {
+              api.delete(`/financeiro/receitas/${id}`).then(() => {
+                mutateTotalReceitas('/financeiro/receitas/total')
+                mutateReceitas('/financeiro/receitas')
+                mutateSaldo('/financeiro/saldo')
+              })
+            }} onDeleteDespesa={id => {
+              api.delete(`/financeiro/despesas/${id}`).then(() => {
+                mutateTotalDespesas('/financeiro/despesas/total')
+                mutateDespesas('/financeiro/despesas')
+                mutateSaldo('/financeiro/saldo')
+              })
+            }}/>
             <Charts>
               {categoriasReceitasTotal && categoriasReceitasTotal.length > 0 && <ChartCategoriasReceitasComCarregamento/>}
               {categoriasDespesasTotal && categoriasDespesasTotal.length > 0 && <ChartCategoriasDespesasComCarregamento/>}

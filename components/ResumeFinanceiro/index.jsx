@@ -1,7 +1,7 @@
 import { Container } from './style'
 import ReceitaOrDespesa from './ReceitaOrDespesa'
 
-export default function ResumeFinanceiro({ receitas, despesas }) {
+export default function ResumeFinanceiro({ receitas, despesas, onDeleteReceita, onDeleteDespesa }) {
     if (typeof receitas != 'string' && typeof despesas != 'string') {
         receitas.map(receita => {
             receita.receita = true
@@ -14,11 +14,17 @@ export default function ResumeFinanceiro({ receitas, despesas }) {
         })
     
         const receitasDespesas = [...receitas, ...despesas]
+
+        function sortDate(a, b) {
+            return b.criação.sistema - a.criação.sistema
+        }
+        
+        receitasDespesas.sort(sortDate)
     
         return (
             <Container>
                 {receitasDespesas.map((receitaDespesa, index) => (
-                    <ReceitaOrDespesa name={receitaDespesa.nome} value={receitaDespesa.preco} receita={receitaDespesa.receita ? true : false}/>
+                    <ReceitaOrDespesa key={index} name={receitaDespesa.nome} value={receitaDespesa.preco} receita={receitaDespesa.receita ? true : false} onDeleteReceita={() => onDeleteReceita(receitaDespesa._id)} onDeleteDespesa={() => onDeleteDespesa(receitaDespesa._id)}/>
                 ))}
             </Container>
         )
