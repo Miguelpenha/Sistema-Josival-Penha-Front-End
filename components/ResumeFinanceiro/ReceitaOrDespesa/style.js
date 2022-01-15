@@ -1,16 +1,16 @@
 import styled from 'styled-components'
 
 export const Container = styled.div`
-    display: flex;
-    border-bottom: 2px solid ${props => props.receita ? '#60BF92' : '#EF5252'};
-    color: #7f7f7f;
-    padding: 0.5%;
-    margin-bottom: 1%;
     width: 90%;
-    flex-direction: column;
-    border-start-start-radius: 10px;
-    border-start-end-radius: 10px;
+    display: flex;
+    padding: 0.5%;
+    color: #7f7f7f;
     cursor: pointer;
+    margin-bottom: 1%;
+    flex-direction: column;
+    border-start-end-radius: 10px;
+    border-start-start-radius: 10px;
+    border-bottom: 2px solid ${props => props.receita ? '#60BF92' : '#EF5252'};
 
     :hover {
         background-color: ${props => props.receita ? '#e0ffda' : '#ffdcdc'};
@@ -18,23 +18,31 @@ export const Container = styled.div`
 `
 
 export const Row1 = styled.div`
-
+    display: flex;
+    margin-bottom: 0.5%;
+    justify-content: space-between;
 `
 
-export const Nome = styled.div`
-    margin-bottom: 0.5%;
+export const Nome = styled.span`
+    
+`
+
+export const Date = styled.span`
+    font-size: 1vw;
+    color: #4c4c4c;
+    font-weight: bold;
 `
 
 export const Row2 = styled.div`
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
 `
 
 export const Value = styled.span`
-    color: ${props => props.receita ? '#60BF92' : '#EF5252'};
     width: 100%;
     height: min-content;
+    color: ${props => props.receita ? '#60BF92' : '#EF5252'};
 `
 
 export const Options = styled.div`
@@ -45,8 +53,8 @@ export const Options = styled.div`
 export const ContainerIconOptions = styled.a`
     width: 12%;
     padding: 2%;
-    border-radius: 50%;
     display: flex;
+    border-radius: 50%;
     align-items: center;
     justify-content: center;
 

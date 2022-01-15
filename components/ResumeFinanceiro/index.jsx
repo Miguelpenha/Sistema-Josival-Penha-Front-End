@@ -13,18 +13,26 @@ export default function ResumeFinanceiro({ receitas, despesas, onDeleteReceita, 
             despesa.criação.sistema = new Date(despesa.criação.sistema)
         })
     
-        const receitasDespesas = [...receitas, ...despesas]
+        const receitasOrDespesas = [...receitas, ...despesas]
 
         function sortDate(a, b) {
             return b.criação.sistema - a.criação.sistema
         }
         
-        receitasDespesas.sort(sortDate)
-    
+        receitasOrDespesas.sort(sortDate)
+        
         return (
             <Container>
-                {receitasDespesas.map((receitaDespesa, index) => (
-                    <ReceitaOrDespesa key={index} name={receitaDespesa.nome} value={receitaDespesa.preco} receita={receitaDespesa.receita ? true : false} onDeleteReceita={() => onDeleteReceita(receitaDespesa._id)} onDeleteDespesa={() => onDeleteDespesa(receitaDespesa._id)}/>
+                {receitasOrDespesas.map((receitaOrDespesa, index) => (
+                    <ReceitaOrDespesa
+                        key={index}
+                        name={receitaOrDespesa.nome}
+                        value={receitaOrDespesa.preco}
+                        date={receitaOrDespesa.criação.data}
+                        receita={receitaOrDespesa.receita ? true : false}
+                        onDeleteReceita={() => onDeleteReceita(receitaOrDespesa._id)}
+                        onDeleteDespesa={() => onDeleteDespesa(receitaOrDespesa._id)}
+                    />
                 ))}
             </Container>
         )
