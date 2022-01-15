@@ -43,9 +43,12 @@ export const Options = styled.div`
 `
 
 export const ContainerIconOptions = styled.a`
-    width: 11%;
+    width: 12%;
     padding: 2%;
     border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     :hover {
         background-color: ${props => props.bg};
@@ -54,6 +57,6 @@ export const ContainerIconOptions = styled.a`
 
 export const IconOptions = styled.svg`
     width: 100%;
-    height: 100%;
+    height: auto;
     fill: ${props => props.color};
 `
