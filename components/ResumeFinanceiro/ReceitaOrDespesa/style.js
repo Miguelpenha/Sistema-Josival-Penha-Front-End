@@ -27,10 +27,18 @@ export const Nome = styled.span`
     
 `
 
-export const Date = styled.span`
+export const Date = styled.a`
+    padding: 1%;
     font-size: 1vw;
     color: #4c4c4c;
     font-weight: bold;
+    border-radius: 10px;
+    height: fit-content;
+    text-decoration: none;
+
+    :hover {
+        background-color: #4c4c4c50;
+    }
 `
 
 export const Row2 = styled.div`
@@ -54,6 +62,7 @@ export const ContainerIconOptions = styled.a`
     width: 12%;
     padding: 2%;
     display: flex;
+    cursor: pointer;
     border-radius: 50%;
     align-items: center;
     justify-content: center;

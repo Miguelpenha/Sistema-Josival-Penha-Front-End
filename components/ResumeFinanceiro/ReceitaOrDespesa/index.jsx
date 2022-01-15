@@ -18,7 +18,7 @@ export default function ReceitaOrDespesa({ name, value, date, receita, onDeleteR
                 <Nome>
                     <LimitText limit="25">{name}</LimitText>
                 </Nome>
-                <Date>{date}</Date>
+                <Date href={`financeiro/date/${date.replaceAll('/', '-')}`}>{date}</Date>
             </Row1>
             <Row2>
                 <Value receita={receita}>{receita ? '+' : '-'} {value}</Value>
