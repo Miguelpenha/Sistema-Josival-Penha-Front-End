@@ -10,6 +10,7 @@ import {
     IconOptions
 } from './style'
 import LimitText from '../../LimitText'
+import Link from 'next/link'
 
 export default function ReceitaOrDespesa({ name, value, date, receita, onDeleteReceita, onDeleteDespesa }) {
     return (
@@ -18,7 +19,9 @@ export default function ReceitaOrDespesa({ name, value, date, receita, onDeleteR
                 <Nome>
                     <LimitText limit="25">{name}</LimitText>
                 </Nome>
-                <Date href={`financeiro/date/${date.replace(/\//g, '-')}`}>{date}</Date>
+                <Link href={`/administrativo/financeiro/date/${date.replace(/\//g, '-')}`} passHref>
+                    <Date title="Ver todas as receitas e despesas dessa data">{date}</Date>
+                </Link>
             </Row1>
             <Row2>
                 <Value receita={receita}>{receita ? '+' : '-'} {value}</Value>
