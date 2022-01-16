@@ -3,20 +3,20 @@ import styled from 'styled-components'
 export const Container = styled.div`
     width: 60%;
     margin: auto;
-    margin-top: 5%;
-    border-radius: 15px;
-    background-color: #ffffff;
     display: flex;
+    margin-top: 5%;
+    padding-bottom: 1%;
+    border-radius: 15px;
     align-items: center;
     flex-direction: column;
-    padding-bottom: 1%;
+    background-color: #ffffff;
 `
 
 export const ContainerReceitasDespesas = styled.div`
-    font-size: 1.5vw;
+    width: 100%;
     padding: 1.5%;
     display: flex;
-    width: 100%;
+    font-size: 1.5vw;
     align-items: center;
     flex-direction: column;
 `

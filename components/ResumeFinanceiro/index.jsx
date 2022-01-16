@@ -1,4 +1,8 @@
-import { Container, ContainerReceitasDespesas, ContainerSaldos } from './style'
+import {
+    Container,
+    ContainerReceitasDespesas,
+    ContainerSaldos
+} from './style'
 import ReceitaOrDespesa from './ReceitaOrDespesa'
 
 export default function ResumeFinanceiro({ receitas, despesas, onDeleteReceita, onDeleteDespesa, resume, saldoReceitas, saldoDespesas, saldo }) {
