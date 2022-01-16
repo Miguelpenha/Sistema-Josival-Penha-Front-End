@@ -27,8 +27,12 @@ export default function Date() {
                 </Link>
                 {receitasDespesas && receitasDespesas.receitas && receitasDespesas.despesas && (
                     <ResumeFinanceiro
+                        resume
                         receitas={receitasDespesas.receitas}
                         despesas={receitasDespesas.despesas}
+                        saldo={receitasDespesas.totals.saldo.total}
+                        saldoReceitas={receitasDespesas.totals.receitas.total}
+                        saldoDespesas={receitasDespesas.totals.despesas.total}
                         onDeleteReceita={id => (
                             api.delete(`/financeiro/receitas/${id}`).then(() => {
                                 mutateReceitasDespesas(`/financeiro/date/${dateBruta && dateBruta}`)

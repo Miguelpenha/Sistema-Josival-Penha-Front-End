@@ -1,7 +1,7 @@
-import { Container, ContainerReceitasDespesas } from './style'
+import { Container, ContainerReceitasDespesas, ContainerSaldos } from './style'
 import ReceitaOrDespesa from './ReceitaOrDespesa'
 
-export default function ResumeFinanceiro({ receitas, despesas, onDeleteReceita, onDeleteDespesa }) {
+export default function ResumeFinanceiro({ receitas, despesas, onDeleteReceita, onDeleteDespesa, resume, saldoReceitas, saldoDespesas, saldo }) {
     if (typeof receitas != 'string' && typeof despesas != 'string') {
         if (receitas.length || despesas.length) {
             receitas.map(receita => {
@@ -37,7 +37,13 @@ export default function ResumeFinanceiro({ receitas, despesas, onDeleteReceita, 
                             />
                         ))}
                     </ContainerReceitasDespesas>
-                    <h1>asd</h1>
+                    {resume && (
+                        <ContainerSaldos>
+                            <h1>Saldo Despesas: - {saldoDespesas}</h1>
+                            <h1>Saldo Receitas: + {saldoReceitas}</h1>
+                            <h1>Saldo: {saldo}</h1>
+                        </ContainerSaldos>
+                    )}
                 </Container>
             )
         } else {
