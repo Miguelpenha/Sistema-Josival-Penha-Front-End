@@ -1,7 +1,50 @@
 import Head from 'next/head'
 import nookies from 'nookies'
-import { FormContainer, FormAccess, InputFormFinanceiro, ButtonFormFinanceiro, Container, Main, IconTrendingDown, IconTrendingUp, IconLabel, Infos, Info, InfoTit, InfoDado, IconAccountBalance, IconTrendingUpInfo, IconTrendingDownInfo, DialogCadasDespesa, DialogContentCadasDespesa, InputNomeDespesa, InputNomeReceita, InputDespesa, InputReceita, RealInputDespesa, FormDespesa, InputDespesaObservação, InputReceitaObservação, DescriptionIcon, InputDespesaData, CampoCheckBoxsDespesas, CheckboxCategoriaDespesa, TitCampoCheckBoxDespesa, NomeCategoriaDepesaComCor, NomeCategoriaDepesaSóCor, InvestimentoDespesa, InvestimentoReceita, FixaDespesa, FixaReceita, ButtonSubmitDespesa, ButtonSubmitReceita, IconPayment, ChartReceitasDespesas, Charts } from '../../../styles/pages/administrativo/financeiro'
-import ResumeFinanceiro from '../../../components/ResumeFinanceiro'
+import {
+  FormContainer, 
+  FormAccess, 
+  InputFormFinanceiro, 
+  ButtonFormFinanceiro, 
+  Container, 
+  Main, 
+  IconTrendingDown,
+  IconTrendingUp,
+  IconLabel,
+  Infos,
+  Info,
+  InfoTit,
+  InfoDado,
+  IconAccountBalance,
+  IconTrendingUpInfo,
+  IconTrendingDownInfo,
+  DialogCadasDespesa,
+  DialogContentCadasDespesa,
+  InputNomeDespesa,
+  InputNomeReceita,
+  InputDespesa,
+  InputReceita,
+  RealInputDespesa,
+  FormDespesa,
+  InputDespesaObservação,
+  InputReceitaObservação,
+  DescriptionIcon,
+  InputDespesaData,
+  CampoCheckBoxsDespesas,
+  CheckboxCategoriaDespesa,
+  TitCampoCheckBoxDespesa,
+  NomeCategoriaDepesaComCor,
+  NomeCategoriaDepesaSóCor,
+  InvestimentoDespesa,
+  InvestimentoReceita,
+  FixaDespesa,
+  FixaReceita,
+  ButtonSubmitDespesa,
+  ButtonSubmitReceita,
+  IconPayment,
+  ChartReceitasDespesas,
+  Charts,
+  ResumeFinanceiro
+} from '../../../styles/pages/administrativo/financeiro'
 import { NavOptions, LogoJPNome, Funções, Função, LinkFunção, IconAlunos, IconAcadêmico, IconDashBoard, IconMarketing, IconFinanceiroSele, IconColaboradores, TextFunção } from '../../../components/NavTool'
 import Link from 'next/link'
 import { Menu, MenuItem, InputAdornment, Snackbar, Alert, TextField, Divider, Skeleton, SpeedDialAction, SpeedDialIcon, SpeedDial, IconButton } from '@material-ui/core'

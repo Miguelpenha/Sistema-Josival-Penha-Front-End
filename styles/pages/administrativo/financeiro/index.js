@@ -1,7 +1,8 @@
 import styled from 'styled-components'
-import { Add as IconAddSVG, TrendingDown as IconTrendingDownSVG, TrendingUp as IconTrendingUpSVG, Label as IconLabelSVG, Description as DescriptionIconSVG, Payment as IconPaymentSVG, SyncAlt as IconSyncAltSVG, AccountBalance as IconAccountBalanceSVG } from '@material-ui/icons'
+import { TrendingDown as IconTrendingDownSVG, TrendingUp as IconTrendingUpSVG, Label as IconLabelSVG, Description as DescriptionIconSVG, Payment as IconPaymentSVG, SyncAlt as IconSyncAltSVG, AccountBalance as IconAccountBalanceSVG } from '@material-ui/icons'
 import { Card, Dialog, DialogContent, TextField, Button, Checkbox, Switch } from '@material-ui/core'
 import Chart from 'react-google-charts'
+import ResumeFinanceiroNotStyled from '../../../../components/ResumeFinanceiro'
 
 export const FormContainer = styled.div`
     display: flex;
@@ -68,23 +69,6 @@ export const Main = styled.main`
     color: black;
     height: 100%;
     width: 100%;
-`
-
-export const IconAdd = styled(IconAddSVG)`
-    && {
-        width: 6%;
-        height: auto;
-        color: #ffffff;
-        background-color: #6A54ED;
-        border-radius: 50%;
-        border: 2px solid #6A54ED;
-        cursor: pointer;
-    }
-
-    &:hover {
-        background-color: #9C59FF;
-        border-color: #9C59FF;
-    }
 `
 
 export const IconTrendingDown = styled(IconTrendingDownSVG)`
@@ -467,4 +451,10 @@ export const Charts = styled.div`
     flex-wrap: wrap;
     flex-direction: row;
     justify-content: space-around;
+`
+
+export const ResumeFinanceiro = styled(ResumeFinanceiroNotStyled)`
+    && {
+        margin-top: 5%;
+    }
 `

@@ -2,9 +2,9 @@ import styled from 'styled-components'
 
 export const Container = styled.div`
     width: 60%;
-    margin: auto;
+    margin-right: auto;
+    margin-left: auto;
     display: flex;
-    margin-top: 5%;
     padding-bottom: 1%;
     border-radius: 15px;
     align-items: center;
@@ -23,4 +23,14 @@ export const ContainerReceitasDespesas = styled.div`
 
 export const ContainerSaldos = styled.div`
     color: #7f7f7f;
+    width: 87%;
+`
+
+export const Saldo= styled.div`
+    border: 2px solid ${props => props.color};
+    padding: 2.5%;
+    border-radius: 10px;
+    color: ${props => props.color};
+    font-size: 1vw;
+    margin-bottom: 2%;
 `

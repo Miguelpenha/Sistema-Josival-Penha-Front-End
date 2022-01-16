@@ -1,11 +1,12 @@
 import {
     Container,
     ContainerReceitasDespesas,
-    ContainerSaldos
+    ContainerSaldos,
+    Saldo
 } from './style'
 import ReceitaOrDespesa from './ReceitaOrDespesa'
 
-export default function ResumeFinanceiro({ receitas, despesas, onDeleteReceita, onDeleteDespesa, resume, saldoReceitas, saldoDespesas, saldo }) {
+export default function ResumeFinanceiro({ receitas, despesas, onDeleteReceita, onDeleteDespesa, resume, saldoReceitas, saldoDespesas, saldo, ...props }) {
     if (typeof receitas != 'string' && typeof despesas != 'string') {
         if (receitas.length || despesas.length) {
             receitas.map(receita => {
@@ -27,7 +28,7 @@ export default function ResumeFinanceiro({ receitas, despesas, onDeleteReceita, 
             receitasOrDespesas.sort(sortDate)
             
             return (
-                <Container>
+                <Container {...props}>
                     <ContainerReceitasDespesas>
                         {receitasOrDespesas.map((receitaOrDespesa, index) => (
                             <ReceitaOrDespesa
@@ -43,9 +44,15 @@ export default function ResumeFinanceiro({ receitas, despesas, onDeleteReceita, 
                     </ContainerReceitasDespesas>
                     {resume && (
                         <ContainerSaldos>
-                            <h1>Saldo Despesas: - {saldoDespesas}</h1>
-                            <h1>Saldo Receitas: + {saldoReceitas}</h1>
-                            <h1>Saldo: {saldo}</h1>
+                            <Saldo color="#EF5252">
+                                <h1>Despesas - {saldoDespesas}</h1>
+                            </Saldo>
+                            <Saldo color="#60BF92">
+                                <h1>Receitas + {saldoReceitas}</h1>
+                            </Saldo>
+                            <Saldo color="#0872FC">
+                                <h1>Saldo {saldo}</h1>
+                            </Saldo>
                         </ContainerSaldos>
                     )}
                 </Container>
