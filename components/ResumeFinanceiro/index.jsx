@@ -1,4 +1,4 @@
-import { Container } from './style'
+import { Container, ContainerReceitasDespesas } from './style'
 import ReceitaOrDespesa from './ReceitaOrDespesa'
 
 export default function ResumeFinanceiro({ receitas, despesas, onDeleteReceita, onDeleteDespesa }) {
@@ -24,17 +24,20 @@ export default function ResumeFinanceiro({ receitas, despesas, onDeleteReceita, 
             
             return (
                 <Container>
-                    {receitasOrDespesas.map((receitaOrDespesa, index) => (
-                        <ReceitaOrDespesa
-                            key={index}
-                            name={receitaOrDespesa.nome}
-                            value={receitaOrDespesa.preco}
-                            date={receitaOrDespesa.criação.data}
-                            receita={receitaOrDespesa.receita ? true : false}
-                            onDeleteReceita={() => onDeleteReceita(receitaOrDespesa._id)}
-                            onDeleteDespesa={() => onDeleteDespesa(receitaOrDespesa._id)}
-                        />
-                    ))}
+                    <ContainerReceitasDespesas>
+                        {receitasOrDespesas.map((receitaOrDespesa, index) => (
+                            <ReceitaOrDespesa
+                                key={index}
+                                name={receitaOrDespesa.nome}
+                                value={receitaOrDespesa.preco}
+                                date={receitaOrDespesa.criação.data}
+                                receita={receitaOrDespesa.receita ? true : false}
+                                onDeleteReceita={() => onDeleteReceita(receitaOrDespesa._id)}
+                                onDeleteDespesa={() => onDeleteDespesa(receitaOrDespesa._id)}
+                            />
+                        ))}
+                    </ContainerReceitasDespesas>
+                    <h1>asd</h1>
                 </Container>
             )
         } else {
