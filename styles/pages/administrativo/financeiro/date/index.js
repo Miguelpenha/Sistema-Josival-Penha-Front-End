@@ -1,5 +1,9 @@
 import styled from 'styled-components'
 
+export const Container = styled.main`
+    
+`
+
 export const ContainerIconBack = styled.a`
     width: 6%;
     margin: 1%;
