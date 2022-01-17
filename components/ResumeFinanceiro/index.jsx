@@ -3,7 +3,12 @@ import {
     Container,
     ContainerReceitasDespesas,
     ContainerSaldos,
-    Saldo
+    Saldo,
+    ContainerModalInfoReceitaOrDespesa,
+    AlertCopyInfo,
+    ContainerInfoReceitaOrDespesa,
+    TitleInfoReceitaOrDespesa,
+    InfoReceitaOrDespesa
 } from './style'
 import ReceitaOrDespesa from './ReceitaOrDespesa'
 import { Modal } from '@material-ui/core'
@@ -13,6 +18,7 @@ export default function ResumeFinanceiro({ receitas, despesas, onDeleteReceita, 
         if (receitas.length || despesas.length) {
             const [openReceitaOrDespesa, setOpenReceitaOrDespesa] = useState(false)
             const [receitaOrDespesa, setReceitaOrDespesa] = useState(null)
+            const [copyTextInfo, setCopyTextInfo] = useState(false)
             const closeModalReceitaOrDespesa = () => setOpenReceitaOrDespesa(false)
             const openModalReceitaOrDespesa = () => setOpenReceitaOrDespesa(true)
             
@@ -30,6 +36,14 @@ export default function ResumeFinanceiro({ receitas, despesas, onDeleteReceita, 
     
             function sortDate(a, b) {
                 return b.criação.sistema - a.criação.sistema
+            }
+
+            function copyInfo(ev) {
+                navigator.clipboard.writeText(ev.currentTarget.innerText)
+
+                setCopyTextInfo(true)
+
+                setInterval(() => setCopyTextInfo(false), 5000)
             }
             
             receitasOrDespesas.sort(sortDate)
@@ -70,11 +84,43 @@ export default function ResumeFinanceiro({ receitas, despesas, onDeleteReceita, 
                         open={openReceitaOrDespesa}
                         onClose={closeModalReceitaOrDespesa}
                     >
-                        {receitaOrDespesa && (
-                            <div style={{width: '35%', backgroundColor: '#ffffff', margin: 'auto', color: '#000000'}}>
-                                <h1>{receitaOrDespesa.nome}</h1>
-                            </div>
-                        )}
+                        <div>
+                            {receitaOrDespesa && (
+                                <ContainerModalInfoReceitaOrDespesa receita={receitaOrDespesa.receita}>
+                                    {copyTextInfo && <AlertCopyInfo>Texto copiado com sucesso!</AlertCopyInfo>}
+                                    <ContainerInfoReceitaOrDespesa>
+                                        <TitleInfoReceitaOrDespesa>Nome: </TitleInfoReceitaOrDespesa>
+                                        <InfoReceitaOrDespesa title="Copiar nome" onClick={copyInfo}>{receitaOrDespesa.nome}</InfoReceitaOrDespesa>
+                                    </ContainerInfoReceitaOrDespesa>
+                                    <ContainerInfoReceitaOrDespesa>
+                                        <TitleInfoReceitaOrDespesa>Valor: </TitleInfoReceitaOrDespesa>
+                                        <InfoReceitaOrDespesa title="Copiar valor" onClick={copyInfo}>{receitaOrDespesa.preco}</InfoReceitaOrDespesa>
+                                    </ContainerInfoReceitaOrDespesa>
+                                    <ContainerInfoReceitaOrDespesa>
+                                        <TitleInfoReceitaOrDespesa>Data: </TitleInfoReceitaOrDespesa>
+                                        <InfoReceitaOrDespesa title="Copiar data" onClick={copyInfo}>{receitaOrDespesa.data}</InfoReceitaOrDespesa>
+                                    </ContainerInfoReceitaOrDespesa>
+                                    {receitaOrDespesa.observação && (
+                                        <ContainerInfoReceitaOrDespesa>
+                                            <TitleInfoReceitaOrDespesa>Observação: </TitleInfoReceitaOrDespesa>
+                                            <InfoReceitaOrDespesa title="Copiar observação" onClick={copyInfo}>{receitaOrDespesa.observação}</InfoReceitaOrDespesa>
+                                        </ContainerInfoReceitaOrDespesa>
+                                    )}
+                                    <ContainerInfoReceitaOrDespesa>
+                                        <TitleInfoReceitaOrDespesa>Investimento: </TitleInfoReceitaOrDespesa>
+                                        <InfoReceitaOrDespesa notCopy>
+                                            {receitaOrDespesa.investimento ? 'Sim' : 'Não'}
+                                        </InfoReceitaOrDespesa>
+                                    </ContainerInfoReceitaOrDespesa>
+                                    <ContainerInfoReceitaOrDespesa>
+                                        <TitleInfoReceitaOrDespesa>Fixa: </TitleInfoReceitaOrDespesa>
+                                        <InfoReceitaOrDespesa notCopy>
+                                            {receitaOrDespesa.fixa ? 'Sim' : 'Não'}
+                                        </InfoReceitaOrDespesa>
+                                    </ContainerInfoReceitaOrDespesa>                                     
+                                </ContainerModalInfoReceitaOrDespesa>
+                            )}
+                        </div>
                     </Modal>
                 </Container>
             )
