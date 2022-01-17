@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import {
     Container,
     Row1,
@@ -12,9 +13,9 @@ import {
 import LimitText from '../../LimitText'
 import Link from 'next/link'
 
-export default function ReceitaOrDespesa({ name, value, date, receita, onDeleteReceita, onDeleteDespesa }) {
+export default function ReceitaOrDespesa({ name, value, date, receita, onDeleteReceita, onDeleteDespesa, openModalReceitaOrDespesa }) {
     return (
-        <Container receita={receita}>
+        <Container receita={receita} onClick={openModalReceitaOrDespesa}>
             <Row1>
                 <Nome>
                     <LimitText limit="25">{name}</LimitText>
