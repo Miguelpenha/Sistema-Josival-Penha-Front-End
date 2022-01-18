@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 
 export const Container = styled.div`
     top: 30%;
@@ -61,15 +61,13 @@ export const ContainerSwitch = styled.div`
     display: flex;
     align-items: center;
 
-    ${props => props.receita && css`
-        && .MuiSwitch-switchBase.Mui-checked {
-            color: ${props => props.receita ? '#60BF92' : '#EF5252'};
-        }
+    && .MuiSwitch-switchBase.Mui-checked {
+        color: ${props => props.receita ? '#60BF92' : '#EF5252'};
+    }
 
-        && .MuiSwitch-track {
-            background-color: ${props => props.receita ? '#60BF92' : '#EF5252'};
-        }
-    `}
+    && .MuiSwitch-track {
+        background-color: ${props => props.receita ? '#60BF92' : '#EF5252'};
+    }
 `
 
 export const TextSwitch = styled.span`
