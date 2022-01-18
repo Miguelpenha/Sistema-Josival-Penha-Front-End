@@ -35,7 +35,7 @@ export const Date = styled.a`
     border-radius: 10px;
     height: fit-content;
     text-decoration: none;
-
+    
     :hover {
         background-color: #4c4c4c50;
     }

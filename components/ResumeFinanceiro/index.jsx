@@ -7,15 +7,19 @@ import {
 } from './style'
 import ReceitaOrDespesa from './ReceitaOrDespesa'
 import ModalReceitaOrDespesa from './ModalReceitaOrDespesa'
+import ModalEditReceitaOrDespesa from './ModalEditReceitaOrDespesa'
 
 export default function ResumeFinanceiro({ receitas, despesas, onDeleteReceita, onDeleteDespesa, resume, saldoReceitas, saldoDespesas, saldo, ...props }) {
     if (typeof receitas != 'string' && typeof despesas != 'string') {
         if (receitas.length || despesas.length) {
             const [openReceitaOrDespesa, setOpenReceitaOrDespesa] = useState(false)
+            const [openEditReceitaOrDespesa, setOpenModalEditReceitaOrDespesa] = useState(false)
             const [receitaOrDespesa, setReceitaOrDespesa] = useState(null)
             const [copyTextInfo, setCopyTextInfo] = useState(false)
             const closeModalReceitaOrDespesa = () => setOpenReceitaOrDespesa(false)
             const openModalReceitaOrDespesa = () => setOpenReceitaOrDespesa(true)
+            const closeModalEditReceitaOrDespesa = () => setOpenModalEditReceitaOrDespesa(false)
+            const openModalEditReceitaOrDespesa = () => setOpenModalEditReceitaOrDespesa(true)
             
             receitas.map(receita => {
                 receita.receita = true
@@ -59,6 +63,10 @@ export default function ResumeFinanceiro({ receitas, despesas, onDeleteReceita, 
                                     openModalReceitaOrDespesa()
                                     setReceitaOrDespesa(receitaOrDespesa)
                                 }}
+                                openModalEditReceitaOrDespesa={() => {
+                                    openModalEditReceitaOrDespesa()
+                                    setReceitaOrDespesa(receitaOrDespesa)
+                                }}
                             />
                         ))}
                     </ContainerReceitasDespesas>
@@ -75,7 +83,7 @@ export default function ResumeFinanceiro({ receitas, despesas, onDeleteReceita, 
                             </Saldo>
                         </ContainerSaldos>
                     )}
-                    {receitaOrDespesa && (
+                    {receitaOrDespesa && <>
                         <ModalReceitaOrDespesa
                             open={openReceitaOrDespesa}
                             onClose={closeModalReceitaOrDespesa}
@@ -83,7 +91,12 @@ export default function ResumeFinanceiro({ receitas, despesas, onDeleteReceita, 
                             copyInfo={copyInfo}
                             receitaOrDespesa={receitaOrDespesa}
                         />
-                    )}
+                        <ModalEditReceitaOrDespesa
+                            open={openEditReceitaOrDespesa}
+                            onClose={closeModalEditReceitaOrDespesa}
+                            receitaOrDespesa={receitaOrDespesa}
+                        />
+                    </>}
                 </Container>
             )
         } else {
