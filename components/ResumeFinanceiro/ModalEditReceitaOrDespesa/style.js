@@ -1,5 +1,4 @@
-import styled from 'styled-components'
-import { Switch as SwitchNotStyle } from '@material-ui/core'
+import styled, { css } from 'styled-components'
 
 export const Container = styled.div`
     background-color: #ffffff;
@@ -13,7 +12,7 @@ export const Container = styled.div`
     flex-direction: column;
     padding: 1.5%;
     border-radius: 10px;
-    height: 55%;
+    height: 75%;
     align-items: center;
 `
 
@@ -61,15 +60,18 @@ export const ContainerSwitch = styled.div`
     width: 80%;
     display: flex;
     align-items: center;
-    font-size: 1vw;
+
+    ${props => props.receita && css`
+        & .MuiSwitch-switchBase.Mui-checked {
+            color: ${props => props.receita ? '#60BF92' : '#EF5252'};
+        }
+        
+        & .MuiSwitch-switchBase + .MuiSwitch-track {
+            background-color: ${props => props.receita ? '#60BF92' : '#EF5252'};
+        }
+    `}
 `
 
-export const Switch = styled(SwitchNotStyle)`
-    & .MuiSwitch-switchBase.Mui-checked {
-        color: ${props => props.receita ? '#60BF92' : '#EF5252'};
-    }
-    
-    & .MuiSwitch-switchBase + .MuiSwitch-track {
-        background-color: ${props => props.receita ? '#60BF92' : '#EF5252'};
-    }
+export const TextSwitch = styled.span`
+    font-size: 1.8vw;
 `

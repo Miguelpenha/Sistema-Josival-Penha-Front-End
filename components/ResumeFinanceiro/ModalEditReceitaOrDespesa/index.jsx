@@ -1,12 +1,10 @@
 import { Modal } from '@material-ui/core'
-import { Container, Title, Form, Campo, Label, InputText, ContainerSwitch, Switch } from './style'
+import { Container, Title, Form, Campo, Label, InputText, ContainerSwitch, TextSwitch } from './style'
+import { Switch } from '@material-ui/core'
 
 export default function ModalEditReceitaOrDespesa({ open, onClose, receitaOrDespesa }) {
     return (
-        <Modal
-            open={open}
-            onClose={onClose}
-        >
+        <Modal open={open} onClose={onClose}>
             <Container receita={receitaOrDespesa.receita}>
                 <Title>Editar {receitaOrDespesa.receita ? 'Receita' : 'Despesa'}</Title>
                 <Form>
@@ -28,13 +26,22 @@ export default function ModalEditReceitaOrDespesa({ open, onClose, receitaOrDesp
                             defaultValue={receitaOrDespesa.preco}
                         />
                     </Campo>
-                    <ContainerSwitch>
-                        <Switch defaultChecked={receitaOrDespesa.investimento} receita={receitaOrDespesa.receita}/>
-                        <span>Investimento</span>
+                    <Campo>
+                        <Label htmlFor="Data">Data</Label>
+                        <InputText
+                            type="date"
+                            placeholder="Data: "
+                            receita={receitaOrDespesa.receita}
+                            defaultValue={`${receitaOrDespesa.data.split('/')[2]}-${receitaOrDespesa.data.split('/')[1]}-${receitaOrDespesa.data.split('/')[0]}`}
+                        />
+                    </Campo>
+                    <ContainerSwitch receita={receitaOrDespesa.receita}>
+                        <Switch defaultChecked={receitaOrDespesa.investimento}/>
+                        <TextSwitch>Investimento</TextSwitch>
                     </ContainerSwitch>
-                    <ContainerSwitch>
-                        <Switch defaultChecked={receitaOrDespesa.fixa} receita={receitaOrDespesa.receita}/>
-                        <span>Fixa</span>
+                    <ContainerSwitch receita={receitaOrDespesa.receita}>
+                        <Switch defaultChecked={receitaOrDespesa.fixa}/>
+                        <TextSwitch>Fixa</TextSwitch>
                     </ContainerSwitch>
                 </Form>
             </Container>
