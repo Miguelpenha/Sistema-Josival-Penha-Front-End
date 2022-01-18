@@ -1,19 +1,19 @@
 import styled, { css } from 'styled-components'
 
 export const Container = styled.div`
-    background-color: #ffffff;
-    width: 50%;
-    color: ${props => props.receita ? '#60BF92' : '#EF5252'};
-    display: flex;
     top: 30%;
     left: 50%;
-    position: absolute;
-    transform: translate(-50%, -30%);
-    flex-direction: column;
-    padding: 1.5%;
-    border-radius: 10px;
+    width: 50%;
     height: 75%;
+    padding: 1.5%;
+    display: flex;
+    position: absolute;
+    border-radius: 10px;
     align-items: center;
+    flex-direction: column;
+    background-color: #ffffff;
+    transform: translate(-50%, -30%);
+    color: ${props => props.receita ? '#60BF92' : '#EF5252'};
 `
 
 export const Title = styled.h1`
@@ -22,18 +22,18 @@ export const Title = styled.h1`
 `
 
 export const Form = styled.form`
-    display: flex;
     width: 70%;
-    flex-direction: column;
-    align-items: center;
+    display: flex;
     padding-top: 2%;
+    align-items: center;
+    flex-direction: column;
 `
 
 export const Campo = styled.div`
-    display: flex;
-    flex-direction: column;
     width: 80%;
+    display: flex;
     padding-bottom: 4%;
+    flex-direction: column;
 `
 
 export const Label = styled.label`
@@ -43,11 +43,11 @@ export const Label = styled.label`
 
 export const InputText = styled.input`
     width: 70%;
-    border: 2px solid ${props => props.receita ? '#60BF92' : '#EF5252'};
-    color: ${props => props.receita ? '#60BF92' : '#EF5252'};
-    border-radius: 10px;
-    font-size: 1.5vw;
     padding: 1.5%;
+    font-size: 1.5vw;
+    border-radius: 10px;
+    color: ${props => props.receita ? '#60BF92' : '#EF5252'};
+    border: 2px solid ${props => props.receita ? '#60BF92' : '#EF5252'};
 
     :focus {
         outline: none;

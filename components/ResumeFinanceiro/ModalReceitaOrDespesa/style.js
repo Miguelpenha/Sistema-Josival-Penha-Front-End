@@ -1,31 +1,31 @@
 import styled, { css } from 'styled-components'
 
 export const ContainerModalInfoReceitaOrDespesa = styled.div`
-    background-color: #ffffff;
-    width: 50%;
-    color: ${props => props.receita ? '#60BF92' : '#EF5252'};
-    display: flex;
     top: 30%;
     left: 50%;
-    position: absolute;
-    transform: translate(-50%, -30%);
-    flex-direction: column;
-    padding: 1.5%;
-    border-radius: 10px;
+    width: 50%;
     height: 50%;
+    display: flex;
+    padding: 1.5%;
     font-size: 0.8vw;
+    position: absolute;
+    border-radius: 10px;
+    flex-direction: column;
+    background-color: #ffffff;
+    transform: translate(-50%, -30%);
+    color: ${props => props.receita ? '#60BF92' : '#EF5252'};
 `
 
 export const AlertCopyInfo = styled.div`
-    background-color: #0872FC;
-    position: fixed;
-    right: 2%;
     top: 5%;
-    color: #ffffff;
+    right: 2%;
     padding: 1.5%;
-    border-radius: 20px 5px 20px 20px;
+    color: #ffffff;
+    position: fixed;
     font-size: 1.2vw;
     font-weight: bold;
+    background-color: #0872FC;
+    border-radius: 20px 5px 20px 20px;
 `
 
 export const ContainerInfoReceitaOrDespesa = styled.h1`
