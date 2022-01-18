@@ -66,7 +66,7 @@ export const ContainerSwitch = styled.div`
             color: ${props => props.receita ? '#60BF92' : '#EF5252'};
         }
         
-        & .MuiSwitch-switchBase + .MuiSwitch-track {
+        & .MuiSwitch-switchBase + & .MuiSwitch-track {
             background-color: ${props => props.receita ? '#60BF92' : '#EF5252'};
         }
     `}
