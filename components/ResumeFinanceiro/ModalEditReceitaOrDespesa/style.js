@@ -62,11 +62,11 @@ export const ContainerSwitch = styled.div`
     align-items: center;
 
     ${props => props.receita && css`
-        & .MuiSwitch-switchBase.Mui-checked {
+        && .MuiSwitch-switchBase.Mui-checked {
             color: ${props => props.receita ? '#60BF92' : '#EF5252'};
         }
         
-        & .MuiSwitch-switchBase + & .MuiSwitch-track {
+        && .MuiSwitch-switchBase + && .MuiSwitch-track {
             background-color: ${props => props.receita ? '#60BF92' : '#EF5252'};
         }
     `}
