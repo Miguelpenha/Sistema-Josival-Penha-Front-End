@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { Switch as SwitchNotStyle } from '@material-ui/core'
 
 export const Container = styled.div`
     background-color: #ffffff;
@@ -12,8 +13,13 @@ export const Container = styled.div`
     flex-direction: column;
     padding: 1.5%;
     border-radius: 10px;
-    height: 50%;
+    height: 55%;
     align-items: center;
+`
+
+export const Title = styled.h1`
+    font-size: 2vw;
+    margin-bottom: 2%;
 `
 
 export const Form = styled.form`
@@ -48,5 +54,22 @@ export const InputText = styled.input`
         outline: none;
         border-width: 3px;
         border-radius: 15px;
+    }
+`
+
+export const ContainerSwitch = styled.div`
+    width: 80%;
+    display: flex;
+    align-items: center;
+    font-size: 1vw;
+`
+
+export const Switch = styled(SwitchNotStyle)`
+    & .MuiSwitch-switchBase.Mui-checked {
+        color: ${props => props.receita ? '#60BF92' : '#EF5252'};
+    }
+    
+    & .MuiSwitch-switchBase + .MuiSwitch-track {
+        background-color: ${props => props.receita ? '#60BF92' : '#EF5252'};
     }
 `
