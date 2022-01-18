@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { Switch as SwitchNotStyled } from '@material-ui/core'
 
 export const Container = styled.div`
     top: 30%;
@@ -60,7 +61,9 @@ export const ContainerSwitch = styled.div`
     width: 80%;
     display: flex;
     align-items: center;
+`
 
+export const Switch = styled(SwitchNotStyled)`
     && .MuiSwitch-switchBase.Mui-checked {
         color: ${props => props.receita ? '#60BF92' : '#EF5252'};
     }

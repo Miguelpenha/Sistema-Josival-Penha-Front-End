@@ -1,6 +1,5 @@
 import { Modal } from '@material-ui/core'
-import { Container, Title, Form, Campo, Label, InputText, ContainerSwitch, TextSwitch } from './style'
-import { Switch } from '@material-ui/core'
+import { Container, Title, Form, Campo, Label, InputText, ContainerSwitch, Switch, TextSwitch } from './style'
 
 export default function ModalEditReceitaOrDespesa({ open, onClose, receitaOrDespesa }) {
     return (
@@ -36,11 +35,17 @@ export default function ModalEditReceitaOrDespesa({ open, onClose, receitaOrDesp
                         />
                     </Campo>
                     <ContainerSwitch receita={receitaOrDespesa.receita}>
-                        <Switch defaultChecked={receitaOrDespesa.investimento}/>
+                        <Switch
+                            receita={receitaOrDespesa.receita}
+                            defaultChecked={receitaOrDespesa.investimento}
+                        />
                         <TextSwitch>Investimento</TextSwitch>
                     </ContainerSwitch>
                     <ContainerSwitch receita={receitaOrDespesa.receita}>
-                        <Switch defaultChecked={receitaOrDespesa.fixa}/>
+                        <Switch
+                            receita={receitaOrDespesa.receita}
+                            defaultChecked={receitaOrDespesa.fixa}
+                        />
                         <TextSwitch>Fixa</TextSwitch>
                     </ContainerSwitch>
                 </Form>
