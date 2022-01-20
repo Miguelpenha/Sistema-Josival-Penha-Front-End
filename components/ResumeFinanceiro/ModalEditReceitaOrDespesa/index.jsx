@@ -1,5 +1,5 @@
 import { Modal } from '@material-ui/core'
-import { Container, Title, Form, Campo, Label, InputText, ContainerSwitch, Switch, TextSwitch } from './style'
+import { Container, Title, Form, Campo, Label, InputText, TextArea, ContainerSwitch, Switch, TextSwitch } from './style'
 
 export default function ModalEditReceitaOrDespesa({ open, onClose, receitaOrDespesa }) {
     return (
@@ -33,6 +33,10 @@ export default function ModalEditReceitaOrDespesa({ open, onClose, receitaOrDesp
                             receita={receitaOrDespesa.receita}
                             defaultValue={`${receitaOrDespesa.data.split('/')[2]}-${receitaOrDespesa.data.split('/')[1]}-${receitaOrDespesa.data.split('/')[0]}`}
                         />
+                    </Campo>
+                    <Campo>
+                        <Label htmlFor="Observação">Observação</Label>
+                        <TextArea receita={receitaOrDespesa.receita}>{receitaOrDespesa.observação}</TextArea>
                     </Campo>
                     <ContainerSwitch receita={receitaOrDespesa.receita}>
                         <Switch

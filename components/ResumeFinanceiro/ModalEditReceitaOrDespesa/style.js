@@ -5,7 +5,7 @@ export const Container = styled.div`
     top: 30%;
     left: 50%;
     width: 50%;
-    height: 75%;
+    height: 85%;
     padding: 1.5%;
     display: flex;
     position: absolute;
@@ -43,6 +43,21 @@ export const Label = styled.label`
 `
 
 export const InputText = styled.input`
+    width: 70%;
+    padding: 1.5%;
+    font-size: 1.5vw;
+    border-radius: 10px;
+    color: ${props => props.receita ? '#60BF92' : '#EF5252'};
+    border: 2px solid ${props => props.receita ? '#60BF92' : '#EF5252'};
+
+    :focus {
+        outline: none;
+        border-width: 3px;
+        border-radius: 15px;
+    }
+`
+
+export const TextArea = styled.textarea`
     width: 70%;
     padding: 1.5%;
     font-size: 1.5vw;
