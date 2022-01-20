@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, memo } from 'react'
 import {
     Container,
     ContainerReceitasDespesas,
@@ -9,7 +9,7 @@ import ReceitaOrDespesa from './ReceitaOrDespesa'
 import ModalReceitaOrDespesa from './ModalReceitaOrDespesa'
 import ModalEditReceitaOrDespesa from './ModalEditReceitaOrDespesa'
 
-export default function ResumeFinanceiro({ receitas, despesas, onDeleteReceita, onDeleteDespesa, resume, saldoReceitas, saldoDespesas, saldo, ...props }) {
+function ResumeFinanceiro({ receitas, despesas, onDeleteReceita, onDeleteDespesa, resume, saldoReceitas, saldoDespesas, saldo, ...props }) {
     if (typeof receitas != 'string' && typeof despesas != 'string') {
         if (receitas.length || despesas.length) {
             const [openReceitaOrDespesa, setOpenReceitaOrDespesa] = useState(false)
@@ -106,3 +106,5 @@ export default function ResumeFinanceiro({ receitas, despesas, onDeleteReceita, 
         return null
     }
 }
+
+export default memo(ResumeFinanceiro)
