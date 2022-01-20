@@ -29,8 +29,13 @@ export const ContainerSaldos = styled.div`
 export const Saldo= styled.div`
     padding: 2.5%;
     font-size: 1vw;
+    cursor: pointer;
     margin-bottom: 2%;
     border-radius: 10px;
     color: ${props => props.color};
     border: 2px solid ${props => props.color};
+
+    :hover {
+        background-color: #a3a0a050;
+    }
 `

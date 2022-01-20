@@ -37,8 +37,8 @@ function ResumeFinanceiro({ receitas, despesas, onDeleteReceita, onDeleteDespesa
                 return b.criação.sistema - a.criação.sistema
             }
 
-            function copyInfo(ev) {
-                navigator.clipboard.writeText(ev.currentTarget.innerText)
+            function copyInfo(ev, text) {
+                navigator.clipboard.writeText(text || ev.currentTarget.innerText)
 
                 setCopyTextInfo(true)
 
@@ -72,13 +72,13 @@ function ResumeFinanceiro({ receitas, despesas, onDeleteReceita, onDeleteDespesa
                     </ContainerReceitasDespesas>
                     {resume && (
                         <ContainerSaldos>
-                            <Saldo color="#EF5252">
+                            <Saldo color="#EF5252" onClick={() => copyInfo(null, saldoDespesas)}>
                                 <h1>Despesas - {saldoDespesas}</h1>
                             </Saldo>
-                            <Saldo color="#60BF92">
+                            <Saldo color="#60BF92" onClick={() => copyInfo(null, saldoReceitas)}>
                                 <h1>Receitas + {saldoReceitas}</h1>
                             </Saldo>
-                            <Saldo color="#0872FC">
+                            <Saldo color="#0872FC" onClick={() => copyInfo(null, saldo)} asd={{casd: '#a3a0a050'}}>
                                 <h1>Saldo {saldo}</h1>
                             </Saldo>
                         </ContainerSaldos>
