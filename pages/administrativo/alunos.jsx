@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import nookies from 'nookies'
 import { Container, Main, AlunosBanner, InfoAdminContainer, InfoAdmin, InfoAdminTit, InfoAdminDado, IconInfoTotalAlunos, IconInfoTotalTurmas, IconInfoMédiaAlunos, IconInfoOcupação, NavInfos, DialogCadasAluno, InputNomeCadasAluno, ButtonSubmitCadasAluno, CampoInputCadasAluno, InputSelectCadasAluno, InputDespesaData, LabelInputStyle, LabelInputStyleReq, ErrorInput } from '../../styles/pages/administrativo/alunos'
-import { NavOptions, LogoJPNome, Funções, Função, LinkFunção, IconAlunosSele, IconFinanceiro, IconAcadêmico, IconDashBoard, IconMarketing, IconColaboradores, TextFunção } from '../../components/NavTool'
+import { NavOptions, LogoJPNome, Funções, Função, LinkFunção, IconAlunosSele, IconFinanceiro, IconPagamentos, IconAcadêmico, IconDashBoard, IconMarketing, IconColaboradores, TextFunção } from '../../components/NavTool'
 import { get } from '../../hooks'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
@@ -244,6 +244,14 @@ export default function Alunos() {
                 <LinkFunção>
                   <IconMarketing/>
                   <TextFunção>Marketing</TextFunção>
+                </LinkFunção>
+              </Link>
+            </Função>
+            <Função>
+              <Link href="/administrativo/pagamentos" passHref>
+                <LinkFunção>
+                  <IconPagamentos/>
+                  <TextFunção>Pagamentos</TextFunção>
                 </LinkFunção>
               </Link>
             </Função>
