@@ -10,7 +10,7 @@ export default createGlobalStyle`
     }
 
     html, body, body>div:first-child, div#__next, div#__next>div {
-        height: 98.5%;
+        height: 100%;
     }
     
     html {
