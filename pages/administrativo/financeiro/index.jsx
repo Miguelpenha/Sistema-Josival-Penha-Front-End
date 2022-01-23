@@ -45,7 +45,7 @@ import {
   Charts,
   ResumeFinanceiro
 } from '../../../styles/pages/administrativo/financeiro'
-import { NavOptions, LogoJPNome, Funções, Função, LinkFunção, IconAlunos, IconAcadêmico, IconDashBoard, IconMarketing, IconFinanceiroSele, IconColaboradores, TextFunção } from '../../../components/NavTool'
+import { NavOptions, LogoJPNome, Funções, Função, LinkFunção, IconAlunos, IconAcadêmico, IconDashBoard, IconMarketing, IconFinanceiroSele, IconPagamentos, IconColaboradores, TextFunção } from '../../../components/NavTool'
 import Link from 'next/link'
 import { Menu, MenuItem, InputAdornment, Snackbar, Alert, TextField, Divider, Skeleton, SpeedDialAction, SpeedDialIcon, SpeedDial, IconButton } from '@material-ui/core'
 import { TrendingDown as TrendingDownIcon, Label as LabelIcon, Payment as PaymentIcon, TrendingUp as TrendingUpIcon, Lock as LockIcon, KeyboardBackspace as ArrowBackIcon } from '@material-ui/icons'
@@ -796,6 +796,14 @@ export default function Financeiro() {
                 <LinkFunção>
                   <IconMarketing/>
                   <TextFunção>Marketing</TextFunção>
+                </LinkFunção>
+              </Link>
+            </Função>
+            <Função>
+              <Link href="/administrativo/pagamentos" passHref>
+                <LinkFunção>
+                  <IconPagamentos/>
+                  <TextFunção>Pagamentos</TextFunção>
                 </LinkFunção>
               </Link>
             </Função>
