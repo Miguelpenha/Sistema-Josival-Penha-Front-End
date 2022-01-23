@@ -1,93 +1,46 @@
+import { get } from '../../hooks'
+import { useState } from 'react'
 import Head from 'next/head'
 import { Container, Main } from '../../styles/pages/administrativo/pagamentos'
-import {
-  NavOptions,
-  LogoJPNome,
-  Funções,
-  Função,
-  LinkFunção,
-  IconAlunos,
-  IconFinanceiro,
-  IconPagamentosSele,
-  IconAcadêmico,
-  IconDashBoard,
-  IconMarketing,
-  IconColaboradores,
-  TextFunção
-} from '../../components/NavTool'
-import Link from 'next/link'
+import NavOptions from '../../components/pages/administrativo/pagamentos/NavOptions'
+import ModalMensalidade from '../../components/pages/administrativo/pagamentos/ModalMensalidade'
 import nookies from 'nookies'
 
 export default function Pagamentos() {
-    return (
-        <>
-            <Head>
-                <title>Pagamentos</title>
-            </Head>
-            <Container>
-              <NavOptions>
-                <LogoJPNome/>
-                <Funções>
-                  <Função>
-                    <Link href="/administrativo/alunos" passHref>
-                        <LinkFunção>
-                          <IconAlunos/>
-                          <TextFunção>Alunos</TextFunção>
-                        </LinkFunção>
-                    </Link>
-                  </Função>
-                  <Função>
-                    <Link href="/administrativo/academico" passHref>
-                      <LinkFunção>
-                        <IconAcadêmico/>
-                        <TextFunção>Acadêmico</TextFunção>
-                      </LinkFunção>
-                    </Link>
-                  </Função>
-                  <Função>
-                    <Link href="/administrativo/dashboard" passHref>
-                      <LinkFunção>
-                        <IconDashBoard/>
-                        <TextFunção>Dashboard</TextFunção>
-                      </LinkFunção>
-                    </Link>
-                  </Função>
-                  <Função>
-                    <Link href="/administrativo/marketing" passHref>
-                      <LinkFunção>
-                        <IconMarketing/>
-                        <TextFunção>Marketing</TextFunção>
-                      </LinkFunção>
-                    </Link>
-                  </Função>
-                  <Função selected={true}>
-                      <IconPagamentosSele/>
-                      <TextFunção>Pagamentos</TextFunção>
-                  </Função>
-                  <Função>
-                    <Link href="/administrativo/financeiro" passHref>
-                      <LinkFunção>
-                        <IconFinanceiro/>
-                        <TextFunção>Financeiro</TextFunção>
-                      </LinkFunção>
-                    </Link>
-                  </Função>
-                  <Função>
-                    <Link href="/administrativo/colaboradores" passHref>
-                      <LinkFunção>
-                        <IconColaboradores/>
-                        <TextFunção>Colaboradores</TextFunção>
-                      </LinkFunção>
-                    </Link>
-                  </Função>
-                </Funções>
-              </NavOptions>
-              <Main>
-                <h1>Pagamentos</h1>
-              </Main>
-            </Container>
-        </>
-    )
+  const { data: alunos } = get('/alunos')
+  const [openModalMensalidade, setOpenModalMensalidade] = useState(false)
+  const [aluno, setAluno] = useState(null)
+  const [mesMensalidade, setMesMensalidade] = useState(null)
+  const handleCloseModalMensalidade = () => setOpenModalMensalidade(false)
+  const handleOpenModalMensalidade = () => setOpenModalMensalidade(true)
+
+  return (
+      <>
+          <Head>
+              <title>Pagamentos</title>
+          </Head>
+          <Container>
+            <NavOptions/>
+            <Main>
+              <h1
+                onClick={() => {
+                  handleOpenModalMensalidade()
+                  setAluno(alunos[0])
+                  setMesMensalidade('01')
+                }}
+              >
+                Pagamentos
+              </h1>
+              <ModalMensalidade
+                open={openModalMensalidade}
+                onClose={handleCloseModalMensalidade}
+                aluno={aluno}
+                mesMensalidade={mesMensalidade}
+              />
+            </Main>
+          </Container>
+      </>
+  )
 }
 
 export const getServerSideProps = async ctx => {
