@@ -11,6 +11,7 @@ import {
     IconDashBoard,
     IconMarketing,
     IconColaboradores,
+    IconError,
     TextFunção
 } from '../../../NavTool'
 import Link from 'next/link'
@@ -21,56 +22,64 @@ export default function NavOptions() {
             <LogoJPNome/>
             <Funções>
                 <Função>
-                <Link href="/administrativo/alunos" passHref>
-                    <LinkFunção>
-                        <IconAlunos/>
-                        <TextFunção>Alunos</TextFunção>
-                    </LinkFunção>
-                </Link>
+                    <Link href="/administrativo/alunos" passHref>
+                        <LinkFunção>
+                            <IconAlunos/>
+                            <TextFunção>Alunos</TextFunção>
+                        </LinkFunção>
+                    </Link>
                 </Função>
                 <Função>
-                <Link href="/administrativo/academico" passHref>
-                    <LinkFunção>
-                    <IconAcadêmico/>
-                    <TextFunção>Acadêmico</TextFunção>
-                    </LinkFunção>
-                </Link>
+                    <Link href="/administrativo/academico" passHref>
+                        <LinkFunção>
+                            <IconAcadêmico/>
+                            <TextFunção>Acadêmico</TextFunção>
+                        </LinkFunção>
+                    </Link>
                 </Função>
                 <Função>
-                <Link href="/administrativo/dashboard" passHref>
-                    <LinkFunção>
-                    <IconDashBoard/>
-                    <TextFunção>Dashboard</TextFunção>
-                    </LinkFunção>
-                </Link>
+                    <Link href="/administrativo/dashboard" passHref>
+                        <LinkFunção>
+                            <IconDashBoard/>
+                            <TextFunção>Dashboard</TextFunção>
+                        </LinkFunção>
+                    </Link>
                 </Função>
                 <Função>
-                <Link href="/administrativo/marketing" passHref>
-                    <LinkFunção>
-                    <IconMarketing/>
-                    <TextFunção>Marketing</TextFunção>
-                    </LinkFunção>
-                </Link>
+                    <Link href="/administrativo/marketing" passHref>
+                        <LinkFunção>
+                            <IconMarketing/>
+                            <TextFunção>Marketing</TextFunção>
+                        </LinkFunção>
+                    </Link>
                 </Função>
                 <Função selected={true}>
                     <IconPagamentosSele/>
                     <TextFunção>Pagamentos</TextFunção>
                 </Função>
                 <Função>
-                <Link href="/administrativo/financeiro" passHref>
-                    <LinkFunção>
-                    <IconFinanceiro/>
-                    <TextFunção>Financeiro</TextFunção>
-                    </LinkFunção>
-                </Link>
+                    <Link href="/administrativo/financeiro" passHref>
+                        <LinkFunção>
+                            <IconFinanceiro/>
+                            <TextFunção>Financeiro</TextFunção>
+                        </LinkFunção>
+                    </Link>
                 </Função>
                 <Função>
-                <Link href="/administrativo/colaboradores" passHref>
-                    <LinkFunção>
-                    <IconColaboradores/>
-                    <TextFunção>Colaboradores</TextFunção>
-                    </LinkFunção>
-                </Link>
+                    <Link href="/administrativo/colaboradores" passHref>
+                        <LinkFunção>
+                            <IconColaboradores/>
+                            <TextFunção>Colaboradores</TextFunção>
+                        </LinkFunção>
+                    </Link>
+                </Função>
+                <Função>
+                    <Link href="/administrativo/reportar" passHref>
+                        <LinkFunção>
+                            <IconError/>
+                            <TextFunção>Reportar erro</TextFunção>
+                        </LinkFunção>
+                    </Link>
                 </Função>
             </Funções>
         </Container>

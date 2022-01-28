@@ -8,7 +8,7 @@ import IconDashBoardSVG from '../../assets/icon-nav-admin-dashBoard.svg'
 import IconDashBoardSeleSVG from '../../assets/icon-nav-admin-dashBoard-sele.svg'
 import IconMarketingSVG from '../../assets/icon-nav-admin-marketing.svg'
 import IconMarketingSeleSVG from '../../assets/icon-nav-admin-marketing-sele.svg'
-import { MonetizationOn as IconFinanceiroSVG, Group as IconColaboradoresSVG, SyncAlt as IconPagamentosSVG } from '@material-ui/icons'
+import { MonetizationOnOutlined as IconFinanceiroSVG, GroupOutlined as IconColaboradoresSVG, SyncAlt as IconPagamentosSVG, ErrorOutline as IconErrorSVG } from '@material-ui/icons'
 import { memo } from 'react'
 
 const NavOptionsStyle = styled.nav`
@@ -33,7 +33,7 @@ export const LogoJPNome = memo(LogoJPNomeStyle)
 export const FunçõesStyle = styled.ul`
     height: auto;
     font-size: 1.4vw;
-    margin-top: 15%;
+    margin-top: 5%;
 `
 
 export const Funções = memo(FunçõesStyle)
@@ -213,6 +213,29 @@ const IconColaboradoresSeleStyle = styled(IconColaboradoresSVG)`
 `
 
 export const IconColaboradoresSele = memo(IconColaboradoresSeleStyle)
+
+const IconErrorStyle = styled(IconErrorSVG)`
+    && {
+        width: 20%;
+        margin-right: 6%;
+        margin-left: 4%;
+        height: auto;
+    }
+`
+
+export const IconError = memo(IconErrorStyle)
+
+const IconErrorSeleStyle = styled(IconErrorSVG)`
+    && {
+        width: 20%;
+        margin-right: 6%;
+        margin-left: 4%;
+        height: auto;
+        color: #0872FC;
+    }
+`
+
+export const IconErrorSele = memo(IconErrorSeleStyle)
 
 const TextFunçãoStyle = styled.span`
     align-self: center;

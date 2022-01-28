@@ -1,7 +1,6 @@
 import Head from 'next/head'
 import nookies from 'nookies'
 import { Container, Main } from '../../styles/pages/professoras/index'
-import NavTool from '../../components/NavTool'
 
 export default function Professoras() {
   return (
@@ -10,7 +9,6 @@ export default function Professoras() {
         <title>Professoras</title>
       </Head>
       <Container>
-        <NavTool/>
         <Main>
           <h1>Professoras</h1>
         </Main>
