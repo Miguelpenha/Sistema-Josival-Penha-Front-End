@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import LogoJPNomeSemStyle from '../../components/LogoJPNome'
 import IconAlunosSVG from '../../assets/icon-nav-admin-alunos.svg'
 import IconAlunosSeleSVG from '../../assets/icon-nav-admin-alunos-sele.svg'
@@ -47,6 +47,14 @@ const FunçãoStyle = styled.li`
     margin-right: auto;
     padding: ${props => props.selected ? '7%' :'4%'};
     align-items: center;
+    ${props => props.menor && css`
+        font-size: 1.2vw;
+        margin-top: 5%;
+
+        && svg {
+            width: 15%;
+        }
+    `}
 `
 
 export const Função = memo(FunçãoStyle)

@@ -819,7 +819,7 @@ export default function Financeiro() {
                 </LinkFunção>
               </Link>
             </Função>
-            <Função>
+            <Função menor>
               <Link href="/administrativo/reportar" passHref>
                 <LinkFunção>
                   <IconError/>
