@@ -111,22 +111,22 @@ export default function Pagamentos() {
                                         */
                                     }}>
                                         <td>
-                                            <Link href={`/administrativo/pagamentos/${aluno.id}`} passHref>
+                                            <Link href={`/administrativo/pagamentos/alunos/${aluno.id}`} passHref>
                                                 <a>{aluno.nome}</a>
                                             </Link>
                                         </td>
                                         <td>
-                                            <Link href={`/administrativo/pagamentos/${aluno.id}`} passHref>
+                                            <Link href={`/administrativo/pagamentos/alunos/${aluno.id}`} passHref>
                                                 <a>{aluno.pagamentos[mesFilter].pago ? 'Em dia' : new Date().getMonth()+1 == mesFilter ? Number(new Date(new Date().getFullYear(), mesFilter-1, Number(new Date().toLocaleDateString('pt-br').split('/')[0])).toLocaleDateString('pt-br').split('/')[0]) <= Number(aluno.pagamentos[mesFilter].vencimento.split('/')[0]) ? 'Em dia' : 'Atrazado' : Number(new Date(new Date().getFullYear(), mesFilter-1, 1).toLocaleDateString('pt-br').split('/')[0]) <= Number(aluno.pagamentos[mesFilter].vencimento.split('/')[0]) ? 'Em dia' : 'Atrazado'}</a>
                                             </Link>
                                         </td>
                                         <td>
-                                            <Link href={`/administrativo/pagamentos/${aluno.id}`} passHref>
+                                            <Link href={`/administrativo/pagamentos/alunos/${aluno.id}`} passHref>
                                                 <a>{aluno.pagamentos[mesFilter].value}</a>
                                             </Link>
                                         </td>
                                         <td>
-                                            <Link href={`/administrativo/pagamentos/${aluno.id}`} passHref>
+                                            <Link href={`/administrativo/pagamentos/alunos/${aluno.id}`} passHref>
                                                 <a>{aluno.pagamentos[mesFilter].forma}</a>
                                             </Link>
                                         </td>
