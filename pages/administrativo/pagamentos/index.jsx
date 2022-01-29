@@ -1,10 +1,11 @@
-import { get } from '../../hooks'
+import { get } from '../../../hooks'
 import { useState } from 'react'
 import Head from 'next/head'
-import { Container, Main, ContainerFilters, ContainerInputFind, IconInputFind, InputFind } from '../../styles/pages/administrativo/pagamentos'
-import NavOptions from '../../components/pages/administrativo/pagamentos/NavOptions'
+import { Container, Main, ContainerFilters, ContainerInputFind, IconInputFind, InputFind, Table } from '../../../styles/pages/administrativo/pagamentos'
+import NavOptions from '../../../components/pages/administrativo/pagamentos/NavOptions'
 import { Select, MenuItem, Switch } from '@material-ui/core'
-import ModalMensalidade from '../../components/pages/administrativo/pagamentos/ModalMensalidade'
+import Link from 'next/link'
+import ModalMensalidade from '../../../components/pages/administrativo/pagamentos/ModalMensalidade'
 import nookies from 'nookies'
 
 export default function Pagamentos() {
@@ -57,8 +58,12 @@ export default function Pagamentos() {
                 </Select>
                 <Select value={turmaFilter} onChange={event => setTurmaFilter(event.target.value)}>
                   <MenuItem value="Nenhuma turma">Nenhuma turma</MenuItem>
-                  {turmas && turmas.map((turma, index) => (
-                    <MenuItem value={turma._id} key={index}>{turma.nome}</MenuItem>
+                  {alunos && turmas && turmas.map((turma, index) => (
+                    <MenuItem value={turma._id} key={index}>{turma.nome} ({[...alunos.map(aluno => {
+                      if (aluno.turma === turma.nome) {
+                        return {...aluno}
+                      }
+                    })].length})</MenuItem>
                   ))}
                 </Select>
               </ContainerFilters>
@@ -79,16 +84,18 @@ export default function Pagamentos() {
 
                   if (renderVeri) {
                     return (
-                      <table key={index}>
+                      <Table key={index} cellSpacing="0" cellpadding="0">
                         <thead>
                           <tr>
-                            <th colSpan={4}>{turma.nome}</th>
+                            <th colSpan={4}>
+                              <h2>{turma.nome}</h2>
+                            </th>
                           </tr>
                           <tr>
-                            <th>Aluno</th>
-                            <th>Status</th>
-                            <th>Valor</th>
-                            <th>Forma de pagamento</th>
+                            <th align="left">Aluno</th>
+                            <th align="left">Status</th>
+                            <th align="left">Valor</th>
+                            <th align="left">Forma de pagamento</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -97,21 +104,39 @@ export default function Pagamentos() {
                               const veriAtrazado = aluno.pagamentos[mesFilter].pago ? false : new Date().getMonth()+1 == mesFilter ? Number(new Date(new Date().getFullYear(), mesFilter-1, Number(new Date().toLocaleDateString('pt-br').split('/')[0])).toLocaleDateString('pt-br').split('/')[0]) <= Number(aluno.pagamentos[mesFilter].vencimento.split('/')[0]) ? false : true : Number(new Date(new Date().getFullYear(), mesFilter-1, 1).toLocaleDateString('pt-br').split('/')[0]) <= Number(aluno.pagamentos[mesFilter].vencimento.split('/')[0]) ? false : true
                               if (atrazadosFilter ? veriAtrazado : true) {
                                 return (
-                                  <tr key={index} onClick={() => {
-                                    handleOpenModalMensalidade()
-                                    setAluno(aluno)
-                                  }}>
-                                    <td>{aluno.nome}</td>
-                                    <td>{aluno.pagamentos[mesFilter].pago ? 'Em dia' : new Date().getMonth()+1 == mesFilter ? Number(new Date(new Date().getFullYear(), mesFilter-1, Number(new Date().toLocaleDateString('pt-br').split('/')[0])).toLocaleDateString('pt-br').split('/')[0]) <= Number(aluno.pagamentos[mesFilter].vencimento.split('/')[0]) ? 'Em dia' : 'Atrazado' : Number(new Date(new Date().getFullYear(), mesFilter-1, 1).toLocaleDateString('pt-br').split('/')[0]) <= Number(aluno.pagamentos[mesFilter].vencimento.split('/')[0]) ? 'Em dia' : 'Atrazado'}</td>
-                                    <td>{aluno.pagamentos[mesFilter].value}</td>
-                                    <td>{aluno.pagamentos[mesFilter].forma}</td>
+                                    <tr className="aluno" key={index} onClick={() => {
+                                        /*
+                                            handleOpenModalMensalidade()
+                                            setAluno(aluno)
+                                        */
+                                    }}>
+                                        <td>
+                                            <Link href={`/administrativo/pagamentos/${aluno.id}`} passHref>
+                                                <a>{aluno.nome}</a>
+                                            </Link>
+                                        </td>
+                                        <td>
+                                            <Link href={`/administrativo/pagamentos/${aluno.id}`} passHref>
+                                                <a>{aluno.pagamentos[mesFilter].pago ? 'Em dia' : new Date().getMonth()+1 == mesFilter ? Number(new Date(new Date().getFullYear(), mesFilter-1, Number(new Date().toLocaleDateString('pt-br').split('/')[0])).toLocaleDateString('pt-br').split('/')[0]) <= Number(aluno.pagamentos[mesFilter].vencimento.split('/')[0]) ? 'Em dia' : 'Atrazado' : Number(new Date(new Date().getFullYear(), mesFilter-1, 1).toLocaleDateString('pt-br').split('/')[0]) <= Number(aluno.pagamentos[mesFilter].vencimento.split('/')[0]) ? 'Em dia' : 'Atrazado'}</a>
+                                            </Link>
+                                        </td>
+                                        <td>
+                                            <Link href={`/administrativo/pagamentos/${aluno.id}`} passHref>
+                                                <a>{aluno.pagamentos[mesFilter].value}</a>
+                                            </Link>
+                                        </td>
+                                        <td>
+                                            <Link href={`/administrativo/pagamentos/${aluno.id}`} passHref>
+                                                <a>{aluno.pagamentos[mesFilter].forma}</a>
+                                            </Link>
+                                        </td>
                                   </tr>
                                 )
                               }
                             }
                           })}
                         </tbody>
-                      </table>
+                      </Table>
                     )
                   } else {
                     return null

@@ -8,36 +8,43 @@ export const Container = styled.div`
 
 export const Main = styled.main`
     padding: 2%;
-    color: #000000;
+    color: #555555;
+`
+
+export const Table = styled.table`
+    width: 110%;
     font-size: 1.5vw;
+    margin-bottom: 5%;
 
-    table {
-        thead {
-            th {
+    th {
+        padding: 1%;
+        color: #7c7c7c;
+    }
+
+    tr {
+        td {
+            padding: 0%;
+            background-color: #ffffff;
+
+            a {
+                width: 100%;
+                padding: 2%;
+                height: 100%;
+                color: #555555;
+                display: block;
+                text-decoration: none;
+            }
+        }
+
+        .aluno {
+            cursor: pointer;
+        }
+
+        :hover {
+            td {
                 background-color: #E5E5E5;
-                padding: 1%;
             }
         }
-
-        tbody {
-            tr {
-                cursor: pointer;
-
-                td {
-                    background-color: #ffffff;
-                    padding: 1%;
-                }
-
-                :hover {
-                    td {
-                        background-color: #E5E5E5;
-                    }
-                }
-            }
-        }
-
-        margin-bottom: 5%;
-        width: 110%;
     }
 `
 
