@@ -65,38 +65,57 @@ export default function Pagamentos() {
               <Switch checked={atrazadosFilter} onChange={event => setAtrazadosFilter(event.target.checked)}/>Atrazados
               {turmas && turmas.map((turma, index) => {
                 if (turmaFilter === 'Nenhuma turma' || turma._id === turmaFilter) {
-                  return (
-                    <table key={index}>
-                      <thead>
-                        <tr>
-                          <th>Aluno</th>
-                          <th>Status</th>
-                          <th>Valor</th>
-                          <th>Forma de pagamento</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {alunos && alunos.map((aluno, index) => {
-                          if(aluno.turma === turma.nome && aluno.nome.toUpperCase().includes(textFilter.toUpperCase())) {
-                            const veriAtrazado = aluno.pagamentos[mesFilter].pago ? false : new Date().getMonth()+1 == mesFilter ? Number(new Date(new Date().getFullYear(), mesFilter-1, Number(new Date().toLocaleDateString('pt-br').split('/')[0])).toLocaleDateString('pt-br').split('/')[0]) <= Number(aluno.pagamentos[mesFilter].vencimento.split('/')[0]) ? false : true : Number(new Date(new Date().getFullYear(), mesFilter-1, 1).toLocaleDateString('pt-br').split('/')[0]) <= Number(aluno.pagamentos[mesFilter].vencimento.split('/')[0]) ? false : true
-                            if (atrazadosFilter ? veriAtrazado : true) {
-                              return (
-                                <tr key={index} onClick={() => {
-                                  handleOpenModalMensalidade()
-                                  setAluno(aluno)
-                                }}>
-                                  <td>{aluno.nome}</td>
-                                  <td>{aluno.pagamentos[mesFilter].pago ? 'Em dia' : new Date().getMonth()+1 == mesFilter ? Number(new Date(new Date().getFullYear(), mesFilter-1, Number(new Date().toLocaleDateString('pt-br').split('/')[0])).toLocaleDateString('pt-br').split('/')[0]) <= Number(aluno.pagamentos[mesFilter].vencimento.split('/')[0]) ? 'Em dia' : 'Atrazado' : Number(new Date(new Date().getFullYear(), mesFilter-1, 1).toLocaleDateString('pt-br').split('/')[0]) <= Number(aluno.pagamentos[mesFilter].vencimento.split('/')[0]) ? 'Em dia' : 'Atrazado'}</td>
-                                  <td>{aluno.pagamentos[mesFilter].value}</td>
-                                  <td>{aluno.pagamentos[mesFilter].forma}</td>
-                                </tr>
-                              )
+                  let renderVeri = false
+
+                  alunos && alunos.map(aluno => {
+                    if (aluno.turma === turma.nome && aluno.nome.toUpperCase().includes(textFilter.toUpperCase())) {
+                      const veriAtrazado = aluno.pagamentos[mesFilter].pago ? false : new Date().getMonth()+1 == mesFilter ? Number(new Date(new Date().getFullYear(), mesFilter-1, Number(new Date().toLocaleDateString('pt-br').split('/')[0])).toLocaleDateString('pt-br').split('/')[0]) <= Number(aluno.pagamentos[mesFilter].vencimento.split('/')[0]) ? false : true : Number(new Date(new Date().getFullYear(), mesFilter-1, 1).toLocaleDateString('pt-br').split('/')[0]) <= Number(aluno.pagamentos[mesFilter].vencimento.split('/')[0]) ? false : true
+
+                      if (atrazadosFilter ? veriAtrazado : true) {
+                        renderVeri = true
+                      }
+                    }
+                  })
+
+                  if (renderVeri) {
+                    return (
+                      <table key={index}>
+                        <thead>
+                          <tr>
+                            <th colSpan={4}>{turma.nome}</th>
+                          </tr>
+                          <tr>
+                            <th>Aluno</th>
+                            <th>Status</th>
+                            <th>Valor</th>
+                            <th>Forma de pagamento</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {alunos && alunos.map((aluno, index) => {
+                            if(aluno.turma === turma.nome && aluno.nome.toUpperCase().includes(textFilter.toUpperCase())) {
+                              const veriAtrazado = aluno.pagamentos[mesFilter].pago ? false : new Date().getMonth()+1 == mesFilter ? Number(new Date(new Date().getFullYear(), mesFilter-1, Number(new Date().toLocaleDateString('pt-br').split('/')[0])).toLocaleDateString('pt-br').split('/')[0]) <= Number(aluno.pagamentos[mesFilter].vencimento.split('/')[0]) ? false : true : Number(new Date(new Date().getFullYear(), mesFilter-1, 1).toLocaleDateString('pt-br').split('/')[0]) <= Number(aluno.pagamentos[mesFilter].vencimento.split('/')[0]) ? false : true
+                              if (atrazadosFilter ? veriAtrazado : true) {
+                                return (
+                                  <tr key={index} onClick={() => {
+                                    handleOpenModalMensalidade()
+                                    setAluno(aluno)
+                                  }}>
+                                    <td>{aluno.nome}</td>
+                                    <td>{aluno.pagamentos[mesFilter].pago ? 'Em dia' : new Date().getMonth()+1 == mesFilter ? Number(new Date(new Date().getFullYear(), mesFilter-1, Number(new Date().toLocaleDateString('pt-br').split('/')[0])).toLocaleDateString('pt-br').split('/')[0]) <= Number(aluno.pagamentos[mesFilter].vencimento.split('/')[0]) ? 'Em dia' : 'Atrazado' : Number(new Date(new Date().getFullYear(), mesFilter-1, 1).toLocaleDateString('pt-br').split('/')[0]) <= Number(aluno.pagamentos[mesFilter].vencimento.split('/')[0]) ? 'Em dia' : 'Atrazado'}</td>
+                                    <td>{aluno.pagamentos[mesFilter].value}</td>
+                                    <td>{aluno.pagamentos[mesFilter].forma}</td>
+                                  </tr>
+                                )
+                              }
                             }
-                          }
-                        })}
-                      </tbody>
-                    </table>
-                  )
+                          })}
+                        </tbody>
+                      </table>
+                    )
+                  } else {
+                    return null
+                  }
                 }
               })}
               <ModalMensalidade
