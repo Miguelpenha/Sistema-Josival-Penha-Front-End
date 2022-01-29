@@ -37,7 +37,7 @@ export const Main = styled.main`
         }
 
         margin-bottom: 5%;
-        width: 100%;
+        width: 110%;
     }
 `
 
