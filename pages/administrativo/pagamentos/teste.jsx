@@ -1,6 +1,6 @@
-import { get } from '../../../../hooks'
-import Loading from '../../../../components/Loading'
-import { Container, ContainerIconBack, IconBack } from '../../../../styles/pages/administrativo/pagamentos/aluno'
+import { get } from '../../../hooks'
+import Loading from '../../../components/Loading'
+import { Container, ContainerIconBack, IconBack } from '../../../styles/pages/administrativo/pagamentos/alunos'
 import Link from 'next/link'
 
 export async function getStaticPaths() {

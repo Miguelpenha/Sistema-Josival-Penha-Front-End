@@ -1,7 +1,7 @@
 import { get } from '../../../hooks'
 import { useState } from 'react'
 import Head from 'next/head'
-import { Container, Main, ContainerFilters, ContainerInputFind, IconInputFind, InputFind, Table } from '../../../styles/pages/administrativo/pagamentos'
+import { Container, Main, ContainerFilters, ContainerInputFind, IconInputFind, InputFind, Table, IconAtrasadoOrEmDia } from '../../../styles/pages/administrativo/pagamentos'
 import NavOptions from '../../../components/pages/administrativo/pagamentos/NavOptions'
 import { Select, MenuItem, Switch } from '@material-ui/core'
 import Link from 'next/link'
@@ -58,13 +58,13 @@ export default function Pagamentos() {
                 </Select>
                 <Select value={turmaFilter} onChange={event => setTurmaFilter(event.target.value)}>
                   <MenuItem value="Nenhuma turma">Nenhuma turma</MenuItem>
-                  {alunos && turmas && turmas.map((turma, index) => (
-                    <MenuItem value={turma._id} key={index}>{turma.nome} ({[...alunos.map(aluno => {
-                      if (aluno.turma === turma.nome) {
-                        return {...aluno}
-                      }
-                    })].length})</MenuItem>
-                  ))}
+                  {alunos && turmas && turmas.map((turma, index) => <>
+                    {turma.alunos >= 1 && (
+                      <MenuItem value={turma._id} key={index}>
+                        {turma.nome} ({turma.alunos} alunos)
+                      </MenuItem>
+                    )}
+                  </>)}
                 </Select>
               </ContainerFilters>
               <Switch checked={atrazadosFilter} onChange={event => setAtrazadosFilter(event.target.checked)}/>Atrazados
@@ -111,22 +111,25 @@ export default function Pagamentos() {
                                         */
                                     }}>
                                         <td>
-                                            <Link href={`/administrativo/pagamentos/alunos/${aluno.id}`} passHref>
+                                            <Link href={`/administrativo/pagamentos/alunos?aluno=${aluno.id}`} passHref>
                                                 <a>{aluno.nome}</a>
                                             </Link>
                                         </td>
                                         <td>
-                                            <Link href={`/administrativo/pagamentos/alunos/${aluno.id}`} passHref>
-                                                <a>{aluno.pagamentos[mesFilter].pago ? 'Em dia' : new Date().getMonth()+1 == mesFilter ? Number(new Date(new Date().getFullYear(), mesFilter-1, Number(new Date().toLocaleDateString('pt-br').split('/')[0])).toLocaleDateString('pt-br').split('/')[0]) <= Number(aluno.pagamentos[mesFilter].vencimento.split('/')[0]) ? 'Em dia' : 'Atrazado' : Number(new Date(new Date().getFullYear(), mesFilter-1, 1).toLocaleDateString('pt-br').split('/')[0]) <= Number(aluno.pagamentos[mesFilter].vencimento.split('/')[0]) ? 'Em dia' : 'Atrazado'}</a>
+                                            <Link href={`/administrativo/pagamentos/alunos?aluno=${aluno.id}`} passHref>
+                                                <a>
+                                                 {aluno.pagamentos[mesFilter].pago ? <IconAtrasadoOrEmDia color="#60BF92"/> : new Date().getMonth()+1 == mesFilter ? Number(new Date(new Date().getFullYear(), mesFilter-1, Number(new Date().toLocaleDateString('pt-br').split('/')[0])).toLocaleDateString('pt-br').split('/')[0]) <= Number(aluno.pagamentos[mesFilter].vencimento.split('/')[0]) ? <IconAtrasadoOrEmDia color="#60BF92"/> : <IconAtrasadoOrEmDia color="#EF5252"/> : Number(new Date(new Date().getFullYear(), mesFilter-1, 1).toLocaleDateString('pt-br').split('/')[0]) <= Number(aluno.pagamentos[mesFilter].vencimento.split('/')[0]) ? <IconAtrasadoOrEmDia color="#60BF92"/> : <IconAtrasadoOrEmDia color="#EF5252"/>}
+                                                  {aluno.pagamentos[mesFilter].pago ? 'Em dia' : new Date().getMonth()+1 == mesFilter ? Number(new Date(new Date().getFullYear(), mesFilter-1, Number(new Date().toLocaleDateString('pt-br').split('/')[0])).toLocaleDateString('pt-br').split('/')[0]) <= Number(aluno.pagamentos[mesFilter].vencimento.split('/')[0]) ? 'Em dia' : 'Atrazado' : Number(new Date(new Date().getFullYear(), mesFilter-1, 1).toLocaleDateString('pt-br').split('/')[0]) <= Number(aluno.pagamentos[mesFilter].vencimento.split('/')[0]) ? 'Em dia' : 'Atrazado'}
+                                                </a>
                                             </Link>
                                         </td>
                                         <td>
-                                            <Link href={`/administrativo/pagamentos/alunos/${aluno.id}`} passHref>
+                                            <Link href={`/administrativo/pagamentos/alunos?aluno=${aluno.id}`} passHref>
                                                 <a>{aluno.pagamentos[mesFilter].value}</a>
                                             </Link>
                                         </td>
                                         <td>
-                                            <Link href={`/administrativo/pagamentos/alunos/${aluno.id}`} passHref>
+                                            <Link href={`/administrativo/pagamentos/alunos?aluno=${aluno.id}`} passHref>
                                                 <a>{aluno.pagamentos[mesFilter].forma}</a>
                                             </Link>
                                         </td>

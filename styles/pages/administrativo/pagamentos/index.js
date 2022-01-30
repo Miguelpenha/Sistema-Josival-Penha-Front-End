@@ -33,6 +33,8 @@ export const Table = styled.table`
                 color: #555555;
                 display: block;
                 text-decoration: none;
+                display: flex;
+                align-items: center;
             }
         }
 
@@ -81,8 +83,18 @@ export const InputFind = styled.input`
     border: #ffffff 2px solid;
     border-top-right-radius: 15px;
     border-bottom-right-radius: 15px;
+
     :focus {
         outline: none;
         border: #1976D2 2px solid;
     }
+`
+
+export const IconAtrasadoOrEmDia = styled.div`
+    display: flex;
+    background-color: ${props => props.color};
+    width: 6%;
+    padding: 6%;
+    margin-right: 5%;
+    border-radius: 50%;
 `
