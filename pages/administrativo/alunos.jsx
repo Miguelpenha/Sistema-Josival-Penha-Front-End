@@ -21,6 +21,7 @@ export default function Alunos() {
   const [mediaAlunos, setMediaAlunos] = useState(undefined)
   const [mediaOcupação, setMediaOcupação] = useState(undefined)
   const [openModelAlunosCadastrar, setOpenModelAlunosCadastrar] = useState(false)
+  const [openModelTurmasCadastrar, setOpenModelTurmasCadastrar] = useState(false)
   const [alert, setAlert] = useState({
     open: false
   })
@@ -193,6 +194,90 @@ export default function Alunos() {
     return null
   }
 
+  function ModelTurmasCadastrar({ open }) {
+    if (open) {
+      const [nomeError, setNomeError] = useState(false)
+      const { register, handleSubmit, reset, watch } = useForm()
+      const { data: professoras } = get('/professoras')
+
+      watch(async (value, { name, type }) => {
+        if (name === 'nome') {
+          let nomes = []
+          turmas.map(turma => nomes.push(turma.nome))
+          if (nomes.includes(value.nome)) {
+            setNomeError(true)
+          } else {
+            setNomeError(false)
+          }
+        }
+      })
+      
+      async function enviarTurma(data, event) {
+        if (!nomeError) {
+          let { nome, serie, turno, professora } = data
+          
+          const turma = {
+            nome,
+            serie,
+            turno,
+            professora,
+            criação: new Date().toISOString()
+          }
+
+          await api.post('/turmas', turma)
+          
+          setAlert({
+            open: true,
+            text: 'Turma cadastrada com sucesso!',
+            variant: 'filled',
+            severity: 'success'
+          })
+          reset()
+          setOpenModelTurmasCadastrar(false)
+          event.preventDefault()
+          mutateAlunos('/turmas')
+          mutateQuantAlunos('/turmas?quant=true')
+          mutateTurmas('alunos')
+          mutateQuantTurmas('alunos?quant=true')
+        }
+      }
+
+      return (
+        <DialogCadasAluno open={true} onClose={() => setOpenModelTurmasCadastrar(false)}>
+          <DialogContent>
+            <form style={{paddingBottom: '17%'}} onSubmit={handleSubmit(enviarTurma)}>
+                <CampoInputCadasAluno>
+                  <LabelInput required>Nome</LabelInput>
+                  <InputNomeCadasAluno name="nome" required {...register('nome')} placeholder="Nome da turma" type="text" variant="standard"/>
+                  {nomeError && <ErrorInput>Já existe uma turma cadastrada com esse nome</ErrorInput>}
+                </CampoInputCadasAluno>
+                <CampoInputCadasAluno>
+                  <LabelInput required>Série</LabelInput>
+                  <InputNomeCadasAluno name="serie" required {...register('serie')} placeholder="Série da turma" type="text" variant="standard"/>
+                </CampoInputCadasAluno>
+                <CampoInputCadasAluno>
+                  <LabelInput required>Turno</LabelInput>
+                  <InputSelectCadasAluno id="turno" {...register('turno')}>
+                    <MenuItem value="Manhã">Manhã</MenuItem>
+                    <MenuItem value="Tarde">Tarde</MenuItem>
+                  </InputSelectCadasAluno>
+                </CampoInputCadasAluno>
+                <CampoInputCadasAluno>
+                  <LabelInput required>Professora</LabelInput>
+                  <InputSelectCadasAluno id="professora" {...register('professora')}>
+                    {professoras && professoras.map(professora => <MenuItem value={professora.nome}>{professora.nome}</MenuItem>)}
+                  </InputSelectCadasAluno>
+                </CampoInputCadasAluno>
+                <ButtonSubmitCadasAluno style={{marginBottom: '0%'}} type="submit" variant="contained">Cadastrar</ButtonSubmitCadasAluno>
+            </form>
+          </DialogContent>
+        </DialogCadasAluno>
+      )
+    }
+
+    return null
+  }
+
   useEffect(() => {
     if (quantTurmas && quantAlunos) {
       setMediaAlunos(parseFloat(Number(quantAlunos.quant)/Number(quantTurmas.quant)).toFixed(2))
@@ -206,6 +291,13 @@ export default function Alunos() {
       name: 'Cadastrar aluno',
       onClick: () => {
         setOpenModelAlunosCadastrar(true)
+      }
+    },
+    {
+      icon: <AddIcon/>,
+      name: 'Cadastrar turma',
+      onClick: () => {
+        setOpenModelTurmasCadastrar(true)
       }
     }
   ]
@@ -416,6 +508,7 @@ export default function Alunos() {
             </Alert>
           </Snackbar>
           <ModelAlunosCadastrar open={openModelAlunosCadastrar}/>
+          <ModelTurmasCadastrar open={openModelTurmasCadastrar}/>
       </Container>
     </>
   )
