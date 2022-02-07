@@ -5,7 +5,6 @@ import { Container, Main, ContainerFilters, ContainerInputFind, IconInputFind, I
 import NavOptions from '../../../components/pages/administrativo/pagamentos/NavOptions'
 import { Select, MenuItem, Switch } from '@material-ui/core'
 import Link from 'next/link'
-import ModalMensalidade from '../../../components/pages/administrativo/pagamentos/ModalMensalidade'
 import nookies from 'nookies'
 
 export default function Pagamentos() {
@@ -15,10 +14,6 @@ export default function Pagamentos() {
   const [textFilter, setTextFilter] = useState('')
   const [turmaFilter, setTurmaFilter] = useState('Nenhuma turma')
   const [atrazadosFilter, setAtrazadosFilter] = useState(false)
-  const [openModalMensalidade, setOpenModalMensalidade] = useState(false)
-  const [aluno, setAluno] = useState(null)
-  const handleCloseModalMensalidade = () => setOpenModalMensalidade(false)
-  const handleOpenModalMensalidade = () => setOpenModalMensalidade(true)
 
   return (
       <>
@@ -104,12 +99,7 @@ export default function Pagamentos() {
                               const veriAtrazado = aluno.pagamentos[mesFilter].pago ? false : new Date().getMonth()+1 == mesFilter ? Number(new Date(new Date().getFullYear(), mesFilter-1, Number(new Date().toLocaleDateString('pt-br').split('/')[0])).toLocaleDateString('pt-br').split('/')[0]) <= Number(aluno.pagamentos[mesFilter].vencimento.split('/')[0]) ? false : true : Number(new Date(new Date().getFullYear(), mesFilter-1, 1).toLocaleDateString('pt-br').split('/')[0]) <= Number(aluno.pagamentos[mesFilter].vencimento.split('/')[0]) ? false : true
                               if (atrazadosFilter ? veriAtrazado : true) {
                                 return (
-                                    <tr className="aluno" key={index} onClick={() => {
-                                        /*
-                                            handleOpenModalMensalidade()
-                                            setAluno(aluno)
-                                        */
-                                    }}>
+                                    <tr className="aluno" key={index}>
                                         <td>
                                             <Link href={`/administrativo/pagamentos/alunos/${aluno.id}`} passHref>
                                                 <a>{aluno.nome}</a>
@@ -146,12 +136,6 @@ export default function Pagamentos() {
                   }
                 }
               })}
-              <ModalMensalidade
-                open={openModalMensalidade}
-                onClose={handleCloseModalMensalidade}
-                aluno={aluno}
-                mesMensalidade={mesFilter}
-              />
             </Main>
           </Container>
       </>

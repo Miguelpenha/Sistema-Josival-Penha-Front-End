@@ -14,7 +14,7 @@ export default function ModalMensalidade({ open, onClose, aluno, mesMensalidade 
     return (
       <Modal open={open} onClose={onClose}>
         <div>
-          {aluno && (
+          {aluno && aluno.pagamentos && aluno.pagamentos[mesMensalidade] && (
               <Container>
                 <Title>Mensalidade</Title>
                 <ContainerInputMensalidade>
