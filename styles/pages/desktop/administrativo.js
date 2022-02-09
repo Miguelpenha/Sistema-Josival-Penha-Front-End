@@ -31,12 +31,12 @@ export const IconBack = styled.svg`
 export const Title = styled.h1`
     color: #009BDD;
     font-size: 3vw;
-    margin-bottom: 4%;
+    margin-bottom: 2%;
     text-align: center;
 `
 
-export const ContainerIconFile = styled.a`
-    width: 18%;
+export const Button = styled.a`
+    width: 20%;
     margin: auto;
     padding: 1.5%;
     display: flex;
@@ -48,6 +48,7 @@ export const ContainerIconFile = styled.a`
     align-items: center;
     justify-content: center;
     background-color: #009BDD;
+    margin-top: 1%;
 
     :hover {
         opacity: 0.7;

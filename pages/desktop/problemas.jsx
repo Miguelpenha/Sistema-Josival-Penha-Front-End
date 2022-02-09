@@ -1,6 +1,6 @@
-import { Container, Title, IconButtonBack, IconBack, Files } from '../../styles/pages/desktop/arquivos'
+import { Container, Title, IconButtonBack, IconBack, Files } from '../../styles/pages/desktop/problemas'
 import { useState } from 'react'
-import File from '../../components/File'
+import Problema from '../../components/Problema'
 import { Snackbar, IconButton } from '@material-ui/core'
 import { Close } from '@material-ui/icons'
 import { Alert } from '../../components/AlertStyle'
@@ -9,7 +9,7 @@ import Link from 'next/link'
 import nookies from 'nookies'
 
 export default function Arquivos() {
-    const { data: fotosAlunos, mutate: mutateFotosAlunos } = get('/alunos/fotos')
+    const { data: problemas, mutate: mutateProblemas } = get('/problemas')
     const [alert, setAlert] = useState({
         open: false
     })
@@ -44,9 +44,9 @@ export default function Arquivos() {
                     <IconBack fontSize="large"/>
                 </IconButtonBack>
             </Link>
-            <Title>Arquivos</Title>
+            <Title>Problemas</Title>
             <Files>
-                {fotosAlunos && typeof fotosAlunos === 'object' && fotosAlunos.map((foto, key) => <File foto={foto} key={key} setAlert={data => setAlert(data)} reload={() => mutateFotosAlunos('/alunos/fotos')}/>)}
+                {problemas && typeof problemas === 'object' && problemas.map((problema, key) => <Problema problema={problema}/>)}
             </Files>
             <AlertFunction/>
         </Container>

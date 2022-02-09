@@ -1,4 +1,4 @@
-import { Container, ContainerIconBack, IconBack, Title, ContainerIconFile, IconFile, Animation } from '../../styles/pages/desktop/administrativo'
+import { Container, ContainerIconBack, IconBack, Title, Button, IconFile, Animation } from '../../styles/pages/desktop/administrativo'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import nookies from 'nookies'
@@ -19,13 +19,22 @@ export default function Administrativo() {
       </ContainerIconBack>
       <Title>Painel de controle Josival Penha</Title>
       <Link href="/desktop/arquivos">
-        <ContainerIconFile title="Ver arquivos">
+        <Button title="Ver arquivos">
           Ver arquivos
           <IconFile xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
             <path d="M0 0h24v24H0z" fill="none"/>
             <path d="M6 2c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6H6zm7 7V3.5L18.5 9H13z"/>
           </IconFile>
-        </ContainerIconFile>
+        </Button>
+      </Link>
+      <Link href="/desktop/problemas">
+        <Button title="Ver problemas">
+          Ver problemas
+          <IconFile xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M0 0h24v24H0z" fill="none"/>
+            <path d="M6 2c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6H6zm7 7V3.5L18.5 9H13z"/>
+          </IconFile>
+        </Button>
       </Link>
       <Animation options={{
         animationData: require('../../animations/control.json'),
