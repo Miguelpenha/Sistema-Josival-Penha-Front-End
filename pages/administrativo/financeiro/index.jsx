@@ -34,7 +34,9 @@ import {
   ButtonSubmitReceita,
   ChartReceitasDespesas,
   Charts,
-  ResumeFinanceiro
+  ResumeFinanceiro,
+  ContainerTitleNotReceitaOrDespesa,
+  TitleNotReceitaOrDespesa
 } from '../../../styles/pages/administrativo/financeiro'
 import { NavOptions, LogoJPNome, Funções, Função, LinkFunção, IconAlunos, IconAcadêmico, IconDashBoard, IconMarketing, IconFinanceiroSele, IconPagamentos, IconColaboradores, IconError, TextFunção } from '../../../components/NavTool'
 import Link from 'next/link'
@@ -494,6 +496,15 @@ export default function Financeiro() {
                 <IconTrendingDownInfo color="#ffffff" bg="#EF5252"/>
               </Info>
             </Infos>
+            {receitas && despesas && <>
+              {!receitas.length >= 1 && !despesas.length >= 1 && (
+                <ContainerTitleNotReceitaOrDespesa>
+                  <TitleNotReceitaOrDespesa>
+                    Não há receitas ou despesas cadastradas, cadastre uma receita ou despesa para ver resumos e gráficos
+                  </TitleNotReceitaOrDespesa>
+                </ContainerTitleNotReceitaOrDespesa>
+              )}
+            </>}
             <ResumeFinanceiro receitas={receitas} despesas={despesas} onDeleteReceita={id => {
               api.delete(`/financeiro/receitas/${id}`).then(() => {
                 mutateTotalReceitas('/financeiro/receitas/total')

@@ -458,3 +458,21 @@ export const ResumeFinanceiro = styled(ResumeFinanceiroNotStyled)`
         margin-top: 5%;
     }
 `
+
+export const ContainerTitleNotReceitaOrDespesa = styled.div`
+    background-color: #0872FC;
+    display: flex;
+    margin-top: 5%;
+    width: fit-content;
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+    padding: 2%;
+    border-radius: 15px;
+    width: 85%;
+`
+
+export const TitleNotReceitaOrDespesa = styled.h1`
+    color: #ffffff;
+    font-size: 1.8vw;
+`
