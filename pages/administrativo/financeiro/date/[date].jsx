@@ -10,7 +10,7 @@ export default function Date() {
     const { date: dateBruta } = useRouter().query
     const date = dateBruta && dateBruta.replace(/-/g, '/')
     const { data: receitasDespesas, mutate: mutateReceitasDespesas } = get(`/financeiro/date/${dateBruta}`)
-
+    
     return (
         <>
             <Head>

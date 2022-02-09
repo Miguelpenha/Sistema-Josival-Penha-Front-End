@@ -7,9 +7,6 @@ import {
   ButtonFormFinanceiro, 
   Container, 
   Main, 
-  IconTrendingDown,
-  IconTrendingUp,
-  IconLabel,
   Infos,
   Info,
   InfoTit,
@@ -29,32 +26,25 @@ import {
   InputReceitaObservação,
   DescriptionIcon,
   InputDespesaData,
-  CampoCheckBoxsDespesas,
-  CheckboxCategoriaDespesa,
-  TitCampoCheckBoxDespesa,
-  NomeCategoriaDepesaComCor,
-  NomeCategoriaDepesaSóCor,
   InvestimentoDespesa,
   InvestimentoReceita,
   FixaDespesa,
   FixaReceita,
   ButtonSubmitDespesa,
   ButtonSubmitReceita,
-  IconPayment,
   ChartReceitasDespesas,
   Charts,
   ResumeFinanceiro
 } from '../../../styles/pages/administrativo/financeiro'
 import { NavOptions, LogoJPNome, Funções, Função, LinkFunção, IconAlunos, IconAcadêmico, IconDashBoard, IconMarketing, IconFinanceiroSele, IconPagamentos, IconColaboradores, IconError, TextFunção } from '../../../components/NavTool'
 import Link from 'next/link'
-import { Menu, MenuItem, InputAdornment, Snackbar, Alert, TextField, Divider, Skeleton, SpeedDialAction, SpeedDialIcon, SpeedDial, IconButton } from '@material-ui/core'
-import { TrendingDown as TrendingDownIcon, Label as LabelIcon, Payment as PaymentIcon, TrendingUp as TrendingUpIcon, Lock as LockIcon, KeyboardBackspace as ArrowBackIcon } from '@material-ui/icons'
+import { MenuItem, InputAdornment, Snackbar, Alert, Skeleton, SpeedDialAction, SpeedDialIcon, SpeedDial, IconButton, Select } from '@material-ui/core'
+import { TrendingDown as TrendingDownIcon, TrendingUp as TrendingUpIcon, Lock as LockIcon, KeyboardBackspace as ArrowBackIcon } from '@material-ui/icons'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { get } from '../../../hooks'
 import api from '../../../services/api/base'
 import TableReceitasDespesas from '../../../components/TableReceitasDespesas'
-import TableCategoriasReceitasDespesas from '../../../components/TableCategoriasReceitasDespesas'
 import { memo } from 'react'
 
 export default function Financeiro() {
@@ -63,8 +53,6 @@ export default function Financeiro() {
   const { data: despesas, mutate: mutateDespesas } = get('/financeiro/despesas')
   const { data: receitas, mutate: mutateReceitas } = get('/financeiro/receitas')
   const { data: saldo, mutate: mutateSaldo } = get('/financeiro/saldo')
-  const { data: categoriasReceitasTotal, mutate: mutateCategoriasReceitasTotal } = get('/financeiro/receitas/categorias/total')
-  const { data: categoriasDespesasTotal, mutate: mutateCategoriasDespesasTotal } = get('/financeiro/despesas/categorias/total')
   const [fechadoCadas, setFechadoCadas] = useState(null)
   const [veri, setVeri] = useState(false)
   const [alert, setAlert] = useState({
@@ -72,17 +60,8 @@ export default function Financeiro() {
   })
   let atualDateBruta = new Date()
   const [atualDate] = useState(`${atualDateBruta.toLocaleDateString().split('/')[2]}-${atualDateBruta.toLocaleDateString().split('/')[1]}-${atualDateBruta.toLocaleDateString().split('/')[0]}`)
-  const openCadas = Boolean(fechadoCadas)
   const [openDialogCadasDespesas, setOpenDialogCadasDespesas] = useState(false)
   const [openDialogCadasReceitas, setOpenDialogCadasReceitas] = useState(false)
-  const [openDialogCadasCategoriasDespesas, setOpenDialogCadasCategoriasDespesas] = useState(false)
-  const [openDialogCadasCategoriasReceitas, setOpenDialogCadasCategoriasReceitas] = useState(false)
-  const [openDialogCadasFontesDespesas, setOpenDialogCadasFontesDespesas] = useState(false)
-  const [openDialogCadasFontesReceitas, setOpenDialogCadasFontesReceitas] = useState(false)
-
-  function clickCloseCadas() {
-    setFechadoCadas(null)
-  }
 
   const actions = [
     {
@@ -95,24 +74,6 @@ export default function Financeiro() {
       color: '#ED3237'
     },
     {
-      icon: <LabelIcon sx={{color: '#ED3237'}}/>,
-      name: 'Categoria',
-      onClick: () => {
-        setOpenDialogCadasCategoriasDespesas(true)
-        setFechadoCadas(false)
-      },
-      color: '#ED3237'
-    },
-    {
-      icon: <PaymentIcon sx={{color: '#ED3237'}}/>,
-      name: 'Fonte',
-      onClick: () => {
-        setOpenDialogCadasFontesDespesas(true)
-        setFechadoCadas(false)
-      },
-      color: '#ED3237'
-    },
-    {
       icon: <TrendingUpIcon sx={{color: '#5AB55E'}}/>,
       name: 'Receita',
       onClick: () => {
@@ -120,44 +81,26 @@ export default function Financeiro() {
         setFechadoCadas(false)
       },
       color: '#5AB55E'
-    },
-    {
-      icon: <LabelIcon sx={{color: '#5AB55E'}}/>,
-      name: 'Categoria',
-      onClick: () => {
-        setOpenDialogCadasCategoriasReceitas(true)
-        setFechadoCadas(false)
-      },
-      color: '#5AB55E'
-    },
-    {
-      icon: <PaymentIcon sx={{color: '#5AB55E'}}/>,
-      name: 'Fonte',
-      onClick: () => {
-        setOpenDialogCadasFontesReceitas(true)
-        setFechadoCadas(false)
-      },
-      color: '#5AB55E'
     }
   ]
 
   function DialogCadasDespesas({ open }) {
-    const { data: categoriasDespesas } = get('/financeiro/despesas/categorias')
-    const { data: fontesDespesas } = get('/financeiro/despesas/fontes')
-    const { register, handleSubmit, reset } = useForm()
-    let categorias = []
-    let fontes = []
+    const { register, handleSubmit, reset, watch } = useForm()
+    const [fixaCampo, setFixaCampo] = useState(false)
+    let days = []
+    for (let cont = 1;cont<=31;cont++) {
+      days.push(cont < 10 ? `0${cont}` : String(cont))
+    }
     async function enviarDespesa(data, event) {
-      let { nome, despesa: despesaValor, date, observação, investimento, fixa } = data
+      let { nome, despesa: despesaValor, date, observação, investimento, fixa, fixaDay } = data
       date = `${date.split('-')[1]}/${date.split('-')[2]}/${date.split('-')[0]}`
       const despesa = {
         nome,
         preco: despesaValor,
-        categorias,
-        fontes,
         data: date,
         investimento,
         fixa,
+        fixaDay: String(fixaDay),
         observação,
         criação: new Date().toISOString()
       }
@@ -168,37 +111,23 @@ export default function Financeiro() {
         variant: 'filled',
         severity: 'success'
       })
-      limparCampos()
+      reset()
       setOpenDialogCadasDespesas(false)
       event.preventDefault()
       mutateTotalDespesas('/financeiro/despesas/total')
       mutateDespesas('/financeiro/despesas')
       mutateSaldo('/financeiro/saldo')
     }
-    function limparCampos() {
-      reset()
-      categorias = []
-      fontes = []
-    }
-    function veriFonteDespesa(event, data) {
-      if (data) {
-        fontes.push(event.target.name)
-      } else {
-        fontes.splice(fontes.indexOf(event.target.name), 1)
+    watch((value, { name, type }) => {
+      if (name === 'fixa') {
+        setFixaCampo(value.fixa)
       }
-    }
-    function veriCategoriaDespesa(event, data) {
-      if (data) {
-        categorias.push(event.target.name)
-      } else {
-        categorias.splice(categorias.indexOf(event.target.name), 1)
-      }
-    }
+    })
     if (open) {
       return (
         <DialogCadasDespesa open={true} onClose={() => {
           setOpenDialogCadasDespesas(false)
-          limparCampos()
+          reset()
         }}>
           <DialogContentCadasDespesa>
             <FormDespesa onSubmit={handleSubmit(enviarDespesa)}>
@@ -220,7 +149,22 @@ export default function Financeiro() {
                   </>
                 )
               }}/>
-              <InputDespesaData defaultValue={atualDate} type="date" {...register('date')} required name="date"/>
+              <FixaDespesa name="fixa" inputRef={register('fixa').ref} onChange={register('fixa').onChange}/>Fixa
+              {fixaCampo && <>
+                <br/>
+                <span style={{fontSize: '1.2vw',marginLeft: '2%'}}>Dia do pagamento fixo</span>
+                <Select name="fixaDay" {...register('fixaDay')} defaultValue={String(new Date().toLocaleDateString().split('/')[0])} sx={{'&&': {
+                  marginLeft: '1%',
+                  fontSize: '1vw'
+                }}}>
+                  {days.map((day, index) => (
+                    <MenuItem key={index} value={day}>{day}</MenuItem>
+                  ))}
+                </Select>
+              </>}
+              {!fixaCampo && (
+                <InputDespesaData defaultValue={atualDate} type="date" {...register('date')} required name="date"/>
+              )}
               <InputDespesaObservação multiline {...register('observação')} placeholder="Observação" type="text" name="observação" fullWidth variant="standard" InputProps={{
                 startAdornment: (
                   <>
@@ -230,49 +174,8 @@ export default function Financeiro() {
                   </>
                 )
               }}/>
-              <FixaDespesa name="fixa" inputRef={register('fixa').ref} onChange={register('fixa').onChange}/>Fixa
               <br/>
               <InvestimentoDespesa {...register('investimento')}/>Investimento
-              <CampoCheckBoxsDespesas>
-                <TitCampoCheckBoxDespesa>Categorias</TitCampoCheckBoxDespesa>
-                {categoriasDespesas.length == 0 && <Alert style={{marginTop: '3%', marginLeft: '10%', marginRight: '10%', marginBottom: '5%'}} variant="standard" severity="info">
-                  <h2>Não existem categorias cadastradas</h2>
-                </Alert>}
-                {categoriasDespesas.map(categoria =>
-                  <div key={categoria._id}>
-                    <CheckboxCategoriaDespesa name={categoria.nome} onChange={veriCategoriaDespesa} sx={{
-                      color: categoria.cor,
-                      '&.Mui-checked': {
-                        color: categoria.cor
-                      }
-                    }}/>
-                    <NomeCategoriaDepesaComCor>
-                      <NomeCategoriaDepesaSóCor color={categoria.cor}/>
-                      {categoria.nome}
-                    </NomeCategoriaDepesaComCor>
-                  </div>
-                )}
-              </CampoCheckBoxsDespesas>
-              <CampoCheckBoxsDespesas>
-                <TitCampoCheckBoxDespesa>Fontes</TitCampoCheckBoxDespesa>
-                {fontesDespesas.length == 0 && <Alert style={{marginTop: '3%', marginLeft: '10%', marginRight: '10%', marginBottom: '5%'}} variant="standard" severity="info">
-                  <h2>Não existem fontes cadastradas</h2>
-                </Alert>}
-                {fontesDespesas.map(fonte => 
-                  <div key={fonte._id}>
-                    <CheckboxCategoriaDespesa name={fonte.nome} onChange={veriFonteDespesa} sx={{
-                      color: fonte.cor,
-                      '&.Mui-checked': {
-                        color: fonte.cor
-                      }
-                    }}/>
-                    <NomeCategoriaDepesaComCor>
-                      <NomeCategoriaDepesaSóCor color={fonte.cor}/>
-                      {fonte.nome}
-                    </NomeCategoriaDepesaComCor>
-                  </div>
-                )}
-              </CampoCheckBoxsDespesas>
               <ButtonSubmitDespesa type="submit" variant="contained">Salvar</ButtonSubmitDespesa>
             </FormDespesa>
           </DialogContentCadasDespesa>
@@ -282,120 +185,15 @@ export default function Financeiro() {
     return null
   }
 
-  function DialogCadasCategoriasDespesas({ open }) {
-    const { register, handleSubmit, reset } = useForm()
-    async function enviarDespesa(data, event) {
-      let { nome, cor } = data
-      const despesa = {
-        nome,
-        cor,
-        criação: new Date().toISOString()
-      }
-      await api.post('/financeiro/despesas/categorias', despesa)
-      setAlert({
-        open: true,
-        text: 'Categoria de despesa salva com sucesso!',
-        variant: 'filled',
-        severity: 'success'
-      })
-      limparCampos()
-      setOpenDialogCadasCategoriasDespesas(false)
-      event.preventDefault()
-    }
-    function limparCampos() {
-      reset()
-    }
-    if (open) {
-      return (
-        <DialogCadasDespesa open={true} onClose={() => {
-          setOpenDialogCadasCategoriasDespesas(false)
-          limparCampos()
-        }}>
-          <DialogContentCadasDespesa>
-            <FormDespesa onSubmit={handleSubmit(enviarDespesa)}>
-              <InputNomeDespesa required {...register('nome')} placeholder="Nome" type="text" name="nome" fullWidth variant="standard" InputProps={{
-                startAdornment: (
-                  <>
-                    <InputAdornment position="start">
-                      <DescriptionIcon/>
-                    </InputAdornment>
-                  </>
-                )
-              }}/>
-              <TextField style={{marginTop: '5%', width: '65%'}} required type="color" {...register('cor')} placeholder="Cor" name="cor"/>
-              <ButtonSubmitDespesa style={{marginBottom: '0%'}} type="submit" variant="contained">Salvar</ButtonSubmitDespesa>
-            </FormDespesa>
-          </DialogContentCadasDespesa>
-        </DialogCadasDespesa>
-      )
-    }
-    return null
-  }
-
-  function DialogCadasFontesDespesas({ open }) {
-    const { register, handleSubmit, reset } = useForm()
-    async function enviarDespesa(data, event) {
-      let { nome, cor } = data
-      const despesa = {
-        nome,
-        cor,
-        criação: new Date().toISOString()
-      }
-      await api.post('/financeiro/despesas/fontes', despesa)
-      setAlert({
-        open: true,
-        text: 'Fonte de despesa salva com sucesso!',
-        variant: 'filled',
-        severity: 'success'
-      })
-      limparCampos()
-      setOpenDialogCadasFontesDespesas(false)
-      event.preventDefault()
-    }
-    function limparCampos() {
-      reset()
-    }
-    if (open) {
-      return (
-        <DialogCadasDespesa open={true} onClose={() => {
-          setOpenDialogCadasFontesDespesas(false)
-          limparCampos()
-        }}>
-          <DialogContentCadasDespesa>
-            <FormDespesa onSubmit={handleSubmit(enviarDespesa)}>
-              <InputNomeDespesa required {...register('nome')} placeholder="Nome" type="text" name="nome" fullWidth variant="standard" InputProps={{
-                startAdornment: (
-                  <>
-                    <InputAdornment position="start">
-                      <DescriptionIcon/>
-                    </InputAdornment>
-                  </>
-                )
-              }}/>
-              <TextField style={{marginTop: '5%', width: '65%'}} required type="color" {...register('cor')} placeholder="Cor" name="cor"/>
-              <ButtonSubmitDespesa style={{marginBottom: '0%'}} type="submit" variant="contained">Salvar</ButtonSubmitDespesa>
-            </FormDespesa>
-          </DialogContentCadasDespesa>
-        </DialogCadasDespesa>
-      )
-    }
-    return null
-  }
-
   function DialogCadasReceitas({ open }) {
-    const { data: categoriasReceitas} = get('/financeiro/receitas/categorias')
-    const { data: fontesReceitas } = get('/financeiro/receitas/fontes')
     const { register, handleSubmit, reset } = useForm()
-    let categorias = []
-    let fontes = []
+
     async function enviarReceita(data, event) {
       let { nome, receita: receitaValor, date, observação, investimento, fixa } = data
       date = `${date.split('-')[1]}/${date.split('-')[2]}/${date.split('-')[0]}`
       const receita = {
         nome,
         preco: receitaValor,
-        categorias,
-        fontes,
         data: date,
         investimento,
         fixa,
@@ -409,37 +207,19 @@ export default function Financeiro() {
         variant: 'filled',
         severity: 'success'
       })
-      limparCampos()
+      reset()
       setOpenDialogCadasReceitas(false)
       event.preventDefault()
       mutateTotalReceitas('/financeiro/receitas/total')
       mutateReceitas('/financeiro/receitas')
       mutateSaldo('/financeiro/saldo')
     }
-    function limparCampos() {
-      reset()
-      categorias = []
-      fontes = []
-    }
-    function veriFonteReceita(event, data) {
-      if (data) {
-        fontes.push(event.target.name)
-      } else {
-        fontes.splice(fontes.indexOf(event.target.name), 1)
-      }
-    }
-    function veriCategoriaReceita(event, data) {
-      if (data) {
-        categorias.push(event.target.name)
-      } else {
-        categorias.splice(categorias.indexOf(event.target.name), 1)
-      }
-    }
+    
     if (open) {
       return (
         <DialogCadasDespesa open={true} onClose={() => {
           setOpenDialogCadasReceitas(false)
-          limparCampos()
+          reset()
         }}>
           <DialogContentCadasDespesa>
             <FormDespesa onSubmit={handleSubmit(enviarReceita)}>
@@ -474,147 +254,7 @@ export default function Financeiro() {
               <FixaReceita name="fixa" inputRef={register('fixa').ref} onChange={register('fixa').onChange}/>Fixa
               <br/>
               <InvestimentoReceita {...register('investimento')}/>Investimento
-              <CampoCheckBoxsDespesas>
-                <TitCampoCheckBoxDespesa>Categorias</TitCampoCheckBoxDespesa>
-                {categoriasReceitas.length == 0 && <Alert style={{marginTop: '3%', marginLeft: '10%', marginRight: '10%', marginBottom: '5%'}} variant="standard" severity="info">
-                  <h2>Não existem categorias cadastradas</h2>
-                </Alert>}
-                {categoriasReceitas.map(categoria =>
-                  <div key={categoria._id}>
-                    <CheckboxCategoriaDespesa name={categoria.nome} onChange={veriCategoriaReceita} sx={{
-                      color: categoria.cor,
-                      '&.Mui-checked': {
-                        color: categoria.cor
-                      }
-                    }}/>
-                    <NomeCategoriaDepesaComCor>
-                      <NomeCategoriaDepesaSóCor color={categoria.cor}/>
-                      {categoria.nome}
-                    </NomeCategoriaDepesaComCor>
-                  </div>
-                )}
-              </CampoCheckBoxsDespesas>
-              <CampoCheckBoxsDespesas>
-                <TitCampoCheckBoxDespesa>Fontes</TitCampoCheckBoxDespesa>
-                {fontesReceitas.length == 0 && <Alert style={{marginTop: '3%', marginLeft: '10%', marginRight: '10%', marginBottom: '5%'}} variant="standard" severity="info">
-                  <h2>Não existem fontes cadastradas</h2>
-                </Alert>}
-                {fontesReceitas.map(fonte => 
-                  <div key={fonte._id}>
-                    <CheckboxCategoriaDespesa name={fonte.nome} onChange={veriFonteReceita} sx={{
-                      color: fonte.cor,
-                      '&.Mui-checked': {
-                        color: fonte.cor
-                      }
-                    }}/>
-                    <NomeCategoriaDepesaComCor>
-                      <NomeCategoriaDepesaSóCor color={fonte.cor}/>
-                      {fonte.nome}
-                    </NomeCategoriaDepesaComCor>
-                  </div>
-                )}
-              </CampoCheckBoxsDespesas>
               <ButtonSubmitReceita type="submit" variant="contained">Salvar</ButtonSubmitReceita>
-            </FormDespesa>
-          </DialogContentCadasDespesa>
-        </DialogCadasDespesa>
-      )
-    }
-    return null
-  }
-
-  function DialogCadasCategoriasReceitas({ open }) {
-    const { register, handleSubmit, reset } = useForm()
-    async function enviarCategoriaReceita(data, event) {
-      let { nome, cor } = data
-      const categoria = {
-        nome,
-        cor,
-        criação: new Date().toISOString()
-      }
-      await api.post('/financeiro/receitas/categorias', categoria)
-      setAlert({
-        open: true,
-        text: 'Categoria de receita salva com sucesso!',
-        variant: 'filled',
-        severity: 'success'
-      })
-      limparCampos()
-      setOpenDialogCadasCategoriasReceitas(false)
-      event.preventDefault()
-    }
-    function limparCampos() {
-      reset()
-    }
-    if (open) {
-      return (
-        <DialogCadasDespesa open={true} onClose={() => {
-          setOpenDialogCadasCategoriasReceitas(false)
-          limparCampos()
-        }}>
-          <DialogContentCadasDespesa>
-            <FormDespesa onSubmit={handleSubmit(enviarCategoriaReceita)}>
-              <InputNomeReceita required {...register('nome')} placeholder="Nome" type="text" name="nome" fullWidth variant="standard" InputProps={{
-                startAdornment: (
-                  <>
-                    <InputAdornment position="start">
-                      <DescriptionIcon/>
-                    </InputAdornment>
-                  </>
-                )
-              }}/>
-              <TextField style={{marginTop: '5%', width: '65%'}} required type="color" {...register('cor')} placeholder="Cor" name="cor"/>
-              <ButtonSubmitReceita style={{marginBottom: '0%'}} type="submit" variant="contained">Salvar</ButtonSubmitReceita>
-            </FormDespesa>
-          </DialogContentCadasDespesa>
-        </DialogCadasDespesa>
-      )
-    }
-    return null
-  }
-
-  function DialogCadasFontesReceitas({ open }) {
-    const { register, handleSubmit, reset } = useForm()
-    async function enviarFonteReceita(data, event) {
-      let { nome, cor } = data
-      const fonte = {
-        nome,
-        cor,
-        criação: new Date().toISOString()
-      }
-      await api.post('/financeiro/receitas/fontes', fonte)
-      setAlert({
-        open: true,
-        text: 'Fonte de receita salva com sucesso!',
-        variant: 'filled',
-        severity: 'success'
-      })
-      limparCampos()
-      setOpenDialogCadasFontesReceitas(false)
-      event.preventDefault()
-    }
-    function limparCampos() {
-      reset()
-    }
-    if (open) {
-      return (
-        <DialogCadasDespesa open={true} onClose={() => {
-          setOpenDialogCadasFontesReceitas(false)
-          limparCampos()
-        }}>
-          <DialogContentCadasDespesa>
-            <FormDespesa onSubmit={handleSubmit(enviarFonteReceita)}>
-              <InputNomeReceita required {...register('nome')} placeholder="Nome" type="text" name="nome" fullWidth variant="standard" InputProps={{
-                startAdornment: (
-                  <>
-                    <InputAdornment position="start">
-                      <DescriptionIcon/>
-                    </InputAdornment>
-                  </>
-                )
-              }}/>
-              <TextField style={{marginTop: '5%', width: '65%'}} required type="color" {...register('cor')} placeholder="Cor" name="cor"/>
-              <ButtonSubmitReceita style={{marginBottom: '0%'}} type="submit" variant="contained">Salvar</ButtonSubmitReceita>
             </FormDespesa>
           </DialogContentCadasDespesa>
         </DialogCadasDespesa>
@@ -644,67 +284,6 @@ export default function Financeiro() {
     }
   }
 
-  function ChartCategoriasReceitasComCarregamento() {
-    if (categoriasReceitasTotal) {
-      try {
-        let categoriasReceitasBrutas = []
-        let colors = []
-        categoriasReceitasTotal.map(categoria => {
-          categoriasReceitasBrutas.push([categoria.nome, categoria.total])
-          colors.push(categoria.cor)
-        })
-      
-      return <ChartReceitasDespesas width="500px" height="300px" chartType="PieChart" data={[
-        ['Nome', 'Total'],
-        ...categoriasReceitasBrutas
-      ]} options={{
-        colors,
-        pieHole: 0.4,
-        title: 'Categorias receitas',
-        titleTextStyle: {
-          color: '#5AB55E',
-          fontSize: 20
-        },
-        pieStartAngle: 180
-      }}/>
-      } catch {
-        return null
-      }
-    } else {
-      return <Skeleton variant="rectangular" width={500} height={300} style={{marginTop: '3%', borderRadius: '20px'}} animation="wave"/>
-    }
-  }
-
-  function ChartCategoriasDespesasComCarregamento() {
-    if (categoriasDespesasTotal) {
-      try {
-        let categoriasDespesasBrutas = []
-        let colors = []
-        categoriasDespesasTotal.map(categoria => {
-          categoriasDespesasBrutas.push([categoria.nome, categoria.total])
-          colors.push(categoria.cor)
-        })
-        
-        return <ChartReceitasDespesas width="500px" height="300px" chartType="PieChart" data={[
-          ['Nome', 'Total'],
-          ...categoriasDespesasBrutas
-        ]} options={{
-          colors,
-          pieHole: 0.4,
-          title: 'Categorias despesas',
-          titleTextStyle: {
-            color: '#ED3237',
-            fontSize: 20
-          },
-          pieStartAngle: 180
-        }}/>
-      } catch {
-        return null
-      }
-    } else {
-      return <Skeleton variant="rectangular" width={500} height={300} style={{marginTop: '3%', borderRadius: '20px'}} animation="wave"/>
-    }
-  }
   function Verification({ children }) {
     const [error, setError] = useState(false)
     
@@ -901,8 +480,6 @@ export default function Financeiro() {
               })
             }}/>
             <Charts>
-              {categoriasReceitasTotal && categoriasReceitasTotal.length > 0 && <ChartCategoriasReceitasComCarregamento/>}
-              {categoriasDespesasTotal && categoriasDespesasTotal.length > 0 && <ChartCategoriasDespesasComCarregamento/>}
               <ChartReceitasDespesasComCarregamento/>
             </Charts>
             {receitas && despesas ? <TableReceitasDespesas receitas={receitas && receitas} despesas={despesas && despesas} onDeleteDespesas={id => {
@@ -933,77 +510,6 @@ export default function Financeiro() {
                 })
               })
             }} onEditReceita={() => {}} onEditDespesa={() => {}} saldo={saldo && saldo.saldo}/> : <Skeleton variant="rectangular" width={`85.5%`} height={`50%`} style={{display: 'block', marginLeft: 'auto', marginRight: 'auto', borderRadius: '20px', marginTop: '5%'}} animation="wave"/>}
-            {categoriasReceitasTotal && categoriasDespesasTotal ? <TableCategoriasReceitasDespesas categoriasReceitas={categoriasReceitasTotal && categoriasReceitasTotal} categoriasDespesas={categoriasDespesasTotal && categoriasDespesasTotal} onDeleteCategoriaReceita={id => {
-              api.delete(`/financeiro/despesas/categorias/${id}`).then(() => {
-                mutateDespesas('/financeiro/despesas')
-                mutateCategoriasDespesasTotal('/financeiro/despesas/categorias/total')
-              })
-            }} onDeleteCategoriaDespesa={id => {
-              api.delete(`/financeiro/receitas/categorias/${id}`).then(() => {
-                mutateReceitas('/financeiro/receitas')
-                mutateCategoriasReceitasTotal('/financeiro/receitas/categorias/total')
-              })
-            }} onDeleteTodos={() => {
-              categoriasReceitasTotal.map(categoriaReceita => {
-                api.delete(`/financeiro/receitas/categorias/${categoriaReceita._id}`).then(() => {
-                  mutateReceitas('/financeiro/receitas')
-                  mutateCategoriasReceitasTotal('/financeiro/receitas/categorias/total')
-                })
-              })
-              categoriasDespesasTotal.map(categoriaDespesa => {
-                api.delete(`/financeiro/despesas/categorias/${categoriaDespesa._id}`).then(() => {
-                  mutateDespesas('/financeiro/despesas')
-                  mutateCategoriasDespesasTotal('/financeiro/despesas/categorias/total')
-                })
-              })
-            }} saldo={saldo && saldo.saldo}/> : <Skeleton variant="rectangular" width={`85.5%`} height={`50%`} style={{display: 'block', marginLeft: 'auto', marginRight: 'auto', borderRadius: '20px', marginTop: '5%'}} animation="wave"/>}
-            <Menu anchorEl={fechadoCadas} open={openCadas} onClose={clickCloseCadas} MenuListProps={{
-            'aria-labelledby': 'basic-button',
-            }} style={{height: '62%', width: '32%'}}>
-              <MenuItem disableRipple style={{height: '40%', width: '100%', fontSize: '1.2vw', color: '#C6C6C6'}} onClick={() => {
-                setOpenDialogCadasDespesas(true)
-                setFechadoCadas(false)
-              }}>
-                <IconTrendingDown color="#ED3237"/>
-                Despesa
-              </MenuItem>
-              <MenuItem disableRipple style={{height: '40%', width: '100%', fontSize: '1.2vw', color: '#C6C6C6'}} onClick={() => {
-                setOpenDialogCadasCategoriasDespesas(true)
-                setFechadoCadas(false)
-              }}>
-                <IconLabel color="#ED3237"/>
-                Categoria
-              </MenuItem>
-              <MenuItem disableRipple style={{height: '40%', width: '100%', fontSize: '1.2vw', color: '#C6C6C6'}} onClick={() => {
-                setOpenDialogCadasFontesDespesas(true)
-                setFechadoCadas(false)
-              }}>
-                <IconPayment color="#ED3237"/>
-                Fonte
-              </MenuItem>
-              <Divider/>
-              <MenuItem disableRipple style={{height: '40%', width: '100%', fontSize: '1.2vw', color: '#C6C6C6'}} onClick={() => {
-                setOpenDialogCadasReceitas(true)
-                setFechadoCadas(false)
-              }}>
-                <IconTrendingUp color="#5AB55E"/>
-                Receita
-              </MenuItem>
-              <MenuItem disableRipple style={{height: '40%', width: '100%', fontSize: '1.2vw', color: '#C6C6C6'}} onClick={() => {
-                setOpenDialogCadasCategoriasReceitas(true)
-                setFechadoCadas(false)
-              }}>
-                <IconLabel color="#5AB55E"/>
-                Categoria
-              </MenuItem>
-              <MenuItem disableRipple style={{height: '40%', width: '100%', fontSize: '1.2vw', color: '#C6C6C6'}} onClick={() => {
-                setOpenDialogCadasFontesReceitas(true)
-                setFechadoCadas(false)
-              }}>
-                <IconPayment color="#5AB55E"/>
-                Fonte
-              </MenuItem>
-            </Menu>
             <Snackbar anchorOrigin={{
               horizontal: 'right',
               vertical: 'bottom'
@@ -1019,11 +525,7 @@ export default function Financeiro() {
               </Alert>
             </Snackbar>
             <DialogCadasDespesas open={openDialogCadasDespesas}/>
-            <DialogCadasCategoriasDespesas open={openDialogCadasCategoriasDespesas}/>
-            <DialogCadasFontesDespesas open={openDialogCadasFontesDespesas}/>
             <DialogCadasReceitas open={openDialogCadasReceitas}/>
-            <DialogCadasCategoriasReceitas open={openDialogCadasCategoriasReceitas}/>
-            <DialogCadasFontesReceitas open={openDialogCadasFontesReceitas}/>
         </Main>
       </Container>
     </VerificationMemo>
