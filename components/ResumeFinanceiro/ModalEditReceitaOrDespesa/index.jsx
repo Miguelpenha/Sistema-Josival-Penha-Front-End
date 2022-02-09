@@ -31,7 +31,7 @@ export default function ModalEditReceitaOrDespesa({ open, onClose, receitaOrDesp
                             type="date"
                             placeholder="Data: "
                             receita={receitaOrDespesa.receita}
-                            defaultValue={`${receitaOrDespesa.data.split('/')[2]}-${receitaOrDespesa.data.split('/')[1]}-${receitaOrDespesa.data.split('/')[0]}`}
+                            defaultValue={receitaOrDespesa.data ? `${receitaOrDespesa.data.split('/')[2]}-${receitaOrDespesa.data.split('/')[1]}-${receitaOrDespesa.data.split('/')[0]}` : receitaOrDespesa.fixa && `${new Date().toLocaleDateString().split('/')[2]}-${new Date().toLocaleDateString().split('/')[1]}-${receitaOrDespesa.fixaDay}`}
                         />
                     </Campo>
                     <Campo>
