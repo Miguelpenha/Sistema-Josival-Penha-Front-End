@@ -91,6 +91,7 @@ export default function Financeiro() {
     for (let cont = 1;cont<=31;cont++) {
       days.push(cont < 10 ? `0${cont}` : String(cont))
     }
+
     async function enviarDespesa(data, event) {
       let { nome, despesa: despesaValor, date, observação, investimento, fixa, fixaDay } = data
       date = `${date.split('-')[1]}/${date.split('-')[2]}/${date.split('-')[0]}`
@@ -186,10 +187,15 @@ export default function Financeiro() {
   }
 
   function DialogCadasReceitas({ open }) {
-    const { register, handleSubmit, reset } = useForm()
+    const { register, handleSubmit, reset, watch } = useForm()
+    const [fixaCampo, setFixaCampo] = useState(false)
+    let days = []
+    for (let cont = 1;cont<=31;cont++) {
+      days.push(cont < 10 ? `0${cont}` : String(cont))
+    }
 
     async function enviarReceita(data, event) {
-      let { nome, receita: receitaValor, date, observação, investimento, fixa } = data
+      let { nome, receita: receitaValor, date, observação, investimento, fixa, fixaDay } = data
       date = `${date.split('-')[1]}/${date.split('-')[2]}/${date.split('-')[0]}`
       const receita = {
         nome,
@@ -197,6 +203,7 @@ export default function Financeiro() {
         data: date,
         investimento,
         fixa,
+        fixaDay: String(fixaDay),
         observação,
         criação: new Date().toISOString()
       }
@@ -214,7 +221,11 @@ export default function Financeiro() {
       mutateReceitas('/financeiro/receitas')
       mutateSaldo('/financeiro/saldo')
     }
-    
+    watch((value, { name, type }) => {
+      if (name === 'fixa') {
+        setFixaCampo(value.fixa)
+      }
+    })
     if (open) {
       return (
         <DialogCadasDespesa open={true} onClose={() => {
@@ -241,7 +252,22 @@ export default function Financeiro() {
                   </>
                 )
               }}/>
-              <InputDespesaData defaultValue={atualDate} type="date" {...register('date')} required name="date"/>
+              <FixaReceita name="fixa" inputRef={register('fixa').ref} onChange={register('fixa').onChange}/>Fixa
+              {fixaCampo && <>
+                <br/>
+                <span style={{fontSize: '1.2vw',marginLeft: '2%'}}>Dia do pagamento fixo</span>
+                <Select name="fixaDay" {...register('fixaDay')} defaultValue={String(new Date().toLocaleDateString().split('/')[0])} sx={{'&&': {
+                  marginLeft: '1%',
+                  fontSize: '1vw'
+                }}}>
+                  {days.map((day, index) => (
+                    <MenuItem key={index} value={day}>{day}</MenuItem>
+                  ))}
+                </Select>
+              </>}
+              {!fixaCampo && (
+                <InputDespesaData defaultValue={atualDate} type="date" {...register('date')} required name="date"/>
+              )}
               <InputReceitaObservação multiline {...register('observação')} placeholder="Observação" type="text" name="observação" fullWidth variant="standard" InputProps={{
                 startAdornment: (
                   <>
@@ -251,7 +277,6 @@ export default function Financeiro() {
                   </>
                 )
               }}/>
-              <FixaReceita name="fixa" inputRef={register('fixa').ref} onChange={register('fixa').onChange}/>Fixa
               <br/>
               <InvestimentoReceita {...register('investimento')}/>Investimento
               <ButtonSubmitReceita type="submit" variant="contained">Salvar</ButtonSubmitReceita>
@@ -264,21 +289,25 @@ export default function Financeiro() {
   }
 
   function ChartReceitasDespesasComCarregamento() {
-    if (totalReceitas && totalDespesas) {
-      return <ChartReceitasDespesas style={{marginTop: '4.5%'}} width="500px" height="300px" chartType="PieChart" data={[
-        ['Linguagens', 'Quantidade'],
-        ['Receitas', totalDespesas && totalReceitas && totalReceitas.totalBruto],
-        ['Despesas', totalReceitas && totalDespesas && totalDespesas.totalBruto]
-      ]} options={{
-        colors: ['#5AB55E', '#ED3237'],
-        pieHole: 0.4,
-        title: totalReceitas && totalDespesas && totalReceitas.totalBruto==totalDespesas.totalBruto ? 'Iguais' : totalReceitas.totalBruto>totalDespesas.totalBruto ? 'Receitas' : 'Despesas',
-        titleTextStyle: {
-          color: totalReceitas && totalDespesas && totalReceitas.totalBruto==totalDespesas.totalBruto ? '#009CDE' : totalReceitas.totalBruto>totalDespesas.totalBruto ? '#5AB55E' : '#ED3237',
-          fontSize: 20
-        },
-        pieStartAngle: 180
-      }}/>
+    if (receitas && despesas && totalReceitas && totalDespesas) {
+      if (receitas.length >= 1 || despesas.length >= 1) {
+        return <ChartReceitasDespesas style={{marginTop: '4.5%'}} width="500px" height="300px" chartType="PieChart" data={[
+          ['Linguagens', 'Quantidade'],
+          ['Receitas', totalDespesas && totalReceitas && totalReceitas.totalBruto],
+          ['Despesas', totalReceitas && totalDespesas && totalDespesas.totalBruto]
+        ]} options={{
+          colors: ['#5AB55E', '#ED3237'],
+          pieHole: 0.4,
+          title: totalReceitas && totalDespesas && totalReceitas.totalBruto==totalDespesas.totalBruto ? 'Iguais' : totalReceitas.totalBruto>totalDespesas.totalBruto ? 'Receitas' : 'Despesas',
+          titleTextStyle: {
+            color: totalReceitas && totalDespesas && totalReceitas.totalBruto==totalDespesas.totalBruto ? '#009CDE' : totalReceitas.totalBruto>totalDespesas.totalBruto ? '#5AB55E' : '#ED3237',
+            fontSize: 20
+          },
+          pieStartAngle: 180
+        }}/>
+      } else {
+        return null
+      }
     } else {
       return <Skeleton variant="rectangular" width={500} height={300} style={{marginTop: '3%', borderRadius: '20px'}} animation="wave"/>
     }
@@ -445,7 +474,6 @@ export default function Financeiro() {
                 ))}
               </SpeedDial>
             </div>
-            {/* <IconAdd onClick={clickCadas}/> */}
             <Infos>
               <Info>
                 <InfoTit>Saldo atual</InfoTit>
