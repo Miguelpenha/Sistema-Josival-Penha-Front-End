@@ -195,11 +195,12 @@ export const LabelInputStyle = styled.span`
     font-size: 1vw;
     width: fit-content;
     color: #8a8a8a;
+    white-space: nowrap;
 `
 
 export const LabelInputStyleReq = styled.span`
     color: #D93025;
-    margin-left: 10%;
+    margin-left: 8%;
 `
 
 const ErrorInputStyle = styled.div`

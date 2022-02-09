@@ -99,6 +99,10 @@ export default function Alunos() {
                   {nomeError && <ErrorInput>Já existe um aluno cadastrado com esse nome</ErrorInput>}
                 </CampoInputCadasAluno>
                 <CampoInputCadasAluno>
+                  <LabelInput required>Data de nascimento</LabelInput>
+                  <InputDespesaData required defaultValue={atualDate} type="date" name="nascimento" {...register('nascimento')}/>
+                </CampoInputCadasAluno>
+                <CampoInputCadasAluno>
                   <LabelInput required>Sexo</LabelInput>
                   <InputSelectCadasAluno id="sexo" {...register('sexo')}>
                     <MenuItem value="Masculino">Masculino</MenuItem>
@@ -112,12 +116,11 @@ export default function Alunos() {
                   </InputSelectCadasAluno>
                 </CampoInputCadasAluno>
                 <CampoInputCadasAluno>
-                  <LabelInput required>Primeiro responsável(a)</LabelInput>
-                  <InputNomeCadasAluno name="res1" required {...register('res1')} placeholder="Nome do primeiro responsável" type="text" variant="standard"/>
-                </CampoInputCadasAluno>
-                <CampoInputCadasAluno>
-                  <LabelInput>Segundo responsável(a)</LabelInput>
-                  <InputNomeCadasAluno name="res2" {...register('res2')} placeholder="Nome do segundo responsável" type="text" variant="standard"/>
+                  <LabelInput required>Situação</LabelInput>
+                  <InputSelectCadasAluno name="situacao" {...register('situacao')} defaultValue="Ativo">
+                    <MenuItem value="Ativo">Ativo</MenuItem>
+                    <MenuItem value="Cancelado">Cancelado</MenuItem>
+                  </InputSelectCadasAluno>
                 </CampoInputCadasAluno>
                 <CampoInputCadasAluno>
                   <LabelInput required>Telefone</LabelInput>
@@ -126,25 +129,12 @@ export default function Alunos() {
                   </InputMask>
                 </CampoInputCadasAluno>
                 <CampoInputCadasAluno>
-                  <LabelInput required>Situação</LabelInput>
-                  <InputSelectCadasAluno name="situacao" {...register('situacao')} defaultValue="Ativo">
-                    <MenuItem value="Ativo">Ativo</MenuItem>
-                    <MenuItem value="Cancelado">Cancelado</MenuItem>
-                  </InputSelectCadasAluno>
+                  <LabelInput required>Primeiro responsável(a)</LabelInput>
+                  <InputNomeCadasAluno name="res1" required {...register('res1')} placeholder="Nome do primeiro responsável" type="text" variant="standard"/>
                 </CampoInputCadasAluno>
                 <CampoInputCadasAluno>
-                  <LabelInput>Data de nascimento</LabelInput>
-                  <InputDespesaData defaultValue={atualDate} type="date" name="nascimento" {...register('nascimento')}/>
-                </CampoInputCadasAluno>
-                <CampoInputCadasAluno>
-                  <LabelInput>CPF</LabelInput>
-                  <InputMask mask="999.999.999-99" {...register('cpf')}>
-                    {() => <InputNomeCadasAluno name="cpf" placeholder="CPF do aluno" type="text" variant="standard"/>}
-                  </InputMask>
-                </CampoInputCadasAluno>
-                <CampoInputCadasAluno>
-                  <LabelInput>E-mail</LabelInput>
-                  <InputNomeCadasAluno name="email" {...register('email')} placeholder="E-mail do aluno" type="email" variant="standard"/>
+                  <LabelInput>Segundo responsável(a)</LabelInput>
+                  <InputNomeCadasAluno name="res2" {...register('res2')} placeholder="Nome do segundo responsável" type="text" variant="standard"/>
                 </CampoInputCadasAluno>
                 <CampoInputCadasAluno>
                   <LabelInput>CEP</LabelInput>
@@ -171,6 +161,16 @@ export default function Alunos() {
                 <CampoInputCadasAluno>
                   <LabelInput>Rua</LabelInput>
                   <InputNomeCadasAluno name="rua" {...register('rua')} placeholder="Rua do aluno" type="text" variant="standard"/>
+                </CampoInputCadasAluno>
+                <CampoInputCadasAluno>
+                  <LabelInput>CPF</LabelInput>
+                  <InputMask mask="999.999.999-99" {...register('cpf')}>
+                    {() => <InputNomeCadasAluno name="cpf" placeholder="CPF do aluno" type="text" variant="standard"/>}
+                  </InputMask>
+                </CampoInputCadasAluno>
+                <CampoInputCadasAluno>
+                  <LabelInput>E-mail</LabelInput>
+                  <InputNomeCadasAluno name="email" {...register('email')} placeholder="E-mail do aluno" type="email" variant="standard"/>
                 </CampoInputCadasAluno>
                 <CampoInputCadasAluno>
                   <LabelInput>Matrícula</LabelInput>
