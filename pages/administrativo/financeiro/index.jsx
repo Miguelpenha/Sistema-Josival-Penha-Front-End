@@ -500,7 +500,7 @@ export default function Financeiro() {
               {!receitas.length >= 1 && !despesas.length >= 1 && (
                 <ContainerTitleNotReceitaOrDespesa>
                   <TitleNotReceitaOrDespesa>
-                    Não há receitas ou despesas cadastradas, cadastre uma receita ou despesa para ver resumos e gráficos
+                    Não há receitas ou despesas cadastradas, cadastre uma receita ou despesa para ver resumos e gráficos &#x1F603;
                   </TitleNotReceitaOrDespesa>
                 </ContainerTitleNotReceitaOrDespesa>
               )}
