@@ -396,7 +396,7 @@ export default function Alunos() {
             onClick={handleClickAddOptions}
             sx={{
               '&&': {
-                fontSize: '6vw',
+                fontSize: '5vw',
                 cursor: 'pointer',
                 color: '#ffffff',
                 borderRadius: '50%',
