@@ -67,15 +67,6 @@ export default function Financeiro() {
 
   const actions = [
     {
-      icon: <TrendingDownIcon sx={{color: '#ED3237'}}/>,
-      name: 'Despesa',
-      onClick: () => {
-        setOpenDialogCadasDespesas(true)
-        setFechadoCadas(false)
-      },
-      color: '#ED3237'
-    },
-    {
       icon: <TrendingUpIcon sx={{color: '#5AB55E'}}/>,
       name: 'Receita',
       onClick: () => {
@@ -83,6 +74,15 @@ export default function Financeiro() {
         setFechadoCadas(false)
       },
       color: '#5AB55E'
+    },
+    {
+      icon: <TrendingDownIcon sx={{color: '#ED3237'}}/>,
+      name: 'Despesa',
+      onClick: () => {
+        setOpenDialogCadasDespesas(true)
+        setFechadoCadas(false)
+      },
+      color: '#ED3237'
     }
   ]
 
