@@ -9,7 +9,7 @@ import ReceitaOrDespesa from './ReceitaOrDespesa'
 import ModalReceitaOrDespesa from './ModalReceitaOrDespesa'
 import ModalEditReceitaOrDespesa from './ModalEditReceitaOrDespesa'
 
-function ResumeFinanceiro({ receitas, despesas, onDeleteReceita, onDeleteDespesa, resume, saldoReceitas, saldoDespesas, saldo, ...props }) {
+function ResumeFinanceiro({ receitas, despesas, onDeleteReceita, onDeleteDespesa, onEdit, resume, saldoReceitas, saldoDespesas, saldo, ...props }) {
     if (typeof receitas != 'string' && typeof despesas != 'string') {
         if (receitas.length || despesas.length) {
             const [openReceitaOrDespesa, setOpenReceitaOrDespesa] = useState(false)
@@ -95,6 +95,7 @@ function ResumeFinanceiro({ receitas, despesas, onDeleteReceita, onDeleteDespesa
                             open={openEditReceitaOrDespesa}
                             onClose={closeModalEditReceitaOrDespesa}
                             receitaOrDespesa={receitaOrDespesa}
+                            onEdit={onEdit}
                         />
                     </>}
                 </Container>

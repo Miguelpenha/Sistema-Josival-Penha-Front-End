@@ -517,6 +517,12 @@ export default function Financeiro() {
                 mutateDespesas('/financeiro/despesas')
                 mutateSaldo('/financeiro/saldo')
               })
+            }} onEdit={() => {
+              mutateTotalDespesas('/financeiro/receitas/total')
+              mutateTotalReceitas('/financeiro/despesas/total')
+              mutateDespesas('/financeiro/receitas')
+              mutateReceitas('/financeiro/despesas')
+              mutateSaldo('/financeiro/saldo')
             }}/>
             <Charts>
               <ChartReceitasDespesasComCarregamento/>

@@ -17,7 +17,7 @@ import {
 } from './style'
 import { Select, MenuItem } from '@material-ui/core'
 
-function ModalEditReceitaOrDespesa({ open, onClose, receitaOrDespesa }) {
+function ModalEditReceitaOrDespesa({ open, onClose, onEdit, receitaOrDespesa }) {
     const { register, handleSubmit, watch, reset } = useForm()
     const [fixaCampo, setFixaCampo] = useState(receitaOrDespesa.fixa)
     let days = []
@@ -33,11 +33,11 @@ function ModalEditReceitaOrDespesa({ open, onClose, receitaOrDespesa }) {
     })
     
     async function enviarReceitaOrDespesa(data, event) {
-        let { nome, receita: receitaValor, date, observação, investimento, fixaDay } = data
-        console.log(date)
+        let { nome, valor, date, observação, investimento, fixaDay } = data
+        
         const receitaOrDespesaSubmit = {
             nome,
-            preco: receitaValor,
+            preco: valor,
             data: date ? `${date.split('-')[1]}/${date.split('-')[2]}/${date.split('-')[0]}` : date,
             investimento,
             fixa: fixaCampo,
@@ -53,7 +53,8 @@ function ModalEditReceitaOrDespesa({ open, onClose, receitaOrDespesa }) {
         }
         
         reset()
-        onclose()
+        onEdit()
+        onClose()
         setFixaCampo(null)
         event.preventDefault()
     }
