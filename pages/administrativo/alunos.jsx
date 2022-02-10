@@ -7,8 +7,8 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import TableAlunos from '../../components/TableAlunos'
 import TableTurmas from '../../components/TableTurmas'
-import { SpeedDial, SpeedDialAction, SpeedDialIcon, Skeleton, Snackbar, Alert, DialogContent, MenuItem } from '@material-ui/core'
-import { Add as AddIcon } from '@material-ui/icons'
+import { Skeleton, Snackbar, Alert, DialogContent, MenuItem, Menu } from '@material-ui/core'
+import { Add as AddIcon, School, Class } from '@material-ui/icons'
 import api from '../../services/api/base'
 import InputMask from 'react-input-mask'
 import { useForm } from 'react-hook-form'
@@ -285,22 +285,11 @@ export default function Alunos() {
     }
   }, [quantAlunos, quantTurmas])
 
-  const actions = [
-    {
-      icon: <AddIcon/>,
-      name: 'Cadastrar aluno',
-      onClick: () => {
-        setOpenModelAlunosCadastrar(true)
-      }
-    },
-    {
-      icon: <AddIcon/>,
-      name: 'Cadastrar turma',
-      onClick: () => {
-        setOpenModelTurmasCadastrar(true)
-      }
-    }
-  ]
+  const [anchorElAddOptions, setAnchorElAddOptions] = useState(false)
+  const openAddOptions = Boolean(anchorElAddOptions)
+
+  const handleClickAddOptions = (ev) => setAnchorElAddOptions(ev.currentTarget)
+  const handleCloseAddOptions = () => setAnchorElAddOptions(false)
   
   return (
     <>
@@ -377,7 +366,7 @@ export default function Alunos() {
           <AlunosBanner>
             Alunos
           </AlunosBanner>
-          <InfoAdminContainer style={{paddingBottom: '9%'}}>
+          <InfoAdminContainer style={{paddingBottom: '2%'}}>
             <InfoAdmin>
               <InfoAdminTit>Total de Alunos</InfoAdminTit>
               {!quantAlunos && <Skeleton variant="rectangular" width={`20%`} height={35} style={{display: 'inline-block', borderRadius: '10px', marginTop: '5%'}} animation="wave"/>}
@@ -403,37 +392,54 @@ export default function Alunos() {
               <IconInfoOcupação/>
             </InfoAdmin>
           </InfoAdminContainer>
-          <div style={{position: 'relative'}}>
-            <SpeedDial
-              ariaLabel="SpeedDial basic example"
-              sx={{position: 'absolute', bottom: 2.8, left: 12}}
-              icon={<SpeedDialIcon sx={{'& .MuiSpeedDialIcon-icon': {
-                width: '50%',
-                height: 'auto'
-              }}}/>}
+          <AddIcon
+            onClick={handleClickAddOptions}
+            sx={{
+              '&&': {
+                fontSize: '6vw',
+                cursor: 'pointer',
+                color: '#ffffff',
+                borderRadius: '50%',
+                backgroundColor: '#0872FC',
+                '&&:hover': {
+                  opacity: 0.8
+                }}}
+              }
+          />
+          <Menu
+            anchorEl={anchorElAddOptions}
+            open={openAddOptions}
+            onClose={handleCloseAddOptions}
+            sx={{
+              '.MuiMenu-paper': {
+                backgroundColor: '#0872FC',
+                color: '#ffffff',
+                borderRadius: '10px',
+                padding: '0.5%'
+              }
+            }}
+          >
+            <MenuItem
+              onClick={() => {
+                handleCloseAddOptions(true)
+                setOpenModelAlunosCadastrar(true)
+              }}
+              sx={{fontSize: '1.5vw'}}
             >
-              {actions.map((action) => (
-                <SpeedDialAction
-                  key={action.name}
-                  icon={action.icon}
-                  tooltipOpen
-                  tooltipTitle={action.name}
-                  tooltipPlacement="right"
-                  sx={{
-                    '& .MuiSpeedDialAction-staticTooltipLabel': {
-                      backgroundColor: '#0872FC',
-                      color: '#ffffff'
-                    },
-                    '& .MuiSpeedDialAction-fab, & .MuiSpeedDialAction-fab:hover': {
-                      backgroundColor: '#0872FC',
-                      color: '#ffffff'
-                    }
-                  }}
-                  onClick={action.onClick}
-                />
-              ))}
-            </SpeedDial>
-          </div>
+              <School fontSize="large" sx={{marginRight: '5%'}}/>
+              Cadastrar aluno
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
+                handleCloseAddOptions(true)
+                setOpenModelTurmasCadastrar(true)
+              }}
+              sx={{fontSize: '1.5vw'}}
+            >
+              <Class fontSize="large" sx={{marginRight: '5%'}}/>
+              Cadastrar turma
+            </MenuItem>
+          </Menu>
           {alunos ? <TableAlunos
             setAlert={setAlert}
             alunos={alunos && alunos}
