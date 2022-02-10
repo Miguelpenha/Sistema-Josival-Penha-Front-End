@@ -31,36 +31,75 @@ function ModalEditReceitaOrDespesa({ open, onClose, receitaOrDespesa }) {
           setFixaCampo(value)
         }
     })
-
+    
     async function enviarReceitaOrDespesa(data, event) {
-        let { nome, receita: receitaValor, date, observação, investimento, fixa, fixaDay } = data
-        date = `${date.split('-')[1]}/${date.split('-')[2]}/${date.split('-')[0]}`
-        const receitaOrDespesa = {
+        let { nome, receita: receitaValor, date, observação, investimento, fixaDay } = data
+        console.log(date)
+        const receitaOrDespesaSubmit = {
             nome,
             preco: receitaValor,
-            data: date,
+            data: date ? `${date.split('-')[1]}/${date.split('-')[2]}/${date.split('-')[0]}` : date,
             investimento,
-            fixa,
+            fixa: fixaCampo,
             fixaDay: String(fixaDay),
             observação,
             criação: new Date().toISOString()
         }
-
+        
         if (receitaOrDespesa.receita) {
-            await api.post(`/financeiro/receitas/${receitaOrDespesa.id}`, receitaOrDespesa)
-        } else  {
-            await api.post(`/financeiro/desspesas/${receitaOrDespesa.id}`, receitaOrDespesa)
+            await api.post(`/financeiro/receitas/${receitaOrDespesa._id}`, receitaOrDespesaSubmit)
+        } else {
+            await api.post(`/financeiro/despesas/${receitaOrDespesa._id}`, receitaOrDespesaSubmit)
         }
         
         reset()
         onclose()
+        setFixaCampo(null)
         event.preventDefault()
+    }
+
+    function CampoDateFixa() {
+        return <>
+            <Label htmlFor="Dia do pagamento fixo" style={{marginLeft: '20%', marginTop: '2%', marginBottom: '1.5%'}}>Dia do pagamento fixo</Label>
+            <Select
+                name="fixaDay"
+                {...register('fixaDay')}
+                defaultValue={receitaOrDespesa.fixaDay || String(new Date().toLocaleDateString().split('/')[0])}
+                sx={{
+                    '&&': {
+                        marginRight: '66%',
+                        fontSize: '1vw'
+                    }
+                }}
+            >
+                {days.map((day, index) => (
+                    <MenuItem key={index} value={day}>{day}</MenuItem>
+                ))}
+            </Select>
+        </>
+    }
+
+    function CampoDate() {
+        return (
+            <Campo>
+                <Label htmlFor="Data">Data</Label>
+                <InputText
+                    name="data"
+                    type="date"
+                    {...register('data')}
+                    placeholder="Data: "
+                    receita={receitaOrDespesa.receita}
+                    defaultValue={receitaOrDespesa.data ? `${receitaOrDespesa.data.split('/')[2]}-${receitaOrDespesa.data.split('/')[1]}-${receitaOrDespesa.data.split('/')[0]}` : receitaOrDespesa.fixa && `${new Date().toLocaleDateString().split('/')[2]}-${new Date().toLocaleDateString().split('/')[1]}-${receitaOrDespesa.fixaDay}`}
+                />
+            </Campo>
+        )
     }
 
     return (
         <Modal open={open} onClose={() => {
             reset()
             onClose()
+            setFixaCampo(null)
         }}>
             <Container receita={receitaOrDespesa.receita}>
                 <Title>Editar {receitaOrDespesa.receita ? 'Receita' : 'Despesa'}</Title>
@@ -111,43 +150,25 @@ function ModalEditReceitaOrDespesa({ open, onClose, receitaOrDespesa }) {
                     <ContainerSwitch receita={receitaOrDespesa.receita}>
                         <Switch
                             name="fixa"
-                            inputRef={register('fixa').ref}
+                            onChange={(ev, checked) => setFixaCampo(checked)}
                             receita={receitaOrDespesa.receita}
-                            onChange={register('fixa').onChange}
                             defaultChecked={receitaOrDespesa.fixa}
                         />
                         <TextSwitch>Fixa</TextSwitch>
                     </ContainerSwitch>
-                    {fixaCampo ? <>
-                        <Label htmlFor="Dia do pagamento fixo" style={{marginLeft: '20%', marginTop: '2%', marginBottom: '1.5%'}}>Dia do pagamento fixo</Label>
-                        <Select
-                            name="fixaDay"
-                            {...register('fixaDay')}
-                            defaultValue={receitaOrDespesa.fixaDay || String(new Date().toLocaleDateString().split('/')[0])}
-                            sx={{
-                                '&&': {
-                                    marginRight: '66%',
-                                    fontSize: '1vw'
-                                }
-                            }}
-                        >
-                            {days.map((day, index) => (
-                                <MenuItem key={index} value={day}>{day}</MenuItem>
-                            ))}
-                        </Select>
-                    </> : (
-                        <Campo>
-                            <Label htmlFor="Data">Data</Label>
-                            <InputText
-                                name="data"
-                                type="date"
-                                {...register('data')}
-                                placeholder="Data: "
-                                receita={receitaOrDespesa.receita}
-                                defaultValue={receitaOrDespesa.data ? `${receitaOrDespesa.data.split('/')[2]}-${receitaOrDespesa.data.split('/')[1]}-${receitaOrDespesa.data.split('/')[0]}` : receitaOrDespesa.fixa && `${new Date().toLocaleDateString().split('/')[2]}-${new Date().toLocaleDateString().split('/')[1]}-${receitaOrDespesa.fixaDay}`}
-                            />
-                        </Campo>
+                    {fixaCampo !== null ? <>
+                        {fixaCampo ? (
+                            <CampoDateFixa/>
+                        ): (
+                            <CampoDate/>
+                        )}
+                    </> : <>
+                    {receitaOrDespesa.fixa ? (
+                        <CampoDateFixa/>
+                    ) : (
+                        <CampoDate/>
                     )}
+                    </>}
                     <Button
                         type="submit"
                         receita={receitaOrDespesa.receita}
