@@ -40,8 +40,8 @@ import {
 } from '../../../styles/pages/administrativo/financeiro'
 import { NavOptions, LogoJPNome, Funções, Função, LinkFunção, IconAlunos, IconAcadêmico, IconDashBoard, IconMarketing, IconFinanceiroSele, IconPagamentos, IconColaboradores, IconError, TextFunção } from '../../../components/NavTool'
 import Link from 'next/link'
-import { MenuItem, InputAdornment, Snackbar, Alert, Skeleton, SpeedDialAction, SpeedDialIcon, SpeedDial, IconButton, Select } from '@material-ui/core'
-import { TrendingDown as TrendingDownIcon, TrendingUp as TrendingUpIcon, Lock as LockIcon, KeyboardBackspace as ArrowBackIcon } from '@material-ui/icons'
+import { Menu, MenuItem, InputAdornment, Snackbar, Alert, Skeleton, SpeedDialAction, SpeedDialIcon, SpeedDial, IconButton, Select } from '@material-ui/core'
+import { Add as AddIcon, TrendingDown as TrendingDownIcon, TrendingUp as TrendingUpIcon, Lock as LockIcon, KeyboardBackspace as ArrowBackIcon } from '@material-ui/icons'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { get } from '../../../hooks'
@@ -64,27 +64,6 @@ export default function Financeiro() {
   const [atualDate] = useState(`${atualDateBruta.toLocaleDateString().split('/')[2]}-${atualDateBruta.toLocaleDateString().split('/')[1]}-${atualDateBruta.toLocaleDateString().split('/')[0]}`)
   const [openDialogCadasDespesas, setOpenDialogCadasDespesas] = useState(false)
   const [openDialogCadasReceitas, setOpenDialogCadasReceitas] = useState(false)
-
-  const actions = [
-    {
-      icon: <TrendingUpIcon sx={{color: '#5AB55E'}}/>,
-      name: 'Receita',
-      onClick: () => {
-        setOpenDialogCadasReceitas(true)
-        setFechadoCadas(false)
-      },
-      color: '#5AB55E'
-    },
-    {
-      icon: <TrendingDownIcon sx={{color: '#ED3237'}}/>,
-      name: 'Despesa',
-      onClick: () => {
-        setOpenDialogCadasDespesas(true)
-        setFechadoCadas(false)
-      },
-      color: '#ED3237'
-    }
-  ]
 
   function DialogCadasDespesas({ open }) {
     const { register, handleSubmit, reset, watch } = useForm()
@@ -367,6 +346,12 @@ export default function Financeiro() {
   }
 
   const VerificationMemo = memo(Verification)
+
+  const [anchorElAddOptions, setAnchorElAddOptions] = useState(false)
+  const openAddOptions = Boolean(anchorElAddOptions)
+
+  const handleClickAddOptions = (ev) => setAnchorElAddOptions(ev.currentTarget)
+  const handleCloseAddOptions = () => setAnchorElAddOptions(false)
   
   return (
     <VerificationMemo>
@@ -440,42 +425,60 @@ export default function Financeiro() {
           </Funções>
         </NavOptions>
         <Main>
-          <div style={{position: 'relative'}}>
-              <SpeedDial
-                direction="down"
-                ariaLabel="SpeedDial basic example"
-                sx={{position: 'absolute'}}
-                icon={<SpeedDialIcon sx={{'& .MuiSpeedDialIcon-icon': {
-                  width: '50%',
-                  height: 'auto'
-                }}}/>}
+          <AddIcon
+            onClick={handleClickAddOptions}
+            sx={{
+              '&&': {
+                fontSize: '5vw',
+                cursor: 'pointer',
+                color: '#ffffff',
+                borderRadius: '50%',
+                backgroundColor: '#0872FC',
+                '&&:hover': {
+                  opacity: 0.8
+                }}}
+              }
+          />
+          <Menu
+            anchorEl={anchorElAddOptions}
+            open={openAddOptions}
+            onClose={handleCloseAddOptions}
+            PaperProps={{
+              style: {
+                left: '50%',
+                transform: 'translateX(100%) translateY(90%)'
+              }
+            }}
+            sx={{
+              '.MuiMenu-paper': {
+                backgroundColor: '#0872FC',
+                borderRadius: '10px',
+                color: '#ffffff',
+                padding: '0.5%'
+              }
+            }}
+          >
+            <MenuItem
+              onClick={() => {
+                handleCloseAddOptions(true)
+                setOpenDialogCadasReceitas(true)
+              }}
+              sx={{fontSize: '1.5vw'}}
+            >
+              <TrendingUpIcon fontSize="large" sx={{marginRight: '5%', color: '#5AB55E', backgroundColor: '#ffffff', borderRadius: '50%', padding: '1%', fontSize: '2vw'}}/>
+                Cadastrar receita
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  handleCloseAddOptions(true)
+                  setOpenDialogCadasDespesas(true)
+                }}
+                sx={{fontSize: '1.5vw'}}
               >
-                {actions.map((action) => (
-                  <SpeedDialAction
-                    key={action.name}
-                    icon={action.icon}
-                    tooltipOpen
-                    tooltipTitle={action.name}
-                    tooltipPlacement="right"
-                    sx={{
-                      '& .MuiSpeedDialAction-staticTooltipLabel': {
-                        backgroundColor: '#ffffff',
-                        color: `${action.color}`,
-                        fontSize: '1.2vw',
-                        padding: '15%',
-                        borderRadius: '15px',
-                        width: 'max-content'
-                      },
-                      '& .MuiSpeedDialAction-fab, & .MuiSpeedDialAction-fab:hover': {
-                        backgroundColor: '#ffffff',
-                        color: '#EFEFEF'
-                      }
-                    }}
-                    onClick={action.onClick}
-                  />
-                ))}
-              </SpeedDial>
-            </div>
+                <TrendingDownIcon fontSize="large" sx={{marginRight: '5%', color: '#ED3237', backgroundColor: '#ffffff', borderRadius: '50%', padding: '1%', fontSize: '2vw'}}/>
+                Cadastrar despesa
+              </MenuItem>
+            </Menu>
             <Infos>
               <Info>
                 <InfoTit>Saldo atual</InfoTit>
