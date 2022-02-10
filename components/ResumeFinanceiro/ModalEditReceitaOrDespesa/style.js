@@ -5,7 +5,7 @@ export const Container = styled.div`
     top: 30%;
     left: 50%;
     width: 50%;
-    height: 85%;
+    height: 95%;
     padding: 1.5%;
     display: flex;
     position: absolute;
@@ -15,6 +15,22 @@ export const Container = styled.div`
     background-color: #ffffff;
     transform: translate(-50%, -30%);
     color: ${props => props.receita ? '#60BF92' : '#EF5252'};
+    overflow-y: scroll;
+    scrollbar-width: thin;
+    scrollbar-color: ${props => props.receita ? '#60BF92' : '#EF5252'} #cccccc;
+
+    ::-webkit-scrollbar {
+        width: 12px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: #cccccc;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        border-radius: 20px;
+        background-color: ${props => props.receita ? '#60BF92' : '#EF5252'};
+    }
 `
 
 export const Title = styled.h1`
@@ -23,7 +39,7 @@ export const Title = styled.h1`
 `
 
 export const Form = styled.form`
-    width: 70%;
+    width: 80%;
     display: flex;
     padding-top: 2%;
     align-items: center;
@@ -40,6 +56,7 @@ export const Campo = styled.div`
 export const Label = styled.label`
     font-size: 1.5vw;
     padding-bottom: 2%;
+    width: 100%;
 `
 
 export const InputText = styled.input`
@@ -90,4 +107,21 @@ export const Switch = styled(SwitchNotStyled)`
 
 export const TextSwitch = styled.span`
     font-size: 1.8vw;
+`
+
+export const Button = styled.button`
+    width: 50%;
+    padding: 3%;
+    border: none;
+    font-size: 2vw;
+    color: #ffffff;
+    margin-top: 7%;
+    cursor: pointer;
+    margin-bottom: 4%;
+    border-radius: 10px;
+    background-color: ${props => props.receita ? '#60BF92' : '#EF5252'};
+    
+    :hover {
+        opacity: 0.8;
+    }
 `
