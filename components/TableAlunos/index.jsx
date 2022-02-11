@@ -26,8 +26,10 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg, onDef
         function Row({row, index}) {
             const [fechadoCadas, setFechadoCadas] = useState(null)
             const [openDialogGerarDeclaração, setOpenDialogGerarDeclaração] = useState(false)
+            const [openDialogEditAluno, setOpenDialogEditAluno] = useState(false)
 
             let actions = []
+            let bottom = 0
 
             if (row.foto.key === 'Padrão.jpg') {
                 actions = [
@@ -42,8 +44,16 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg, onDef
                         name: 'Baixar declaração de frequência do aluno',
                         onClick: () => setOpenDialogGerarDeclaração(true),
                         background: '#A8CDFE'
+                    },
+                    {
+                        icon: <EditIcon sx={{color: '#0872FC'}}/>,
+                        name: 'Editar aluno',
+                        onClick: () => setOpenDialogEditAluno(true),
+                        background: '#A8CDFE'
                     }
                 ]
+
+                bottom = 212
             } else {
                 actions = [
                     {
@@ -59,12 +69,20 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg, onDef
                         background: '#FBD6D7'
                     },
                     {
+                        icon: <EditIcon sx={{color: '#0872FC'}}/>,
+                        name: 'Editar aluno',
+                        onClick: () => setOpenDialogEditAluno(true),
+                        background: '#A8CDFE'
+                    },
+                    {
                         icon: <DownloadIcon sx={{color: '#0872FC'}}/>,
                         name: 'Baixar declaração de frequência do aluno',
                         onClick: () => setOpenDialogGerarDeclaração(true),
                         background: '#A8CDFE'
                     }
                 ]
+
+                bottom = 270
             }
 
             function clickCloseCadas() {
@@ -92,6 +110,20 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg, onDef
                                     <BolsistaSwitch name="bolsista"/>Bolsista
                                     <ButtonSubmitGerarDeclaração style={{marginBottom: '0%'}} type="submit" variant="contained">Gerar</ButtonSubmitGerarDeclaração>
                                 </form>
+                            </DialogContent>
+                        </DialogGerarDeclaração>
+                    )
+                }
+
+                return null
+            }
+
+            function ModelEditAluno({ open }) {
+                if (open) {
+                    return (
+                        <DialogGerarDeclaração open={true} onClose={() => setOpenDialogEditAluno(false)}>
+                            <DialogContent>
+                                
                             </DialogContent>
                         </DialogGerarDeclaração>
                     )
@@ -129,7 +161,7 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg, onDef
             <TableCellValueBorder component="th" scope="col" align="center">{row.nascimento} ({calcIdade(row.nascimento, new Date())} anos)</TableCellValueBorder>
             <TableCellValueBorder component="th" scope="col" align="center">{row.situação}</TableCellValueBorder>
             <TableCellValueBorder align="center">
-                <div style={{position: 'relative', bottom: row.foto.key === 'Padrão.jpg' ? 160 : 210}}>
+                <div style={{position: 'relative', bottom}}>
                     <SpeedDial
                         ariaLabel="SpeedDial basic example"
                         sx={{position: 'absolute'}}
@@ -167,6 +199,7 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg, onDef
                     </SpeedDial>
                 </div>
                 <ModelGerarDeclaração open={openDialogGerarDeclaração}/>
+                <ModelEditAluno open={openDialogEditAluno}/>
             </TableCellValueBorder>
             <Menu
                 anchorEl={fechadoCadas} 
