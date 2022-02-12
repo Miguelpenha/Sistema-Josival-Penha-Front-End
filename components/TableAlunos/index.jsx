@@ -7,7 +7,7 @@ import { useState, memo } from 'react'
 import api from '../../services/api/base'
 import ContentModalEditAluno from '../pages/administrativo/alunos/ContentModalEditAluno/index.jsx'
 
-function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg, onDefaultFoto }) {
+function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg, onDefaultFoto, onEditAluno }) {
     if (typeof alunos != 'string' && alunos) {
         alunos.map(aluno => aluno.criação.sistema = new Date(aluno.criação.sistema))
         
@@ -123,13 +123,14 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg, onDef
                 if (open) {
                     return (
                         <DialogGerarDeclaração open={true} onClose={() => setOpenDialogEditAluno(false)}>
-                            <DialogContent>
-                                <ContentModalEditAluno
-                                    aluno={row}
-                                    alunos={alunos}
-                                    onClose={() => setOpenDialogEditAluno(false)}
-                                />
-                            </DialogContent>
+                            <ContentModalEditAluno
+                                aluno={row}
+                                alunos={alunos}
+                                onClose={() => {
+                                    onEditAluno()
+                                    setOpenDialogEditAluno(false)
+                                }}
+                            />
                         </DialogGerarDeclaração>
                     )
                 }

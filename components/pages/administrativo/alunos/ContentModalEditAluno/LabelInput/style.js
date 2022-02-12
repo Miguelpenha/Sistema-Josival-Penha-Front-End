@@ -5,6 +5,7 @@ export const LabelInputStyle = styled.label`
     width: fit-content;
     color: #8a8a8a;
     white-space: nowrap;
+    margin-bottom: 1%;
 `
 
 export const LabelInputStyleReq = styled.label`
