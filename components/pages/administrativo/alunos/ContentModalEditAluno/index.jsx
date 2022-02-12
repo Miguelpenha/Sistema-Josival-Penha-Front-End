@@ -19,6 +19,7 @@ export default function ContentModalEditAluno({ onClose, alunos, aluno }) {
                     data.turma = turma._id
                 }
             })
+            
             await api.post(`/alunos/${aluno._id}`, data)
             event.preventDefault()
             reset()
