@@ -5,6 +5,7 @@ import { Delete as DeleteIcon, Download as DownloadIcon, Edit as EditIcon, Send 
 import Link from 'next/link'
 import { useState, memo } from 'react'
 import api from '../../services/api/base'
+import ContentModalEditAluno from '../pages/administrativo/alunos/ContentModalEditAluno/index.jsx'
 
 function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg, onDefaultFoto }) {
     if (typeof alunos != 'string' && alunos) {
@@ -123,7 +124,11 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg, onDef
                     return (
                         <DialogGerarDeclaração open={true} onClose={() => setOpenDialogEditAluno(false)}>
                             <DialogContent>
-                                
+                                <ContentModalEditAluno
+                                    aluno={row}
+                                    alunos={alunos}
+                                    onClose={() => setOpenDialogEditAluno(false)}
+                                />
                             </DialogContent>
                         </DialogGerarDeclaração>
                     )
