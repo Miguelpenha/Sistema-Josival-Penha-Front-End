@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import { get } from '../../../../../hooks'
 import api from '../../../../../services/api/base'
 import { Container, Campo, InputText, Error, InputDate, Select, ItemSelect, Button } from './style'
-import LabelInput from './LabelInput'
+import LabelInput from '../../../../LabelInput'
 import InputMask from 'react-input-mask'
 
 export default function ContentModalEditAluno({ onClose, alunos, aluno }) {

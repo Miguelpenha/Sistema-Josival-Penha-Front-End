@@ -1,105 +1,107 @@
 import styled from 'styled-components'
+import { TextField, Switch as SwitchNotStyled } from '@material-ui/core'
 
 export const Container = styled.div`
     top: 30%;
     left: 50%;
-    width: 40%;
-    height: 60%;
+    width: 50%;
+    height: 80%;
     display: flex;
     padding: 1.5%;
     font-size: 0.8vw;
+    overflow-y: auto;
     position: absolute;
     align-items: center;
     border-radius: 10px;
+    scrollbar-width: thin;
     flex-direction: column;
     background-color: #ffffff;
+    scrollbar-color: #4ED134 #cccccc;
     transform: translate(-50%, -25%);
-`
 
-export const Title = styled.h1`
-    font-size: 2vw;
-    color: #8A8A8A;
-    margin-top: 2%;
-`
-
-export const ContainerInputMensalidade = styled.div`
-    width: 90%;
-    display: flex;
-    color: #4ED134;
-    margin-top: 5%;
-    border-bottom: 4px solid #4ED134;
-`
-
-export const IconInput = styled.svg`
-    width: 10%;
-    margin-left: 2%;
-    margin-right: 2%;
-    margin-bottom: 0.5%;
-`
-
-export const InputMensalidade = styled.input`
-    width: 100%;
-    border: none;
-    color: #4ED134;
-    margin-left: 2%;
-    font-size: 2.4vw;
-    margin-bottom: 2.5%;
-
-    :focus {
-        outline: none;
-    }
-`
-
-export const ContainerInputDescription = styled.div`
-    width: 90%;
-    display: flex;
-    color: #C6C6C6;
-    margin-top: 8%;
-    border-bottom: 4px solid #C6C6C6;
-`
-
-export const InputDescription = styled.textarea`
-    width: 100%;
-    border: none;
-    color: #C6C6C6;
-    margin-left: 2%;
-    font-size: 2.4vw;
-    resize: vertical;
-    margin-bottom: 2.5%;
-    scrollbar-color: #E5E5E5 #C6C6C6;
-
-    :focus {
-        outline: none;
-    }
-    
     ::-webkit-scrollbar {
         width: 12px;
     }
 
     ::-webkit-scrollbar-track {
-        background: #C6C6C6;
+        background: #cccccc;
     }
 
     ::-webkit-scrollbar-thumb {
         border-radius: 20px;
-        background-color: #E5E5E5;
-    }
-
-    ::-webkit-input-placeholder{
-        color: currentColor;
+        background-color: #4ED134;
     }
 `
 
-export const ButtonSubmit = styled.button`
-    background-color: #4ED134;
+export const Form = styled.form`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`
+
+export const Title = styled.h1`
+    font-size: 2vw;
+    color: #4ED134;
+    margin-top: 2%;
+    padding-bottom: 4%;
+    font-weight: 500;
+`
+
+export const Campo= styled.div`
+    width: 80%;
+    display: flex;
+    margin-top: 3.5%;
+    flex-direction: column;
+`
+
+export const TextInput = styled(TextField)`
+    && {
+        margin-bottom: 2%;
+
+        && .MuiInput-underline {
+            font-size: 1.5vw;
+            color: ${props => props.colorIn};
+        }
+
+        && .MuiInput-underline:after, .MuiInput-underline:before {
+            border-bottom-color: ${props => props.colorIn};
+        }
+    }
+`
+
+export const DateInput = styled(TextField)`
+    && {
+        margin-bottom: 2%;
+
+        && .MuiInputBase-colorPrimary {
+            color: #4ED134;
+            font-size: 1.5vw;
+            border-color: #4ED134;
+        }
+    }
+`
+
+export const Switch = styled(SwitchNotStyled)`
+    && .MuiSwitch-switchBase.Mui-checked {
+        color: #4ED134;
+    }
+
+    && .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track {
+        background-color: #4ED134;
+    }
+`
+
+export const Button = styled.button`
     width: 45%;
     border: none;
+    padding: 2.5%;
     color: #ffffff;
     font-size: 2vw;
     margin-top: 9%;
-    padding: 2.5%;
-    border-radius: 15px;
     cursor: pointer;
+    border-radius: 15px;
+    background-color: #4ED134;
 
     :hover {
         opacity: 0.7;
