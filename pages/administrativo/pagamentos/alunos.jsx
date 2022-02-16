@@ -1,12 +1,12 @@
-import { get } from '../../../../hooks'
+import { get } from '../../../hooks'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import Head from 'next/head'
-import Loading from '../../../../components/Loading'
-import { Container, ContainerIconBack, IconBack, Select, Table, IconAtrasadoOrEmDia } from '../../../../styles/pages/administrativo/pagamentos/alunos'
+import Loading from '../../../components/Loading'
+import { Container, ContainerIconBack, IconBack, Select, Table, IconAtrasadoOrEmDia } from '../../../styles/pages/administrativo/pagamentos/alunos'
 import Link from 'next/link'
 import { MenuItem } from '@material-ui/core'
-import ModalMensalidade from '../../../../components/pages/administrativo/pagamentos/ModalMensalidade'
+import ModalMensalidade from '../../../components/pages/administrativo/pagamentos/ModalMensalidade'
 
 export default function PagamentosAlunos() {
     const router = useRouter()
@@ -86,12 +86,13 @@ export default function PagamentosAlunos() {
                         </IconBack>
                     </ContainerIconBack>
                 </Link>
-                {alunos && alunos.length >=1 && alunoId && aluno && (
+                {alunos && alunos.length >=1 && alunoId && aluno && <>
+                    
                     <Select
                         value={alunoId}
                         onChange={event => (
                             router.push(
-                                `/administrativo/pagamentos/alunos/${event.target.value}`,
+                                `/administrativo/pagamentos/alunos?aluno=${event.target.value}`,
                                 null,
                                 { shallow: true }
                             )
@@ -101,7 +102,7 @@ export default function PagamentosAlunos() {
                             <MenuItem value={aluno._id} key={index}>{aluno.nome}</MenuItem>
                         )}
                     </Select>
-                )}
+                </>}
                 <Table cellSpacing="0" cellPadding="0">
                     <thead>
                         <tr>
