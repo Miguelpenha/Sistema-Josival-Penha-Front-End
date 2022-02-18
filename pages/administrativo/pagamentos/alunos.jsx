@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import { useState } from 'react'
 import Head from 'next/head'
 import Loading from '../../../components/Loading'
-import { Container, ContainerIconBack, IconBack, Select, Table, IconAtrasadoOrEmDia } from '../../../styles/pages/administrativo/pagamentos/alunos'
+import { Main, ContainerIconBack, IconBack, Container, Select, InputFind, Table, IconAtrasadoOrEmDia } from '../../../styles/pages/administrativo/pagamentos/alunos'
 import Link from 'next/link'
 import { MenuItem } from '@material-ui/core'
 import ModalMensalidade from '../../../components/pages/administrativo/pagamentos/ModalMensalidade'
@@ -15,6 +15,7 @@ export default function PagamentosAlunos() {
     const { data: aluno, mutate: mutateAluno } = get(`/alunos/${alunoId}`)
     const [mes, setMes] = useState(null)
     const [openModalMensalidade, setOpenModalMensalidade] = useState(false)
+    const [find, setFind] = useState('')
     const handleCloseModalMensalidade = () => setOpenModalMensalidade(false)
     const handleOpenModalMensalidade = mês => {
         mutateAluno(`/alunos/${alunoId}`)
@@ -77,7 +78,7 @@ export default function PagamentosAlunos() {
             <title>Alunos Pagamentos</title>
         </Head>
         <Loading loading={[alunos, aluno]}>
-            <Container>
+            <Main>
                 <Link href="/administrativo/pagamentos" passHref>
                     <ContainerIconBack>
                         <IconBack xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
@@ -86,58 +87,69 @@ export default function PagamentosAlunos() {
                         </IconBack>
                     </ContainerIconBack>
                 </Link>
-                {alunos && alunos.length >=1 && alunoId && aluno && <>
-                    
-                    <Select
-                        value={alunoId}
-                        onChange={event => (
-                            router.push(
-                                `/administrativo/pagamentos/alunos?aluno=${event.target.value}`,
-                                null,
-                                { shallow: true }
-                            )
-                        )}
-                    >
-                        {alunos && alunos.length >=1 && alunoId && aluno && alunos.map((aluno, index) =>
-                            <MenuItem value={aluno._id} key={index}>{aluno.nome}</MenuItem>
-                        )}
-                    </Select>
-                </>}
-                <Table cellSpacing="0" cellPadding="0">
-                    <thead>
-                        <tr>
-                            <th align="left">Mês</th>
-                            <th align="left">Status</th>
-                            <th align="left">Valor</th>
-                            <th align="left">Vencimento</th>
-                            <th align="left">Forma de pagamento</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {aluno && aluno.pagamentos && meses.map((mês, index) => (
-                            <tr key={index} onClick={() => handleOpenModalMensalidade(mês.num)}>
-                                <td>{mês.mês}</td>
-                                <td>
-                                    {aluno.pagamentos[mês.num].pago ? <IconAtrasadoOrEmDia color="#60BF92"/> : new Date().getMonth()+1 == mês.num ? Number(new Date(new Date().getFullYear(), mês.num-1, Number(new Date().toLocaleDateString('pt-br').split('/')[0])).toLocaleDateString('pt-br').split('/')[0]) <= Number(aluno.pagamentos[mês.num].vencimento.split('/')[0]) ? <IconAtrasadoOrEmDia color="#60BF92"/> : <IconAtrasadoOrEmDia color="#EF5252"/> : Number(new Date(new Date().getFullYear(), mês.num-1, 1).toLocaleDateString('pt-br').split('/')[0]) <= Number(aluno.pagamentos[mês.num].vencimento.split('/')[0]) ? <IconAtrasadoOrEmDia color="#60BF92"/> : <IconAtrasadoOrEmDia color="#EF5252"/>}
-                                    {aluno.pagamentos[mês.num].pago ? 'Em dia' : new Date().getMonth()+1 == mês.num ? Number(new Date(new Date().getFullYear(), mês.num-1, Number(new Date().toLocaleDateString('pt-br').split('/')[0])).toLocaleDateString('pt-br').split('/')[0]) <= Number(aluno.pagamentos[mês.num].vencimento.split('/')[0]) ? 'Em dia' : 'Atrazado' : Number(new Date(new Date().getFullYear(), mês.num-1, 1).toLocaleDateString('pt-br').split('/')[0]) <= Number(aluno.pagamentos[mês.num].vencimento.split('/')[0]) ? 'Em dia' : 'Atrazado'}
-                                </td>
-                                <td>{aluno.pagamentos[mês.num].value}</td>
-                                <td>{aluno.pagamentos[mês.num].vencimento}</td>
-                                <td>{aluno.pagamentos[mês.num].forma}</td>
+                <Container>
+                    {alunos && alunos.length >=1 && alunoId && aluno && <>
+                        <InputFind
+                            type="text"
+                            name="pesquisar"
+                            placeholder="Pesquisar..."
+                            onChange={ev => setFind(ev.target.value)}
+                        />
+                        <Select
+                            value={alunoId}
+                            onChange={event => (
+                                router.push(
+                                    `/administrativo/pagamentos/alunos?aluno=${event.target.value}`,
+                                    null,
+                                    { shallow: true }
+                                )
+                            )}
+                        >
+                            {alunos && alunos.length >=1 && alunoId && aluno && alunos.map((aluno, index) => {
+                                if (aluno.nome.includes(find)) {
+                                    return (
+                                        <MenuItem value={aluno._id} key={index}>{aluno.nome}</MenuItem>
+                                    )
+                                }
+                            })}
+                        </Select>
+                    </>}
+                    <Table cellSpacing="0" cellPadding="0">
+                        <thead>
+                            <tr>
+                                <th align="left">Mês</th>
+                                <th align="left">Status</th>
+                                <th align="left">Valor</th>
+                                <th align="left">Vencimento</th>
+                                <th align="left">Forma de pagamento</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </Table>
-                {aluno && aluno.pagamentos && mes && (
-                    <ModalMensalidade
-                        open={openModalMensalidade}
-                        onClose={handleCloseModalMensalidade}
-                        aluno={aluno}
-                        mesMensalidade={mes}
-                        onEdit={() => mutateAluno(`/alunos/${alunoId}`)}
-                    />
-                )}
-            </Container>
+                        </thead>
+                        <tbody>
+                            {aluno && aluno.pagamentos && meses.map((mês, index) => (
+                                <tr key={index} onClick={() => handleOpenModalMensalidade(mês.num)}>
+                                    <td>{mês.mês}</td>
+                                    <td>
+                                        {aluno.pagamentos[mês.num].pago ? <IconAtrasadoOrEmDia color="#60BF92"/> : new Date().getMonth()+1 == mês.num ? Number(new Date(new Date().getFullYear(), mês.num-1, Number(new Date().toLocaleDateString('pt-br').split('/')[0])).toLocaleDateString('pt-br').split('/')[0]) <= Number(aluno.pagamentos[mês.num].vencimento.split('/')[0]) ? <IconAtrasadoOrEmDia color="#60BF92"/> : <IconAtrasadoOrEmDia color="#EF5252"/> : Number(new Date(new Date().getFullYear(), mês.num-1, 1).toLocaleDateString('pt-br').split('/')[0]) <= Number(aluno.pagamentos[mês.num].vencimento.split('/')[0]) ? <IconAtrasadoOrEmDia color="#60BF92"/> : <IconAtrasadoOrEmDia color="#EF5252"/>}
+                                        {aluno.pagamentos[mês.num].pago ? 'Em dia' : new Date().getMonth()+1 == mês.num ? Number(new Date(new Date().getFullYear(), mês.num-1, Number(new Date().toLocaleDateString('pt-br').split('/')[0])).toLocaleDateString('pt-br').split('/')[0]) <= Number(aluno.pagamentos[mês.num].vencimento.split('/')[0]) ? 'Em dia' : 'Atrazado' : Number(new Date(new Date().getFullYear(), mês.num-1, 1).toLocaleDateString('pt-br').split('/')[0]) <= Number(aluno.pagamentos[mês.num].vencimento.split('/')[0]) ? 'Em dia' : 'Atrazado'}
+                                    </td>
+                                    <td>{aluno.pagamentos[mês.num].value}</td>
+                                    <td>{aluno.pagamentos[mês.num].vencimento}</td>
+                                    <td>{aluno.pagamentos[mês.num].forma}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </Table>
+                    {aluno && aluno.pagamentos && mes && (
+                        <ModalMensalidade
+                            open={openModalMensalidade}
+                            onClose={handleCloseModalMensalidade}
+                            aluno={aluno}
+                            mesMensalidade={mes}
+                            onEdit={() => mutateAluno(`/alunos/${alunoId}`)}
+                        />
+                    )}
+                </Container>
+            </Main>
         </Loading>
     </>
 }

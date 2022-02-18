@@ -56,20 +56,6 @@ export default function ModalMensalidade({ open, onClose, aluno, mesMensalidade,
                         />
                     </Campo>
                     <Campo>
-                        <Label required htmlFor="Descrição">Descrição</Label>
-                        <TextInput
-                            rows={2}
-                            type="text"
-                            name="descrição"
-                            multiline={true}
-                            variant="standard"
-                            colorIn="#8A8A8A"
-                            {...register('descrição')}
-                            placeholder="Descrição..."
-                            defaultValue={aluno.pagamentos[mesMensalidade].descrição}
-                        />
-                    </Campo>
-                    <Campo>
                         <Label required htmlFor="Forma de pagamento">Forma de pagamento</Label>
                         <TextInput
                             required
@@ -101,6 +87,20 @@ export default function ModalMensalidade({ open, onClose, aluno, mesMensalidade,
                             inputRef={register('pago').ref}
                             onChange={register('pago').onChange}
                             defaultChecked={aluno.pagamentos[mesMensalidade].pago}
+                        />
+                    </Campo>
+                    <Campo>
+                        <Label required htmlFor="Descrição">Descrição</Label>
+                        <TextInput
+                            rows={2}
+                            type="text"
+                            name="descrição"
+                            multiline={true}
+                            variant="standard"
+                            colorIn="#8A8A8A"
+                            {...register('descrição')}
+                            placeholder="Descrição..."
+                            defaultValue={aluno.pagamentos[mesMensalidade].descrição}
                         />
                     </Campo>
                     <Button type="submit">Salvar</Button>

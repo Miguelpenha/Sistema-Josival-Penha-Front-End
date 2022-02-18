@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { Select as SelectNotStyled } from '@material-ui/core'
 
-export const Container = styled.main`
+export const Main = styled.main`
     color: #383838;
 `
 
@@ -22,19 +22,53 @@ export const IconBack = styled.svg`
     color: #1976D2;
 `
 
+export const Container = styled.div`
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 5%;
+`
+
+export const InputFind = styled.input`
+    padding: 1.25%;
+    color: #1976D2;
+    font-size: 1.2vw;
+    margin-right: 2%;
+    border-radius: 8px;
+    border: 2px solid #cccccc;
+
+    :focus {
+        outline: none;
+        border-radius: 12px;
+        border-color: #1976D2;
+
+        ::placeholder {
+            color: #1976D2;
+        }
+
+        :-ms-input-placeholder {
+            color: #1976D2;
+        }
+
+        ::-ms-input-placeholder {
+            color: #1976D2;
+        }
+    }
+`
+
 export const Select = styled(SelectNotStyled)`
     && {
         width: 20%;
         font-size: 1vw;
+        margin-bottom: 1%;
         background-color: #ffffff;
     }
 `
 
 export const Table = styled.table`
-    width: 80%;
+    width: 100%;
     margin: auto;
     font-size: 1.5vw;
-    margin-bottom: 5%;
 
     th {
         padding: 1%;
