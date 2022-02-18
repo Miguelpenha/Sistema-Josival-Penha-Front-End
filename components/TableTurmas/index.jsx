@@ -1,10 +1,10 @@
 import { TableContainer, TableCellTitle, TableCellTotal, TextTotal, TableRowSele, TableCellValueBorder, TableCellBorder, IconButtonExclu, TableCellTitleBorder, DialogTurma } from './style'
-import { Paper, Table, TableHead, TableRow, TableBody, TableFooter, Tooltip, Checkbox, DialogContent, Skeleton } from '@material-ui/core'
+import { Paper, Table, TableHead, TableRow, TableBody, TableFooter, Tooltip, Checkbox, DialogContent, Skeleton, Dialog } from '@material-ui/core'
 import { Delete as DeleteIcon } from '@material-ui/icons'
 import LimitText from '../LimitText'
 import { useState, memo } from 'react'
-import TableAlunos from '../TableAlunos'
 import { get } from '../../hooks'
+import ModalEditTurma from '../pages/administrativo/alunos/ModalEditTurma'
 
 function TableTurmas({ turmas, alunos, onDeleteTurmas, onDeleteTurmasTodos, setAlert, onDeleteAlunos, onDeleteAlunosTodos }) {
     if (typeof turmas != 'string' && turmas) {
@@ -31,26 +31,21 @@ function TableTurmas({ turmas, alunos, onDeleteTurmas, onDeleteTurmasTodos, setA
                     let newSelecionados = selecionados.map(selecionado => selecionado != id && selecionado)
                 }
 
-                //setOpenDialogTurma(true)
+                setOpenDialogTurma(true)
             }
 
-            function ModelTurma({ open }) {
-                const { data: alunos, mutate: mutateAlunos } = get(`/turmas/alunos/${row._id}`)
+            function ModelTurma({ open, onClose }) {
+                const { data: turma, mutate: mutateTurma } = get(`/turmas/${row._id}`)
 
                 if (open) {
-                    return (
-                        <DialogTurma open={true} onClose={() => setOpenDialogTurma(false)} maxWidth="lg">
-                            <DialogContent>
-                            {alunos ? <TableAlunos
-                                        bg="#f0f0f0"
-                                        setAlert={setAlert}
-                                        alunos={alunos && alunos}
-                                        onDeleteAlunos={onDeleteAlunos}
-                                        onDeleteAlunosTodos={onDeleteAlunosTodos}
-                                    /> : <Skeleton variant="rectangular" width={`85.5%`} height={`50%`} style={{display: 'block', marginLeft: 'auto', marginRight: 'auto', borderRadius: '20px', marginTop: '5%'}} animation="wave"/>}
-                            </DialogContent>
-                        </DialogTurma>
-                    )
+                    <Dialog fullWidth sx={{'&&': {
+                        height: '100%'
+                    }}} open={true} onClose={onClose}>
+                        <ModalEditTurma
+                            turma={turma}
+                            onClose={onClose}
+                        />
+                    </Dialog>    
                 }
 
                 return null
@@ -79,7 +74,7 @@ function TableTurmas({ turmas, alunos, onDeleteTurmas, onDeleteTurmasTodos, setA
                             </Tooltip>       
                         </TableCellValueBorder>
                     </TableRowSele>
-                    <ModelTurma open={openDialogTurma}/>
+                    <ModelTurma open={openDialogTurma} onClose={() => setOpenDialogTurma(false)}/>
                 </>
             )
         }
