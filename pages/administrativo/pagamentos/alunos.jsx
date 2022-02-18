@@ -106,7 +106,7 @@ export default function PagamentosAlunos() {
                             )}
                         >
                             {alunos && alunos.length >=1 && alunoId && aluno && alunos.map((aluno, index) => {
-                                if (aluno.nome.includes(find)) {
+                                if (aluno.nome.toUpperCase().includes(find.toUpperCase())) {
                                     return (
                                         <MenuItem value={aluno._id} key={index}>{aluno.nome}</MenuItem>
                                     )
