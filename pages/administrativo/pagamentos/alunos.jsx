@@ -15,7 +15,7 @@ export default function PagamentosAlunos() {
     const { data: aluno, mutate: mutateAluno } = get(`/alunos/${alunoId}`)
     const [mes, setMes] = useState(null)
     const [openModalMensalidade, setOpenModalMensalidade] = useState(false)
-    const [find, setFind] = useState('')
+    const find = router.query.queryAluno || ''
     const handleCloseModalMensalidade = () => setOpenModalMensalidade(false)
     const handleOpenModalMensalidade = mês => {
         mutateAluno(`/alunos/${alunoId}`)
@@ -72,7 +72,53 @@ export default function PagamentosAlunos() {
             num: '12'
         }
     ]
-    
+
+    function veriPago(pagamento) {
+        if (pagamento.pago) {
+            return (
+                <>
+                    <IconAtrasadoOrEmDia color="#60BF92"/>Pago
+                </>
+            )
+        } else {
+            const mêsVencimento = Number(pagamento.vencimento.split('/')[1])
+            const mêsAtual = Number(new Date().toLocaleDateString('pt-br').split('/')[1])
+
+            if (mêsVencimento >= mêsAtual) {
+                if (mêsVencimento === mêsAtual) {
+                    const diaVencimento = Number(pagamento.vencimento.split('/')[0])
+                    const diaAtual = Number(new Date().toLocaleDateString('pt-br').split('/')[0])
+                    
+                    if (diaVencimento >= diaAtual) {                 
+                        return (
+                            <>
+                                <IconAtrasadoOrEmDia color="#cccccc"/>Em Espera
+                            </>
+                        )
+                    } else {
+                        return (
+                            <>
+                                <IconAtrasadoOrEmDia color="#EF5252"/>Atrasado
+                            </>
+                        )
+                    }
+                } else {
+                    return (
+                        <>
+                            <IconAtrasadoOrEmDia color="#cccccc"/>Em Espera
+                        </>
+                    )
+                }
+            } else {
+                return (
+                    <>
+                        <IconAtrasadoOrEmDia color="#EF5252"/>Atrasado
+                    </>
+                )
+            }
+        }
+    }
+
     return <>
         <Head>
             <title>Alunos Pagamentos</title>
@@ -92,13 +138,28 @@ export default function PagamentosAlunos() {
                         <InputFind
                             type="text"
                             name="pesquisar"
-                            placeholder="Pesquisar..."
-                            onChange={ev => setFind(ev.target.value)}
+                            placeholder="Pesquisar aluno..."
+                            onChange={ev =>
+                                ev.target.value.length >=1 ? router.push(
+                                    `/administrativo/pagamentos/alunos?aluno=${alunoId}&queryAluno=${ev.target.value}`,
+                                    null,
+                                    { shallow: true }
+                                ) : router.push(
+                                    `/administrativo/pagamentos/alunos?aluno=${alunoId}`,
+                                    null,
+                                    { shallow: true }
+                                )
+                            }
+                            defaultValue={find}
                         />
                         <Select
                             value={alunoId}
                             onChange={event => (
-                                router.push(
+                                find.length >=1 ? router.push(
+                                    `/administrativo/pagamentos/alunos?aluno=${event.target.value}&queryAluno=${find}`,
+                                    null,
+                                    { shallow: true }
+                                ) : router.push(
                                     `/administrativo/pagamentos/alunos?aluno=${event.target.value}`,
                                     null,
                                     { shallow: true }
@@ -129,7 +190,7 @@ export default function PagamentosAlunos() {
                                 <tr key={index} onClick={() => handleOpenModalMensalidade(mês.num)}>
                                     <td>{mês.mês}</td>
                                     <td>
-                                        {aluno.pagamentos[mês.num].pago ? 'Em dia' : new Date().getMonth()+1 == mês.num ? Number(new Date(new Date().getFullYear(), mês.num-1, Number(new Date().toLocaleDateString('pt-br').split('/')[0])).toLocaleDateString('pt-br').split('/')[0]) <= Number(aluno.pagamentos[mês.num].vencimento.split('/')[0]) ? 'Em dia' : 'Atrazado' : Number(new Date(new Date().getFullYear(), mês.num-1, 1).toLocaleDateString('pt-br').split('/')[0]) <= Number(aluno.pagamentos[mês.num].vencimento.split('/')[0]) ? 'Em dia' : 'Atrazado'}
+                                        {veriPago(aluno.pagamentos[mês.num])}
                                     </td>
                                     <td>{aluno.pagamentos[mês.num].value}</td>
                                     <td>{aluno.pagamentos[mês.num].vencimento}</td>
