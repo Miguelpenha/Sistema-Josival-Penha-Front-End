@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { TrendingDown as IconTrendingDownSVG, TrendingUp as IconTrendingUpSVG, Label as IconLabelSVG, Description as DescriptionIconSVG, Payment as IconPaymentSVG, SyncAlt as IconSyncAltSVG, AccountBalance as IconAccountBalanceSVG } from '@material-ui/icons'
-import { Card, Dialog, DialogContent, TextField, Button, Checkbox, Switch } from '@material-ui/core'
+import { Card, Dialog, DialogContent, TextField, Button, Checkbox, Switch, Select, MenuItem } from '@material-ui/core'
 import Chart from 'react-google-charts'
 import ResumeFinanceiroNotStyled from '../../../../components/ResumeFinanceiro'
 
@@ -475,4 +475,21 @@ export const ContainerTitleNotReceitaOrDespesa = styled.div`
 export const TitleNotReceitaOrDespesa = styled.h1`
     color: #ffffff;
     font-size: 1.8vw;
+`
+
+export const SelectMonth = styled(Select)`
+    && {
+        width: 20%;
+        display: block;
+        margin-top: 2%;
+        font-size: 1vw;
+        color: #0872FC;
+        font-weight: 500;
+        background-color: #ffffff;
+    }
+`
+
+export const ItemMonth = styled(MenuItem)`
+    color: #0872FC;
+    font-weight: 500;
 `

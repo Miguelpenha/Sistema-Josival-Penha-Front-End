@@ -36,7 +36,9 @@ import {
   Charts,
   ResumeFinanceiro,
   ContainerTitleNotReceitaOrDespesa,
-  TitleNotReceitaOrDespesa
+  TitleNotReceitaOrDespesa,
+  SelectMonth,
+  ItemMonth
 } from '../../../styles/pages/administrativo/financeiro'
 import { NavOptions, LogoJPNome, Funções, Função, LinkFunção, IconAlunos, IconAcadêmico, IconDashBoard, IconMarketing, IconFinanceiroSele, IconPagamentos, IconColaboradores, IconError, TextFunção } from '../../../components/NavTool'
 import Link from 'next/link'
@@ -56,6 +58,7 @@ export default function Financeiro() {
   const { data: receitas, mutate: mutateReceitas } = get('/financeiro/receitas')
   const { data: saldo, mutate: mutateSaldo } = get('/financeiro/saldo')
   const [fechadoCadas, setFechadoCadas] = useState(null)
+  const [month, setMonth] = useState('full')
   const [veri, setVeri] = useState(false)
   const [alert, setAlert] = useState({
     open: false
@@ -350,7 +353,7 @@ export default function Financeiro() {
   const [anchorElAddOptions, setAnchorElAddOptions] = useState(false)
   const openAddOptions = Boolean(anchorElAddOptions)
 
-  const handleClickAddOptions = (ev) => setAnchorElAddOptions(ev.currentTarget)
+  const handleClickAddOptions = ev => setAnchorElAddOptions(ev.currentTarget)
   const handleCloseAddOptions = () => setAnchorElAddOptions(false)
   
   return (
@@ -479,6 +482,21 @@ export default function Financeiro() {
                 Cadastrar despesa
               </MenuItem>
             </Menu>
+            <SelectMonth value={month} onChange={event => setMonth(event.target.value)}>
+              <ItemMonth value="full">Mostrar todos os meses</ItemMonth>
+              <ItemMonth value="01">Janeiro</ItemMonth>
+              <ItemMonth value="02">Fevereiro</ItemMonth>
+              <ItemMonth value="03">Março</ItemMonth>
+              <ItemMonth value="04">Abril</ItemMonth>
+              <ItemMonth value="05">Maio</ItemMonth>
+              <ItemMonth value="06">Junho</ItemMonth>
+              <ItemMonth value="07">Julho</ItemMonth>
+              <ItemMonth value="08">Agosto</ItemMonth>
+              <ItemMonth value="09">Setembro</ItemMonth>
+              <ItemMonth value="10">Outubro</ItemMonth>
+              <ItemMonth value="11">Novembro</ItemMonth>
+              <ItemMonth value="12">Dezembro</ItemMonth>
+            </SelectMonth>
             <Infos>
               <Info>
                 <InfoTit>Saldo atual</InfoTit>
@@ -508,7 +526,7 @@ export default function Financeiro() {
                 </ContainerTitleNotReceitaOrDespesa>
               )}
             </>}
-            <ResumeFinanceiro receitas={receitas} despesas={despesas} onDeleteReceita={id => {
+            <ResumeFinanceiro month={month} receitas={receitas} despesas={despesas} onDeleteReceita={id => {
               api.delete(`/financeiro/receitas/${id}`).then(() => {
                 mutateTotalReceitas('/financeiro/receitas/total')
                 mutateReceitas('/financeiro/receitas')

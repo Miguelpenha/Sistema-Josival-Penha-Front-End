@@ -9,7 +9,7 @@ import ReceitaOrDespesa from './ReceitaOrDespesa'
 import ModalReceitaOrDespesa from './ModalReceitaOrDespesa'
 import ModalEditReceitaOrDespesa from './ModalEditReceitaOrDespesa'
 
-function ResumeFinanceiro({ receitas, despesas, onDeleteReceita, onDeleteDespesa, onEdit, resume, saldoReceitas, saldoDespesas, saldo, ...props }) {
+function ResumeFinanceiro({month,  receitas, despesas, onDeleteReceita, onDeleteDespesa, onEdit, resume, saldoReceitas, saldoDespesas, saldo, ...props }) {
     if (typeof receitas != 'string' && typeof despesas != 'string') {
         if (receitas.length || despesas.length) {
             const [openReceitaOrDespesa, setOpenReceitaOrDespesa] = useState(false)
@@ -21,14 +21,44 @@ function ResumeFinanceiro({ receitas, despesas, onDeleteReceita, onDeleteDespesa
             const closeModalEditReceitaOrDespesa = () => setOpenModalEditReceitaOrDespesa(false)
             const openModalEditReceitaOrDespesa = () => setOpenModalEditReceitaOrDespesa(true)
             
-            receitas.map(receita => {
+            const receitasBrutas = receitas
+            const despesasBrutas = despesas
+
+            receitas = []
+            despesas = []
+
+            receitasBrutas.map(receita => {
                 receita.receita = true
                 receita.criação.sistema = new Date(receita.criação.sistema)
+                
+                if (!month || month === 'full') {
+                    receitas.push(receita)
+                } else {
+                    if (receita.fixa) {
+                        receitas.push(receita)
+                    } else {
+                        if (receita.data.split('/')[1] === month) {
+                            receitas.push(receita)
+                        }
+                    }
+                }
             })
         
-            despesas.map(despesa => {
+            despesasBrutas.map(despesa => {
                 despesa.despesa = true
                 despesa.criação.sistema = new Date(despesa.criação.sistema)
+
+                if (!month || month === 'full') {
+                    despesas.push(despesa)
+                } else {
+                    if (despesa.fixa) {
+                        despesas.push(despesa)
+                    } else {
+                        if (despesa.data.split('/')[1] === month) {
+                            despesas.push(despesa)
+                        }
+                    }
+                }
             })
         
             const receitasOrDespesas = [...receitas, ...despesas]
