@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const Container = styled.main`
-    
+    padding-bottom: 8%;
 `
 
 export const ContainerIconBack = styled.a`

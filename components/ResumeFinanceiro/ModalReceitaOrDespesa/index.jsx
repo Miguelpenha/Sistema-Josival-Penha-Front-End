@@ -48,7 +48,13 @@ export default function ModalReceitaOrDespesa({ open, onClose, copyTextInfo, cop
                     <InfoReceitaOrDespesa notCopy>
                         {receitaOrDespesa.fixa ? 'Sim' : 'Não'}
                     </InfoReceitaOrDespesa>
-                </ContainerInfoReceitaOrDespesa>                                     
+                </ContainerInfoReceitaOrDespesa>
+                <ContainerInfoReceitaOrDespesa>
+                    <TitleInfoReceitaOrDespesa>Automático: </TitleInfoReceitaOrDespesa>
+                    <InfoReceitaOrDespesa notCopy>
+                        {receitaOrDespesa.auto ? 'Sim' : 'Não'}
+                    </InfoReceitaOrDespesa>
+                </ContainerInfoReceitaOrDespesa>                                    
             </ContainerModalInfoReceitaOrDespesa>
         </Modal>
     )

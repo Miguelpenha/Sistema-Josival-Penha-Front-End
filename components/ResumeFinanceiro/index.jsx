@@ -83,6 +83,7 @@ function ResumeFinanceiro({month,  receitas, despesas, onDeleteReceita, onDelete
                         {receitasOrDespesas.map((receitaOrDespesa, index) => (
                             <ReceitaOrDespesa
                                 key={index}
+                                auto={receitaOrDespesa.auto}
                                 name={receitaOrDespesa.nome}
                                 value={receitaOrDespesa.preco}
                                 date={receitaOrDespesa.data || `${receitaOrDespesa.fixaDay}/${new Date().toLocaleDateString().split('/')[1]}/${new Date().toLocaleDateString().split('/')[2]}`}
