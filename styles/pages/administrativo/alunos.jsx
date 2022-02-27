@@ -56,13 +56,13 @@ export const InfoAdminTit = styled.h2`
     width: 100%;
     font-weight: 100;
     color: #525051;
-    font-size: 1.3vw;
+    font-size: 1.2vw;
 `
 
 export const InfoAdminDado = styled.span`
     width: 45%;
     font-weight: bolder;
-    font-size: 3vw;
+    font-size: 2.5vw;
     color: #0872FC;
     height: auto;
 `

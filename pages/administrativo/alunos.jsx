@@ -380,7 +380,7 @@ export default function Alunos() {
               <IconInfoTotalTurmas/>
             </InfoAdmin>
             <InfoAdmin>
-              <InfoAdminTit>Média de Alunos por Turma</InfoAdminTit>
+              <InfoAdminTit>Alunos por Turma</InfoAdminTit>
               {!mediaAlunos && mediaAlunos != 0 && <Skeleton variant="rectangular" width={`20%`} height={35} style={{display: 'inline-block', borderRadius: '10px', marginTop: '5%'}} animation="wave"/>}
               {mediaAlunos >= 0 && <InfoAdminDado>{mediaAlunos}</InfoAdminDado>}
               <IconInfoMédiaAlunos/>
