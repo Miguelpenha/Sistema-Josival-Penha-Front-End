@@ -490,6 +490,8 @@ export const SelectMonth = styled(Select)`
 `
 
 export const ItemMonth = styled(MenuItem)`
-    color: #0872FC;
-    font-weight: 500;
+    && {
+        color: #0872FC;
+        font-weight: 500;
+    }
 `
