@@ -51,12 +51,14 @@ import api from '../../../services/api/base'
 import TableReceitasDespesas from '../../../components/TableReceitasDespesas'
 import { memo } from 'react'
 
+
 export default function Financeiro() {
   const { data: totalReceitas, mutate: mutateTotalReceitas } = get('/financeiro/receitas/total')
   const { data: totalDespesas, mutate: mutateTotalDespesas } = get('/financeiro/despesas/total')
   const { data: despesas, mutate: mutateDespesas } = get('/financeiro/despesas')
   const { data: receitas, mutate: mutateReceitas } = get('/financeiro/receitas')
   const { data: saldo, mutate: mutateSaldo } = get('/financeiro/saldo')
+  const { register, handleSubmit } = useForm()
   const [fechadoCadas, setFechadoCadas] = useState(null)
   const [month, setMonth] = useState('full')
   const [veri, setVeri] = useState(false)
@@ -299,6 +301,21 @@ export default function Financeiro() {
 
   function Verification({ children }) {
     const [error, setError] = useState(false)
+
+    async function submit(data, ev) {
+      const { senha } = data
+      ev.preventDefault()
+      const authorized = (await api.post('financeiro/verify', {
+        password: senha
+      })).data.authorized
+      
+      if (authorized) {
+        setError(false)
+        setVeri(true)
+      } else {
+        setError(true)
+      }
+    }
     
     if (veri) {
       return children
@@ -310,23 +327,12 @@ export default function Financeiro() {
               <ArrowBackIcon sx={{color: '#0872FC', fontSize: '3vw'}}/>
             </IconButton>
           </Link>
-          <FormAccess onSubmit={async ev => {
-            ev.preventDefault()
-            const authorized = (await api.post('financeiro/verify', {
-              password: ev.target[0].value
-            })).data.authorized
-            
-            if (authorized) {
-              setError(false)
-              setVeri(true)
-            } else {
-              setError(true)
-            }
-          }}>
+          <FormAccess onSubmit={handleSubmit(submit)}>
             <InputFormFinanceiro
               autoFocus
               required
               id="senha"
+              {...register('senha')}
               name="senha"
               type="password"
               error={error}
