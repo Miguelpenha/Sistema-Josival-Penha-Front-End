@@ -59,7 +59,7 @@ function TableReceitasDespesas({ receitas=[], despesas=[], saldo='', onDeleteDes
                                     <TableCellValueBorder receita={row.receita && 'true'} component="th" scope="col">{row.nome}</TableCellValueBorder>
                                     <TableCellValueBorder bold receita={row.receita && 'true'}>{row.receita ? '+ ' : '- '}{row.preco}</TableCellValueBorder>
                                     <TableCellValueBorder receita={row.receita && 'true'} align="center">
-                                        {row.data || row.fixa && `${row.fixaDay}/${new Date().toLocaleDateString().split('/')[1]}/${new Date().toLocaleDateString().split('/')[2]}`}
+                                        {row.data || row.fixa && `${row.fixaDay}/${new Date().toLocaleDateString('pt-br').split('/')[1]}/${new Date().toLocaleDateString('pt-br').split('/')[2]}`}
                                     </TableCellValueBorder>
                                     <TableCellValueBorder noColor align="center">
                                         {row.investimento ? <CheckAnimation/> : <NotCheckAnimation/>}

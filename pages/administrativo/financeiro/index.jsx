@@ -66,7 +66,7 @@ export default function Financeiro() {
     open: false
   })
   let atualDateBruta = new Date()
-  const [atualDate] = useState(`${atualDateBruta.toLocaleDateString().split('/')[2]}-${atualDateBruta.toLocaleDateString().split('/')[1]}-${atualDateBruta.toLocaleDateString().split('/')[0]}`)
+  const [atualDate] = useState(`${atualDateBruta.toLocaleDateString('pt-br').split('/')[2]}-${atualDateBruta.toLocaleDateString('pt-br').split('/')[1]}-${atualDateBruta.toLocaleDateString('pt-br').split('/')[0]}`)
   const [openDialogCadasDespesas, setOpenDialogCadasDespesas] = useState(false)
   const [openDialogCadasReceitas, setOpenDialogCadasReceitas] = useState(false)
 
@@ -140,7 +140,7 @@ export default function Financeiro() {
               {fixaCampo && <>
                 <br/>
                 <span style={{fontSize: '1.2vw',marginLeft: '2%'}}>Dia do pagamento fixo</span>
-                <Select name="fixaDay" {...register('fixaDay')} defaultValue={String(new Date().toLocaleDateString().split('/')[0])} sx={{'&&': {
+                <Select name="fixaDay" {...register('fixaDay')} defaultValue={String(new Date().toLocaleDateString('pt-br').split('/')[0])} sx={{'&&': {
                   marginLeft: '1%',
                   fontSize: '1vw'
                 }}}>
@@ -242,7 +242,7 @@ export default function Financeiro() {
               {fixaCampo && <>
                 <br/>
                 <span style={{fontSize: '1.2vw',marginLeft: '2%'}}>Dia do pagamento fixo</span>
-                <Select name="fixaDay" {...register('fixaDay')} defaultValue={String(new Date().toLocaleDateString().split('/')[0])} sx={{'&&': {
+                <Select name="fixaDay" {...register('fixaDay')} defaultValue={String(new Date().toLocaleDateString('pt-br').split('/')[0])} sx={{'&&': {
                   marginLeft: '1%',
                   fontSize: '1vw'
                 }}}>

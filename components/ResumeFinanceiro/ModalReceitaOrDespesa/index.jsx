@@ -28,7 +28,7 @@ export default function ModalReceitaOrDespesa({ open, onClose, copyTextInfo, cop
                 <ContainerInfoReceitaOrDespesa>
                     <TitleInfoReceitaOrDespesa>Data: </TitleInfoReceitaOrDespesa>
                     <InfoReceitaOrDespesa title="Copiar data" onClick={copyInfo}>
-                        {receitaOrDespesa.data || receitaOrDespesa.fixa && `${receitaOrDespesa.fixaDay}/${new Date().toLocaleDateString().split('/')[1]}/${new Date().toLocaleDateString().split('/')[2]}`}
+                        {receitaOrDespesa.data || receitaOrDespesa.fixa && `${receitaOrDespesa.fixaDay}/${new Date().toLocaleDateString('pt-br').split('/')[1]}/${new Date().toLocaleDateString('pt-br').split('/')[2]}`}
                     </InfoReceitaOrDespesa>
                 </ContainerInfoReceitaOrDespesa>
                 {receitaOrDespesa.observação && (

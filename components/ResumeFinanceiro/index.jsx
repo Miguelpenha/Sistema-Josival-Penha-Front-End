@@ -86,7 +86,7 @@ function ResumeFinanceiro({month,  receitas, despesas, onDeleteReceita, onDelete
                                 auto={receitaOrDespesa.auto}
                                 name={receitaOrDespesa.nome}
                                 value={receitaOrDespesa.preco}
-                                date={receitaOrDespesa.data || `${receitaOrDespesa.fixaDay}/${new Date().toLocaleDateString().split('/')[1]}/${new Date().toLocaleDateString().split('/')[2]}`}
+                                date={receitaOrDespesa.data || `${receitaOrDespesa.fixaDay}/${new Date().toLocaleDateString('pt-br').split('/')[1]}/${new Date().toLocaleDateString('pt-br').split('/')[2]}`}
                                 receita={receitaOrDespesa.receita ? true : false}
                                 onDeleteReceita={() => onDeleteReceita(receitaOrDespesa._id)}
                                 onDeleteDespesa={() => onDeleteDespesa(receitaOrDespesa._id)}

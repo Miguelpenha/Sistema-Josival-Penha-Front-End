@@ -65,7 +65,7 @@ function ModalEditReceitaOrDespesa({ open, onClose, onEdit, receitaOrDespesa }) 
             <Select
                 name="fixaDay"
                 {...register('fixaDay')}
-                defaultValue={receitaOrDespesa.fixaDay || String(new Date().toLocaleDateString().split('/')[0])}
+                defaultValue={receitaOrDespesa.fixaDay || String(new Date().toLocaleDateString('pt-br').split('/')[0])}
                 sx={{
                     '&&': {
                         marginRight: '66%',
@@ -90,7 +90,7 @@ function ModalEditReceitaOrDespesa({ open, onClose, onEdit, receitaOrDespesa }) 
                     {...register('date')}
                     placeholder="Data: "
                     receita={receitaOrDespesa.receita}
-                    defaultValue={receitaOrDespesa.data ? `${receitaOrDespesa.data.split('/')[2]}-${receitaOrDespesa.data.split('/')[1]}-${receitaOrDespesa.data.split('/')[0]}` : receitaOrDespesa.fixa && `${new Date().toLocaleDateString().split('/')[2]}-${new Date().toLocaleDateString().split('/')[1]}-${receitaOrDespesa.fixaDay}`}
+                    defaultValue={receitaOrDespesa.data ? `${receitaOrDespesa.data.split('/')[2]}-${receitaOrDespesa.data.split('/')[1]}-${receitaOrDespesa.data.split('/')[0]}` : receitaOrDespesa.fixa && `${new Date().toLocaleDateString('pt-br').split('/')[2]}-${new Date().toLocaleDateString('pt-br').split('/')[1]}-${receitaOrDespesa.fixaDay}`}
                 />
             </Campo>
         )

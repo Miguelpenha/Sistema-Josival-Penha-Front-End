@@ -27,7 +27,7 @@ export default function Alunos() {
   })
 
   let atualDateBruta = new Date()
-  const [atualDate] = useState(`${atualDateBruta.toLocaleDateString().split('/')[2]}-${atualDateBruta.toLocaleDateString().split('/')[1]}-${atualDateBruta.toLocaleDateString().split('/')[0]}`)
+  const [atualDate] = useState(`${atualDateBruta.toLocaleDateString('pt-br').split('/')[2]}-${atualDateBruta.toLocaleDateString('pt-br').split('/')[1]}-${atualDateBruta.toLocaleDateString('pt-br').split('/')[0]}`)
 
   function LabelInput({ children, required }) {
     if (required) {
