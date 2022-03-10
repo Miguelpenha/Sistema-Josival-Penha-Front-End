@@ -95,8 +95,8 @@ export default function ContentModalEditAluno({ onClose, alunos, aluno }) {
                         {...register('turma')}
                         defaultValue={aluno.turma}
                     >
-                        {turmas.map(turma => (
-                            <ItemSelect value={turma.nome}>{turma.nome}</ItemSelect>
+                        {turmas.map((turma, index) => (
+                            <ItemSelect value={turma.nome} key={index}>{turma.nome}</ItemSelect>
                         ))}
                     </Select>
                 </Campo>
