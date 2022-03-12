@@ -27,6 +27,7 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg, onDef
         function Row({row, index}) {
             const [fechadoCadas, setFechadoCadas] = useState(null)
             const [openDialogGerarDeclaração, setOpenDialogGerarDeclaração] = useState(false)
+            const [openDialogGerarDeclaraçãoFinanceira, setOpenDialogGerarDeclaraçãoFinanceira] = useState(false)
             const [openDialogEditAluno, setOpenDialogEditAluno] = useState(false)
 
             let actions = []
@@ -47,6 +48,12 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg, onDef
                         background: '#A8CDFE'
                     },
                     {
+                        icon: <DownloadIcon sx={{color: '#0872FC'}}/>,
+                        name: 'Baixar declaração financeira do aluno',
+                        onClick: () => setOpenDialogGerarDeclaraçãoFinanceira(true),
+                        background: '#A8CDFE'
+                    },
+                    {
                         icon: <EditIcon sx={{color: '#0872FC'}}/>,
                         name: 'Editar aluno',
                         onClick: () => setOpenDialogEditAluno(true),
@@ -54,7 +61,7 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg, onDef
                     }
                 ]
 
-                bottom = 212
+                bottom = 268
             } else {
                 actions = [
                     {
@@ -80,10 +87,16 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg, onDef
                         name: 'Baixar declaração de frequência do aluno',
                         onClick: () => setOpenDialogGerarDeclaração(true),
                         background: '#A8CDFE'
+                    },
+                    {
+                        icon: <DownloadIcon sx={{color: '#0872FC'}}/>,
+                        name: 'Baixar declaração financeira do aluno',
+                        onClick: () => setOpenDialogGerarDeclaraçãoFinanceira(true),
+                        background: '#A8CDFE'
                     }
                 ]
 
-                bottom = 270
+                bottom = 325
             }
 
             function clickCloseCadas() {
@@ -109,6 +122,29 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg, onDef
                                     <input type="hidden" name="keyapi" value={process.env.NEXT_STATIC_API_KEY}/>
                                     <br/>
                                     <BolsistaSwitch name="bolsista"/>Bolsista
+                                    <ButtonSubmitGerarDeclaração style={{marginBottom: '0%'}} type="submit" variant="contained">Gerar</ButtonSubmitGerarDeclaração>
+                                </form>
+                            </DialogContent>
+                        </DialogGerarDeclaração>
+                    )
+                }
+
+                return null
+            }
+
+            function ModelGerarDeclaraçãoFinanceira({ open }) {
+                if (open) {
+                    return (
+                        <DialogGerarDeclaração open={true} onClose={() => setOpenDialogGerarDeclaraçãoFinanceira(false)}>
+                            <DialogContent>
+                                <form method="POST" target="_blank" action={`${process.env.NEXT_STATIC_API_URL}/alunos/documents/declaration-finance`}>
+                                    <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: '60%'}}>
+                                        <span style={{fontSize: '1vw', marginLeft: '30%'}}>Ano da declaração</span>
+                                        <InputPorcentagemGerarDeclaração name="ano" required placeholder="Ano da declaração" type="number" defaultValue={Number(new Date().toLocaleDateString('pt-br').split('/')[2])} variant="standard" fullWidth/>
+                                    </div>
+                                    <input type="hidden" name="id" value={row._id}/>
+                                    <input type="hidden" name="keyapi" value={process.env.NEXT_STATIC_API_KEY}/>
+                                    <br/>
                                     <ButtonSubmitGerarDeclaração style={{marginBottom: '0%'}} type="submit" variant="contained">Gerar</ButtonSubmitGerarDeclaração>
                                 </form>
                             </DialogContent>
@@ -167,7 +203,7 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg, onDef
             <TableCellValueBorder component="th" scope="col" align="center">{row.nascimento} ({calcIdade(row.nascimento, new Date())} anos)</TableCellValueBorder>
             <TableCellValueBorder component="th" scope="col" align="center">{row.situação}</TableCellValueBorder>
             <TableCellValueBorder align="center">
-                <div style={{position: 'relative', bottom}}>
+                <div style={{position: 'absolute', marginTop: -bottom}}>
                     <SpeedDial
                         ariaLabel="SpeedDial basic example"
                         sx={{position: 'absolute'}}
@@ -205,6 +241,7 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg, onDef
                     </SpeedDial>
                 </div>
                 <ModelGerarDeclaração open={openDialogGerarDeclaração}/>
+                <ModelGerarDeclaraçãoFinanceira open={openDialogGerarDeclaraçãoFinanceira}/>
                 <ModelEditAluno open={openDialogEditAluno}/>
             </TableCellValueBorder>
             <Menu
