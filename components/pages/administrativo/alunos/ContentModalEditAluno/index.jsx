@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, memo } from 'react'
 import { useForm } from 'react-hook-form'
 import { get } from '../../../../../hooks'
 import api from '../../../../../services/api/base'
@@ -6,7 +6,7 @@ import { Container, Campo, InputText, Error, InputDate, Select, ItemSelect, Butt
 import LabelInput from '../../../../LabelInput'
 import InputMask from 'react-input-mask'
 
-export default function ContentModalEditAluno({ onClose, alunos, aluno }) {
+function ContentModalEditAluno({ onClose, alunos, aluno }) {
     const [nameError, setNameError] = useState(false)
     const { register, reset, handleSubmit, watch } = useForm()
     const { data: turmas } = get('/turmas')
@@ -20,10 +20,11 @@ export default function ContentModalEditAluno({ onClose, alunos, aluno }) {
                 }
             })
             
-            await api.post(`/alunos/${aluno._id}`, data)
-            event.preventDefault()
-            reset()
-            onClose()
+            api.post(`/alunos/${aluno._id}`, data).then(() => {
+                event.preventDefault()
+                reset()
+                onClose()
+            })
         } else {
             event.preventDefault()
         }
@@ -282,3 +283,5 @@ export default function ContentModalEditAluno({ onClose, alunos, aluno }) {
         </Container>
     )
 }
+
+export default memo(ContentModalEditAluno)
