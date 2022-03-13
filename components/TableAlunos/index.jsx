@@ -6,6 +6,9 @@ import Link from 'next/link'
 import { useState, memo } from 'react'
 import api from '../../services/api/base'
 import ContentModalEditAluno from '../pages/administrativo/alunos/ContentModalEditAluno/index.jsx'
+import dinero from 'dinero.js'
+
+dinero.globalLocale = 'pt-br'
 
 function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg, onDefaultFoto, onEditAluno }) {
     if (typeof alunos != 'string' && alunos) {
@@ -138,14 +141,22 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg, onDef
                         <DialogGerarDeclaração open={true} onClose={() => setOpenDialogGerarDeclaraçãoFinanceira(false)}>
                             <DialogContent>
                                 <form method="POST" action={`${process.env.NEXT_STATIC_API_URL}/alunos/documents/declaration-finance`}>
-                                    <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: '60%'}}>
-                                        <span style={{fontSize: '1vw', marginLeft: '30%'}}>Ano da declaração</span>
-                                        <InputPorcentagemGerarDeclaração name="ano" required placeholder="Ano da declaração" type="number" defaultValue={Number(new Date().toLocaleDateString('pt-br').split('/')[2])} variant="standard" fullWidth/>
+                                    <div style={{display: 'flex', alignItems: 'center', width: '100%', flexDirection: 'column'}}>
+                                        <span style={{fontSize: '1vw', alignSelf: 'flex-start'}}>Ano da declaração</span>
+                                        <InputPorcentagemGerarDeclaração name="ano" required placeholder="Ano da declaração" type="number" defaultValue={Number(new Date().toLocaleDateString('pt-br').split('/')[2])} variant="standard" fullWidth noTop/>
+                                    </div>
+                                    <div style={{display: 'flex', alignItems: 'center', width: '100%', flexDirection: 'column'}}>
+                                        <span style={{fontSize: '1vw', alignSelf: 'flex-start', marginTop: '5%'}}>Valor da mátricula</span>
+                                        <InputPorcentagemGerarDeclaração name="mátricula" required placeholder="Valor da mátricula" type="text" defaultValue={dinero({ amount: Number(process.env.NEXT_STATIC_MATRICULA), currency: 'BRL' }).toFormat()} variant="standard" fullWidth noTop/>
+                                    </div>
+                                    <div style={{display: 'flex', alignItems: 'center', width: '100%', flexDirection: 'column'}}>
+                                        <span style={{fontSize: '1vw', alignSelf: 'flex-start', marginTop: '5%'}}>Valor da mensalidade</span>
+                                        <InputPorcentagemGerarDeclaração name="mensalidade" required placeholder="Valor da mensalidade" type="text" defaultValue={dinero({ amount: Number(process.env.NEXT_STATIC_MENSALIDADE), currency: 'BRL' }).toFormat()} variant="standard" fullWidth noTop/>
                                     </div>
                                     <input type="hidden" name="id" value={row._id}/>
                                     <input type="hidden" name="keyapi" value={process.env.NEXT_STATIC_API_KEY}/>
                                     <br/>
-                                    <ButtonSubmitGerarDeclaração style={{marginBottom: '0%'}} type="submit" variant="contained" onCLick={() => setOpenDialogGerarDeclaração(false)}>Gerar</ButtonSubmitGerarDeclaração>
+                                    <ButtonSubmitGerarDeclaração style={{marginBottom: '0%'}} type="submit" variant="contained" onCLick={() => setOpenDialogGerarDeclaraçãoFinanceira(false)}>Gerar</ButtonSubmitGerarDeclaração>
                                 </form>
                             </DialogContent>
                         </DialogGerarDeclaração>

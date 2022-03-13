@@ -130,11 +130,17 @@ export const DialogGerarDeclaração = styled(Dialog).attrs({
 
 export const InputPorcentagemGerarDeclaração = styled(TextField)`
     && {
-        margin-top: 5%;
-        width: 20%;
         display: block;
         margin-left: auto;
         margin-right: auto;
+
+        ${props => !props.fullWidth && css`
+            width: 20%;
+        `}
+
+        ${props => !props.noTop && css`
+            margin-top: 5%;
+        `}
     }
     
     & .MuiInput-underline {
