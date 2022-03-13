@@ -155,7 +155,7 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg, onDef
                 return null
             }
 
-            function ModelEditAluno({ open }) {
+            function ModelEditAlunoBruto({ open }) {
                 if (open) {
                     return (
                         <DialogGerarDeclaração open={true} onClose={() => setOpenDialogEditAluno(false)}>
@@ -173,6 +173,8 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg, onDef
 
                 return null
             }
+
+            const ModelEditAluno = memo(ModelEditAlunoBruto)
             
             return <TableRowSele key={index}>
                 <TableCellValueBorder component="th" scope="col" align="center">
