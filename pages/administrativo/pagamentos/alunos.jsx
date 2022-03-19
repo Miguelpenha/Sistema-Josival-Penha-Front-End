@@ -13,9 +13,6 @@ export default function PagamentosAlunos() {
     const { aluno: alunoId } = router.query
     const { data: alunos } = get('/alunos')
     const { data: aluno, mutate: mutateAluno } = get(`/alunos/${alunoId}`)
-    if (aluno) {
-        console.log(aluno)
-    }
     const [mes, setMes] = useState(null)
     const [openModalMensalidade, setOpenModalMensalidade] = useState(false)
     const find = router.query.queryAluno || ''
