@@ -215,6 +215,8 @@ export default function PagamentosAlunos() {
                     )}
                 </>
             )
+        } else {
+            return null
         }
     } else {
         return null
