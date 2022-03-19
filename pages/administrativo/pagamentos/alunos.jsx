@@ -190,12 +190,14 @@ export default function PagamentosAlunos() {
                                 {aluno && aluno.pagamentos && meses.map((mês, index) => (
                                     <tr key={index} onClick={() => handleOpenModalMensalidade(mês.num)}>
                                         <td>{mês.mês}</td>
-                                        <td>
-                                            {veriPago(aluno.pagamentos[mês.num])}
-                                        </td>
-                                        <td>{aluno.pagamentos[mês.num].value}</td>
-                                        <td>{aluno.pagamentos[mês.num].vencimento}</td>
-                                        <td>{aluno.pagamentos[mês.num].forma}</td>
+                                        {aluno.pagamentos[mês.num] && <>
+                                            <td>
+                                                {veriPago(aluno.pagamentos[mês.num])}
+                                            </td>
+                                            <td>{aluno.pagamentos[mês.num].value}</td>
+                                            <td>{aluno.pagamentos[mês.num].vencimento}</td>
+                                            <td>{aluno.pagamentos[mês.num].forma}</td>
+                                        </>}
                                     </tr>
                                 ))}
                             </tbody>
