@@ -10,9 +10,9 @@ import ModalMensalidade from '../../../components/pages/administrativo/pagamento
 
 export default function PagamentosAlunos() {
     const router = useRouter()
-    const { data: alunos, mutate: mutateAlunos } = get('/alunos')
     const { aluno: alunoId } = router.query
     const { data: aluno, mutate: mutateAluno } = get(`/alunos/${alunoId}`)
+    const { data: alunos } = get('/alunos')
     const [mes, setMes] = useState(null)
     const [openModalMensalidade, setOpenModalMensalidade] = useState(false)
     const find = router.query.queryAluno || ''
@@ -190,14 +190,12 @@ export default function PagamentosAlunos() {
                                 {aluno && aluno.pagamentos && meses.map((mês, index) => (
                                     <tr key={index} onClick={() => handleOpenModalMensalidade(mês.num)}>
                                         <td>{mês.mês}</td>
-                                        {aluno.pagamentos[mês.num] && <>
-                                            <td>
-                                                {veriPago(aluno.pagamentos[mês.num])}
-                                            </td>
-                                            <td>{aluno.pagamentos[mês.num].value}</td>
-                                            <td>{aluno.pagamentos[mês.num].vencimento}</td>
-                                            <td>{aluno.pagamentos[mês.num].forma}</td>
-                                        </>}
+                                        <td>
+                                            {veriPago(aluno.pagamentos[mês.num])}
+                                        </td>
+                                        <td>{aluno.pagamentos[mês.num].value}</td>
+                                        <td>{aluno.pagamentos[mês.num].vencimento}</td>
+                                        <td>{aluno.pagamentos[mês.num].forma}</td>
                                     </tr>
                                 ))}
                             </tbody>
