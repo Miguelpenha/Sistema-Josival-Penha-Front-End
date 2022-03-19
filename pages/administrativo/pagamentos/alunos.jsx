@@ -14,6 +14,7 @@ export default function PagamentosAlunos() {
     const { data: alunos } = get('/alunos')
     console.log(alunos)
     if (alunoId) {
+        console.log(alunoId)
         const { data: aluno, mutate: mutateAluno } = get(`/alunos/${alunoId}`)
         console.log(aluno)
         const [mes, setMes] = useState(null)
