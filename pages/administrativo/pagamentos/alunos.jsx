@@ -11,8 +11,10 @@ import ModalMensalidade from '../../../components/pages/administrativo/pagamento
 export default function PagamentosAlunos() {
     const router = useRouter()
     const { aluno: alunoId } = router.query
-    const { data: aluno, mutate: mutateAluno } = get(`/alunos/${alunoId}`)
     const { data: alunos } = get('/alunos')
+    console.log(alunos)
+    const { data: aluno, mutate: mutateAluno } = get(`/alunos/${alunoId}`)
+    console.log(aluno)
     const [mes, setMes] = useState(null)
     const [openModalMensalidade, setOpenModalMensalidade] = useState(false)
     const find = router.query.queryAluno || ''
