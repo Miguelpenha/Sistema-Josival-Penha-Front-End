@@ -124,7 +124,7 @@ export default function PagamentosAlunos() {
             <Head>
                 <title>Alunos Pagamentos</title>
             </Head>
-            <Loading loading={alunos}>
+            {alunos && aluno && aluno.pagamentos && (
                 <Main>
                     <Link href="/administrativo/pagamentos" passHref>
                         <ContainerIconBack>
@@ -135,47 +135,45 @@ export default function PagamentosAlunos() {
                         </ContainerIconBack>
                     </Link>
                     <Container>
-                        {alunos && <>
-                            <InputFind
-                                type="text"
-                                name="pesquisar"
-                                placeholder="Pesquisar aluno..."
-                                onChange={ev =>
-                                    ev.target.value.length >=1 ? router.push(
-                                        `/administrativo/pagamentos/alunos?aluno=${alunoId}&queryAluno=${ev.target.value}`,
-                                        null,
-                                        { shallow: true }
-                                    ) : router.push(
-                                        `/administrativo/pagamentos/alunos?aluno=${alunoId}`,
-                                        null,
-                                        { shallow: true }
+                        <InputFind
+                            type="text"
+                            name="pesquisar"
+                            placeholder="Pesquisar aluno..."
+                            onChange={ev =>
+                                ev.target.value.length >=1 ? router.push(
+                                    `/administrativo/pagamentos/alunos?aluno=${alunoId}&queryAluno=${ev.target.value}`,
+                                    null,
+                                    { shallow: true }
+                                ) : router.push(
+                                    `/administrativo/pagamentos/alunos?aluno=${alunoId}`,
+                                    null,
+                                    { shallow: true }
+                                )
+                            }
+                            defaultValue={find}
+                        />
+                        <Select
+                            value={alunoId}
+                            onChange={event => (
+                                find.length >=1 ? router.push(
+                                    `/administrativo/pagamentos/alunos?aluno=${event.target.value}&queryAluno=${find}`,
+                                    null,
+                                    { shallow: true }
+                                ) : router.push(
+                                    `/administrativo/pagamentos/alunos?aluno=${event.target.value}`,
+                                    null,
+                                    { shallow: true }
+                                )
+                            )}
+                        >
+                            {alunos.map((aluno, index) => {
+                                if (aluno.nome.toUpperCase().includes(find.toUpperCase())) {
+                                    return (
+                                        <MenuItem value={aluno._id} key={index}>{aluno.nome}</MenuItem>
                                     )
                                 }
-                                defaultValue={find}
-                            />
-                            <Select
-                                value={alunoId}
-                                onChange={event => (
-                                    find.length >=1 ? router.push(
-                                        `/administrativo/pagamentos/alunos?aluno=${event.target.value}&queryAluno=${find}`,
-                                        null,
-                                        { shallow: true }
-                                    ) : router.push(
-                                        `/administrativo/pagamentos/alunos?aluno=${event.target.value}`,
-                                        null,
-                                        { shallow: true }
-                                    )
-                                )}
-                            >
-                                {alunos && alunos.map((aluno, index) => {
-                                    if (aluno.nome.toUpperCase().includes(find.toUpperCase())) {
-                                        return (
-                                            <MenuItem value={aluno._id} key={index}>{aluno.nome}</MenuItem>
-                                        )
-                                    }
-                                })}
-                            </Select>
-                        </>}
+                            })}
+                        </Select>
                         <Table cellSpacing="0" cellPadding="0">
                             <thead>
                                 <tr>
@@ -187,7 +185,7 @@ export default function PagamentosAlunos() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {aluno && aluno.pagamentos && meses.map((mês, index) => (
+                                {meses.map((mês, index) => (
                                     <tr key={index} onClick={() => handleOpenModalMensalidade(mês.num)}>
                                         <td>{mês.mês}</td>
                                         <td>
@@ -200,18 +198,16 @@ export default function PagamentosAlunos() {
                                 ))}
                             </tbody>
                         </Table>
-                        {aluno && (
-                            <ModalMensalidade
-                                open={openModalMensalidade}
-                                onClose={handleCloseModalMensalidade}
-                                aluno={aluno}
-                                mesMensalidade={mes}
-                                onEdit={() => mutateAluno(`/alunos/${alunoId}`)}
-                            />
-                        )}
+                        <ModalMensalidade
+                            open={openModalMensalidade}
+                            onClose={handleCloseModalMensalidade}
+                            aluno={aluno}
+                            mesMensalidade={mes}
+                            onEdit={() => mutateAluno(`/alunos/${alunoId}`)}
+                        />
                     </Container>
                 </Main>
-            </Loading>
+            )}
         </>
     )
 }
