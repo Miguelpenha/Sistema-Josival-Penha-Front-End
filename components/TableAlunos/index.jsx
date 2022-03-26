@@ -1,7 +1,7 @@
 import { TableContainer, TableCell, TableCellTitle, TableCellTotal, TextTotal, TableRowSele, TableCellValueBorder, TableCellBorder, IconButtonExclu, TableCellTitleBorder, LinkFotoAluno, FotoAluno, DialogGerarDeclaração, InputPorcentagemGerarDeclaração, ButtonSubmitGerarDeclaração, BolsistaSwitch } from './style'
 import { Paper, Table, TableHead, TableRow, TableBody, TableFooter, Tooltip, Menu, MenuItem, Checkbox, DialogContent, SpeedDial, SpeedDialAction } from '@material-ui/core'
 import LimitText from '../LimitText'
-import { Delete as DeleteIcon, Download as DownloadIcon, Edit as EditIcon, Send as SendIcon, ListAlt as ListAltIcon } from '@material-ui/icons'
+import { Delete as DeleteIcon, Download as DownloadIcon, Edit as EditIcon, Send as SendIcon, ListAlt as ListAltIcon, Paid as PaidIcon } from '@material-ui/icons'
 import Link from 'next/link'
 import { useState, memo } from 'react'
 import api from '../../services/api/base'
@@ -292,39 +292,51 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg, onDef
                 <Table size="medium">
                     <TableHead>
                         <TableRow>
-                            <TableCellTitle align="center" scope="col" colSpan={6}>Alunos</TableCellTitle>
-                            <TableCellTitleBorder align="center" scope="col" colSpan={2}>
-                                <Tooltip title={
-                                    <span style={{fontSize: '1vw'}}>Excluir itens</span>
-                                } arrow placement="bottom">
-                                    <IconButtonExclu style={{left: '-8%'}} bg="#FBD6D7" onClick={() => onDeleteAlunosTodos()}>
-                                        <DeleteIcon sx={{color: '#ED3237'}}/>
-                                    </IconButtonExclu>
-                                </Tooltip>
-                                <Tooltip title={
-                                    <span style={{fontSize: '1vw'}}>Baixar planilha</span>
-                                } arrow placement="bottom">
-                                    <form method="POST" action={`${process.env.NEXT_STATIC_API_URL}/alunos/exportar`} style={{display: 'inline-block'}}>
-                                        <input type="hidden" name="keyapi" value={process.env.NEXT_STATIC_API_KEY}/>
-                                        <IconButtonExclu type="submit" style={{left: '3%'}} bg="#B5D5FE">
-                                            <DownloadIcon sx={{color: '#0872FC'}}/>
+                            <TableCellTitle align="center" scope="col" colSpan={5}>Alunos</TableCellTitle>
+                            <TableCellTitleBorder align="center" scope="col" colSpan={3}>
+                                <div style={{display: 'flex', justifyContent: 'space-evenly', width: '100%'}}>
+                                    <Tooltip title={
+                                        <span style={{fontSize: '1vw'}}>Excluir itens</span>
+                                    } arrow placement="bottom">
+                                        <IconButtonExclu bg="#FBD6D7" onClick={() => onDeleteAlunosTodos()}>
+                                            <DeleteIcon sx={{color: '#ED3237'}}/>
                                         </IconButtonExclu>
-                                    </form>
-                                </Tooltip>
-                                <Tooltip title={
-                                    <span style={{fontSize: '1vw'}}>Enviar e-mail para o responsável</span>
-                                } arrow placement="bottom">
-                                    <IconButtonExclu style={{left: '7%'}} title="Enviar e-mail para o responsável" bg="#A8CDFE" component="a" href="/email/responsible">
-                                        <SendIcon sx={{color: '#0872FC'}}/>
-                                    </IconButtonExclu>
-                                </Tooltip>
-                                <Tooltip title={
-                                    <span style={{fontSize: '1vw'}}>Ver boletim de aluno</span>
-                                } arrow placement="bottom">
-                                    <IconButtonExclu style={{left: '10%'}} title="Ver boletim de aluno" bg="#A8CDFE" component="a" href="/boletim">
-                                        <ListAltIcon sx={{color: '#0872FC'}}/>
-                                    </IconButtonExclu>
-                                </Tooltip>
+                                    </Tooltip>
+                                    <Tooltip title={
+                                        <span style={{fontSize: '1vw'}}>Baixar planilha</span>
+                                    } arrow placement="bottom">
+                                        <form method="POST" action={`${process.env.NEXT_STATIC_API_URL}/alunos/exportar`} style={{display: 'inline-block'}}>
+                                            <input type="hidden" name="keyapi" value={process.env.NEXT_STATIC_API_KEY}/>
+                                            <IconButtonExclu type="submit" bg="#B5D5FE">
+                                                <DownloadIcon sx={{color: '#0872FC'}}/>
+                                            </IconButtonExclu>
+                                        </form>
+                                    </Tooltip>
+                                    <Tooltip title={
+                                        <span style={{fontSize: '1vw'}}>Enviar e-mail para o responsável</span>
+                                    } arrow placement="bottom">
+                                        <IconButtonExclu title="Enviar e-mail para o responsável" bg="#A8CDFE" component="a" href="/email/responsible">
+                                            <SendIcon sx={{color: '#0872FC'}}/>
+                                        </IconButtonExclu>
+                                    </Tooltip>
+                                    <Tooltip title={
+                                        <span style={{fontSize: '1vw'}}>Ver boletim de aluno</span>
+                                    } arrow placement="bottom">
+                                        <IconButtonExclu title="Ver boletim de aluno" bg="#A8CDFE" component="a" href="/boletim">
+                                            <ListAltIcon sx={{color: '#0872FC'}}/>
+                                        </IconButtonExclu>
+                                    </Tooltip>
+                                    <Tooltip title={
+                                        <span style={{fontSize: '1vw'}}>Baixar planilha de pagamentos dos alunos</span>
+                                    } arrow placement="bottom">
+                                        <form method="POST" action={`${process.env.NEXT_STATIC_API_URL}/alunos/documents/payments`} style={{display: 'inline-block'}}>
+                                            <input type="hidden" name="keyapi" value={process.env.NEXT_STATIC_API_KEY}/>
+                                            <IconButtonExclu type="submit" bg="#B5D5FE">
+                                                <PaidIcon sx={{color: '#0872FC'}}/>
+                                            </IconButtonExclu>
+                                        </form>
+                                    </Tooltip>
+                                </div>
                             </TableCellTitleBorder>
                         </TableRow>
                         <TableRow>
