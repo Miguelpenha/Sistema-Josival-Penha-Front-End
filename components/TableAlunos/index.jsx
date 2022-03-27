@@ -1,7 +1,7 @@
 import { TableContainer, TableCell, TableCellTitle, TableCellTotal, TextTotal, TableRowSele, TableCellValueBorder, TableCellBorder, IconButtonExclu, TableCellTitleBorder, LinkFotoAluno, FotoAluno, DialogGerarDeclaração, InputPorcentagemGerarDeclaração, ButtonSubmitGerarDeclaração, BolsistaSwitch } from './style'
 import { Paper, Table, TableHead, TableRow, TableBody, TableFooter, Tooltip, Menu, MenuItem, Checkbox, DialogContent, SpeedDial, SpeedDialAction } from '@material-ui/core'
 import LimitText from '../LimitText'
-import { Delete as DeleteIcon, Download as DownloadIcon, Edit as EditIcon, Send as SendIcon, ListAlt as ListAltIcon, Paid as PaidIcon } from '@material-ui/icons'
+import { Delete as DeleteIcon, Download as DownloadIcon, Edit as EditIcon, Send as SendIcon, ListAlt as ListAltIcon, Paid as PaidIcon, Downloading as DownloadingIcon } from '@material-ui/icons'
 import Link from 'next/link'
 import { useState, memo } from 'react'
 import api from '../../services/api/base'
@@ -303,7 +303,7 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg, onDef
                                         </IconButtonExclu>
                                     </Tooltip>
                                     <Tooltip title={
-                                        <span style={{fontSize: '1vw'}}>Baixar planilha</span>
+                                        <span style={{fontSize: '1vw'}}>Baixar planilha de alunos</span>
                                     } arrow placement="bottom">
                                         <form method="POST" action={`${process.env.NEXT_STATIC_API_URL}/alunos/exportar`} style={{display: 'inline-block'}}>
                                             <input type="hidden" name="keyapi" value={process.env.NEXT_STATIC_API_KEY}/>
@@ -333,6 +333,16 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg, onDef
                                             <input type="hidden" name="keyapi" value={process.env.NEXT_STATIC_API_KEY}/>
                                             <IconButtonExclu type="submit" bg="#B5D5FE">
                                                 <PaidIcon sx={{color: '#0872FC'}}/>
+                                            </IconButtonExclu>
+                                        </form>
+                                    </Tooltip>
+                                    <Tooltip title={
+                                        <span style={{fontSize: '1vw'}}>Baixar planilha de aluno separada por turmas</span>
+                                    } arrow placement="bottom">
+                                        <form method="POST" action={`${process.env.NEXT_STATIC_API_URL}/alunos/exportar-por-turma`} style={{display: 'inline-block'}}>
+                                            <input type="hidden" name="keyapi" value={process.env.NEXT_STATIC_API_KEY}/>
+                                            <IconButtonExclu type="submit" bg="#B5D5FE">
+                                                <DownloadingIcon sx={{color: '#0872FC'}}/>
                                             </IconButtonExclu>
                                         </form>
                                     </Tooltip>
