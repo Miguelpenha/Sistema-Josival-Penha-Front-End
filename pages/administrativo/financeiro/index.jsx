@@ -56,11 +56,11 @@ export default function Financeiro() {
   const { data: totalReceitas, mutate: mutateTotalReceitas } = get('/financeiro/receitas/total')
   const { data: totalDespesas, mutate: mutateTotalDespesas } = get('/financeiro/despesas/total')
   const { data: despesas, mutate: mutateDespesas } = get('/financeiro/despesas')
-  const { data: receitas, mutate: mutateReceitas } = get('/financeiro/receitas')
+  const [month, setMonth] = useState('full')
+  const { data: receitas, mutate: mutateReceitas } = get(`/financeiro/receitas${!month || month != 'full' ? '?month='+month : ''}`)
   const { data: saldo, mutate: mutateSaldo } = get('/financeiro/saldo')
   const { register, handleSubmit } = useForm()
   const [fechadoCadas, setFechadoCadas] = useState(null)
-  const [month, setMonth] = useState('full')
   const [veri, setVeri] = useState(false)
   const [alert, setAlert] = useState({
     open: false
@@ -433,172 +433,177 @@ export default function Financeiro() {
             </Função>
           </Funções>
         </NavOptions>
-        <Main>
-          <AddIcon
-            onClick={handleClickAddOptions}
-            sx={{
-              '&&': {
-                fontSize: '5vw',
-                cursor: 'pointer',
-                color: '#ffffff',
-                borderRadius: '50%',
-                backgroundColor: '#0872FC',
-                '&&:hover': {
-                  opacity: 0.8
-                }}}
-              }
-          />
-          <Menu
-            anchorEl={anchorElAddOptions}
-            open={openAddOptions}
-            onClose={handleCloseAddOptions}
-            PaperProps={{
-              style: {
-                left: '50%',
-                transform: 'translateX(100%) translateY(90%)'
-              }
-            }}
-            sx={{
-              '.MuiMenu-paper': {
-                backgroundColor: '#0872FC',
-                borderRadius: '10px',
-                color: '#ffffff',
-                padding: '0.5%'
-              }
-            }}
-          >
-            <MenuItem
-              onClick={() => {
-                handleCloseAddOptions(true)
-                setOpenDialogCadasReceitas(true)
+        {receitas && (
+          <Main>
+            <AddIcon
+              onClick={handleClickAddOptions}
+              sx={{
+                '&&': {
+                  fontSize: '5vw',
+                  cursor: 'pointer',
+                  color: '#ffffff',
+                  borderRadius: '50%',
+                  backgroundColor: '#0872FC',
+                  '&&:hover': {
+                    opacity: 0.8
+                  }}}
+                }
+            />
+            <Menu
+              anchorEl={anchorElAddOptions}
+              open={openAddOptions}
+              onClose={handleCloseAddOptions}
+              PaperProps={{
+                style: {
+                  left: '50%',
+                  transform: 'translateX(100%) translateY(90%)'
+                }
               }}
-              sx={{fontSize: '1.5vw'}}
+              sx={{
+                '.MuiMenu-paper': {
+                  backgroundColor: '#0872FC',
+                  borderRadius: '10px',
+                  color: '#ffffff',
+                  padding: '0.5%'
+                }
+              }}
             >
-              <TrendingUpIcon fontSize="large" sx={{marginRight: '5%', color: '#5AB55E', backgroundColor: '#ffffff', borderRadius: '50%', padding: '1%', fontSize: '2vw'}}/>
-                Cadastrar receita
-              </MenuItem>
               <MenuItem
                 onClick={() => {
                   handleCloseAddOptions(true)
-                  setOpenDialogCadasDespesas(true)
+                  setOpenDialogCadasReceitas(true)
                 }}
                 sx={{fontSize: '1.5vw'}}
               >
-                <TrendingDownIcon fontSize="large" sx={{marginRight: '5%', color: '#ED3237', backgroundColor: '#ffffff', borderRadius: '50%', padding: '1%', fontSize: '2vw'}}/>
-                Cadastrar despesa
-              </MenuItem>
-            </Menu>
-            <SelectMonth value={month} onChange={event => setMonth(event.target.value)}>
-              <ItemMonth value="full">Mostrar todos os meses</ItemMonth>
-              <ItemMonth value="01">Janeiro</ItemMonth>
-              <ItemMonth value="02">Fevereiro</ItemMonth>
-              <ItemMonth value="03">Março</ItemMonth>
-              <ItemMonth value="04">Abril</ItemMonth>
-              <ItemMonth value="05">Maio</ItemMonth>
-              <ItemMonth value="06">Junho</ItemMonth>
-              <ItemMonth value="07">Julho</ItemMonth>
-              <ItemMonth value="08">Agosto</ItemMonth>
-              <ItemMonth value="09">Setembro</ItemMonth>
-              <ItemMonth value="10">Outubro</ItemMonth>
-              <ItemMonth value="11">Novembro</ItemMonth>
-              <ItemMonth value="12">Dezembro</ItemMonth>
-            </SelectMonth>
-            <Infos>
-              <Info>
-                <InfoTit>Saldo atual</InfoTit>
-                <br/>
-                {saldo ? <InfoDado color="#0872FC">{saldo.saldo}</InfoDado> : <Skeleton variant="rectangular" width={`60%`} height={35} style={{display: 'inline-block', borderRadius: '10px', marginTop: '5%'}} animation="wave"/>}
-                <IconAccountBalance color="#009CDE" bg="#A7E7FF"/>
-              </Info>
-              <Info>
-                <InfoTit>Receitas</InfoTit>
-                <br/>
-                {totalReceitas ? <InfoDado color="#60BF92">+{totalReceitas.total}</InfoDado> : <Skeleton variant="rectangular" width={`60%`} height={35} style={{display: 'inline-block', borderRadius: '10px', marginTop: '5%'}} animation="wave"/>}
-                <IconTrendingUpInfo color="#ffffff" bg="#60BF92"/>
-              </Info>
-              <Info>
-                <InfoTit>Despesas</InfoTit>
-                <br/>
-                {totalDespesas ? <InfoDado color="#EF5252">-{totalDespesas.total}</InfoDado> : <Skeleton variant="rectangular" width={`60%`} height={35} style={{display: 'inline-block', borderRadius: '10px', marginTop: '5%'}} animation="wave"/>}
-                <IconTrendingDownInfo color="#ffffff" bg="#EF5252"/>
-              </Info>
-            </Infos>
-            {receitas && despesas && <>
-              {!receitas.length >= 1 && !despesas.length >= 1 && (
-                <ContainerTitleNotReceitaOrDespesa>
-                  <TitleNotReceitaOrDespesa>
-                    Não há receitas ou despesas cadastradas, cadastre uma receita ou despesa para ver resumos e gráficos &#x1F603;
-                  </TitleNotReceitaOrDespesa>
-                </ContainerTitleNotReceitaOrDespesa>
-              )}
-            </>}
-            <ResumeFinanceiro month={month} receitas={receitas} despesas={despesas} onDeleteReceita={id => {
-              api.delete(`/financeiro/receitas/${id}`).then(() => {
-                mutateTotalReceitas('/financeiro/receitas/total')
-                mutateReceitas('/financeiro/receitas')
-                mutateSaldo('/financeiro/saldo')
-              })
-            }} onDeleteDespesa={id => {
-              api.delete(`/financeiro/despesas/${id}`).then(() => {
-                mutateTotalDespesas('/financeiro/despesas/total')
-                mutateDespesas('/financeiro/despesas')
-                mutateSaldo('/financeiro/saldo')
-              })
-            }} onEdit={() => {
-              mutateTotalDespesas('/financeiro/receitas/total')
-              mutateTotalReceitas('/financeiro/despesas/total')
-              mutateDespesas('/financeiro/receitas')
-              mutateReceitas('/financeiro/despesas')
-              mutateSaldo('/financeiro/saldo')
-            }}/>
-            <Charts>
-              <ChartReceitasDespesasComCarregamento/>
-            </Charts>
-            {receitas && despesas ? <TableReceitasDespesas receitas={receitas && receitas} despesas={despesas && despesas} onDeleteDespesas={id => {
-              api.delete(`/financeiro/despesas/${id}`).then(() => {
-                mutateTotalDespesas('/financeiro/despesas/total')
-                mutateDespesas('/financeiro/despesas')
-                mutateSaldo('/financeiro/saldo')
-              })
-            }} onDeleteReceitas={id => {
-              api.delete(`/financeiro/receitas/${id}`).then(() => {
-                mutateTotalReceitas('/financeiro/receitas/total')
-                mutateReceitas('/financeiro/receitas')
-                mutateSaldo('/financeiro/saldo')
-              })
-            }} onDeleteTodos={() => {
-              despesas.map(despesa => {
-                api.delete(`/financeiro/despesas/${despesa._id}`).then(() => {
-                  mutateTotalDespesas('/financeiro/despesas/total')
-                  mutateDespesas('/financeiro/despesas')
-                  mutateSaldo('/financeiro/saldo')
-                })
-              })
-              receitas.map(receita => {
-                api.delete(`/financeiro/receitas/${receita._id}`).then(() => {
+                <TrendingUpIcon fontSize="large" sx={{marginRight: '5%', color: '#5AB55E', backgroundColor: '#ffffff', borderRadius: '50%', padding: '1%', fontSize: '2vw'}}/>
+                  Cadastrar receita
+                </MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    handleCloseAddOptions(true)
+                    setOpenDialogCadasDespesas(true)
+                  }}
+                  sx={{fontSize: '1.5vw'}}
+                >
+                  <TrendingDownIcon fontSize="large" sx={{marginRight: '5%', color: '#ED3237', backgroundColor: '#ffffff', borderRadius: '50%', padding: '1%', fontSize: '2vw'}}/>
+                  Cadastrar despesa
+                </MenuItem>
+              </Menu>
+              <SelectMonth value={month} onChange={event => {
+                setMonth(event.target.value)
+                mutateReceitas()
+              }}>
+                <ItemMonth value="full">Mostrar todos os meses</ItemMonth>
+                <ItemMonth value="01">Janeiro</ItemMonth>
+                <ItemMonth value="02">Fevereiro</ItemMonth>
+                <ItemMonth value="03">Março</ItemMonth>
+                <ItemMonth value="04">Abril</ItemMonth>
+                <ItemMonth value="05">Maio</ItemMonth>
+                <ItemMonth value="06">Junho</ItemMonth>
+                <ItemMonth value="07">Julho</ItemMonth>
+                <ItemMonth value="08">Agosto</ItemMonth>
+                <ItemMonth value="09">Setembro</ItemMonth>
+                <ItemMonth value="10">Outubro</ItemMonth>
+                <ItemMonth value="11">Novembro</ItemMonth>
+                <ItemMonth value="12">Dezembro</ItemMonth>
+              </SelectMonth>
+              <Infos>
+                <Info>
+                  <InfoTit>Saldo atual</InfoTit>
+                  <br/>
+                  {saldo ? <InfoDado color="#0872FC">{saldo.saldo}</InfoDado> : <Skeleton variant="rectangular" width={`60%`} height={35} style={{display: 'inline-block', borderRadius: '10px', marginTop: '5%'}} animation="wave"/>}
+                  <IconAccountBalance color="#009CDE" bg="#A7E7FF"/>
+                </Info>
+                <Info>
+                  <InfoTit>Receitas</InfoTit>
+                  <br/>
+                  {totalReceitas ? <InfoDado color="#60BF92">+{totalReceitas.total}</InfoDado> : <Skeleton variant="rectangular" width={`60%`} height={35} style={{display: 'inline-block', borderRadius: '10px', marginTop: '5%'}} animation="wave"/>}
+                  <IconTrendingUpInfo color="#ffffff" bg="#60BF92"/>
+                </Info>
+                <Info>
+                  <InfoTit>Despesas</InfoTit>
+                  <br/>
+                  {totalDespesas ? <InfoDado color="#EF5252">-{totalDespesas.total}</InfoDado> : <Skeleton variant="rectangular" width={`60%`} height={35} style={{display: 'inline-block', borderRadius: '10px', marginTop: '5%'}} animation="wave"/>}
+                  <IconTrendingDownInfo color="#ffffff" bg="#EF5252"/>
+                </Info>
+              </Infos>
+              {receitas && despesas && <>
+                {!receitas.length >= 1 && !despesas.length >= 1 && (
+                  <ContainerTitleNotReceitaOrDespesa>
+                    <TitleNotReceitaOrDespesa>
+                      Não há receitas ou despesas cadastradas, cadastre uma receita ou despesa para ver resumos e gráficos &#x1F603;
+                    </TitleNotReceitaOrDespesa>
+                  </ContainerTitleNotReceitaOrDespesa>
+                )}
+              </>}
+              <ResumeFinanceiro month={month} receitas={receitas} despesas={despesas} onDeleteReceita={id => {
+                api.delete(`/financeiro/receitas/${id}`).then(() => {
                   mutateTotalReceitas('/financeiro/receitas/total')
                   mutateReceitas('/financeiro/receitas')
                   mutateSaldo('/financeiro/saldo')
                 })
-              })
-            }} onEditReceita={() => {}} onEditDespesa={() => {}} saldo={saldo && saldo.saldo}/> : <Skeleton variant="rectangular" width={`85.5%`} height={`50%`} style={{display: 'block', marginLeft: 'auto', marginRight: 'auto', borderRadius: '20px', marginTop: '5%'}} animation="wave"/>}
-            <Snackbar anchorOrigin={{
-              horizontal: 'right',
-              vertical: 'bottom'
-            }} open={alert.open} onClose={() => setAlert({
-              open: false
-            })} autoHideDuration={3000}>
-              <Alert variant={alert.variant} severity={alert.severity} onClose={() => 
-                setAlert({
-                  open: false
+              }} onDeleteDespesa={id => {
+                api.delete(`/financeiro/despesas/${id}`).then(() => {
+                  mutateTotalDespesas('/financeiro/despesas/total')
+                  mutateDespesas('/financeiro/despesas')
+                  mutateSaldo('/financeiro/saldo')
                 })
-              }>
-                <h1>{alert.text}</h1>
-              </Alert>
-            </Snackbar>
-            <DialogCadasDespesas open={openDialogCadasDespesas}/>
-            <DialogCadasReceitas open={openDialogCadasReceitas}/>
-        </Main>
+              }} onEdit={() => {
+                mutateTotalDespesas('/financeiro/receitas/total')
+                mutateTotalReceitas('/financeiro/despesas/total')
+                mutateDespesas('/financeiro/receitas')
+                mutateReceitas('/financeiro/despesas')
+                mutateSaldo('/financeiro/saldo')
+              }}/>
+              <Charts>
+                <ChartReceitasDespesasComCarregamento/>
+              </Charts>
+              {receitas && despesas ? <TableReceitasDespesas receitas={receitas && receitas} despesas={despesas && despesas} onDeleteDespesas={id => {
+                api.delete(`/financeiro/despesas/${id}`).then(() => {
+                  mutateTotalDespesas('/financeiro/despesas/total')
+                  mutateDespesas('/financeiro/despesas')
+                  mutateSaldo('/financeiro/saldo')
+                })
+              }} onDeleteReceitas={id => {
+                api.delete(`/financeiro/receitas/${id}`).then(() => {
+                  mutateTotalReceitas('/financeiro/receitas/total')
+                  mutateReceitas('/financeiro/receitas')
+                  mutateSaldo('/financeiro/saldo')
+                })
+              }} onDeleteTodos={() => {
+                despesas.map(despesa => {
+                  api.delete(`/financeiro/despesas/${despesa._id}`).then(() => {
+                    mutateTotalDespesas('/financeiro/despesas/total')
+                    mutateDespesas('/financeiro/despesas')
+                    mutateSaldo('/financeiro/saldo')
+                  })
+                })
+                receitas.map(receita => {
+                  api.delete(`/financeiro/receitas/${receita._id}`).then(() => {
+                    mutateTotalReceitas('/financeiro/receitas/total')
+                    mutateReceitas('/financeiro/receitas')
+                    mutateSaldo('/financeiro/saldo')
+                  })
+                })
+              }} onEditReceita={() => {}} onEditDespesa={() => {}} saldo={saldo && saldo.saldo}/> : <Skeleton variant="rectangular" width={`85.5%`} height={`50%`} style={{display: 'block', marginLeft: 'auto', marginRight: 'auto', borderRadius: '20px', marginTop: '5%'}} animation="wave"/>}
+              <Snackbar anchorOrigin={{
+                horizontal: 'right',
+                vertical: 'bottom'
+              }} open={alert.open} onClose={() => setAlert({
+                open: false
+              })} autoHideDuration={3000}>
+                <Alert variant={alert.variant} severity={alert.severity} onClose={() => 
+                  setAlert({
+                    open: false
+                  })
+                }>
+                  <h1>{alert.text}</h1>
+                </Alert>
+              </Snackbar>
+              <DialogCadasDespesas open={openDialogCadasDespesas}/>
+              <DialogCadasReceitas open={openDialogCadasReceitas}/>
+          </Main>
+        )}
       </Container>
     </VerificationMemo>
   )
