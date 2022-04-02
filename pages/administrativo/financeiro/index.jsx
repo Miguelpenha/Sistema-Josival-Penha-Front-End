@@ -57,7 +57,7 @@ export default function Financeiro() {
   const { data: totalDespesas, mutate: mutateTotalDespesas } = get('/financeiro/despesas/total')
   const { data: despesas, mutate: mutateDespesas } = get('/financeiro/despesas')
   const [month, setMonth] = useState('full')
-  const { data: receitas, mutate: mutateReceitas } = get(`/financeiro/receitas${!month || month != 'full' ? '?month='+month : ''}`)
+  const { data: receitas, mutate: mutateReceitas } = get(`/financeiro/receitas${month != 'full' ? '?month='+month : '?month=full'}`)
   const { data: saldo, mutate: mutateSaldo } = get('/financeiro/saldo')
   const { register, handleSubmit } = useForm()
   const [fechadoCadas, setFechadoCadas] = useState(null)
@@ -536,6 +536,9 @@ export default function Financeiro() {
                   </ContainerTitleNotReceitaOrDespesa>
                 )}
               </>}
+              <Charts>
+                <ChartReceitasDespesasComCarregamento/>
+              </Charts>
               <ResumeFinanceiro month={month} receitas={receitas} despesas={despesas} onDeleteReceita={id => {
                 api.delete(`/financeiro/receitas/${id}`).then(() => {
                   mutateTotalReceitas('/financeiro/receitas/total')
@@ -555,9 +558,6 @@ export default function Financeiro() {
                 mutateReceitas('/financeiro/despesas')
                 mutateSaldo('/financeiro/saldo')
               }}/>
-              <Charts>
-                <ChartReceitasDespesasComCarregamento/>
-              </Charts>
               {receitas && despesas ? <TableReceitasDespesas receitas={receitas && receitas} despesas={despesas && despesas} onDeleteDespesas={id => {
                 api.delete(`/financeiro/despesas/${id}`).then(() => {
                   mutateTotalDespesas('/financeiro/despesas/total')
