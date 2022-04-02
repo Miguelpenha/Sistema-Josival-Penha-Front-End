@@ -151,14 +151,14 @@ export default function Pagamentos() {
                   let veriAtrasadoTurma = false
 
                   if (atrazadosFilter) {
-                    alunos.map(aluno => {
-                      if (veriPago(aluno.pagamentos, mesFilter)) {
+                    alunos && alunos.map(aluno => {
+                      if (aluno.turma === turma.nome && aluno.nome.toUpperCase().includes(textFilter.toUpperCase()) && !veriPago(aluno.pagamentos, mesFilter)) {
                         veriAtrasadoTurma = true
                       }
                     })
                   }
-
-                  if (!veriAtrasadoTurma) {
+                  
+                  if (!atrazadosFilter ? true : veriAtrasadoTurma) {
                     return (
                       <Table key={index} cellSpacing="0" cellpadding="0">
                         <thead>
@@ -178,7 +178,7 @@ export default function Pagamentos() {
                           {alunos && alunos.map((aluno, index) => {
                             if(aluno.turma === turma.nome && aluno.nome.toUpperCase().includes(textFilter.toUpperCase())) {
                               const veriAtrazado = veriPago(aluno.pagamentos, mesFilter)
-  
+                              
                               if (!atrazadosFilter) {
                                 return (
                                   <tr className="aluno" key={index}>
