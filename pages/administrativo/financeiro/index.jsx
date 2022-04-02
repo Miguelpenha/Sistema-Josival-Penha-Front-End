@@ -51,7 +51,6 @@ import api from '../../../services/api/base'
 import TableReceitasDespesas from '../../../components/TableReceitasDespesas'
 import { memo } from 'react'
 
-
 export default function Financeiro() {
   const { data: totalReceitas, mutate: mutateTotalReceitas } = get('/financeiro/receitas/total')
   const { data: totalDespesas, mutate: mutateTotalDespesas } = get('/financeiro/despesas/total')
