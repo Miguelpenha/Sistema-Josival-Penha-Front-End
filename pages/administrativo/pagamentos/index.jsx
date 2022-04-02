@@ -148,86 +148,100 @@ export default function Pagamentos() {
               <Switch checked={atrazadosFilter} onChange={event => setAtrazadosFilter(event.target.checked)}/>Atrazados
               {turmas && turmas.map((turma, index) => {
                 if (turmaFilter === 'Nenhuma turma' || turma._id === turmaFilter) {
-                  return (
-                    <Table key={index} cellSpacing="0" cellpadding="0">
-                      <thead>
-                        <tr>
-                          <th colSpan={4}>
-                            <h2>{turma.nome}</h2>
-                          </th>
-                        </tr>
-                        <tr>
-                          <th align="left">Aluno</th>
-                          <th align="left">Status</th>
-                          <th align="left">Valor</th>
-                          <th align="left">Forma de pagamento</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {alunos && alunos.map((aluno, index) => {
-                          if(aluno.turma === turma.nome && aluno.nome.toUpperCase().includes(textFilter.toUpperCase())) {
-                            const veriAtrazado = veriPago(aluno.pagamentos, mesFilter)
+                  let veriAtrasadoTurma = false
 
-                            if (!atrazadosFilter) {
-                              return (
-                                <tr className="aluno" key={index}>
-                                    <td>
-                                        <Link href={`/administrativo/pagamentos/alunos?aluno=${aluno.id}`} passHref>
-                                            <a>{aluno.nome}</a>
-                                        </Link>
-                                    </td>
-                                    <td>
-                                        <Link href={`/administrativo/pagamentos/alunos?aluno=${aluno.id}`} passHref>
-                                            <a>
-                                              <VeriPago2 pagamentos={aluno.pagamentos} mês={mesFilter}/>
-                                            </a>
-                                        </Link>
-                                    </td>
-                                    <td>
-                                        <Link href={`/administrativo/pagamentos/alunos?aluno=${aluno.id}`} passHref>
-                                            <a>{aluno.pagamentos[mesFilter].value}</a>
-                                        </Link>
-                                    </td>
-                                    <td>
-                                        <Link href={`/administrativo/pagamentos/alunos?aluno=${aluno.id}`} passHref>
-                                            <a>{aluno.pagamentos[mesFilter].forma}</a>
-                                        </Link>
-                                    </td>
-                              </tr>
-                            )
-                            } else if (atrazadosFilter && !veriAtrazado) {
-                              return (
-                                <tr className="aluno" key={index}>
-                                    <td>
-                                        <Link href={`/administrativo/pagamentos/alunos?aluno=${aluno.id}`} passHref>
-                                            <a>{aluno.nome}</a>
-                                        </Link>
-                                    </td>
-                                    <td>
-                                        <Link href={`/administrativo/pagamentos/alunos?aluno=${aluno.id}`} passHref>
-                                            <a>
-                                              <VeriPago2 pagamentos={aluno.pagamentos} mês={mesFilter}/>
-                                            </a>
-                                        </Link>
-                                    </td>
-                                    <td>
-                                        <Link href={`/administrativo/pagamentos/alunos?aluno=${aluno.id}`} passHref>
-                                            <a>{aluno.pagamentos[mesFilter].value}</a>
-                                        </Link>
-                                    </td>
-                                    <td>
-                                        <Link href={`/administrativo/pagamentos/alunos?aluno=${aluno.id}`} passHref>
-                                            <a>{aluno.pagamentos[mesFilter].forma}</a>
-                                        </Link>
-                                    </td>
-                              </tr>
-                            )
+                  if (atrazadosFilter) {
+                    alunos.map(aluno => {
+                      if (veriPago(aluno.pagamentos, mesFilter)) {
+                        veriAtrasadoTurma = true
+                      }
+                    })
+                  }
+
+                  if (!veriAtrasadoTurma) {
+                    return (
+                      <Table key={index} cellSpacing="0" cellpadding="0">
+                        <thead>
+                          <tr>
+                            <th colSpan={4}>
+                              <h2>{turma.nome}</h2>
+                            </th>
+                          </tr>
+                          <tr>
+                            <th align="left">Aluno</th>
+                            <th align="left">Status</th>
+                            <th align="left">Valor</th>
+                            <th align="left">Forma de pagamento</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {alunos && alunos.map((aluno, index) => {
+                            if(aluno.turma === turma.nome && aluno.nome.toUpperCase().includes(textFilter.toUpperCase())) {
+                              const veriAtrazado = veriPago(aluno.pagamentos, mesFilter)
+  
+                              if (!atrazadosFilter) {
+                                return (
+                                  <tr className="aluno" key={index}>
+                                      <td>
+                                          <Link href={`/administrativo/pagamentos/alunos?aluno=${aluno.id}`} passHref>
+                                              <a>{aluno.nome}</a>
+                                          </Link>
+                                      </td>
+                                      <td>
+                                          <Link href={`/administrativo/pagamentos/alunos?aluno=${aluno.id}`} passHref>
+                                              <a>
+                                                <VeriPago2 pagamentos={aluno.pagamentos} mês={mesFilter}/>
+                                              </a>
+                                          </Link>
+                                      </td>
+                                      <td>
+                                          <Link href={`/administrativo/pagamentos/alunos?aluno=${aluno.id}`} passHref>
+                                              <a>{aluno.pagamentos[mesFilter].value}</a>
+                                          </Link>
+                                      </td>
+                                      <td>
+                                          <Link href={`/administrativo/pagamentos/alunos?aluno=${aluno.id}`} passHref>
+                                              <a>{aluno.pagamentos[mesFilter].forma}</a>
+                                          </Link>
+                                      </td>
+                                </tr>
+                              )
+                              } else if (atrazadosFilter && !veriAtrazado) {
+                                return (
+                                  <tr className="aluno" key={index}>
+                                      <td>
+                                          <Link href={`/administrativo/pagamentos/alunos?aluno=${aluno.id}`} passHref>
+                                              <a>{aluno.nome}</a>
+                                          </Link>
+                                      </td>
+                                      <td>
+                                          <Link href={`/administrativo/pagamentos/alunos?aluno=${aluno.id}`} passHref>
+                                              <a>
+                                                <VeriPago2 pagamentos={aluno.pagamentos} mês={mesFilter}/>
+                                              </a>
+                                          </Link>
+                                      </td>
+                                      <td>
+                                          <Link href={`/administrativo/pagamentos/alunos?aluno=${aluno.id}`} passHref>
+                                              <a>{aluno.pagamentos[mesFilter].value}</a>
+                                          </Link>
+                                      </td>
+                                      <td>
+                                          <Link href={`/administrativo/pagamentos/alunos?aluno=${aluno.id}`} passHref>
+                                              <a>{aluno.pagamentos[mesFilter].forma}</a>
+                                          </Link>
+                                      </td>
+                                </tr>
+                              )
+                              }
                             }
-                          }
-                        })}
-                      </tbody>
-                    </Table>
-                  )
+                          })}
+                        </tbody>
+                      </Table>
+                    )
+                  } else {
+                    return null
+                  }
                 }
               })}
             </Main>
