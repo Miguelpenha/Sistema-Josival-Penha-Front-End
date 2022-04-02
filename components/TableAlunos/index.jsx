@@ -261,7 +261,7 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg, onDef
             <TableCellValueBorder component="th" scope="col" align="center">{row.nascimento} ({calcIdade(row.nascimento, new Date())} anos)</TableCellValueBorder>
             <TableCellValueBorder component="th" scope="col" align="center">{row.situação}</TableCellValueBorder>
             <TableCellValueBorder align="center">
-                
+                <SpeedDialAlunoMemo/>
                 <ModelGerarDeclaração open={openDialogGerarDeclaração}/>
                 <ModelGerarDeclaraçãoFinanceira open={openDialogGerarDeclaraçãoFinanceira}/>
                 <ModelEditAluno open={openDialogEditAluno}/>
