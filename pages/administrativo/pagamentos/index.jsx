@@ -15,6 +15,89 @@ export default function Pagamentos() {
   const [turmaFilter, setTurmaFilter] = useState('Nenhuma turma')
   const [atrazadosFilter, setAtrazadosFilter] = useState(false)
 
+  function veriPago(pagamentos, mês) {
+    const mêsPagamento = mês || new Date().toLocaleString().split('/')[1]
+    const pagamento = pagamentos[mêsPagamento]
+    
+    if (pagamento.pago) {
+        return true
+    } else {
+        const mêsVencimento = Number(pagamento.vencimento.split('/')[1])
+        const mêsAtual = Number(new Date().toLocaleString().split('/')[1])
+
+        if (mêsVencimento >= mêsAtual) {
+            if (mêsVencimento === mêsAtual) {
+                const diaVencimento = Number(pagamento.vencimento.split('/')[0])
+                const diaAtual = Number(new Date().toLocaleString().split('/')[0])
+                
+                if (diaVencimento >= diaAtual) {                 
+                    return true
+                } else {
+                    return false
+                }
+            } else {
+                return true
+            }
+        } else {
+            return false
+        }
+    }
+  }
+
+  function VeriPago2({ pagamentos, mês }) {
+    const mêsPagamento = mês || new Date().toLocaleString().split('/')[1]
+    const pagamento = pagamentos[mêsPagamento]
+    
+    if (pagamento.pago) {
+        return (
+          <>
+            <IconAtrasadoOrEmDia color="#60BF92"/>
+            Em dia
+          </>
+        )
+    } else {
+        const mêsVencimento = Number(pagamento.vencimento.split('/')[1])
+        const mêsAtual = Number(new Date().toLocaleString().split('/')[1])
+
+        if (mêsVencimento >= mêsAtual) {
+            if (mêsVencimento === mêsAtual) {
+                const diaVencimento = Number(pagamento.vencimento.split('/')[0])
+                const diaAtual = Number(new Date().toLocaleString().split('/')[0])
+                
+                if (diaVencimento >= diaAtual) {                 
+                    return (
+                      <>
+                        <IconAtrasadoOrEmDia color="#60BF92"/>
+                        Em dia
+                      </>
+                    )
+                } else {
+                    return (
+                      <>
+                        <IconAtrasadoOrEmDia color="#EF5252"/>
+                        Atrasado
+                      </>
+                    )
+                }
+            } else {
+                return (
+                  <>
+                    <IconAtrasadoOrEmDia color="#60BF92"/>
+                    Em dia
+                  </>
+                )
+            }
+        } else {
+            return (
+              <>
+                <IconAtrasadoOrEmDia color="#EF5252"/>
+                Atrasado
+              </>
+            )
+        }
+    }
+  }
+
   return (
       <>
           <Head>
@@ -65,75 +148,86 @@ export default function Pagamentos() {
               <Switch checked={atrazadosFilter} onChange={event => setAtrazadosFilter(event.target.checked)}/>Atrazados
               {turmas && turmas.map((turma, index) => {
                 if (turmaFilter === 'Nenhuma turma' || turma._id === turmaFilter) {
-                  let renderVeri = false
+                  return (
+                    <Table key={index} cellSpacing="0" cellpadding="0">
+                      <thead>
+                        <tr>
+                          <th colSpan={4}>
+                            <h2>{turma.nome}</h2>
+                          </th>
+                        </tr>
+                        <tr>
+                          <th align="left">Aluno</th>
+                          <th align="left">Status</th>
+                          <th align="left">Valor</th>
+                          <th align="left">Forma de pagamento</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {alunos && alunos.map((aluno, index) => {
+                          if(aluno.turma === turma.nome && aluno.nome.toUpperCase().includes(textFilter.toUpperCase())) {
+                            const veriAtrazado = veriPago(aluno.pagamentos, mesFilter)
 
-                  alunos && alunos.map(aluno => {
-                    if (aluno.turma === turma.nome && aluno.nome.toUpperCase().includes(textFilter.toUpperCase())) {
-                      const veriAtrazado = aluno.pagamentos[mesFilter].pago ? false : new Date().getMonth()+1 == mesFilter ? Number(new Date(new Date().getFullYear(), mesFilter-1, Number(new Date().toLocaleDateString('pt-br').split('/')[0])).toLocaleDateString('pt-br').split('/')[0]) <= Number(aluno.pagamentos[mesFilter].vencimento.split('/')[0]) ? false : true : Number(new Date(new Date().getFullYear(), mesFilter-1, 1).toLocaleDateString('pt-br').split('/')[0]) <= Number(aluno.pagamentos[mesFilter].vencimento.split('/')[0]) ? false : true
-
-                      if (atrazadosFilter ? veriAtrazado : true) {
-                        renderVeri = true
-                      }
-                    }
-                  })
-
-                  if (renderVeri) {
-                    return (
-                      <Table key={index} cellSpacing="0" cellpadding="0">
-                        <thead>
-                          <tr>
-                            <th colSpan={4}>
-                              <h2>{turma.nome}</h2>
-                            </th>
-                          </tr>
-                          <tr>
-                            <th align="left">Aluno</th>
-                            <th align="left">Status</th>
-                            <th align="left">Valor</th>
-                            <th align="left">Forma de pagamento</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {alunos && alunos.map((aluno, index) => {
-                            if(aluno.turma === turma.nome && aluno.nome.toUpperCase().includes(textFilter.toUpperCase())) {
-                              const veriAtrazado = aluno.pagamentos[mesFilter].pago ? false : new Date().getMonth()+1 == mesFilter ? Number(new Date(new Date().getFullYear(), mesFilter-1, Number(new Date().toLocaleDateString('pt-br').split('/')[0])).toLocaleDateString('pt-br').split('/')[0]) <= Number(aluno.pagamentos[mesFilter].vencimento.split('/')[0]) ? false : true : Number(new Date(new Date().getFullYear(), mesFilter-1, 1).toLocaleDateString('pt-br').split('/')[0]) <= Number(aluno.pagamentos[mesFilter].vencimento.split('/')[0]) ? false : true
-                              if (atrazadosFilter ? veriAtrazado : true) {
-                                return (
-                                    <tr className="aluno" key={index}>
-                                        <td>
-                                            <Link href={`/administrativo/pagamentos/alunos?aluno=${aluno.id}`} passHref>
-                                                <a>{aluno.nome}</a>
-                                            </Link>
-                                        </td>
-                                        <td>
-                                            <Link href={`/administrativo/pagamentos/alunos?aluno=${aluno.id}`} passHref>
-                                                <a>
-                                                 {aluno.pagamentos[mesFilter].pago ? <IconAtrasadoOrEmDia color="#60BF92"/> : new Date().getMonth()+1 == mesFilter ? Number(new Date(new Date().getFullYear(), mesFilter-1, Number(new Date().toLocaleDateString('pt-br').split('/')[0])).toLocaleDateString('pt-br').split('/')[0]) <= Number(aluno.pagamentos[mesFilter].vencimento.split('/')[0]) ? <IconAtrasadoOrEmDia color="#60BF92"/> : <IconAtrasadoOrEmDia color="#EF5252"/> : Number(new Date(new Date().getFullYear(), mesFilter-1, 1).toLocaleDateString('pt-br').split('/')[0]) <= Number(aluno.pagamentos[mesFilter].vencimento.split('/')[0]) ? <IconAtrasadoOrEmDia color="#60BF92"/> : <IconAtrasadoOrEmDia color="#EF5252"/>}
-                                                  {aluno.pagamentos[mesFilter].pago ? 'Em dia' : new Date().getMonth()+1 == mesFilter ? Number(new Date(new Date().getFullYear(), mesFilter-1, Number(new Date().toLocaleDateString('pt-br').split('/')[0])).toLocaleDateString('pt-br').split('/')[0]) <= Number(aluno.pagamentos[mesFilter].vencimento.split('/')[0]) ? 'Em dia' : 'Atrazado' : Number(new Date(new Date().getFullYear(), mesFilter-1, 1).toLocaleDateString('pt-br').split('/')[0]) <= Number(aluno.pagamentos[mesFilter].vencimento.split('/')[0]) ? 'Em dia' : 'Atrazado'}
-                                                </a>
-                                            </Link>
-                                        </td>
-                                        <td>
-                                            <Link href={`/administrativo/pagamentos/alunos?aluno=${aluno.id}`} passHref>
-                                                <a>{aluno.pagamentos[mesFilter].value}</a>
-                                            </Link>
-                                        </td>
-                                        <td>
-                                            <Link href={`/administrativo/pagamentos/alunos?aluno=${aluno.id}`} passHref>
-                                                <a>{aluno.pagamentos[mesFilter].forma}</a>
-                                            </Link>
-                                        </td>
-                                  </tr>
-                                )
-                              }
+                            if (!atrazadosFilter) {
+                              return (
+                                <tr className="aluno" key={index}>
+                                    <td>
+                                        <Link href={`/administrativo/pagamentos/alunos?aluno=${aluno.id}`} passHref>
+                                            <a>{aluno.nome}</a>
+                                        </Link>
+                                    </td>
+                                    <td>
+                                        <Link href={`/administrativo/pagamentos/alunos?aluno=${aluno.id}`} passHref>
+                                            <a>
+                                              <VeriPago2 pagamentos={aluno.pagamentos} mês={mesFilter}/>
+                                            </a>
+                                        </Link>
+                                    </td>
+                                    <td>
+                                        <Link href={`/administrativo/pagamentos/alunos?aluno=${aluno.id}`} passHref>
+                                            <a>{aluno.pagamentos[mesFilter].value}</a>
+                                        </Link>
+                                    </td>
+                                    <td>
+                                        <Link href={`/administrativo/pagamentos/alunos?aluno=${aluno.id}`} passHref>
+                                            <a>{aluno.pagamentos[mesFilter].forma}</a>
+                                        </Link>
+                                    </td>
+                              </tr>
+                            )
+                            } else if (atrazadosFilter && !veriAtrazado) {
+                              return (
+                                <tr className="aluno" key={index}>
+                                    <td>
+                                        <Link href={`/administrativo/pagamentos/alunos?aluno=${aluno.id}`} passHref>
+                                            <a>{aluno.nome}</a>
+                                        </Link>
+                                    </td>
+                                    <td>
+                                        <Link href={`/administrativo/pagamentos/alunos?aluno=${aluno.id}`} passHref>
+                                            <a>
+                                              <VeriPago2 pagamentos={aluno.pagamentos} mês={mesFilter}/>
+                                            </a>
+                                        </Link>
+                                    </td>
+                                    <td>
+                                        <Link href={`/administrativo/pagamentos/alunos?aluno=${aluno.id}`} passHref>
+                                            <a>{aluno.pagamentos[mesFilter].value}</a>
+                                        </Link>
+                                    </td>
+                                    <td>
+                                        <Link href={`/administrativo/pagamentos/alunos?aluno=${aluno.id}`} passHref>
+                                            <a>{aluno.pagamentos[mesFilter].forma}</a>
+                                        </Link>
+                                    </td>
+                              </tr>
+                            )
                             }
-                          })}
-                        </tbody>
-                      </Table>
-                    )
-                  } else {
-                    return null
-                  }
+                          }
+                        })}
+                      </tbody>
+                    </Table>
+                  )
                 }
               })}
             </Main>
