@@ -203,3 +203,18 @@ export const InputSelectCadasAluno = styled(Select)`
         font-size: 1vw;
     }
 `
+
+export const InputFindAlunos = styled.input`
+    width: 90%;
+    padding: 2%;
+    font-size: 1.5vw;
+    color:  #0872FC;
+    border: 2px solid  #e0e0e0;
+    border-radius: 8px;
+
+    :focus {
+        outline: none;
+        border-radius: 12px;
+        border-color: #0872FC;
+    }
+`

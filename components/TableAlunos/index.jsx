@@ -1,9 +1,9 @@
-import { TableContainer, TableCell, TableCellTitle, TableCellTotal, TextTotal, TableRowSele, TableCellValueBorder, TableCellBorder, IconButtonExclu, TableCellTitleBorder, LinkFotoAluno, FotoAluno, DialogGerarDeclaração, InputPorcentagemGerarDeclaração, ButtonSubmitGerarDeclaração, BolsistaSwitch } from './style'
+import { TableContainer, TableCell, TableCellTitle, TableCellTotal, TextTotal, TableRowSele, TableCellValueBorder, TableCellBorder, IconButtonExclu, TableCellTitleBorder, LinkFotoAluno, FotoAluno, DialogGerarDeclaração, InputPorcentagemGerarDeclaração, ButtonSubmitGerarDeclaração, BolsistaSwitch, InputFindAlunos } from './style'
 import { Paper, Table, TableHead, TableRow, TableBody, TableFooter, Tooltip, Menu, MenuItem, Checkbox, DialogContent, SpeedDial, SpeedDialAction } from '@material-ui/core'
 import LimitText from '../LimitText'
 import { Delete as DeleteIcon, Download as DownloadIcon, Edit as EditIcon, Send as SendIcon, ListAlt as ListAltIcon, Paid as PaidIcon, Downloading as DownloadingIcon } from '@material-ui/icons'
 import Link from 'next/link'
-import { useState, memo } from 'react'
+import { useState, memo, useMemo } from 'react'
 import api from '../../services/api/base'
 import ContentModalEditAluno from '../pages/administrativo/alunos/ContentModalEditAluno/index.jsx'
 import dinero from 'dinero.js'
@@ -13,6 +13,7 @@ dinero.globalLocale = 'pt-br'
 function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg, onDefaultFoto, onEditAluno }) {
     if (typeof alunos != 'string' && alunos) {
         alunos.map(aluno => aluno.criação.sistema = new Date(aluno.criação.sistema))
+        const [findAlunos, setFindAlunos] = useState('')
         
         let rows = alunos
         
@@ -186,6 +187,50 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg, onDef
             }
 
             const ModelEditAluno = memo(ModelEditAlunoBruto)
+
+            function SpeedDialAluno() {
+                return (
+                    <div style={{position: 'absolute', marginTop: -bottom}}>
+                        <SpeedDial
+                            ariaLabel="SpeedDial basic example"
+                            sx={{position: 'absolute'}}
+                            icon={<EditIcon sx={{width: '40%', height: 'auto'}}/>}
+                        >
+                            {actions.map(action => (
+                                <SpeedDialAction
+                                    tooltipOpen
+                                    key={action.name}
+                                    icon={action.icon}
+                                    tooltipPlacement="left"
+                                    onClick={action.onClick}
+                                    tooltipTitle={action.name}
+                                    sx={{
+                                        '& .MuiSpeedDialAction-staticTooltipLabel': {
+                                            backgroundColor: '#0872FC',
+                                            color: '#ffffff',
+                                            width: 'max-content',
+                                            fontSize: '1vw'
+                                        },
+                                        '& .MuiSpeedDialAction-fab, & .MuiSpeedDialAction-fab:hover': {
+                                            backgroundColor: action.background ? action.background :'#0872FC',
+                                            color: '#ffffff'
+                                        },
+                                        '& .MuiSpeedDialAction-fab:hover': {
+                                            opacity: '85%'
+                                        },
+                                        '& svg': {
+                                            width: '70%',
+                                            height: 'auto'
+                                        }
+                                    }}
+                                />
+                            ))}
+                        </SpeedDial>
+                    </div>
+                )
+            }
+
+            const SpeedDialAlunoMemo = memo(SpeedDialAluno)
             
             return <TableRowSele key={index}>
                 <TableCellValueBorder component="th" scope="col" align="center">
@@ -216,43 +261,7 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg, onDef
             <TableCellValueBorder component="th" scope="col" align="center">{row.nascimento} ({calcIdade(row.nascimento, new Date())} anos)</TableCellValueBorder>
             <TableCellValueBorder component="th" scope="col" align="center">{row.situação}</TableCellValueBorder>
             <TableCellValueBorder align="center">
-                <div style={{position: 'absolute', marginTop: -bottom}}>
-                    <SpeedDial
-                        ariaLabel="SpeedDial basic example"
-                        sx={{position: 'absolute'}}
-                        icon={<EditIcon sx={{width: '40%', height: 'auto'}}/>}
-                    >
-                        {actions.map(action => (
-                            <SpeedDialAction
-                                tooltipOpen
-                                key={action.name}
-                                icon={action.icon}
-                                tooltipPlacement="left"
-                                onClick={action.onClick}
-                                tooltipTitle={action.name}
-                                sx={{
-                                    '& .MuiSpeedDialAction-staticTooltipLabel': {
-                                        backgroundColor: '#0872FC',
-                                        color: '#ffffff',
-                                        width: 'max-content',
-                                        fontSize: '1vw'
-                                    },
-                                    '& .MuiSpeedDialAction-fab, & .MuiSpeedDialAction-fab:hover': {
-                                        backgroundColor: action.background ? action.background :'#0872FC',
-                                        color: '#ffffff'
-                                    },
-                                    '& .MuiSpeedDialAction-fab:hover': {
-                                        opacity: '85%'
-                                    },
-                                    '& svg': {
-                                        width: '70%',
-                                        height: 'auto'
-                                    }
-                                }}
-                            />
-                        ))}
-                    </SpeedDial>
-                </div>
+                
                 <ModelGerarDeclaração open={openDialogGerarDeclaração}/>
                 <ModelGerarDeclaraçãoFinanceira open={openDialogGerarDeclaraçãoFinanceira}/>
                 <ModelEditAluno open={openDialogEditAluno}/>
@@ -286,14 +295,21 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg, onDef
             </Menu>
         </TableRowSele>
         }
+
+        const RowMemo = memo(Row)
         
         return (
             <TableContainer component={Paper} sx={{backgroundColor: bg && bg}}>
                 <Table size="medium">
                     <TableHead>
                         <TableRow>
-                            <TableCellTitle align="center" scope="col" colSpan={5}>Alunos</TableCellTitle>
-                            <TableCellTitleBorder align="center" scope="col" colSpan={3}>
+                            <TableCellTitle align="center" scope="col" colSpan={8}>Alunos</TableCellTitle>
+                        </TableRow>
+                        <TableRow>
+                            <TableCellTitle align="center" scope="col" colSpan={4}>
+                                <InputFindAlunos placeholder="Pesquisar aluno..." onChange={ev => setFindAlunos(ev.target.value)} defaultValue={findAlunos}/> 
+                            </TableCellTitle>
+                            <TableCellTitleBorder align="center" scope="col" colSpan={4}>
                                 <div style={{display: 'flex', justifyContent: 'space-evenly', width: '100%'}}>
                                     <Tooltip title={
                                         <span style={{fontSize: '1vw'}}>Excluir itens</span>
@@ -363,8 +379,8 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg, onDef
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rows.map((row, index) => (
-                            <Row key={index} row={row} index={index}/>
+                        {rows.map((row, index) => row.nome.toUpperCase().includes(findAlunos.toUpperCase()) && (
+                            <RowMemo key={index} row={row} index={index}/>
                         ))}
                     </TableBody>
                     <TableFooter>
