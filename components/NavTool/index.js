@@ -45,7 +45,6 @@ const FunçãoStyle = styled.li`
     display: flex;
     margin-left: auto;
     margin-right: auto;
-    padding: ${props => props.selected ? '7%' :'4%'};
     align-items: center;
     ${props => props.menor && css`
         font-size: 1.2vw;
@@ -69,7 +68,7 @@ const LinkFunçãoStyle = styled.a`
     border-radius: 20px;
     transition-timing-function: linear;
     transition-duration: 0.2s;
-    padding: 3%;
+    padding: 2%;
 
     &:hover {
         transition-timing-function: linear;
@@ -247,6 +246,7 @@ export const IconErrorSele = memo(IconErrorSeleStyle)
 
 const TextFunçãoStyle = styled.span`
     align-self: center;
+    font-size: 1.4vw;
 `
 
 export const TextFunção = memo(TextFunçãoStyle)
