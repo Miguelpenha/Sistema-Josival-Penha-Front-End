@@ -258,7 +258,7 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg, onDef
                     </span>
                 </>}
             </TableCellValueBorder>
-            <TableCellValueBorder component="th" scope="col" align="center">{row.nascimento} ({calcIdade(row.nascimento, new Date())} anos)</TableCellValueBorder>
+            <TableCellValueBorder component="th" scope="col" align="center">{row.nascimento}<br/>({calcIdade(row.nascimento, new Date())} anos)</TableCellValueBorder>
             <TableCellValueBorder component="th" scope="col" align="center">{row.situação}</TableCellValueBorder>
             <TableCellValueBorder align="center">
                 <SpeedDialAlunoMemo/>
