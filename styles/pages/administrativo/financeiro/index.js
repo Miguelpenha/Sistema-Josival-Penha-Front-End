@@ -448,9 +448,8 @@ export const Tabelas = styled.div`
 
 export const Charts = styled.div`
     display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
 `
 
 export const ResumeFinanceiro = styled(ResumeFinanceiroNotStyled)`

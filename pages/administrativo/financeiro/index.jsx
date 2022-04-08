@@ -44,12 +44,14 @@ import { NavOptions, LogoJPNome, Funções, Função, LinkFunção, IconAlunos, 
 import Link from 'next/link'
 import { Menu, MenuItem, InputAdornment, Snackbar, Alert, Skeleton, SpeedDialAction, SpeedDialIcon, SpeedDial, IconButton, Select } from '@material-ui/core'
 import { Add as AddIcon, TrendingDown as TrendingDownIcon, TrendingUp as TrendingUpIcon, Lock as LockIcon, KeyboardBackspace as ArrowBackIcon } from '@material-ui/icons'
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import { get } from '../../../hooks'
 import api from '../../../services/api/base'
 import TableReceitasDespesas from '../../../components/TableReceitasDespesas'
 import { memo } from 'react'
+import meses from '../../../meses'
+import dinero from 'dinero.js'
 
 export default function Financeiro() {
   const { data: totalReceitas, mutate: mutateTotalReceitas } = get('/financeiro/receitas/total')
@@ -360,7 +362,40 @@ export default function Financeiro() {
 
   const handleClickAddOptions = ev => setAnchorElAddOptions(ev.currentTarget)
   const handleCloseAddOptions = () => setAnchorElAddOptions(false)
-  
+
+  const [receitasAndDespesasColumnChart] = useState([
+    ['Nome', 'Valor', { role: 'style' }, { role: 'annotation' }]
+  ])
+
+  function addColunms() {
+    meses.map(mês => {
+      let totalReceitas = 0
+      let totalDespesas = 0
+
+      api.get('/financeiro/receitas', {
+        params: {
+          month: mês.number
+        }
+      }).then(({ data: receitas }) => {
+        receitas.map(receita => totalReceitas =+ receita.precoBruto)
+
+        api.get('/financeiro/despesas', {
+          params: {
+            month: mês.number
+          }
+        }).then(({ data: despesas }) => {
+          despesas.map(despesa => totalDespesas =+ despesa.precoBruto)
+
+          const saldo = totalDespesas-totalReceitas
+
+          receitasAndDespesasColumnChart.push([mês.name, saldo/100, '#0872fc', dinero({ amount: saldo, currency: 'BRL' }).toFormat()])
+        })
+      })
+    })
+  }
+
+  useMemo(() => addColunms(), [])
+    
   return (
     <VerificationMemo>
       <Head>
@@ -537,6 +572,29 @@ export default function Financeiro() {
               </>}
               <Charts>
                 <ChartReceitasDespesasComCarregamento/>
+                {month == 'full' && receitasAndDespesasColumnChart && (
+                  <ChartReceitasDespesas chartType="ColumnChart" data={receitasAndDespesasColumnChart} width="95%" height="500px" style={{marginBottom: '5%'}} options={{
+                    title: 'Comparação receitas x despesas',
+                    colors: ['#0872fc'],
+                    titleTextStyle: {
+                      color: '#0872fc',
+                      fontSize: 25
+                    },
+                    bar: { groupWidth: '90%' },
+                    annotations: {
+                      textStyle: {
+                        fontSize: 14,
+                        bold: true
+                      }
+                    },
+                    chartArea: {
+                      width: '90%'
+                    },
+                    legend: {
+                      position: 'none'
+                    }
+                  }}/>
+                )}
               </Charts>
               <ResumeFinanceiro month={month} receitas={receitas} despesas={despesas} onDeleteReceita={id => {
                 api.delete(`/financeiro/receitas/${id}`).then(() => {
