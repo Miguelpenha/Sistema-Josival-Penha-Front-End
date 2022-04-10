@@ -572,7 +572,7 @@ export default function Financeiro() {
                     bar: { groupWidth: '90%' },
                     annotations: {
                       textStyle: {
-                        fontSize: 14,
+                        fontSize: 13,
                         bold: true
                       }
                     },
