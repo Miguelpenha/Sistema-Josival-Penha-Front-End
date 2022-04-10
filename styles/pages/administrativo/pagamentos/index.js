@@ -12,7 +12,8 @@ export const Main = styled.main`
 `
 
 export const Table = styled.table`
-    width: 110%;
+    max-width: 120%;
+    min-width: 95%;
     font-size: 1.5vw;
     margin-bottom: 5%;
 
