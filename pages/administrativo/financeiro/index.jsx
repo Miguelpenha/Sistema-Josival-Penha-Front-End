@@ -368,18 +368,18 @@ export default function Financeiro() {
   ])
 
   function addColunms() {
-    meses.map(mês => {
+    meses.map(async mês => {
       let totalReceitas = 0
 
-      api.get('/financeiro/receitas', {
+      const receitas = (await api.get('/financeiro/receitas', {
         params: {
           month: mês.number
         }
-      }).then(({ data: receitas }) => {
-        receitas.map(receita => totalReceitas =+ receita.precoBruto)
+      })).data
 
-        receitasAndDespesasColumnChart.push([mês.name, totalReceitas/100, '#5AB55E', dinero({ amount: totalReceitas, currency: 'BRL' }).toFormat()])
-      })
+      receitas.map(receita => totalReceitas =+ receita.precoBruto)
+
+      receitasAndDespesasColumnChart.push([mês.name, totalReceitas/100, '#5AB55E', dinero({ amount: totalReceitas, currency: 'BRL' }).toFormat()])
     })
   }
 
