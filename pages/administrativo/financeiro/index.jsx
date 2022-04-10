@@ -370,7 +370,6 @@ export default function Financeiro() {
   function addColunms() {
     meses.map(mês => {
       let totalReceitas = 0
-      let totalDespesas = 0
 
       api.get('/financeiro/receitas', {
         params: {
@@ -379,17 +378,7 @@ export default function Financeiro() {
       }).then(({ data: receitas }) => {
         receitas.map(receita => totalReceitas =+ receita.precoBruto)
 
-        api.get('/financeiro/despesas', {
-          params: {
-            month: mês.number
-          }
-        }).then(({ data: despesas }) => {
-          despesas.map(despesa => totalDespesas =+ despesa.precoBruto)
-
-          const saldo = totalDespesas-totalReceitas
-
-          receitasAndDespesasColumnChart.push([mês.name, saldo/100, '#0872fc', dinero({ amount: saldo, currency: 'BRL' }).toFormat()])
-        })
+        receitasAndDespesasColumnChart.push([mês.name, totalReceitas/100, '#5AB55E', dinero({ amount: totalReceitas, currency: 'BRL' }).toFormat()])
       })
     })
   }
@@ -574,10 +563,10 @@ export default function Financeiro() {
                 <ChartReceitasDespesasComCarregamento/>
                 {month == 'full' && receitasAndDespesasColumnChart && (
                   <ChartReceitasDespesas chartType="ColumnChart" data={receitasAndDespesasColumnChart} width="95%" height="500px" style={{marginBottom: '5%'}} options={{
-                    title: 'Comparação receitas x despesas',
-                    colors: ['#0872fc'],
+                    title: 'Receitas',
+                    colors: ['#5AB55E'],
                     titleTextStyle: {
-                      color: '#0872fc',
+                      color: '#5AB55E',
                       fontSize: 25
                     },
                     bar: { groupWidth: '90%' },
