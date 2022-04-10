@@ -367,23 +367,36 @@ export default function Financeiro() {
     ['Nome', 'Valor', { role: 'style' }, { role: 'annotation' }]
   ])
 
-  function addColunms() {
-    meses.map(async mês => {
+  async function addColunms() {
+    async function addInfo(number, name) {
       let totalReceitas = 0
 
       const receitas = (await api.get('/financeiro/receitas', {
         params: {
-          month: mês.number
+          month: number
         }
       })).data
 
       receitas.map(receita => totalReceitas =+ receita.precoBruto)
 
-      receitasAndDespesasColumnChart.push([mês.name, totalReceitas/100, '#5AB55E', dinero({ amount: totalReceitas, currency: 'BRL' }).toFormat()])
-    })
+      receitasAndDespesasColumnChart.push([name, totalReceitas/100, '#5AB55E', dinero({ amount: totalReceitas, currency: 'BRL' }).toFormat()])
+    }
+
+    await addInfo('01', 'Janeiro')
+    await addInfo('02', 'Feveiro')
+    await addInfo('03', 'Março')
+    await addInfo('04', 'Abril')
+    await addInfo('05', 'Maio')
+    await addInfo('06', 'Junho')
+    await addInfo('07', 'Julho')
+    await addInfo('08', 'Agosto')
+    await addInfo('09', 'Setembro')
+    await addInfo('10', 'Outubro')
+    await addInfo('11', 'Novembro')
+    await addInfo('12', 'Dezembro')
   }
 
-  useMemo(() => addColunms(), [])
+  useMemo(() => addColunms().then(), [])
     
   return (
     <VerificationMemo>
