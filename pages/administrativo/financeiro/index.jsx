@@ -577,7 +577,7 @@ export default function Financeiro() {
                       }
                     },
                     chartArea: {
-                      width: '90%'
+                      width: '85%'
                     },
                     legend: {
                       position: 'none'
