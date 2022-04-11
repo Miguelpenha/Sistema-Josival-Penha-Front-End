@@ -58,7 +58,7 @@ export default function Financeiro() {
   const { data: totalDespesas, mutate: mutateTotalDespesas } = get(`/financeiro/despesas/total${month != 'full' ? '?month='+month : '?month=full'}`)
   const { data: despesas, mutate: mutateDespesas } = get('/financeiro/despesas')
   const { data: receitas, mutate: mutateReceitas } = get(`/financeiro/receitas${month != 'full' ? '?month='+month : '?month=full'}`)
-  const { data: saldo, mutate: mutateSaldo } = get('/financeiro/saldo')
+  const { data: saldo, mutate: mutateSaldo } = get(`/financeiro/saldo${month != 'full' ? '?month='+month : '?month=full'}`)
   const { register, handleSubmit } = useForm()
   const [veri, setVeri] = useState(false)
   const [alert, setAlert] = useState({
@@ -526,6 +526,7 @@ export default function Financeiro() {
               <SelectMonth value={month} onChange={event => {
                 setMonth(event.target.value)
                 mutateReceitas()
+                mutateSaldo()
               }}>
                 <ItemMonth value="full">Mostrar todos os meses</ItemMonth>
                 <ItemMonth value="01">Janeiro</ItemMonth>
