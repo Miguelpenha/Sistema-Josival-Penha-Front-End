@@ -50,18 +50,16 @@ import { get } from '../../../hooks'
 import api from '../../../services/api/base'
 import TableReceitasDespesas from '../../../components/TableReceitasDespesas'
 import { memo } from 'react'
-import meses from '../../../meses'
 import dinero from 'dinero.js'
 
 export default function Financeiro() {
-  const { data: totalReceitas, mutate: mutateTotalReceitas } = get('/financeiro/receitas/total')
-  const { data: totalDespesas, mutate: mutateTotalDespesas } = get('/financeiro/despesas/total')
-  const { data: despesas, mutate: mutateDespesas } = get('/financeiro/despesas')
   const [month, setMonth] = useState('full')
+  const { data: totalReceitas, mutate: mutateTotalReceitas } = get(`/financeiro/receitas/total${month != 'full' ? '?month='+month : '?month=full'}`)
+  const { data: totalDespesas, mutate: mutateTotalDespesas } = get(`/financeiro/despesas/total${month != 'full' ? '?month='+month : '?month=full'}`)
+  const { data: despesas, mutate: mutateDespesas } = get('/financeiro/despesas')
   const { data: receitas, mutate: mutateReceitas } = get(`/financeiro/receitas${month != 'full' ? '?month='+month : '?month=full'}`)
   const { data: saldo, mutate: mutateSaldo } = get('/financeiro/saldo')
   const { register, handleSubmit } = useForm()
-  const [fechadoCadas, setFechadoCadas] = useState(null)
   const [veri, setVeri] = useState(false)
   const [alert, setAlert] = useState({
     open: false
