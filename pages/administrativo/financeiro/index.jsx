@@ -573,7 +573,7 @@ export default function Financeiro() {
               </>}
               <Charts>
                 <ChartReceitasDespesasComCarregamento/>
-                {month == 'full' && receitasAndDespesasColumnChart && (
+                {receitasAndDespesasColumnChart && (
                   <ChartReceitasDespesas chartType="ColumnChart" data={receitasAndDespesasColumnChart} width="95%" height="500px" style={{marginBottom: '5%'}} options={{
                     title: 'Receitas',
                     colors: ['#5AB55E'],
