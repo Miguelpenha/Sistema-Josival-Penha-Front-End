@@ -115,7 +115,7 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg, onDef
                         <DialogGerarDeclaração open={true} onClose={() => setOpenDialogGerarDeclaração(false)}>
                             <DialogContent>
                                 <form method="POST" action={`${process.env.NEXT_STATIC_API_URL}/alunos/documents/declaration`}>
-                                    <InputPorcentagemGerarDeclaração name="frequencia" required placeholder="Porcentagem de aulas sem faltas" type="number" InputProps={{
+                                    <InputPorcentagemGerarDeclaração name="frequência" required placeholder="Porcentagem de aulas sem faltas" type="number" InputProps={{
                                         inputProps: {
                                             max: 100,
                                             min: 0
