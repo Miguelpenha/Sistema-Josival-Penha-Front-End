@@ -51,12 +51,13 @@ import api from '../../../services/api/base'
 import TableReceitasDespesas from '../../../components/TableReceitasDespesas'
 import { memo } from 'react'
 import dinero from 'dinero.js'
+import meses from '../../../meses'
 
 export default function Financeiro() {
   const [month, setMonth] = useState('full')
   const { data: totalReceitas, mutate: mutateTotalReceitas } = get(`/financeiro/receitas/total${month != 'full' ? '?month='+month : '?month=full'}`)
   const { data: totalDespesas, mutate: mutateTotalDespesas } = get(`/financeiro/despesas/total${month != 'full' ? '?month='+month : '?month=full'}`)
-  const { data: despesas, mutate: mutateDespesas } = get('/financeiro/despesas')
+  const { data: despesas, mutate: mutateDespesas } = get(`/financeiro/despesas${month != 'full' ? '?month='+month : '?month=full'}`)
   const { data: receitas, mutate: mutateReceitas } = get(`/financeiro/receitas${month != 'full' ? '?month='+month : '?month=full'}`)
   const { data: saldo, mutate: mutateSaldo } = get(`/financeiro/saldo${month != 'full' ? '?month='+month : '?month=full'}`)
   const { register, handleSubmit } = useForm()
@@ -278,8 +279,8 @@ export default function Financeiro() {
       if (receitas.length >= 1 || despesas.length >= 1) {
         return <ChartReceitasDespesas style={{marginTop: '4.5%'}} width="500px" height="300px" chartType="PieChart" data={[
           ['Linguagens', 'Quantidade'],
-          ['Receitas', totalDespesas && totalReceitas && totalReceitas.totalBruto],
-          ['Despesas', totalReceitas && totalDespesas && totalDespesas.totalBruto]
+          ['Receitas', totalDespesas && totalReceitas && totalReceitas.totalBruto/100],
+          ['Despesas', totalReceitas && totalDespesas && totalDespesas.totalBruto/100]
         ]} options={{
           colors: ['#5AB55E', '#ED3237'],
           pieHole: 0.4,
@@ -366,32 +367,17 @@ export default function Financeiro() {
   ])
 
   async function addColunms() {
-    async function addInfo(number, name) {
+    const receitas = (await api.get('/financeiro/receitas')).data
+
+    meses.map(mês => {
       let totalReceitas = 0
+      
+      receitas.map(receita => 
+        totalReceitas += receita.fixa ? receita.months[mês.number].precoBruto : receita.data.split('/')[1] == mês.number ? receita.precoBruto : 0
+      )
 
-      const receitas = (await api.get('/financeiro/receitas', {
-        params: {
-          month: number
-        }
-      })).data
-
-      receitas.map(receita => totalReceitas =+ receita.precoBruto)
-
-      receitasAndDespesasColumnChart.push([name, totalReceitas/100, '#5AB55E', dinero({ amount: totalReceitas, currency: 'BRL' }).toFormat()])
-    }
-
-    await addInfo('01', 'Janeiro')
-    await addInfo('02', 'Feveiro')
-    await addInfo('03', 'Março')
-    await addInfo('04', 'Abril')
-    await addInfo('05', 'Maio')
-    await addInfo('06', 'Junho')
-    await addInfo('07', 'Julho')
-    await addInfo('08', 'Agosto')
-    await addInfo('09', 'Setembro')
-    await addInfo('10', 'Outubro')
-    await addInfo('11', 'Novembro')
-    await addInfo('12', 'Dezembro')
+      receitasAndDespesasColumnChart.push([mês.name, totalReceitas/100, '#5AB55E', dinero({ amount: totalReceitas, currency: 'BRL' }).toFormat()])
+    })
   }
 
   useMemo(() => addColunms().then(), [])
