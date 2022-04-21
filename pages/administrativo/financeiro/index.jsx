@@ -366,7 +366,7 @@ export default function Financeiro() {
     ['Nome', 'Valor', { role: 'style' }, { role: 'annotation' }]
   ])
 
-  async function addColunms() {
+  async function addColumns() {
     const receitas = (await api.get('/financeiro/receitas')).data
 
     meses.map(mês => {
@@ -380,7 +380,7 @@ export default function Financeiro() {
     })
   }
 
-  useMemo(() => addColunms().then(), [])
+  useMemo(() => addColumns().then(), [])
     
   return (
     <VerificationMemo>

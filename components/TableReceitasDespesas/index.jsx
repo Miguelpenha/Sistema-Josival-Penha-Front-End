@@ -69,7 +69,7 @@ function TableReceitasDespesas({ receitas=[], despesas=[], saldo='', onDeleteDes
                                     </TableCellValueBorder>
                                     <TableCellValueBorder align="center">
                                         <Tooltip title={
-                                            <span style={{fontSize: '1vw'}}>Excluir essa despessa</span>
+                                            <span style={{fontSize: '1vw'}}>Excluir essa despesa</span>
                                         } arrow placement="bottom">
                                             <IconButton idfinanceiro={row._id} onClick={e => {
                                                 if (row.receita) {
@@ -82,7 +82,7 @@ function TableReceitasDespesas({ receitas=[], despesas=[], saldo='', onDeleteDes
                                             </IconButton>
                                         </Tooltip>
                                         <Tooltip title={
-                                            <span style={{fontSize: '1vw'}}>Editar essa despessa</span>
+                                            <span style={{fontSize: '1vw'}}>Editar essa despesa</span>
                                         } arrow placement="bottom">
                                             <IconButton bg="#a0c9ff" idfinanceiro={row._id} onClick={e => {
                                                 if (row.receita) {

@@ -340,7 +340,7 @@ export const CheckboxCategoriaDespesa = styled(Checkbox)`
     }
 `
 
-export const NomeCategoriaDepesaComCor = styled.span`
+export const NomeCategoriaDespesaComCor = styled.span`
     font-size: 0.8vw;
 `
 
@@ -349,7 +349,7 @@ export const TitCampoCheckBoxDespesa = styled.h1`
     padding-top: 2%;
 `
 
-export const NomeCategoriaDepesaSóCor = styled.span`
+export const NomeCategoriaDespesaSóCor = styled.span`
     background-color: ${props => props.color ? props.color : '#53BDE8'};
     padding: 0.1%;
     border-radius: 50%;

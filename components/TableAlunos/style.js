@@ -86,7 +86,7 @@ export const TextSaldoValue = styled.span`
     }
 `
 
-export const IconButtonExclu = styled(IconButtonBruto)`
+export const IconButtonExcluir = styled(IconButtonBruto)`
     && {
         background-color: ${props => props.bg};
     }

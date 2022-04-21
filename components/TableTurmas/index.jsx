@@ -1,4 +1,4 @@
-import { TableContainer, TableCellTitle, TableCellTotal, TextTotal, TableRowSele, TableCellValueBorder, TableCellBorder, IconButtonExclu, TableCellTitleBorder, DialogTurma } from './style'
+import { TableContainer, TableCellTitle, TableCellTotal, TextTotal, TableRowSele, TableCellValueBorder, TableCellBorder, IconButtonExclui, TableCellTitleBorder, DialogTurma } from './style'
 import { Paper, Table, TableHead, TableRow, TableBody, TableFooter, Tooltip, Checkbox, DialogContent, Skeleton, Dialog } from '@material-ui/core'
 import { Delete as DeleteIcon } from '@material-ui/icons'
 import LimitText from '../LimitText'
@@ -68,9 +68,9 @@ function TableTurmas({ turmas, alunos, onDeleteTurmas, onDeleteTurmasTodos, setA
                             <Tooltip  title={
                                 <span style={{fontSize: '1vw'}}>Excluir essa turma</span>
                             } arrow placement="bottom">
-                                <IconButtonExclu onClick={() => onDeleteTurmas(row._id)}>
+                                <IconButtonExclui onClick={() => onDeleteTurmas(row._id)}>
                                     <DeleteIcon sx={{color: '#ED3237'}}/>
-                                </IconButtonExclu>
+                                </IconButtonExclui>
                             </Tooltip>       
                         </TableCellValueBorder>
                     </TableRowSele>
@@ -89,9 +89,9 @@ function TableTurmas({ turmas, alunos, onDeleteTurmas, onDeleteTurmasTodos, setA
                                 <Tooltip title={
                                     <span style={{fontSize: '1vw'}}>Excluir turmas</span>
                                 } arrow placement="bottom">
-                                    <IconButtonExclu onClick={() => onDeleteTurmasTodos()}>
+                                    <IconButtonExclui onClick={() => onDeleteTurmasTodos()}>
                                         <DeleteIcon sx={{color: '#ED3237'}}/>
-                                    </IconButtonExclu>
+                                    </IconButtonExclui>
                                 </Tooltip>
                             </TableCellTitleBorder>
                         </TableRow>
