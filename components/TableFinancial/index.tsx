@@ -2,15 +2,36 @@ import { FC } from 'react'
 import { Table, Header, HeaderRow, HeaderCellTitle, Body, BodyRow, BodyCell, ContainerName, IconName, ContainerIconMore, IconMore } from './style'
 import { Ireceita, Idespesa } from '../../types'
 
+interface IreceitaModify extends Ireceita {
+    receita?: boolean
+}
+
+interface IdespesaModify extends Idespesa {
+    despesa?: boolean
+}
+
+interface IreceitaAndDespesaModify extends Ireceita {
+    receita?: boolean
+    despesa?: boolean
+}
+
 interface Iprops {
-    receitas: Ireceita[]
-    despesas: Idespesa[]
+    receitas: IreceitaModify[]
+    despesas: IdespesaModify[]
     month: string
 }
 
 const TableFinanceiro: FC<Iprops> = ({ receitas, despesas, month }) => {
-    const receitasAndDespesas: (Ireceita | Idespesa)[] = [...receitas, ...despesas]
+    receitas.map(receita => {
+        receita.receita = true
+    })
 
+    despesas.map(despesa => {
+        despesa.despesa = true
+    })
+
+    const receitasAndDespesas: IreceitaAndDespesaModify[] = [...receitas, ...despesas]
+    
     return (
         <Table cellPadding="0" cellSpacing="0">
             <Header>
@@ -27,9 +48,23 @@ const TableFinanceiro: FC<Iprops> = ({ receitas, despesas, month }) => {
                     <BodyRow>
                         <BodyCell first colSpan={2}>
                             <ContainerName>
-                                <IconName xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
-                                    <path d="M29.95 25.3Q31.45 25.3 32.525 24.225Q33.6 23.15 33.6 21.65Q33.6 20.15 32.525 19.075Q31.45 18 29.95 18Q28.45 18 27.375 19.075Q26.3 20.15 26.3 21.65Q26.3 23.15 27.375 24.225Q28.45 25.3 29.95 25.3ZM21.95 34H37.95V33.05Q37.95 30.95 35.825 29.8Q33.7 28.65 29.95 28.65Q26.2 28.65 24.075 29.8Q21.95 30.95 21.95 33.05ZM7.05 40Q5.85 40 4.95 39.075Q4.05 38.15 4.05 37V11Q4.05 9.85 4.95 8.925Q5.85 8 7.05 8H21.05L24.05 11H41.05Q42.2 11 43.125 11.925Q44.05 12.85 44.05 14V37Q44.05 38.15 43.125 39.075Q42.2 40 41.05 40ZM7.05 11V37Q7.05 37 7.05 37Q7.05 37 7.05 37H41.05Q41.05 37 41.05 37Q41.05 37 41.05 37V14Q41.05 14 41.05 14Q41.05 14 41.05 14H22.8L19.8 11H7.05Q7.05 11 7.05 11Q7.05 11 7.05 11ZM7.05 11Q7.05 11 7.05 11Q7.05 11 7.05 11V14Q7.05 14 7.05 14Q7.05 14 7.05 14V37Q7.05 37 7.05 37Q7.05 37 7.05 37Q7.05 37 7.05 37Q7.05 37 7.05 37Z"/>
-                                </IconName>
+                                {receitaOrDespesa.auto ? (
+                                    <IconName
+                                        viewBox="0 0 45 45"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        colorType={receitaOrDespesa.receita ? 'receita' : 'despesa'}
+                                    >
+                                        <path d="M32.85 9.6 24.75 17.7 22.35 15.35 25.7 11.95H23.75Q18.9 11.95 15.375 15.525Q11.85 19.1 11.85 24Q11.85 25.6 12.175 27Q12.5 28.4 13.05 29.6L9.75 32.9Q8.35 30.85 7.75 28.625Q7.15 26.4 7.15 24Q7.15 17.25 12.05 12.25Q16.95 7.25 23.65 7.25H25.8L22.4 3.8L24.75 1.45ZM15.05 38.6 23.15 30.4 25.55 32.8 22.1 36.2H24.25Q29.1 36.2 32.625 32.625Q36.15 29.05 36.15 24.1Q36.15 22.55 35.825 21.15Q35.5 19.75 34.9 18.55L38.25 15.25Q39.6 17.35 40.225 19.55Q40.85 21.75 40.85 24.1Q40.85 30.9 35.95 35.925Q31.05 40.95 24.4 40.95H22.1L25.55 44.35L23.15 46.7Z"/>
+                                    </IconName>
+                                ) : receitaOrDespesa.receita ? (
+                                    <IconName xmlns="http://www.w3.org/2000/svg" viewBox="0 0 45 45" colorType="receita">
+                                        <path d="M6.35 36.85 2.95 33.5 18.8 17.75 27.15 26.1 37.1 16.1H31.15V11.4H45.05V25.25H40.4V19.5L27.1 32.8L18.75 24.45Z"/>
+                                    </IconName>
+                                ) : (
+                                    <IconName xmlns="http://www.w3.org/2000/svg" viewBox="0 0 45 45" colorType="despesa">
+                                        <path d="M2.95 14.75 6.35 11.4 18.75 23.8 27.1 15.45 40.4 28.75V23H45.05V36.85H31.15V32.15H37.1L27.15 22.15L18.8 30.5Z"/>
+                                    </IconName>
+                                )}
                                 {receitaOrDespesa.nome}
                             </ContainerName>
                         </BodyCell>

@@ -83,10 +83,20 @@ export const ContainerName = styled.div`
     align-items: center;
 `
 
-export const IconName = styled.svg`
+interface IIconName {
+    colorType: 'receita' | 'despesa'
+}
+
+export const IconName = styled.svg<IIconName>`
     width: 8%;
-    fill: #797979;
-    margin-right: 2%;
+    margin-right: 4%;
+    fill: ${props => {
+        if (props.colorType === 'receita') {
+            return '#60bf92'
+        } else if (props.colorType === 'despesa') {
+            return '#ef5252'
+        }
+    }};
 `
 
 export const ContainerIconMore = styled.button`

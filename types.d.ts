@@ -4,6 +4,7 @@ export interface Ireceita {
     precoBruto: number
     data?: string
     fixaDay?: string
+    auto?: boolean
 }
 
 export interface Idespesa {
@@ -12,4 +13,5 @@ export interface Idespesa {
     precoBruto: number
     data?: string
     fixaDay?: string
+    auto?: boolean
 }

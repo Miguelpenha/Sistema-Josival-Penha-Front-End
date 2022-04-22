@@ -51,7 +51,7 @@ import api from '../../../services/api/base'
 import { memo } from 'react'
 import dinero from 'dinero.js'
 import meses from '../../../meses'
-import TableFinanceiro from '../../../components/TableFinanceiro'
+import TableFinancial from '../../../components/TableFinancial'
 
 export default function Financeiro() {
   const [month, setMonth] = useState('full')
@@ -602,7 +602,7 @@ export default function Financeiro() {
                 mutateReceitas('/financeiro/despesas')
                 mutateSaldo('/financeiro/saldo')
               }}/>
-              <TableFinanceiro receitas={receitas} despesas={despesas} month={month}/>
+              <TableFinancial receitas={receitas} despesas={despesas} month={month}/>
               <Snackbar anchorOrigin={{
                 horizontal: 'right',
                 vertical: 'bottom'
