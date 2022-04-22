@@ -48,10 +48,10 @@ import { useState, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import { get } from '../../../hooks'
 import api from '../../../services/api/base'
-import TableReceitasDespesas from '../../../components/TableReceitasDespesas'
 import { memo } from 'react'
 import dinero from 'dinero.js'
 import meses from '../../../meses'
+import TableFinanceiro from '../../../components/TableFinanceiro'
 
 export default function Financeiro() {
   const [month, setMonth] = useState('full')
@@ -602,34 +602,7 @@ export default function Financeiro() {
                 mutateReceitas('/financeiro/despesas')
                 mutateSaldo('/financeiro/saldo')
               }}/>
-              {receitas && despesas ? <TableReceitasDespesas receitas={receitas && receitas} despesas={despesas && despesas} onDeleteDespesas={id => {
-                api.delete(`/financeiro/despesas/${id}`).then(() => {
-                  mutateTotalDespesas('/financeiro/despesas/total')
-                  mutateDespesas('/financeiro/despesas')
-                  mutateSaldo('/financeiro/saldo')
-                })
-              }} onDeleteReceitas={id => {
-                api.delete(`/financeiro/receitas/${id}`).then(() => {
-                  mutateTotalReceitas('/financeiro/receitas/total')
-                  mutateReceitas('/financeiro/receitas')
-                  mutateSaldo('/financeiro/saldo')
-                })
-              }} onDeleteTodos={() => {
-                despesas.map(despesa => {
-                  api.delete(`/financeiro/despesas/${despesa._id}`).then(() => {
-                    mutateTotalDespesas('/financeiro/despesas/total')
-                    mutateDespesas('/financeiro/despesas')
-                    mutateSaldo('/financeiro/saldo')
-                  })
-                })
-                receitas.map(receita => {
-                  api.delete(`/financeiro/receitas/${receita._id}`).then(() => {
-                    mutateTotalReceitas('/financeiro/receitas/total')
-                    mutateReceitas('/financeiro/receitas')
-                    mutateSaldo('/financeiro/saldo')
-                  })
-                })
-              }} onEditReceita={() => {}} onEditDespesa={() => {}} saldo={saldo && saldo.saldo}/> : <Skeleton variant="rectangular" width={`85.5%`} height={`50%`} style={{display: 'block', marginLeft: 'auto', marginRight: 'auto', borderRadius: '20px', marginTop: '5%'}} animation="wave"/>}
+              <TableFinanceiro receitas={receitas} despesas={despesas} month={month}/>
               <Snackbar anchorOrigin={{
                 horizontal: 'right',
                 vertical: 'bottom'
