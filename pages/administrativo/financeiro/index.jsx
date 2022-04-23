@@ -54,7 +54,7 @@ import meses from '../../../meses'
 import TableFinancial from '../../../components/TableFinancial'
 
 export default function Financeiro() {
-  const [month, setMonth] = useState('full')
+  const [month, setMonth] = useState(new Date().toLocaleDateString().split('/')[1])
   const { data: totalReceitas, mutate: mutateTotalReceitas } = get(`/financeiro/receitas/total${month != 'full' ? '?month='+month : '?month=full'}`)
   const { data: totalDespesas, mutate: mutateTotalDespesas } = get(`/financeiro/despesas/total${month != 'full' ? '?month='+month : '?month=full'}`)
   const { data: despesas, mutate: mutateDespesas } = get(`/financeiro/despesas${month != 'full' ? '?month='+month : '?month=full'}`)
@@ -602,7 +602,20 @@ export default function Financeiro() {
                 mutateReceitas('/financeiro/despesas')
                 mutateSaldo('/financeiro/saldo')
               }}/>
-              <TableFinancial receitas={receitas} despesas={despesas} month={month}/>
+              {typeof receitas[0] != 'string' && typeof despesas[0] != 'string' && month && (
+                <TableFinancial
+                  month={month}
+                  receitas={receitas}
+                  despesas={despesas}
+                  onEdit={() => {
+                    mutateTotalDespesas('/financeiro/receitas/total')
+                    mutateTotalReceitas('/financeiro/despesas/total')
+                    mutateDespesas('/financeiro/receitas')
+                    mutateReceitas('/financeiro/despesas')
+                    mutateSaldo('/financeiro/saldo')
+                  }}
+                />
+              )}
               <Snackbar anchorOrigin={{
                 horizontal: 'right',
                 vertical: 'bottom'

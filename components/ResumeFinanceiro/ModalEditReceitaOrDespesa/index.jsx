@@ -33,7 +33,7 @@ function ModalEditReceitaOrDespesa({ open, onClose, onEdit, receitaOrDespesa }) 
     })
     
     async function enviarReceitaOrDespesa(data, event) {
-        let { nome, valor, date, observação, investimento, fixaDay } = data
+        let { nome, valor, date, observação, investimento, fixaDay, pago } = data
         
         const receitaOrDespesaSubmit = {
             nome,
@@ -43,6 +43,7 @@ function ModalEditReceitaOrDespesa({ open, onClose, onEdit, receitaOrDespesa }) 
             fixa: fixaCampo,
             fixaDay: String(fixaDay),
             observação,
+            pago,
             criação: new Date().toISOString()
         }
         
@@ -138,6 +139,16 @@ function ModalEditReceitaOrDespesa({ open, onClose, onEdit, receitaOrDespesa }) 
                             {receitaOrDespesa.observação}
                         </TextArea>
                     </Campo>
+                    <ContainerSwitch receita={receitaOrDespesa.receita}>
+                        <Switch
+                            name="pago"
+                            receita={receitaOrDespesa.receita}
+                            inputRef={register('pago').ref}
+                            onChange={register('pago').onChange}
+                            defaultChecked={receitaOrDespesa.pago}
+                        />
+                        <TextSwitch>Pago</TextSwitch>
+                    </ContainerSwitch>
                     <ContainerSwitch receita={receitaOrDespesa.receita}>
                         <Switch
                             name="investimento"

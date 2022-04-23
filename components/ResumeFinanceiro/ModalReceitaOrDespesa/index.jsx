@@ -38,6 +38,12 @@ export default function ModalReceitaOrDespesa({ open, onClose, copyTextInfo, cop
                     </ContainerInfoReceitaOrDespesa>
                 )}
                 <ContainerInfoReceitaOrDespesa>
+                    <TitleInfoReceitaOrDespesa>Pago: </TitleInfoReceitaOrDespesa>
+                    <InfoReceitaOrDespesa notCopy>
+                        {receitaOrDespesa.pago ? 'Sim' : 'Não'}
+                    </InfoReceitaOrDespesa>
+                </ContainerInfoReceitaOrDespesa>
+                <ContainerInfoReceitaOrDespesa>
                     <TitleInfoReceitaOrDespesa>Investimento: </TitleInfoReceitaOrDespesa>
                     <InfoReceitaOrDespesa notCopy>
                         {receitaOrDespesa.investimento ? 'Sim' : 'Não'}
