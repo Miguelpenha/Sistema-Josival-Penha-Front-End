@@ -18,7 +18,7 @@ export default function Login() {
   
   async function enviar(data, event) {
     const { login, senha } = data
-    const token = await api.administrativo.login(login, senha, false)
+    const token = await api.administrativo.login(login, senha, true, window.navigator.userAgent.split('(')[1].split(')')[0].split(';').map(info => info.trim()))
     if (token) {
       setError(false)
       setErrorMsg('')
