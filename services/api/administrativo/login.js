@@ -5,7 +5,7 @@ export default async function login(login='', senha='', ult=false, modelUser=[])
         login,
         senha,
         ult: ult ? true : false,
-        modelUser: ult ? modelUser : false
+        modelUser: modelUser
     })
     
     return data.token
