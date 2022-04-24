@@ -602,7 +602,7 @@ export default function Financeiro() {
                 mutateReceitas('/financeiro/despesas')
                 mutateSaldo('/financeiro/saldo')
               }}/>
-              {receitas && despesas && typeof receitas[0] != 'string' && typeof despesas[0] != 'string' && month && (
+              {typeof receitas[0] != 'string' && typeof despesas[0] != 'string' && month && (
                 <TableFinancial
                   month={month}
                   receitas={receitas}
