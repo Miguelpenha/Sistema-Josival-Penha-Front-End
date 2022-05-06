@@ -136,7 +136,9 @@ export const Info = styled(Card)`
 `
 
 export const InfoTit = styled.span`
-    font-size: 1vw;
+    color: #525051;
+    font-weight: 100;
+    font-size: 1.4vw;
 `
 
 export const InfoDado = styled.span`
