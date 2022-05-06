@@ -372,10 +372,11 @@ export default function Financeiro() {
     meses.map(mês => {
       let totalReceitas = 0
       
-      receitas.map(receita => 
+      receitas.map(receita => {
+        console.log(receita.fixa ? receita.months[mês.number].precoBruto : receita.data.split('/')[1] == mês.number ? receita.precoBruto : 0)
         totalReceitas += receita.fixa ? receita.months[mês.number].precoBruto : receita.data.split('/')[1] == mês.number ? receita.precoBruto : 0
-      )
-
+    })
+      
       receitasAndDespesasColumnChart.push([mês.name, totalReceitas/100, '#5AB55E', dinero({ amount: totalReceitas, currency: 'BRL' }).toFormat()])
     })
   }

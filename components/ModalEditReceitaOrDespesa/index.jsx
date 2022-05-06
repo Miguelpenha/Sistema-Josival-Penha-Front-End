@@ -17,14 +17,14 @@ import {
 } from './style'
 import { Select, MenuItem } from '@material-ui/core'
 
-function ModalEditReceitaOrDespesa({ open, onClose, onEdit, receitaOrDespesa }) {
+function ModalEditReceitaOrDespesa({ open, onClose, onEdit, receitaOrDespesa, month }) {
     if (receitaOrDespesa) {
         const { register, handleSubmit, watch, reset } = useForm()
         const [fixaCampo, setFixaCampo] = useState(receitaOrDespesa.fixa)
         let days = []
         
         for (let cont = 1;cont<=31;cont++) {
-        days.push(cont < 10 ? `0${cont}` : String(cont))
+            days.push(cont < 10 ? `0${cont}` : String(cont))
         }
 
         watch((value, { name }) => {
@@ -35,17 +35,34 @@ function ModalEditReceitaOrDespesa({ open, onClose, onEdit, receitaOrDespesa }) 
         
         async function enviarReceitaOrDespesa(data, event) {
             let { nome, valor, date, observação, investimento, fixaDay, pago } = data
+
+            let receitaOrDespesaSubmit = {}
             
-            const receitaOrDespesaSubmit = {
-                nome,
-                preco: valor,
-                data: date ? `${date.split('-')[1]}/${date.split('-')[2]}/${date.split('-')[0]}` : date,
-                investimento,
-                fixa: fixaCampo,
-                fixaDay: String(fixaDay),
-                observação,
-                pago,
-                criação: new Date().toISOString()
+            if (fixaCampo) {
+                receitaOrDespesaSubmit = {
+                    nome,
+                    preco: valor,
+                    data: date ? `${date.split('-')[1]}/${date.split('-')[2]}/${date.split('-')[0]}` : date,
+                    investimento,
+                    fixa: fixaCampo,
+                    fixaDay: String(fixaDay),
+                    observação,
+                    pago,
+                    criação: new Date().toISOString()
+                }
+            } else {
+                receitaOrDespesaSubmit = {
+                    nome,
+                    preco: valor,
+                    data: date ? `${date.split('-')[1]}/${date.split('-')[2]}/${date.split('-')[0]}` : date,
+                    investimento,
+                    fixa: fixaCampo,
+                    fixaDay: String(fixaDay),
+                    observação,
+                    pago,
+                    months: receitaOrDespesa.months,
+                    criação: new Date().toISOString()
+                }
             }
             
             if (receitaOrDespesa.receita) {
@@ -97,7 +114,7 @@ function ModalEditReceitaOrDespesa({ open, onClose, onEdit, receitaOrDespesa }) 
                 </Campo>
             )
         }
-
+       
         return (
             <Modal open={open} onClose={() => {
                 reset()
@@ -126,7 +143,7 @@ function ModalEditReceitaOrDespesa({ open, onClose, onEdit, receitaOrDespesa }) 
                                 placeholder="Valor: "
                                 {...register('valor')}
                                 receita={receitaOrDespesa.receita}
-                                defaultValue={receitaOrDespesa.preco}
+                                defaultValue={receitaOrDespesa.fixa ? receitaOrDespesa.months[month].preco : receitaOrDespesa.preco}
                             />
                         </Campo>
                         <Campo>
@@ -137,7 +154,7 @@ function ModalEditReceitaOrDespesa({ open, onClose, onEdit, receitaOrDespesa }) 
                                 {...register('observação')}
                                 receita={receitaOrDespesa.receita}
                             >
-                                {receitaOrDespesa.observação}
+                                {receitaOrDespesa.fixa ? receitaOrDespesa.months[month].observação : receitaOrDespesa.observação}
                             </TextArea>
                         </Campo>
                         <ContainerSwitch receita={receitaOrDespesa.receita}>
@@ -146,7 +163,7 @@ function ModalEditReceitaOrDespesa({ open, onClose, onEdit, receitaOrDespesa }) 
                                 receita={receitaOrDespesa.receita}
                                 inputRef={register('pago').ref}
                                 onChange={register('pago').onChange}
-                                defaultChecked={receitaOrDespesa.pago}
+                                defaultChecked={receitaOrDespesa.fixa ? receitaOrDespesa.months[month].pago : receitaOrDespesa.pago}
                             />
                             <TextSwitch>Pago</TextSwitch>
                         </ContainerSwitch>

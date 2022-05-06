@@ -95,6 +95,7 @@ const TableFinanceiro: FC<Iprops> = ({ receitas, despesas, month, onEdit }) => {
             receitaOrDespesa={receitaOrDespesaModal}
         />
         <ModalEditReceitaOrDespesa
+            month={monthFind}
             onEdit={onEdit}
             open={openEdit}
             onClose={() => setOpenEdit(false)}
@@ -212,8 +213,8 @@ const TableFinanceiro: FC<Iprops> = ({ receitas, despesas, month, onEdit }) => {
                                                 <TextStatus>{veriPago(receita)}</TextStatus>
                                             </ContainerStatus>
                                         </BodyCell>
-                                        <BodyCell>{receita.data ? receita.data : `${receita.fixaDay}/${month==='full' ? new Date().toLocaleDateString().split('/')[1] : month}/${new Date().toLocaleDateString().split('/')[2]}`}</BodyCell>
-                                        <BodyCell>{receita.preco}</BodyCell>
+                                        <BodyCell>{receita.data ? receita.data : `${receita.fixaDay}/${monthFind==='full' ? new Date().toLocaleDateString().split('/')[1] : monthFind}/${new Date().toLocaleDateString().split('/')[2]}`}</BodyCell>
+                                        <BodyCell>{receita.fixa ? receita.months[monthFind].preco : receita.preco}</BodyCell>
                                         <BodyCell>
                                             <ContainerIconMore onClick={ev => {
                                                 ev.stopPropagation()
