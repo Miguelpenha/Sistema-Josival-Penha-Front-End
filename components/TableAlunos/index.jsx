@@ -1,9 +1,9 @@
 import { TableContainer, TableCell, TableCellTitle, TableCellTotal, TextTotal, TableRowSele, TableCellValueBorder, TableCellBorder, IconButtonExcluir, TableCellTitleBorder, LinkFotoAluno, FotoAluno, DialogGerarDeclaração, InputPorcentagemGerarDeclaração, ButtonSubmitGerarDeclaração, BolsistaSwitch, InputFindAlunos } from './style'
 import { Paper, Table, TableHead, TableRow, TableBody, TableFooter, Tooltip, Menu, MenuItem, Checkbox, DialogContent, SpeedDial, SpeedDialAction } from '@material-ui/core'
 import LimitText from '../LimitText'
-import { Delete as DeleteIcon, Download as DownloadIcon, Edit as EditIcon, Send as SendIcon, ListAlt as ListAltIcon, Paid as PaidIcon, Downloading as DownloadingIcon } from '@material-ui/icons'
+import { Delete as DeleteIcon, Download as DownloadIcon, Edit as EditIcon, Send as SendIcon, ListAlt as ListAltIcon, Paid as PaidIcon, Downloading as DownloadingIcon, ReportProblem as ReportProblemIcon } from '@material-ui/icons'
 import Link from 'next/link'
-import { useState, memo, useMemo } from 'react'
+import { useState, memo } from 'react'
 import api from '../../services/api/base'
 import ContentModalEditAluno from '../pages/administrativo/alunos/ContentModalEditAluno/index.jsx'
 import dinero from 'dinero.js'
@@ -361,6 +361,13 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg, onDef
                                                 <DownloadingIcon sx={{color: '#0872FC'}}/>
                                             </IconButtonExcluir>
                                         </form>
+                                    </Tooltip>
+                                    <Tooltip title={
+                                        <span style={{fontSize: '1vw'}}>Gerar aviso escolar</span>
+                                    } arrow placement="bottom">
+                                        <IconButtonExcluir title="Gerar aviso escolar" bg="#A8CDFE" component="a" href="notification">
+                                            <ReportProblemIcon sx={{color: '#0872FC'}}/>
+                                        </IconButtonExcluir>
                                     </Tooltip>
                                 </div>
                             </TableCellTitleBorder>
