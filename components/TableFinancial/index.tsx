@@ -60,12 +60,12 @@ const TableFinanceiro: FC<Iprops> = ({ receitas, despesas, month, onEdit }) => {
                 }
             }
         } else {
-            if (receitaOrDespesa.pago) {
+            if (receitaOrDespesa.months[monthFind].pago) {
                 return 'Pago'
             } else {
-                const mêsAtual = Number(new Date().toLocaleString().split('/')[1])
+                const mêsAtual = Number(monthFind)
                 const mêsVencimento = Number(!receitaOrDespesa.fixa ? receitaOrDespesa.data.split('/')[1] : receitaOrDespesa.months[String(new Date().toLocaleString().split('/')[1])])
-        
+                
                 if (mêsVencimento >= mêsAtual) {
                     if (mêsVencimento === mêsAtual) {
                         const diaAtual = Number(new Date().toLocaleString().split('/')[0])

@@ -16,6 +16,7 @@ import {
     Button
 } from './style'
 import { Select, MenuItem } from '@material-ui/core'
+import dinero from 'dinero.js'
 
 function ModalEditReceitaOrDespesa({ open, onClose, onEdit, receitaOrDespesa, month }) {
     if (receitaOrDespesa) {
@@ -39,16 +40,26 @@ function ModalEditReceitaOrDespesa({ open, onClose, onEdit, receitaOrDespesa, mo
             let receitaOrDespesaSubmit = {}
             
             if (fixaCampo) {
+                valor.includes(',') ? null : valor = `${valor},00`
+                let precoBruto = Number(
+                    valor.replace('.', '')
+                    .replace(',', '')
+                    .replace('R$', '')
+                    .trimStart()
+                )
+                receitaOrDespesa.months[month].observação = observação
+                receitaOrDespesa.months[month].preco = valor
+                receitaOrDespesa.months[month].precoBruto = precoBruto
+
                 receitaOrDespesaSubmit = {
                     nome,
-                    preco: valor,
+                    preco: receitaOrDespesa.preco,
+                    fixa: receitaOrDespesa.fixa,
                     data: date ? `${date.split('-')[1]}/${date.split('-')[2]}/${date.split('-')[0]}` : date,
                     investimento,
-                    fixa: fixaCampo,
                     fixaDay: String(fixaDay),
-                    observação,
-                    pago,
-                    criação: new Date().toISOString()
+                    criação: new Date().toISOString(),
+                    months: receitaOrDespesa.months
                 }
             } else {
                 receitaOrDespesaSubmit = {
