@@ -50,6 +50,7 @@ function ModalEditReceitaOrDespesa({ open, onClose, onEdit, receitaOrDespesa, mo
                 receitaOrDespesa.months[month].observação = observação
                 receitaOrDespesa.months[month].preco = valor
                 receitaOrDespesa.months[month].precoBruto = precoBruto
+                receitaOrDespesa.months[month].pago = pago
 
                 receitaOrDespesaSubmit = {
                     nome,
