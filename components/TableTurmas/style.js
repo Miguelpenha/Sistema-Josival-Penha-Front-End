@@ -92,7 +92,7 @@ export const TextSaldoValue = styled.span`
     }
 `
 
-export const IconButtonExclu = styled(IconButtonBruto)`
+export const IconButtonExclui = styled(IconButtonBruto)`
     && {
         background-color: #FBD6D7;
     }

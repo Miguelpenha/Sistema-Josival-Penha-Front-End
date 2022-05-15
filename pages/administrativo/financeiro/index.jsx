@@ -48,15 +48,16 @@ import { useState, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import { get } from '../../../hooks'
 import api from '../../../services/api/base'
-import TableReceitasDespesas from '../../../components/TableReceitasDespesas'
 import { memo } from 'react'
 import dinero from 'dinero.js'
+import meses from '../../../meses'
+import TableFinancial from '../../../components/TableFinancial'
 
 export default function Financeiro() {
-  const [month, setMonth] = useState('full')
+  const [month, setMonth] = useState(new Date().toLocaleDateString().split('/')[1])
   const { data: totalReceitas, mutate: mutateTotalReceitas } = get(`/financeiro/receitas/total${month != 'full' ? '?month='+month : '?month=full'}`)
   const { data: totalDespesas, mutate: mutateTotalDespesas } = get(`/financeiro/despesas/total${month != 'full' ? '?month='+month : '?month=full'}`)
-  const { data: despesas, mutate: mutateDespesas } = get('/financeiro/despesas')
+  const { data: despesas, mutate: mutateDespesas } = get(`/financeiro/despesas${month != 'full' ? '?month='+month : '?month=full'}`)
   const { data: receitas, mutate: mutateReceitas } = get(`/financeiro/receitas${month != 'full' ? '?month='+month : '?month=full'}`)
   const { data: saldo, mutate: mutateSaldo } = get(`/financeiro/saldo${month != 'full' ? '?month='+month : '?month=full'}`)
   const { register, handleSubmit } = useForm()
@@ -278,8 +279,8 @@ export default function Financeiro() {
       if (receitas.length >= 1 || despesas.length >= 1) {
         return <ChartReceitasDespesas style={{marginTop: '4.5%'}} width="500px" height="300px" chartType="PieChart" data={[
           ['Linguagens', 'Quantidade'],
-          ['Receitas', totalDespesas && totalReceitas && totalReceitas.totalBruto],
-          ['Despesas', totalReceitas && totalDespesas && totalDespesas.totalBruto]
+          ['Receitas', totalDespesas && totalReceitas && totalReceitas.totalBruto/100],
+          ['Despesas', totalReceitas && totalDespesas && totalDespesas.totalBruto/100]
         ]} options={{
           colors: ['#5AB55E', '#ED3237'],
           pieHole: 0.4,
@@ -365,36 +366,22 @@ export default function Financeiro() {
     ['Nome', 'Valor', { role: 'style' }, { role: 'annotation' }]
   ])
 
-  async function addColunms() {
-    async function addInfo(number, name) {
+  async function addColumns() {
+    const receitas = (await api.get('/financeiro/receitas')).data
+
+    meses.map(mês => {
       let totalReceitas = 0
-
-      const receitas = (await api.get('/financeiro/receitas', {
-        params: {
-          month: number
-        }
-      })).data
-
-      receitas.map(receita => totalReceitas =+ receita.precoBruto)
-
-      receitasAndDespesasColumnChart.push([name, totalReceitas/100, '#5AB55E', dinero({ amount: totalReceitas, currency: 'BRL' }).toFormat()])
-    }
-
-    await addInfo('01', 'Janeiro')
-    await addInfo('02', 'Feveiro')
-    await addInfo('03', 'Março')
-    await addInfo('04', 'Abril')
-    await addInfo('05', 'Maio')
-    await addInfo('06', 'Junho')
-    await addInfo('07', 'Julho')
-    await addInfo('08', 'Agosto')
-    await addInfo('09', 'Setembro')
-    await addInfo('10', 'Outubro')
-    await addInfo('11', 'Novembro')
-    await addInfo('12', 'Dezembro')
+      
+      receitas.map(receita => {
+        console.log(receita.fixa ? receita.months[mês.number].precoBruto : receita.data.split('/')[1] == mês.number ? receita.precoBruto : 0)
+        totalReceitas += receita.fixa ? receita.months[mês.number].precoBruto : receita.data.split('/')[1] == mês.number ? receita.precoBruto : 0
+    })
+      
+      receitasAndDespesasColumnChart.push([mês.name, totalReceitas/100, '#5AB55E', dinero({ amount: totalReceitas, currency: 'BRL' }).toFormat()])
+    })
   }
 
-  useMemo(() => addColunms().then(), [])
+  useMemo(() => addColumns().then(), [])
     
   return (
     <VerificationMemo>
@@ -616,34 +603,20 @@ export default function Financeiro() {
                 mutateReceitas('/financeiro/despesas')
                 mutateSaldo('/financeiro/saldo')
               }}/>
-              {receitas && despesas ? <TableReceitasDespesas receitas={receitas && receitas} despesas={despesas && despesas} onDeleteDespesas={id => {
-                api.delete(`/financeiro/despesas/${id}`).then(() => {
-                  mutateTotalDespesas('/financeiro/despesas/total')
-                  mutateDespesas('/financeiro/despesas')
-                  mutateSaldo('/financeiro/saldo')
-                })
-              }} onDeleteReceitas={id => {
-                api.delete(`/financeiro/receitas/${id}`).then(() => {
-                  mutateTotalReceitas('/financeiro/receitas/total')
-                  mutateReceitas('/financeiro/receitas')
-                  mutateSaldo('/financeiro/saldo')
-                })
-              }} onDeleteTodos={() => {
-                despesas.map(despesa => {
-                  api.delete(`/financeiro/despesas/${despesa._id}`).then(() => {
-                    mutateTotalDespesas('/financeiro/despesas/total')
-                    mutateDespesas('/financeiro/despesas')
+              {receitas && despesas && typeof receitas[0] != 'string' && typeof despesas[0] != 'string' && month && (
+                <TableFinancial
+                  month={month}
+                  receitas={receitas}
+                  despesas={despesas}
+                  onEdit={() => {
+                    mutateTotalDespesas('/financeiro/receitas/total')
+                    mutateTotalReceitas('/financeiro/despesas/total')
+                    mutateDespesas('/financeiro/receitas')
+                    mutateReceitas('/financeiro/despesas')
                     mutateSaldo('/financeiro/saldo')
-                  })
-                })
-                receitas.map(receita => {
-                  api.delete(`/financeiro/receitas/${receita._id}`).then(() => {
-                    mutateTotalReceitas('/financeiro/receitas/total')
-                    mutateReceitas('/financeiro/receitas')
-                    mutateSaldo('/financeiro/saldo')
-                  })
-                })
-              }} onEditReceita={() => {}} onEditDespesa={() => {}} saldo={saldo && saldo.saldo}/> : <Skeleton variant="rectangular" width={`85.5%`} height={`50%`} style={{display: 'block', marginLeft: 'auto', marginRight: 'auto', borderRadius: '20px', marginTop: '5%'}} animation="wave"/>}
+                  }}
+                />
+              )}
               <Snackbar anchorOrigin={{
                 horizontal: 'right',
                 vertical: 'bottom'

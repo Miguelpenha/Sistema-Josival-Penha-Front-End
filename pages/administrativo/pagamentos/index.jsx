@@ -13,7 +13,7 @@ export default function Pagamentos() {
   const [mesFilter, setMesFilter] = useState(new Date().toLocaleDateString('pt-br').split('/')[1])
   const [textFilter, setTextFilter] = useState('')
   const [turmaFilter, setTurmaFilter] = useState('Nenhuma turma')
-  const [atrazadosFilter, setAtrazadosFilter] = useState(false)
+  const [atrasadosFilter, setAtrasadosFilter] = useState(false)
 
   function veriPago(pagamentos, mês) {
     const mêsPagamento = mês || new Date().toLocaleString().split('/')[1]
@@ -145,12 +145,12 @@ export default function Pagamentos() {
                   </>)}
                 </Select>
               </ContainerFilters>
-              <Switch checked={atrazadosFilter} onChange={event => setAtrazadosFilter(event.target.checked)}/>Atrazados
+              <Switch checked={atrasadosFilter} onChange={event => setAtrasadosFilter(event.target.checked)}/>Atrasados
               {turmas && turmas.map((turma, index) => {
                 if (turmaFilter === 'Nenhuma turma' || turma._id === turmaFilter) {
                   let veriAtrasadoTurma = false
 
-                  if (atrazadosFilter) {
+                  if (atrasadosFilter) {
                     alunos && alunos.map(aluno => {
                       if (aluno.turma === turma.nome && aluno.nome.toUpperCase().includes(textFilter.toUpperCase()) && !veriPago(aluno.pagamentos, mesFilter)) {
                         veriAtrasadoTurma = true
@@ -158,7 +158,7 @@ export default function Pagamentos() {
                     })
                   }
                   
-                  if (!atrazadosFilter ? true : veriAtrasadoTurma) {
+                  if (!atrasadosFilter ? true : veriAtrasadoTurma) {
                     return (
                       <Table key={index} cellSpacing="0" cellpadding="0">
                         <thead>
@@ -177,9 +177,9 @@ export default function Pagamentos() {
                         <tbody>
                           {alunos && alunos.map((aluno, index) => {
                             if(aluno.turma === turma.nome && aluno.nome.toUpperCase().includes(textFilter.toUpperCase())) {
-                              const veriAtrazado = veriPago(aluno.pagamentos, mesFilter)
+                              const veriAtrasado = veriPago(aluno.pagamentos, mesFilter)
                               
-                              if (!atrazadosFilter) {
+                              if (!atrasadosFilter) {
                                 return (
                                   <tr className="aluno" key={index}>
                                       <td>
@@ -206,7 +206,7 @@ export default function Pagamentos() {
                                       </td>
                                 </tr>
                               )
-                              } else if (atrazadosFilter && !veriAtrazado) {
+                              } else if (atrasadosFilter && !veriAtrasado) {
                                 return (
                                   <tr className="aluno" key={index}>
                                       <td>

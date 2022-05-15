@@ -13,6 +13,7 @@ export function AuthProvider({ children }) {
         const { [process.env.NEXT_STATIC_NAME_COOKIE_ADMINISTRATIVO]:tokenAdmin } = parseCookies()
         if (tokenProf) {
             const token = tokenProf
+            
             api.professoras.auth(token).then(response => {
                 if (response.newToken) {
                     setCookie(undefined, process.env.NEXT_STATIC_NAME_COOKIE_PROFESSORAS, response.newToken, {

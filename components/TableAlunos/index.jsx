@@ -1,9 +1,9 @@
-import { TableContainer, TableCell, TableCellTitle, TableCellTotal, TextTotal, TableRowSele, TableCellValueBorder, TableCellBorder, IconButtonExclu, TableCellTitleBorder, LinkFotoAluno, FotoAluno, DialogGerarDeclaração, InputPorcentagemGerarDeclaração, ButtonSubmitGerarDeclaração, BolsistaSwitch, InputFindAlunos } from './style'
+import { TableContainer, TableCell, TableCellTitle, TableCellTotal, TextTotal, TableRowSele, TableCellValueBorder, TableCellBorder, IconButtonExcluir, TableCellTitleBorder, LinkFotoAluno, FotoAluno, DialogGerarDeclaração, InputPorcentagemGerarDeclaração, ButtonSubmitGerarDeclaração, BolsistaSwitch, InputFindAlunos } from './style'
 import { Paper, Table, TableHead, TableRow, TableBody, TableFooter, Tooltip, Menu, MenuItem, Checkbox, DialogContent, SpeedDial, SpeedDialAction } from '@material-ui/core'
 import LimitText from '../LimitText'
-import { Delete as DeleteIcon, Download as DownloadIcon, Edit as EditIcon, Send as SendIcon, ListAlt as ListAltIcon, Paid as PaidIcon, Downloading as DownloadingIcon } from '@material-ui/icons'
+import { Delete as DeleteIcon, Download as DownloadIcon, Edit as EditIcon, Send as SendIcon, ListAlt as ListAltIcon, Paid as PaidIcon, Downloading as DownloadingIcon, ReportProblem as ReportProblemIcon } from '@material-ui/icons'
 import Link from 'next/link'
-import { useState, memo, useMemo } from 'react'
+import { useState, memo } from 'react'
 import api from '../../services/api/base'
 import ContentModalEditAluno from '../pages/administrativo/alunos/ContentModalEditAluno/index.jsx'
 import dinero from 'dinero.js'
@@ -115,7 +115,7 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg, onDef
                         <DialogGerarDeclaração open={true} onClose={() => setOpenDialogGerarDeclaração(false)}>
                             <DialogContent>
                                 <form method="POST" action={`${process.env.NEXT_STATIC_API_URL}/alunos/documents/declaration`}>
-                                    <InputPorcentagemGerarDeclaração name="frequencia" required placeholder="Porcentagem de aulas sem faltas" type="number" InputProps={{
+                                    <InputPorcentagemGerarDeclaração name="frequência" required placeholder="Porcentagem de aulas sem faltas" type="number" InputProps={{
                                         inputProps: {
                                             max: 100,
                                             min: 0
@@ -148,7 +148,7 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg, onDef
                                     </div>
                                     <div style={{display: 'flex', alignItems: 'center', width: '100%', flexDirection: 'column'}}>
                                         <span style={{fontSize: '1vw', alignSelf: 'flex-start', marginTop: '5%'}}>Valor da mátricula</span>
-                                        <InputPorcentagemGerarDeclaração name="mátricula" required placeholder="Valor da mátricula" type="text" defaultValue={dinero({ amount: Number(process.env.NEXT_STATIC_MATRICULA), currency: 'BRL' }).toFormat()} variant="standard" fullWidth noTop/>
+                                        <InputPorcentagemGerarDeclaração name="mátricula" required placeholder="Valor da matrícula" type="text" defaultValue={dinero({ amount: Number(process.env.NEXT_STATIC_MATRICULA), currency: 'BRL' }).toFormat()} variant="standard" fullWidth noTop/>
                                     </div>
                                     <div style={{display: 'flex', alignItems: 'center', width: '100%', flexDirection: 'column'}}>
                                         <span style={{fontSize: '1vw', alignSelf: 'flex-start', marginTop: '5%'}}>Valor da mensalidade</span>
@@ -286,9 +286,9 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg, onDef
                             setOpenDialogGerarDeclaração(true)
                         }}
                     >
-                        <IconButtonExclu style={{marginRight: '3%'}} bg="#B5D5FE">
+                        <IconButtonExcluir style={{marginRight: '3%'}} bg="#B5D5FE">
                             <DownloadIcon sx={{color: '#0872FC'}}/>
-                        </IconButtonExclu>
+                        </IconButtonExcluir>
                         Baixar declaração do aluno
                     </MenuItem>
                 </Tooltip>
@@ -314,42 +314,42 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg, onDef
                                     <Tooltip title={
                                         <span style={{fontSize: '1vw'}}>Excluir itens</span>
                                     } arrow placement="bottom">
-                                        <IconButtonExclu bg="#FBD6D7" onClick={() => onDeleteAlunosTodos()}>
+                                        <IconButtonExcluir bg="#FBD6D7" onClick={() => onDeleteAlunosTodos()}>
                                             <DeleteIcon sx={{color: '#ED3237'}}/>
-                                        </IconButtonExclu>
+                                        </IconButtonExcluir>
                                     </Tooltip>
                                     <Tooltip title={
                                         <span style={{fontSize: '1vw'}}>Baixar planilha de alunos</span>
                                     } arrow placement="bottom">
                                         <form method="POST" action={`${process.env.NEXT_STATIC_API_URL}/alunos/exportar`} style={{display: 'inline-block'}}>
                                             <input type="hidden" name="keyapi" value={process.env.NEXT_STATIC_API_KEY}/>
-                                            <IconButtonExclu type="submit" bg="#B5D5FE">
+                                            <IconButtonExcluir type="submit" bg="#B5D5FE">
                                                 <DownloadIcon sx={{color: '#0872FC'}}/>
-                                            </IconButtonExclu>
+                                            </IconButtonExcluir>
                                         </form>
                                     </Tooltip>
                                     <Tooltip title={
                                         <span style={{fontSize: '1vw'}}>Enviar e-mail para o responsável</span>
                                     } arrow placement="bottom">
-                                        <IconButtonExclu title="Enviar e-mail para o responsável" bg="#A8CDFE" component="a" href="/email/responsible">
+                                        <IconButtonExcluir title="Enviar e-mail para o responsável" bg="#A8CDFE" component="a" href="/email/responsible">
                                             <SendIcon sx={{color: '#0872FC'}}/>
-                                        </IconButtonExclu>
+                                        </IconButtonExcluir>
                                     </Tooltip>
                                     <Tooltip title={
                                         <span style={{fontSize: '1vw'}}>Ver boletim de aluno</span>
                                     } arrow placement="bottom">
-                                        <IconButtonExclu title="Ver boletim de aluno" bg="#A8CDFE" component="a" href="/boletim">
+                                        <IconButtonExcluir title="Ver boletim de aluno" bg="#A8CDFE" component="a" href="/boletim">
                                             <ListAltIcon sx={{color: '#0872FC'}}/>
-                                        </IconButtonExclu>
+                                        </IconButtonExcluir>
                                     </Tooltip>
                                     <Tooltip title={
                                         <span style={{fontSize: '1vw'}}>Baixar planilha de pagamentos dos alunos</span>
                                     } arrow placement="bottom">
                                         <form method="POST" action={`${process.env.NEXT_STATIC_API_URL}/alunos/documents/payments`} style={{display: 'inline-block'}}>
                                             <input type="hidden" name="keyapi" value={process.env.NEXT_STATIC_API_KEY}/>
-                                            <IconButtonExclu type="submit" bg="#B5D5FE">
+                                            <IconButtonExcluir type="submit" bg="#B5D5FE">
                                                 <PaidIcon sx={{color: '#0872FC'}}/>
-                                            </IconButtonExclu>
+                                            </IconButtonExcluir>
                                         </form>
                                     </Tooltip>
                                     <Tooltip title={
@@ -357,10 +357,17 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg, onDef
                                     } arrow placement="bottom">
                                         <form method="POST" action={`${process.env.NEXT_STATIC_API_URL}/alunos/exportar-por-turma`} style={{display: 'inline-block'}}>
                                             <input type="hidden" name="keyapi" value={process.env.NEXT_STATIC_API_KEY}/>
-                                            <IconButtonExclu type="submit" bg="#B5D5FE">
+                                            <IconButtonExcluir type="submit" bg="#B5D5FE">
                                                 <DownloadingIcon sx={{color: '#0872FC'}}/>
-                                            </IconButtonExclu>
+                                            </IconButtonExcluir>
                                         </form>
+                                    </Tooltip>
+                                    <Tooltip title={
+                                        <span style={{fontSize: '1vw'}}>Gerar aviso escolar</span>
+                                    } arrow placement="bottom">
+                                        <IconButtonExcluir title="Gerar aviso escolar" bg="#A8CDFE" component="a" href="notification">
+                                            <ReportProblemIcon sx={{color: '#0872FC'}}/>
+                                        </IconButtonExcluir>
                                     </Tooltip>
                                 </div>
                             </TableCellTitleBorder>

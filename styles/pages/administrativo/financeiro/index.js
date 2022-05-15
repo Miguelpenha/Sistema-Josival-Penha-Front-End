@@ -136,7 +136,9 @@ export const Info = styled(Card)`
 `
 
 export const InfoTit = styled.span`
-    font-size: 1vw;
+    color: #525051;
+    font-weight: 100;
+    font-size: 1.4vw;
 `
 
 export const InfoDado = styled.span`
@@ -340,7 +342,7 @@ export const CheckboxCategoriaDespesa = styled(Checkbox)`
     }
 `
 
-export const NomeCategoriaDepesaComCor = styled.span`
+export const NomeCategoriaDespesaComCor = styled.span`
     font-size: 0.8vw;
 `
 
@@ -349,7 +351,7 @@ export const TitCampoCheckBoxDespesa = styled.h1`
     padding-top: 2%;
 `
 
-export const NomeCategoriaDepesaSóCor = styled.span`
+export const NomeCategoriaDespesaSóCor = styled.span`
     background-color: ${props => props.color ? props.color : '#53BDE8'};
     padding: 0.1%;
     border-radius: 50%;

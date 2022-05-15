@@ -109,7 +109,7 @@ function ResumeFinanceiro({month,  receitas, despesas, onDeleteReceita, onDelete
                             <Saldo color="#60BF92" onClick={() => copyInfo(null, saldoReceitas)}>
                                 <h1>Receitas + {saldoReceitas}</h1>
                             </Saldo>
-                            <Saldo color="#0872FC" onClick={() => copyInfo(null, saldo)} asd={{casd: '#a3a0a050'}}>
+                            <Saldo color="#0872FC" onClick={() => copyInfo(null, saldo)}>
                                 <h1>Saldo {saldo}</h1>
                             </Saldo>
                         </ContainerSaldos>

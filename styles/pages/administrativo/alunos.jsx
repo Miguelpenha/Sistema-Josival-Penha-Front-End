@@ -62,7 +62,7 @@ export const InfoAdminTit = styled.h2`
 export const InfoAdminDado = styled.span`
     width: 45%;
     font-weight: bolder;
-    font-size: 2.5vw;
+    font-size: 2.1vw;
     color: #0872FC;
     height: auto;
 `
