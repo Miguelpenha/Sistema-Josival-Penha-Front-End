@@ -239,7 +239,7 @@ const TableFinanceiro: FC<Iprops> = ({ receitas, despesas, month, onEdit }) => {
                             return (
                                 <BodyRow onClick={() => {
                                     setReceitaOrDespesaModal(despesa)
-                                    setOpen(true)
+                                    setOpenEdit(true)
                                 }}>
                                     <BodyCell first colSpan={2}>
                                         <ContainerName>
