@@ -510,11 +510,7 @@ export default function Financeiro() {
                   Cadastrar despesa
                 </MenuItem>
               </Menu>
-              <SelectMonth value={month} onChange={event => {
-                setMonth(event.target.value)
-                mutateReceitas()
-                mutateSaldo()
-              }}>
+              <SelectMonth value={month} onChange={event => setMonth(event.target.value)}>
                 <ItemMonth value="full">Mostrar todos os meses</ItemMonth>
                 <ItemMonth value="01">Janeiro</ItemMonth>
                 <ItemMonth value="02">Fevereiro</ItemMonth>
@@ -608,6 +604,7 @@ export default function Financeiro() {
                   month={month}
                   receitas={receitas}
                   despesas={despesas}
+                  setMonth={setMonth}
                   onEdit={() => {
                     mutateTotalDespesas('/financeiro/receitas/total')
                     mutateTotalReceitas('/financeiro/despesas/total')

@@ -1,5 +1,5 @@
 import { Ireceita, Idespesa } from '../../types'
-import { FC, useState, ChangeEvent } from 'react'
+import { FC, useState, ChangeEvent, Dispatch, SetStateAction, useEffect } from 'react'
 import { ContainerHeaderOptions, ContainerOptionFindName, IconOptionFindName, InputOptionsFindName, ContainerOptionMonth, SelectMonth, IconOptionMonth, ContainerOptionStatus, SelectStatus, IconOptionStatus, Table, Header, HeaderRow, HeaderCellTitle, Body, BodyRow, BodyCell, ContainerName, IconName, ContainerStatus, TextStatus, ContainerIconMore, IconMore } from './style'
 import ModalReceitaOrDespesa from '../ModalReceitaOrDespesa'
 import ModalEditReceitaOrDespesa from '../ModalEditReceitaOrDespesa'
@@ -10,10 +10,11 @@ interface Iprops {
     receitas: Ireceita[]
     despesas: Idespesa[]
     month: string
+    setMonth: Dispatch<SetStateAction<string>>
     onEdit: Function
 }
 
-const TableFinanceiro: FC<Iprops> = ({ receitas, despesas, month, onEdit }) => {
+const TableFinanceiro: FC<Iprops> = ({ receitas, despesas, month, setMonth, onEdit }) => {
     const [open, setOpen] = useState(false)
     const [openEdit, setOpenEdit] = useState(false)
     const [copyTextInfo, setCopyTextInfo] = useState(false)
@@ -25,6 +26,8 @@ const TableFinanceiro: FC<Iprops> = ({ receitas, despesas, month, onEdit }) => {
     const [find, setFind] = useState('')
     const [monthFind, setMonthFind] = useState(new Date().toLocaleDateString().split('/')[1])
     const [status, setStatus] = useState<'Pago' | 'Aguardando' | 'Atrasado' | 'Full'>('Full')
+    
+    useEffect(() => setMonthFind(month), [month])
     
     function copyInfo(ev, text) {
         navigator.clipboard.writeText(text || ev.currentTarget.innerText)
@@ -41,7 +44,7 @@ const TableFinanceiro: FC<Iprops> = ({ receitas, despesas, month, onEdit }) => {
             } else {
                 const mêsAtual = Number(new Date().toLocaleString().split('/')[1])
                 const mêsVencimento = Number(!receitaOrDespesa.fixa ? receitaOrDespesa.data.split('/')[1] : receitaOrDespesa.months[String(new Date().toLocaleString().split('/')[1])])
-        
+                
                 if (mêsVencimento >= mêsAtual) {
                     if (mêsVencimento === mêsAtual) {
                         const diaAtual = Number(new Date().toLocaleString().split('/')[0])
@@ -84,7 +87,7 @@ const TableFinanceiro: FC<Iprops> = ({ receitas, despesas, month, onEdit }) => {
                 }
             }
         }
-    }  
+    }
     
     return <>
         <ModalReceitaOrDespesa
@@ -137,7 +140,10 @@ const TableFinanceiro: FC<Iprops> = ({ receitas, despesas, month, onEdit }) => {
                 <InputOptionsFindName value={find} placeholder="Pesquisar" onChange={ev => setFind(ev.target.value)}/>
             </ContainerOptionFindName>
             <ContainerOptionMonth>
-                <SelectMonth value={monthFind} onChange={(ev: ChangeEvent<HTMLInputElement>) => setMonthFind(ev.target.value)}>
+                <SelectMonth value={monthFind} onChange={(ev: ChangeEvent<HTMLInputElement>) => {
+                    setMonthFind(ev.target.value)
+                    setMonth(ev.target.value)
+                }}>
                     <MenuItem value="full">Mostrar todos os meses</MenuItem>
                     <MenuItem value="01">Janeiro</MenuItem>
                     <MenuItem value="02">Fevereiro</MenuItem>
@@ -239,7 +245,7 @@ const TableFinanceiro: FC<Iprops> = ({ receitas, despesas, month, onEdit }) => {
                             return (
                                 <BodyRow onClick={() => {
                                     setReceitaOrDespesaModal(despesa)
-                                    setOpenEdit(true)
+                                    setOpen(true)
                                 }}>
                                     <BodyCell first colSpan={2}>
                                         <ContainerName>
