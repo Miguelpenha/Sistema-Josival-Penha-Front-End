@@ -225,3 +225,20 @@ export function ErrorInput ({ children }) {
         </ErrorInputStyle>
     )
 }
+
+export const ButtonMenuActions = styled.button`
+    color: #ffffff;
+    background-color: #0872FC;
+    border: none;
+    padding: 1.5%;
+    font-size: 1vw;
+    font-weight: bold;
+    border-radius: 10px;
+    width: 10%;
+    margin-left: 80%;
+    cursor: pointer;
+
+    :hover {
+        background-color: #0852FF;
+    }
+`

@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import nookies from 'nookies'
-import { Container, Main, AlunosBanner, InfoAdminContainer, InfoAdmin, InfoAdminTit, InfoAdminDado, IconInfoTotalAlunos, IconInfoTotalTurmas, IconInfoMédiaAlunos, IconInfoOcupação, NavInfos, DialogCadasAluno, InputNomeCadasAluno, ButtonSubmitCadasAluno, CampoInputCadasAluno, InputSelectCadasAluno, InputDespesaData, LabelInputStyle, LabelInputStyleReq, ErrorInput } from '../../styles/pages/administrativo/alunos'
+import { Container, Main, AlunosBanner, InfoAdminContainer, InfoAdmin, InfoAdminTit, InfoAdminDado, IconInfoTotalAlunos, IconInfoTotalTurmas, IconInfoMédiaAlunos, IconInfoOcupação, NavInfos, DialogCadasAluno, InputNomeCadasAluno, ButtonSubmitCadasAluno, CampoInputCadasAluno, InputSelectCadasAluno, InputDespesaData, LabelInputStyle, LabelInputStyleReq, ErrorInput, ButtonMenuActions } from '../../styles/pages/administrativo/alunos'
 import { NavOptions, LogoJPNome, Funções, Função, LinkFunção, IconAlunosSele, IconFinanceiro, IconPagamentos, IconAcadêmico, IconDashBoard, IconMarketing, IconColaboradores, IconError, TextFunção } from '../../components/NavTool'
 import { get } from '../../hooks'
 import { useEffect, useState } from 'react'
@@ -8,7 +8,7 @@ import Link from 'next/link'
 import TableAlunos from '../../components/TableAlunos'
 import TableTurmas from '../../components/TableTurmas'
 import { Skeleton, Snackbar, Alert, DialogContent, MenuItem, Menu } from '@material-ui/core'
-import { Add as AddIcon, School, Class } from '@material-ui/icons'
+import { Add as AddIcon, School, Class, Edit as IconEdit } from '@material-ui/icons'
 import api from '../../services/api/base'
 import InputMask from 'react-input-mask'
 import { useForm } from 'react-hook-form'
@@ -290,6 +290,11 @@ export default function Alunos() {
 
   const handleClickAddOptions = (ev) => setAnchorElAddOptions(ev.currentTarget)
   const handleCloseAddOptions = () => setAnchorElAddOptions(false)
+
+  const [anchorElAddOptionsActions, setAnchorElAddOptionsActions] = useState(false)
+  const openAddOptionsActions = Boolean(anchorElAddOptionsActions)
+  const handleClickAddOptionsActions = ev => setAnchorElAddOptionsActions(ev.currentTarget)
+  const handleCloseAddOptionsActions = () => setAnchorElAddOptionsActions(false)
   
   return (
     <>
@@ -440,6 +445,34 @@ export default function Alunos() {
               Cadastrar turma
             </MenuItem>
           </Menu>
+          <ButtonMenuActions onClick={handleClickAddOptionsActions}>Ações</ButtonMenuActions>
+          <Menu
+            open={openAddOptionsActions}
+            onClose={handleCloseAddOptionsActions}
+            anchorEl={anchorElAddOptionsActions}
+            PaperProps={{
+                style: {
+                    transform: 'translateX(-80%) translateY(-90%)'
+                }
+            }}
+            sx={{
+                '.MuiMenu-paper': {
+                    backgroundColor: '#0872FC',
+                    borderRadius: '10px',
+                    color: '#ffffff'
+                }
+            }}
+        >
+            <MenuItem
+                onClick={() => {
+                    handleCloseAddOptionsActions()
+                }}
+                sx={{fontSize: '1.5vw'}}
+            >
+                <IconEdit fontSize="large" sx={{color: '#ffffff', borderRadius: '50%', fontSize: '2.5vw', paddingRight: '10%'}}/>
+                <span style={{paddingRight: '40%'}}>Editar</span>
+            </MenuItem>
+        </Menu>
           {alunos ? <TableAlunos
             setAlert={setAlert}
             alunos={alunos && alunos}

@@ -126,7 +126,7 @@ function TableAlunos({ alunos=[], onDeleteAlunos, onDeleteAlunosTodos, bg, onDef
                                     <input type="hidden" name="keyapi" value={process.env.NEXT_STATIC_API_KEY}/>
                                     <br/>
                                     <BolsistaSwitch name="bolsista"/>Bolsista
-                                    <ButtonSubmitGerarDeclaração style={{marginBottom: '0%'}} type="submit" variant="contained"  onCLick={() => setOpenDialogGerarDeclaração(false)}>Gerar</ButtonSubmitGerarDeclaração>
+                                    <ButtonSubmitGerarDeclaração style={{marginBottom: '0%'}} type="submit" variant="contained" onCLick={() => setOpenDialogGerarDeclaração(false)}>Gerar</ButtonSubmitGerarDeclaração>
                                 </form>
                             </DialogContent>
                         </DialogGerarDeclaração>
